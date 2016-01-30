@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet5-Topodata-305f40e9-ca25-4b62-8296-85ee67b6cd12",
   "version": "1.0.0-*",
   "compilationOptions": {
@@ -33,7 +33,11 @@
   },
 
   "frameworks": {
-    "dnx451": { },
+    "dnx451": {
+      "dependencies": {
+        "FluentNHibernate": "2.0.3"
+      }
+    },
     "dnxcore50": { }
   },
 
