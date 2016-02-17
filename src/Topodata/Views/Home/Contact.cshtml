@@ -1,17 +1,60 @@
 ﻿@{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Contactanos";
 }
 <h2>@ViewData["Title"].</h2>
 <h3>@ViewData["Message"]</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="row margin-bottom-30">
+    <div class="col-md-9 mb-margin-bottom-30">
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+    </div>
+    <div class="col-md-3">
+        <div class="headline">
+            <h2>Contacto</h2>
+        </div>
+        <ul class="list-unstyled who margin-bottom-30">
+            <li>
+                <a href="#">
+                    <i class="fa fa-home"></i>
+                    Calle Ciriaco Ramírez No 19-B Sector Don Bosco, Distrito Nacional, Rep Dom, Zip-10201
+                </a>
+            </li>
+            <li>
+                <a href="mailto:info@topodata.com">
+                    <i class="fa fa-envelope"></i>
+                    info@topodata.com
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-mobile"></i>
+                    809-519-4131
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-phone"></i>
+                    809-687-7702
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-phone"></i>
+                    809-682-8728
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index","Home")">
+                    <i class="fa fa-globe"></i>
+                    http://www.topodata.com
+                </a>
+            </li>
+        </ul>
+        <div class="headline">
+            <h2>Horario</h2>
+        </div>
+        <div class="headline">
+            <h2></h2>
+        </div>
+    </div>
+</div>
