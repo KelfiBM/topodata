@@ -28,237 +28,535 @@
 
     <!-- CSS Global Compulsory -->
     <link rel="stylesheet" href="~/css/style.css">
-    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- CSS Header and Footer -->
     <link rel="stylesheet" href="~/css/footers/footer-default.css">
-    <link href="~/css/headers/header-v1.css" rel="stylesheet" />
+    <link href="~/css/headers/header-v1.css" rel="stylesheet"/>
 
     <!-- CSS Implementing Plugins -->
-    <link href="~/plugins/animate.css" rel="stylesheet" />
-    <link href="~/plugins/line-icons/line-icons.css" rel="stylesheet" />
-    <link href="~/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/plugins/animate.css" rel="stylesheet"/>
+    <link href="~/plugins/line-icons/line-icons.css" rel="stylesheet"/>
+    <link href="~/plugins/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
     <!-- CSS Theme -->
-    <link href="~/css/theme-colors/default.css" rel="stylesheet" />
+    <link href="~/css/theme-colors/default.css" rel="stylesheet"/>
 
     <!-- CSS Customization -->
-    <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="wrapper">
-        <!--=== Header v1===-->
-        <div class="header-v1">
-            <!-- Topbar -->
-            <div class="topbar-v1">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-inline top-v1-contacts">
-                                <li>
-                                    <i class="fa fa-envelope"></i> Email: <a href="mailto:info@topodata.com">info@topodata.com</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-phone"></i> Telefono 1: 809-687-7702
-                                </li>
-                                <li>
-                                    <i class="fa fa-phone"></i>Telefono 2: 809-682-8728
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-inline top-v1-data">
-                                <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a></li>
-                                <li><a href="@urlFacebook"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="@urlTwitter"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="@urlInstagram"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="@urlYoutube"><i class="fa fa-youtube"></i></a></li>
-                                <li><a href="@urlGooglePlus"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="@urlFlickr"><i class="fa fa-flickr"></i></a></li>
-                                <li><a href="@urlFlipboard"><i class="fa fa-deviantart"></i></a></li>
-                                <li><a href="#">Mi cuenta</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
+<div class="wrapper">
+<!--=== Header v1===-->
+<div class="header-v1">
+<!-- Topbar -->
+<div class="topbar-v1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-inline top-v1-contacts">
+                    <li>
+                        <i class="fa fa-envelope"></i> Email: <a href="mailto:info@topodata.com">info@topodata.com</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-phone"></i> Telefono 1: 809-687-7702
+                    </li>
+                    <li>
+                        <i class="fa fa-phone"></i>Telefono 2: 809-682-8728
+                    </li>
+                </ul>
             </div>
-            <!--  End Topbar -->
-            <!-- Navbar -->
-            <div class="navbar navbar-default mega-menu" role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-
-
-                    </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
-
-
-                    </div><!-- /navbar-collapse -->
-                </div>
+            <div class="col-md-6">
+                <ul class="list-inline top-v1-data">
+                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a></li>
+                    <li><a href="@urlFacebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="@urlTwitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="@urlInstagram"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="@urlYoutube"><i class="fa fa-youtube"></i></a></li>
+                    <li><a href="@urlGooglePlus"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="@urlFlickr"><i class="fa fa-flickr"></i></a></li>
+                    <li><a href="@urlFlipboard"><i class="fa fa-deviantart"></i></a></li>
+                    <li><a href="#">Mi cuenta</a></li>
+                </ul>
             </div>
-            <!-- End Navbar -->
         </div>
-        <!-- End Header v1 -->
-        <!--=== Content Part ===-->
-        <div class="container content">
-            @RenderBody()
-        </div><!--/container-->
-        <!--=== End Content Part ===-->
-        <!--=== Default Footer ===-->
-        <div class="footer-default">
-            <div class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="headline">
-                                <h2>Sobre Topodata</h2>
-                            </div>
-                            <p class="margin-bottom-25">Topodata, es una empresa dedicada a la tecnología en ingeniería aplicada en la creación de diseños, planos y documentos, que describen y sustentan los proyectos de obras de construcción</p>
-                            <div class="headline">
-                                <h2>Suscríbete!</h2>
-                            </div>
-                            <p>Mantente al tanto de todo lo que pasa en la comunidad Topodata!</p>
-                            <form class="footer-subsribe">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Correo Electronico" />
-                                    <span class="input-group-btn">
+    </div>
+
+</div>
+<!-- End Topbar -->
+<!-- Navbar -->
+<div class="navbar navbar-default mega-menu" role="navigation">
+<div class="container">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="fa fa-bars"></span>
+    </button>
+    <a class="navbar-brand" href="/">
+        <img id="logo-header" src="~/img/logo1-default.png" alt="Logo">
+    </a>
+</div>
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+<ul class="nav navbar-nav">
+<!-- Home -->
+<li>
+    <a href="@Url.Action("Index", "Home")">
+        Inicio
+    </a>
+
+</li>
+<!-- End Home -->
+<!-- Pages -->
+<li class="dropdown">
+<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+    Pages
+</a>
+<ul class="dropdown-menu">
+<!-- About Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">About Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_about2.html">About Us </a></li>
+        <li><a href="page_about3.html">About Us 1</a></li>
+        <li><a href="page_about1.html">About Us 2</a></li>
+        <li><a href="page_about.html">About Us 3</a></li>
+        <li><a href="page_about_me.html">About Me </a></li>
+        <li><a href="page_about_me1.html">About Me 1</a></li>
+        <li><a href="page_about_me2.html">About Me 2</a></li>
+        <li><a href="page_about_our_team.html">About Our Team</a></li>
+        <li><a href="page_about_our_team1.html">About Our Team 1</a></li>
+        <li><a href="page_about_our_team2.html">About Our Team 2</a></li>
+    </ul>
+</li>
+<!-- End About Pages -->
+<!-- Service Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Service Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_services.html">Our Services</a></li>
+        <li><a href="page_services1.html">Our Services 1</a></li>
+        <li><a href="page_services2.html">Our Services 2</a></li>
+        <li><a href="page_services3.html">Our Services 3</a></li>
+    </ul>
+</li>
+<!-- End Service Pages -->
+<!-- Contacts -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+        Contact Pages
+    </a>
+    <ul class="dropdown-menu">
+        <li><a href="page_contact1.html">Contacts Default</a></li>
+        <li><a href="page_contact2.html">Contacts Option 1</a></li>
+        <li><a href="page_contact3.html">Contacts Option 2</a></li>
+        <li><a href="page_contact4.html">Contacts Option 3</a></li>
+        <li><a href="page_contact_advanced.php">Contacts Advanced</a></li>
+    </ul>
+</li>
+<!-- End Contacts -->
+<!-- Profile Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Profile Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_profile.html">Profile Main Page</a></li>
+        <li><a href="page_profile_me.html">Profile Overview</a></li>
+        <li><a href="page_profile_users.html">Profile Users</a></li>
+        <li><a href="page_profile_projects.html">Profile Projects</a></li>
+        <li><a href="page_profile_comments.html">Profile Comments</a></li>
+        <li><a href="page_profile_history.html">Profile History</a></li>
+        <li><a href="page_profile_settings.html">Profile Settings</a></li>
+    </ul>
+</li>
+<!-- End Profile Pages -->
+<!-- Job Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Job Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_jobs.html">Jobs Main Page</a></li>
+        <li><a href="page_jobs1.html">Jobs Main Page 1</a></li>
+        <li><a href="page_jobs_inner.html">Jobs Description Default</a></li>
+        <li><a href="page_jobs_inner1.html">Jobs Description Basic</a></li>
+        <li><a href="page_jobs_inner2.html">Jobs Description Min</a></li>
+    </ul>
+</li>
+<!-- End Job Pages -->
+<!-- Pricing Tables -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Pricing Tables</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_pricing_colorful.html">Colorful Pricing Tables</a></li>
+        <li><a href="page_pricing_flat.html">Flat Pricing Tables</a></li>
+        <li><a href="page_pricing_light.html">Light Pricing Tables</a></li>
+        <li><a href="page_pricing_mega.html">Mega Pricing Tables</a></li>
+        <li><a href="page_pricing.html">Default Pricing Tables</a></li>
+    </ul>
+</li>
+<!-- End Pricing Tables -->
+<!-- Login and Registration -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Login and Registration</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_registration.html">Registration Page</a></li>
+        <li><a href="page_login.html">Login Page</a></li>
+        <li><a href="page_registration1.html">Registration Option</a></li>
+        <li><a href="page_login1.html">Login Option</a></li>
+    </ul>
+</li>
+<!-- End Login and Registration -->
+<!-- FAQs Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">FAQs Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_faq1.html">FAQs Page</a></li>
+        <li><a href="page_faq.html">FAQs Basic</a></li>
+    </ul>
+</li>
+<!-- End FAQs Pages -->
+<!-- Email Tempaltes -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Email Templates</a>
+    <ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+            <a href="javascript:void(0);">Email Corporate</a>
+            <ul class="dropdown-menu">
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_aqua.html">Corporate Aqua Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_blue.html">Corporate Blue Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_brown.html">Corporate Brown Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_dark_blue.html">Corporate Dark Blue Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_green.html">Corporate Green Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_light_green.html">Corporate Light Green Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_grey.html">Corporate Grey Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_orange.html">Corporate Orange Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_purple.html">Corporate Purple Color</a></li>
+                <li><a target="_blank" href="Email-Templates/corporate/email_corporate_red.html">Corporate Red Color</a></li>
+            </ul>
+        </li>
+        <li class="dropdown-submenu">
+            <a href="javascript:void(0);">Email Flat</a>
+            <ul class="dropdown-menu">
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_aqua.html">Flat Aqua Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_blue.html">Flat Blue Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_brown.html">Flat Brown Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_dark_blue.html">Flat Dark Blue Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_green.html">Flat Green Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_light_green.html">Flat Light Green Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_grey.html">Flat Grey Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_orange.html">Flat Orange Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_purple.html">Flat Purple Color</a></li>
+                <li><a target="_blank" href="Email-Templates/flat/email_flat_red.html">Flat Red Color</a></li>
+            </ul>
+        </li>
+        <li class="dropdown-submenu">
+            <a href="javascript:void(0);">Email Modern</a>
+            <ul class="dropdown-menu">
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_aqua.html">Modern Aqua Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_blue.html">Modern Blue Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_brown.html">Modern Brown Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_dark_blue.html">Modern Dark Blue Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_green.html">Modern Green Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_light_green.html">Modern Light Green Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_grey.html">Modern Grey Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_orange.html">Modern Orange Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_purple.html">Modern Purple Color</a></li>
+                <li><a target="_blank" href="Email-Templates/modern/email_modern_red.html">Modern Red Color</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>
+<!-- End Email Tempaltes -->
+<!-- Search Results -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Search Results</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_search_inner_full_width.html">Search Results Full Width</a></li>
+        <li><a href="page_search_inner_left_sidebar.html">Search Result Left Sidebar</a></li>
+        <li><a href="page_search_table.html">Search Result Tables</a></li>
+    </ul>
+</li>
+<!-- End Search Results -->
+<!-- Coming Soon -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Coming Soon Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_coming_soon.html">Coming Soon</a></li>
+        <li><a href="page_coming_soon1.html">Coming Soon 1</a></li>
+    </ul>
+</li>
+<!-- End Coming Soon -->
+<!-- Error Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Error Pages</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_404_error.html">404 Error Default</a></li>
+        <li><a href="page_404_error1.html">404 Error Option 1</a></li>
+        <li><a href="page_404_error2.html">404 Error Option 2</a></li>
+        <li><a href="page_404_error3.html">404 Error Option 3</a></li>
+    </ul>
+</li>
+<!-- End Error Pages -->
+<!-- Invoice Page -->
+<li><a href="page_invoice.html">Invoice Page</a></li>
+<!-- End Invoice Page -->
+<!-- Clients Page -->
+<li><a href="page_clients.html">Clients Page</a></li>
+<!-- End Clients Page -->
+<!-- Column Pages -->
+<li><a href="page_3_columns.html">Three Columns Page</a></li>
+<!-- End Column Pages -->
+<!-- Privacy Policy -->
+<li><a href="page_privacy.html">Privacy Policy</a></li>
+<!-- End Privacy Policy -->
+<!-- Terms of Service -->
+<li><a href="page_terms.html">Terms of Service</a></li>
+<!-- End Terms of Service -->
+<!-- Misc Pages -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Misc</a>
+    <ul class="dropdown-menu">
+        <li><a href="page_misc_blank.html">Blank page</a></li>
+        <li><a href="page_misc_boxed.html">Boxed Page</a></li>
+        <li><a href="page_misc_boxed_img.html">Boxed Image Page</a></li>
+        <li><a href="page_misc_boxed_fixed_header.html">Boxed Fixed Menu</a></li>
+        <li><a href="page_misc_dark.html">Dark Page</a></li>
+        <li><a href="page_misc_dark_boxed.html">Dark Boxed Page</a></li>
+        <li><a href="page_misc_dark_other_color.html">Dark Page with Theme Color</a></li>
+        <li><a href="page_misc_sticky_footer.html">Sticky Footer Example</a></li>
+    </ul>
+</li>
+<!-- End Misc Pages -->
+<!-- Sub Level Menu -->
+<li class="dropdown-submenu">
+    <a href="javascript:void(0);">Sub Level 1</a>
+    <ul class="dropdown-menu no-bottom-space">
+        <li><a href="index.hmtl">Sub Level 2</a></li>
+        <li class="dropdown-submenu">
+            <a href="javascript:void(0);">Sub Level 2</a>
+            <ul class="dropdown-menu">
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+            </ul>
+        </li>
+        <li><a href="index.hmtl">Sub Level 2</a></li>
+        <li class="dropdown-submenu">
+            <a href="javascript:void(0);">Sub Level 2</a>
+            <ul class="dropdown-menu no-bottom-space">
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+                <li><a href="index.hmtl">Sub Level 3</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>
+<!-- End Sub Level Menu -->
+</ul>
+</li>
+<!-- End Pages -->
+<!--Contacto-->
+
+
+<li>
+    <a href="@Url.Action("Contact", "Home")">
+        Contacto
+    </a>
+</li>
+<!--End Contacto-->
+<!--About Us-->
+    <li>
+        <a href="@Url.Action("About", "Home")">
+            Conócenos
+        </a>
+    </li>
+    <!--End About Us-->
+<!-- Search Block -->
+<li>
+    <i class="search fa fa-search search-btn"></i>
+    <div class="search-open">
+        <div class="input-group animated fadeInDown">
+            <input class="form-control" placeholder="Search" type="text">
+            <span class="input-group-btn">
+                                            <button class="btn-u" type="button">Go</button>
+                                        </span>
+        </div>
+    </div>
+</li>
+<!-- End Search Block -->
+</ul>
+</div><!--/navbar-collapse-->
+</div>
+</div>
+<!-- End Navbar -->
+</div>
+<!-- End Header v1 -->
+<!--=== Content Part ===-->
+<div class="container content">
+    @RenderBody()
+</div><!--/container-->
+<!--=== End Content Part ===-->
+<!--=== Default Footer ===-->
+<div class="footer-default">
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="headline">
+                        <h2>Sobre Topodata</h2>
+                    </div>
+                    <p class="margin-bottom-25">Topodata, es una empresa dedicada a la tecnología en ingeniería aplicada en la creación de diseños, planos y documentos, que describen y sustentan los proyectos de obras de construcción</p>
+                    <div class="headline">
+                        <h2>Suscríbete!</h2>
+                    </div>
+                    <p>Mantente al tanto de todo lo que pasa en la comunidad Topodata!</p>
+                    <form class="footer-subsribe">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Correo Electronico"/>
+                            <span class="input-group-btn">
                                         <button class="btn-u" type="button">Suscribirse</button>
                                     </span>
-                                </div>
-                            </form>
                         </div>
-                        <div class="col-md-4">
-                            <div class="headline">
-                                <h2>Ultimas Noticias</h2>
-                            </div>
-                            <a class="twitter-timeline"
-                               href="https://twitter.com/topodata/lists/noticias-periodistas"
-                               data-widget-id="697619227469975552"
-                               data-chrome="noheader nofooter noborders noscrollbar transparent"
-                               height="263"></a>
-
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="headline">
-                                <h2>Contáctanos</h2>
-                            </div>
-                            <address class="md-margin-bottom-40">
-                                Calle Ciriaco Ramírez No 19-B Sector Don Bosco,
-                                <br />
-                                Distrito Nacional, Rep Dom 10201
-                                <br />
-                                <br />
-                                Telefono 1: 809-687-7702
-                                <br />
-                                Telefono 2: 809-682-8728
-                                <br />
-                                Movil: 809-519-4131
-                                <br />
-                                <br />
-                                Email: <a href="mailto:info@topodata.com">topodata@topodata.com</a>
-                            </address>
-                            <div class="headline">
-                                <h2>Mantente Conectado</h2>
-                            </div>
-                            <ul class="social-icons">
-                                <li>
-                                    <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlInstagram" class="social_instagram" data-original-title="Instagram" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
-                                </li>
-                            </ul>
-                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div class="headline">
+                        <h2>Ultimas Noticias</h2>
                     </div>
+                    <a class="twitter-timeline"
+                       href="https://twitter.com/topodata/lists/noticias-periodistas"
+                       data-widget-id="697619227469975552"
+                       data-chrome="noheader nofooter noborders noscrollbar transparent"
+                       height="263"></a>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="headline">
+                        <h2>Contáctanos</h2>
+                    </div>
+                    <address class="md-margin-bottom-40">
+                        Calle Ciriaco Ramírez No 19-B Sector Don Bosco,
+                        <br/>
+                        Distrito Nacional, Rep Dom 10201
+                        <br/>
+                        <br/>
+                        Telefono 1: 809-687-7702
+                        <br/>
+                        Telefono 2: 809-682-8728
+                        <br/>
+                        Movil: 809-519-4131
+                        <br/>
+                        <br/>
+                        Email: <a href="mailto:info@topodata.com">topodata@topodata.com</a>
+                    </address>
+                    <div class="headline">
+                        <h2>Mantente Conectado</h2>
+                    </div>
+                    <ul class="social-icons">
+                        <li>
+                            <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlInstagram" class="social_instagram" data-original-title="Instagram" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <!--/footer-->
-            <div class="copyright">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>
-                                Copyright © 2016 TOPODATA. All Rights Reserved.
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <img id="logo-footer" class="pull-right" src="~/resources/logo_footer.png" />
-                        </div>
-                    </div>
-                </div>
-            </div><!--/copyright-->
         </div>
-        <!--=== End Default Footer ===-->
-        @*    @RenderSection("scripts", required: false)*@
     </div>
-    <!-- JS Global Compulsory -->
-    <script src="~/plugins/jquery/jquery.min.js"></script>
-    <script src="~/plugins/jquery/jquery-migrate.min.js"></script>
-    <script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!--/footer-->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        Copyright © 2016 TOPODATA. All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <img id="logo-footer" class="pull-right" src="~/resources/logo_footer.png"/>
+                </div>
+            </div>
+        </div>
+    </div><!--/copyright-->
+</div>
+<!--=== End Default Footer ===-->
+@*    @RenderSection("scripts", required: false)*@
+</div>
+<!-- JS Global Compulsory -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/plugins/jquery/jquery-migrate.min.js"></script>
+<script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
 
 
-    <!-- JS Implementing Plugins -->
-    <script src="~/plugins/back-to-top.js"></script>
-    <script src="~/plugins/smoothscroll.js"></script>
+<!-- JS Implementing Plugins -->
+<script src="~/plugins/back-to-top.js"></script>
+<script src="~/plugins/smoothscroll.js"></script>
 
-    <!-- JS Customization -->
-    <script src="~/js/custom.js"></script>
+<!-- JS Customization -->
+<script src="~/js/custom.js"></script>
 
-    <!-- JS Page Level -->
-    <script src="~/js/app.js"></script>
+<!-- JS Page Level -->
+<script src="~/js/app.js"></script>
 
 
-    <script>
-        jQuery(document).ready(function () {
-            App.init();
-        });
-    </script>
+<script>
+    jQuery(document).ready(function() {
+        App.init();
+    });
+</script>
+<script>
+    var url = window.location;
+    // Will only work if string in href matches with location
+    $('ul.nav a[href="' + url + '"]').parent().addClass('active');
 
-    <!-- Twitter script-->
-    <script>
-        window.twttr = (function (d, s, id) {
-            var js,
-                fjs = d.getElementsByTagName(s)[0],
-                t = window.twttr || {};
-            if (d.getElementById(id)) return t;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
+    // Will also work for relative and absolute hrefs
+    $('ul.nav a').filter(function() {
+        return this.href == url;
+    }).parent().addClass('active');
+</script>
 
-            t._e = [];
-            t.ready = function (f) {
-                t._e.push(f);
-            };
+<!-- Twitter script-->
+<script>
+    window.twttr = (function(d, s, id) {
+        var js,
+            fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
 
-            return t;
-        }(document, "script", "twitter-wjs"));
-    </script>
-    <!--[if lt IE 9]>
-        <script src="~/wwwroot/plugins/respond.js"></script>
-        <script src="~/wwwroot/plugins/html5shiv.js"></script>
-        <script src="~/wwwroot/plugins/placeholder-IE-fixes.js"></script>
-    <![endif]-->
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));
+</script>
+<!--[if lt IE 9]>
+    <script src="~/wwwroot/plugins/respond.js"></script>
+    <script src="~/wwwroot/plugins/html5shiv.js"></script>
+    <script src="~/wwwroot/plugins/placeholder-IE-fixes.js"></script>
+<![endif]-->
 
 </body>
 </html>
