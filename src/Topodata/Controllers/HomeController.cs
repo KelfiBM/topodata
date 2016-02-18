@@ -20,9 +20,17 @@ namespace Topodata.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(string name, string mail, string message)
+        {
 
             return View();
         }
