@@ -307,5 +307,7 @@
 /// <reference path="plugins/vector-map/tests/assets/jquery-jvectormap-us-mill-en.js" />
 /// <reference path="plugins/vector-map/tests/assets/jquery-jvectormap-world-mill-en.js" />
 /// <reference path="plugins/wow-animations/js/wow.min.js" />
+/// <reference path="plugins/youmax-master/jquery/jquery-1.9.1.min.js" />
+/// <reference path="plugins/youmax-master/js/youmax.js" />
 /// <reference path="plugins/youtube-player/jquery.mb.YTPlayer-ini.js" />
 /// <reference path="plugins/youtube-player/src/jquery.mb.YTPlayer.js" />
