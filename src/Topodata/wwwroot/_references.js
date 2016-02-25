@@ -226,6 +226,7 @@
 /// <reference path="plugins/master-slider/masterslider/masterslider.js" />
 /// <reference path="plugins/modernizr.custom.js" />
 /// <reference path="plugins/modernizr.js" />
+/// <reference path="plugins/nano-gallery/jquery.nanogallery.min.js" />
 /// <reference path="plugins/owl-carousel/owl-carousel/owl.carousel.js" />
 /// <reference path="plugins/owl-carousel2/owl.carousel.js" />
 /// <reference path="plugins/parallax-slider/js/jquery.cslider.js" />

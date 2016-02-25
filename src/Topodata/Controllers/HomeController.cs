@@ -37,6 +37,21 @@ namespace Topodata.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("media/fotos")]
+        public IActionResult Photo()
+        {
+
+            return View();
+        }
+        [HttpGet]
+        [Route("media/videos")]
+        public IActionResult Video()
+        {
+
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Contact(string name, string mail, string message)
         {
