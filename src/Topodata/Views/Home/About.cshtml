@@ -1,7 +1,97 @@
 ﻿@{
     ViewData["Title"] = "About";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+
+<div class="breadcrumbs-v3 img-v1 text-center">
+    <div class="container">
+        <h1>Topodata</h1>
+        <p>Tecnologia en Ingenieria</p>
+    </div><!--/end container-->
+</div>
+
+<div class="container content-sm">
+    <div class="headline-center margin-bottom-60">
+        <h2>TOPODATA</h2>
+        <p>
+            Topodata, es una empresa dedicada a la tecnología en ingeniería aplicada en la creación de diseños,<br/>
+            planos y documentos, que describen y sustentan los proyectos de obras de construcción
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-6 md-margin-bottom-50">
+            <img class="img-responsive" src="/img/mockup/planning2.jpg" alt="">
+        </div>
+        <div class="col-md-6">
+            <br/>
+            <br />
+            <p>Somos una empresa reconocida que busca ofrecer todas las areas sobre la ingenieria aplicada ofreciendo los siguientes servicios:</p><br>
+            <div class="row">
+                <ul class="col-xs-6 list-unstyled lists-v1">
+                    <li><i class="fa fa-angle-right"></i>Diseño</li>
+                    <li><i class="fa fa-angle-right"></i>Estudios del Suelo</li>
+                    <li><i class="fa fa-angle-right"></i>Agrimensura</li>
+                    <li><i class="fa fa-angle-right"></i>Ingeniería Estructural</li>
+                    <li><i class="fa fa-angle-right"></i>Presentaciones</li>
+                    <li><i class="fa fa-angle-right"></i>Supervisión</li>
+                </ul>
+                <ul class="col-xs-6 list-unstyled lists-v1">
+                    <li><i class="fa fa-angle-right"></i>Impacto Ambiental</li>
+                    <li><i class="fa fa-angle-right"></i>Presupuestos</li>
+                    <li><i class="fa fa-angle-right"></i>Planificación</li>
+                    <li><i class="fa fa-angle-right"></i>Evaluación de Proyectos</li>
+                    <li><i class="fa fa-angle-right"></i>Construcción</li>
+                </ul>
+            </div>
+        </div>
+    </div><!--/end row-->
+</div>
+
+<div class="service-block-v5">
+    <div class="container">
+        <div class="row equal-height-columns">
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
+                <img src="/img/icons/agrimensura.png" alt="" />
+                <span>Agrimensura</span>
+                <p> Cada punto del planeta tierra es una coordenada precisa, con ellos realizamos la topografía aplicando geomática.</p>
+            </div>
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column service-border">
+                <img src="/img/icons/estudios.png" alt="" />
+                <span>Estudios del Suelo</span>
+                <p>Con la regulación de la Ley 108-05JI de Registro Inmobiliario, gestionamos Certificados de Titulos de Propiedad.</p>
+            </div>
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
+                <img src="/img/icons/diseno.png" alt="" />
+                <span>Diseño</span>
+                <p>Formulamos los estudios, diseños y planos de Obras de Construcción.</p>
+            </div>
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
+                <img src="/img/icons/ingenieria.png" alt="" />
+                <span>Ingenieria</span>
+                <p>Edificamos proyectos ajustados a su presupuesto y programación de obra con seguridad y calidad garantizada.</p>
+            </div>
+        </div><!--/end row-->
+    </div><!--/end container-->
+</div>
+
+<div class="container content-sm">
+    <div class="headline-center margin-bottom-60">
+        <h2>Introduccion</h2>
+        <p>
+            Conoce quienes somos y vive la experiencia Topodata
+        </p>
+    </div>
+    <div class="text-center">
+        <iframe width="853" height="480" src="https://www.youtube.com/embed/uMC5VESsRG0" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    
+</div>
+
+@section cssPlugins{
+    <link href="~/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+
+}
+@section PageScripts{
+    <script src="~/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+}

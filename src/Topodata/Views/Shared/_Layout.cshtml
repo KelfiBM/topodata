@@ -27,301 +27,302 @@
     <link rel="shortcut" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=cyrillic,latin">
 
     <!-- CSS Global Compulsory -->
-    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/style.css" rel="stylesheet" />
-    
+    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/css/style.css" rel="stylesheet"/>
+
     <!-- CSS Header and Footer -->
     <link rel="stylesheet" href="~/css/footers/footer-default.css">
-    <link href="~/css/headers/header-v1.css" rel="stylesheet" />
+    <link href="~/css/headers/header-v1.css" rel="stylesheet"/>
 
     <!-- CSS Implementing Plugins -->
-    <link href="~/plugins/animate.css" rel="stylesheet" />
-    <link href="~/plugins/line-icons/line-icons.css" rel="stylesheet" />
-    <link href="~/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    @RenderSection("cssPlugins",false)
+    <link href="~/plugins/animate.css" rel="stylesheet"/>
+    <link href="~/plugins/line-icons/line-icons.css" rel="stylesheet"/>
+    <link href="~/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    @RenderSection("cssPlugins", false)
 
     <!--CSS Page Style-->
-    @RenderSection("cssPageStyle",false)
+    @RenderSection("cssPageStyle", false)
 
 
     <!-- CSS Theme -->
-    <link id="style_color" href="~/css/theme-colors/default.css" rel="stylesheet" />
-    @RenderSection("cssTheme",false)
+    <link id="style_color" href="~/css/theme-colors/default.css" rel="stylesheet"/>
+    @RenderSection("cssTheme", false)
 
     <!-- CSS Customization -->
-    <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet"/>
 
     <!--CSS Pages-->
     @RenderSection("PageStyles", false)
 
 </head>
 <body>
-    <div class="wrapper">
-        <!--=== Header v1===-->
-        <div class="header-v1">
-            <!-- Topbar -->
-            <div class="topbar-v1">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-inline top-v1-contacts">
-                                <li>
-                                    <i class="fa fa-envelope"></i> Email: <a href="mailto:info@topodata.com">info@topodata.com</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-phone"></i> Telefono 1: 809-687-7702
-                                </li>
-                                <li>
-                                    <i class="fa fa-phone"></i>Telefono 2: 809-682-8728
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-inline top-v1-data">
-                                <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a></li>
-                                <li><a href="@urlFacebook"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="@urlTwitter"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="@urlInstagram"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="@urlYoutube"><i class="fa fa-youtube"></i></a></li>
-                                <li><a href="@urlGooglePlus"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="@urlFlickr"><i class="fa fa-flickr"></i></a></li>
-                                <li><a href="@urlFlipboard"><i class="fa fa-deviantart"></i></a></li>
-                                <li><a href="#">Mi cuenta</a></li>
-                            </ul>
-                        </div>
-                    </div>
+<div class="wrapper">
+<!--=== Header v1===-->
+<div class="header-v1">
+    <!-- Topbar -->
+    <div class="topbar-v1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-inline top-v1-contacts">
+                        <li>
+                            <i class="fa fa-envelope"></i> Email: <a href="mailto:info@topodata.com">info@topodata.com</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-phone"></i> Telefono 1: 809-687-7702
+                        </li>
+                        <li>
+                            <i class="fa fa-phone"></i>Telefono 2: 809-682-8728
+                        </li>
+                    </ul>
                 </div>
-
-            </div>
-            <!-- End Topbar -->
-            <!-- Navbar -->
-            <div class="navbar navbar-default mega-menu" role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="fa fa-bars"></span>
-                        </button>
-                        <a class="navbar-brand" href="/">
-                            <img id="logo-header" src="~/img/logo1-default.png" alt="Logo">
-                        </a>
-                    </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
-                        <ul class="nav navbar-nav">
-                            <!-- Home -->
-                            <li>
-                                <a href="@Url.Action("Index", "Home")">
-                                    Inicio
-                                </a>
-                            </li>
-                            <!-- End Home -->
-                            <!-- Pages -->
-                            <!-- End Pages -->
-                            <!--Contacto-->
-
-
-                            <li>
-                                <a href="@Url.Action("Contact", "Home")">
-                                    Contacto
-                                </a>
-                            </li>
-                            <!--End Contacto-->
-                            <!--About Us-->
-                            <li>
-                                <a href="@Url.Action("About", "Home")">
-                                    Conócenos
-                                </a>
-                            </li>
-                            <!--End About Us-->
-                            <!-- Search Block -->
-                            <li>
-                                <i class="search fa fa-search search-btn"></i>
-                                <div class="search-open">
-                                    <div class="input-group animated fadeInDown">
-                                        <input class="form-control" placeholder="Search" type="text">
-                                        <span class="input-group-btn"><button class="btn-u" type="button">Go</button></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- End Search Block -->
-                        </ul>
-                    </div><!--/navbar-collapse-->
+                <div class="col-md-6">
+                    <ul class="list-inline top-v1-data">
+                        <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a></li>
+                        <li><a href="@urlFacebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="@urlTwitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="@urlInstagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="@urlYoutube" target="_blank"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="@urlFlickr" target="_blank"><i class="fa fa-flickr"></i></a></li>
+                        <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-deviantart"></i></a></li>
+                        <li><a href="#">Mi cuenta</a></li>
+                    </ul>
                 </div>
             </div>
-            <!-- End Navbar -->
         </div>
-        <!-- End Header v1 -->
-        <!--=== Content Part ===-->
-        <div class="container content">
-            @RenderBody()
-        </div><!--/container-->
-        <!--=== End Content Part ===-->
-        <!--=== Default Footer ===-->
-        <div class="footer-default">
-            <div class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="headline">
-                                <h2>Sobre Topodata</h2>
+
+    </div>
+    <!-- End Topbar -->
+    <!-- Navbar -->
+    <div class="navbar navbar-default mega-menu" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img id="logo-header" src="~/img/logo1-default.png" alt="Logo">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Home -->
+                    <li>
+                        @Html.ActionLink("Inicio", "Index", "Home")
+                    </li>
+                    <!-- End Home -->
+                    <!-- Pages -->
+                    <!-- End Pages -->
+                    <!--Contacto-->
+
+
+                    <li>
+                        @Html.ActionLink("Contacto", "Contact", "Home")
+                    </li>
+                    <!--End Contacto-->
+                    <!--About Us-->
+                    <li class="dropdown">
+                        @Html.ActionLink("Conócenos", "About", "Home")
+                        <ul class="dropdown-menu">
+                            <li>
+                                @Html.ActionLink("Sobre Topodata", "About", "Home")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Nuestro Equipo", "OurTeam", "Home")
+
+                            </li>
+                        </ul>
+                    </li>
+                    <!--End About Us-->
+                    <!-- Search Block -->
+                    <li>
+                        <i class="search fa fa-search search-btn"></i>
+                        <div class="search-open">
+                            <div class="input-group animated fadeInDown">
+                                <input class="form-control" placeholder="Search" type="text">
+                                <span class="input-group-btn"><button class="btn-u" type="button">Go</button></span>
                             </div>
-                            <p class="margin-bottom-25">Topodata, es una empresa dedicada a la tecnología en ingeniería aplicada en la creación de diseños, planos y documentos, que describen y sustentan los proyectos de obras de construcción</p>
-                            <div class="headline">
-                                <h2>Suscríbete!</h2>
-                            </div>
-                            <p>Mantente al tanto de todo lo que pasa en la comunidad Topodata!</p>
-                            <form class="footer-subsribe">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Correo Electronico" />
-                                    <span class="input-group-btn">
+                        </div>
+                    </li>
+                    <!-- End Search Block -->
+                </ul>
+            </div><!--/navbar-collapse-->
+        </div>
+    </div>
+    <!-- End Navbar -->
+</div>
+<!-- End Header v1 -->
+
+<!--=== RenderBody Part ===-->
+    @RenderBody()
+<!--/container-->
+<!--=== End RenderBody Part ===-->
+<!--=== Default Footer ===-->
+<div class="footer-default">
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="headline">
+                        <h2>Sobre Topodata</h2>
+                    </div>
+                    <p class="margin-bottom-25">Topodata, es una empresa dedicada a la tecnología en ingeniería aplicada en la creación de diseños, planos y documentos, que describen y sustentan los proyectos de obras de construcción</p>
+                    <div class="headline">
+                        <h2>Suscríbete!</h2>
+                    </div>
+                    <p>Mantente al tanto de todo lo que pasa en la comunidad Topodata!</p>
+                    <form class="footer-subsribe">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Correo Electronico"/>
+                            <span class="input-group-btn">
                                         <button class="btn-u" type="button">Suscribirse</button>
                                     </span>
-                                </div>
-                            </form>
                         </div>
-                        <div class="col-md-4">
-                            <div class="headline">
-                                <h2>Ultimas Noticias</h2>
-                            </div>
-                            <a class="twitter-timeline"
-                               href="https://twitter.com/topodata/lists/noticias-periodistas"
-                               data-widget-id="697619227469975552"
-                               data-chrome="noheader nofooter noborders noscrollbar transparent"
-                               height="263"></a>
-
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="headline">
-                                <h2>Contáctanos</h2>
-                            </div>
-                            <address class="md-margin-bottom-40">
-                                Calle Ciriaco Ramírez No 19-B Sector Don Bosco,
-                                <br />
-                                Distrito Nacional, Rep Dom 10201
-                                <br />
-                                <br />
-                                Telefono 1: 809-687-7702
-                                <br />
-                                Telefono 2: 809-682-8728
-                                <br />
-                                Movil: 809-519-4131
-                                <br />
-                                <br />
-                                Email: <a href="mailto:info@topodata.com">topodata@topodata.com</a>
-                            </address>
-                            <div class="headline">
-                                <h2>Mantente Conectado</h2>
-                            </div>
-                            <ul class="social-icons">
-                                <li>
-                                    <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlInstagram" class="social_instagram" data-original-title="Instagram" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
-                                </li>
-                                <li>
-                                    <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
-                                </li>
-                            </ul>
-                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div class="headline">
+                        <h2>Ultimas Noticias</h2>
                     </div>
+                    <a class="twitter-timeline"
+                       href="https://twitter.com/topodata/lists/noticias-periodistas"
+                       data-widget-id="697619227469975552"
+                       data-chrome="noheader nofooter noborders noscrollbar transparent"
+                       height="263"></a>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="headline">
+                        <h2>Contáctanos</h2>
+                    </div>
+                    <address class="md-margin-bottom-40">
+                        Calle Ciriaco Ramírez No 19-B Sector Don Bosco,
+                        <br/>
+                        Distrito Nacional, Rep Dom 10201
+                        <br/>
+                        <br/>
+                        Telefono 1: 809-687-7702
+                        <br/>
+                        Telefono 2: 809-682-8728
+                        <br/>
+                        Movil: 809-519-4131
+                        <br/>
+                        <br/>
+                        Email: <a href="mailto:info@topodata.com">info@topodata.com</a>
+                    </address>
+                    <div class="headline">
+                        <h2>Mantente Conectado</h2>
+                    </div>
+                    <ul class="social-icons">
+                        <li>
+                            <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlInstagram" class="social_instagram" data-original-title="Instagram" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <!--/footer-->
-            <div class="copyright">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>
-                                Copyright © 2016 TOPODATA. All Rights Reserved.
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <img id="logo-footer" class="pull-right" src="~/resources/logo_footer.png" />
-                        </div>
-                    </div>
-                </div>
-            </div><!--/copyright-->
         </div>
-        <!--=== End Default Footer ===-->
-        @*    @RenderSection("scripts", required: false)*@
     </div>
-    <!-- JS Global Compulsory -->
-    <script src="~/plugins/jquery/jquery.min.js"></script>
-    <script src="~/plugins/jquery/jquery-migrate.min.js"></script>
-    <script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!--/footer-->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        Copyright © 2016 TOPODATA. All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <img id="logo-footer" class="pull-right" src="~/resources/logo_footer.png"/>
+                </div>
+            </div>
+        </div>
+    </div><!--/copyright-->
+</div>
+<!--=== End Default Footer ===-->
+@*    @RenderSection("scripts", required: false)*@
+</div>
+<!-- JS Global Compulsory -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/plugins/jquery/jquery-migrate.min.js"></script>
+<script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
 
 
-    <!-- JS Implementing Plugins -->
-    <script src="~/plugins/back-to-top.js"></script>
-    <script src="~/plugins/smoothscroll.js"></script>
+<!-- JS Implementing Plugins -->
+<script src="~/plugins/back-to-top.js"></script>
+<script src="~/plugins/smoothscroll.js"></script>
 
-    <!-- JS Customization -->
-    <script src="~/js/custom.js"></script>
+<!-- JS Customization -->
+<script src="~/js/custom.js"></script>
 
-    <!-- JS Page Level -->
-    <script src="~/js/app.js"></script>
+<!-- JS Page Level -->
+<script src="~/js/app.js"></script>
+@RenderSection("PageScripts", false)
 
-    <!--JS Pages-->
-    @RenderSection("PageScripts", false)
+<script>
+    jQuery(document).ready(function() {
+        App.init();
+        @RenderSection("documentReady", false)
+    });
+</script>
+<script>
+    var url = window.location;
+    // Will only work if string in href matches with location
+    $('ul.nav a[href="' + url + '"]').parent().addClass('active');
 
-    <script>
-        jQuery(document).ready(function () {
-            App.init();
-            @RenderSection("documentReady",false)
-        });
-    </script>
-    <script>
-        var url = window.location;
-        // Will only work if string in href matches with location
-        $('ul.nav a[href="' + url + '"]').parent().addClass('active');
+    // Will also work for relative and absolute hrefs
+    $('ul.nav a').filter(function() {
+        return this.href == url;
+    }).parent().addClass('active');
+</script>
 
-        // Will also work for relative and absolute hrefs
-        $('ul.nav a').filter(function () {
-            return this.href == url;
-        }).parent().addClass('active');
-    </script>
+<!-- Twitter script-->
+<script>
+    window.twttr = (function(d, s, id) {
+        var js,
+            fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
 
-    <!-- Twitter script-->
-    <script>
-        window.twttr = (function (d, s, id) {
-            var js,
-                fjs = d.getElementsByTagName(s)[0],
-                t = window.twttr || {};
-            if (d.getElementById(id)) return t;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
 
-            t._e = [];
-            t.ready = function (f) {
-                t._e.push(f);
-            };
-
-            return t;
-        }(document, "script", "twitter-wjs"));
-    </script>
-    <!--[if lt IE 9]>
-        <script src="~/wwwroot/plugins/respond.js"></script>
-        <script src="~/wwwroot/plugins/html5shiv.js"></script>
-        <script src="~/wwwroot/plugins/placeholder-IE-fixes.js"></script>
-    <![endif]-->
+        return t;
+    }(document, "script", "twitter-wjs"));
+</script>
+<!--[if lt IE 9]>
+    <script src="~/wwwroot/plugins/respond.js"></script>
+    <script src="~/wwwroot/plugins/html5shiv.js"></script>
+    <script src="~/wwwroot/plugins/placeholder-IE-fixes.js"></script>
+<![endif]-->
 
 
 </body>

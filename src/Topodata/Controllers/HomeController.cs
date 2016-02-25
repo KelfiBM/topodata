@@ -13,6 +13,7 @@ namespace Topodata.Controllers
             return View();
         }
 
+        [Route("SobreTopo")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -20,7 +21,15 @@ namespace Topodata.Controllers
             return View();
         }
 
+        [Route("NuestroEquipo")]
+        public IActionResult OurTeam()
+        {
+
+            return View();
+        }
+
         [HttpGet]
+        [Route("Contacto")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
