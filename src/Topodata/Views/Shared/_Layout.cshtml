@@ -25,6 +25,7 @@
 
     <!-- Web Fonts -->
     <link rel="shortcut" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=cyrillic,latin">
+    @RenderSection("fonts",false)
 
     <!-- CSS Global Compulsory -->
     <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
@@ -115,11 +116,18 @@
                         @Html.ActionLink("Inicio", "Index", "Home")
                     </li>
                     <!-- End Home -->
-                    <!-- Pages -->
-                    <!-- End Pages -->
+                    <li class="dropdown">
+                        @Html.ActionLink("Galeria", "Photo", "Home")
+                        <ul class="dropdown-menu">
+                            <li>
+                                @Html.ActionLink("Fotos", "Photo", "Home")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Videos", "Video", "Home")
+                            </li>
+                        </ul>
+                    </li>
                     <!--Contacto-->
-
-
                     <li>
                         @Html.ActionLink("Contacto", "Contact", "Home")
                     </li>
@@ -138,6 +146,9 @@
                         </ul>
                     </li>
                     <!--End About Us-->
+                    <li>
+                        <a href="http://www.topodata.com/topogis/" target="_blank">Topodata-GIS</a>
+                    </li>
                     <!-- Search Block -->
                     <li>
                         <i class="search fa fa-search search-btn"></i>
@@ -189,7 +200,7 @@
                         <h2>Ultimas Noticias</h2>
                     </div>
                     <a class="twitter-timeline"
-                       href="https://twitter.com/topodata/lists/noticias-periodistas"
+                       href="https://twitter.com/topodata/lists/geomatica-topografia-ttw"
                        data-widget-id="697619227469975552"
                        data-chrome="noheader nofooter noborders noscrollbar transparent"
                        height="263"></a>
@@ -287,6 +298,7 @@
         @RenderSection("documentReady", false)
     });
 </script>
+    @RenderSection("ScriptsFunction",false)
 <script>
     var url = window.location;
     // Will only work if string in href matches with location
