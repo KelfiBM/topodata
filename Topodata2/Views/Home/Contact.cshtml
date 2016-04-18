@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Contáctenos";
+}
+<div class="container content">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="row margin-bottom-30">
+        <div class="col-md-9 mb-margin-bottom-30">
+            <div id="map"
+                 class="map map-box map-box-space margin-bottom-40"
+                 style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden">
+            </div>
+            <p>
+                <strong>Hazno saber tus inquietudes e intentaremos responderte lo mas antes posible</strong>
+            </p>
+            <br />
+            <form id="sky-form3" class="sky-form contact-style" method="post" action="Home/Contact">
+                <fieldset class="no-padding">
+                    <label>
+                        Nombre
+                        <span class="color-red">*</span>
+                    </label>
+                    <div class="row sky-space-20">
+                        <div class="col-md-7 col-md-offset-0">
+                            <div>
+                                <input type="text" name="name" id="name" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <label>Email <span class="color-red">*</span></label>
+                    <div class="row sky-space-20">
+                        <div class="col-md-7 col-md-offset-0">
+                            <div>
+                                <input type="text" name="email" id="mail" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <label>Mensaje <span class="color-red">*</span></label>
+                    <div class="row sky-space-20">
+                        <div class="col-md-11 col-md-offset-0">
+                            <div>
+                                <textarea rows="8" name="message" id="message" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                        <button type="submit" class="btn-u">Enviar Mensaje</button>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <div class="headline">
+                <h2>Contacto</h2>
+            </div>
+            <ul class="list-unstyled who margin-bottom-30">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-home"></i>
+                        Calle Ciriaco Ramírez No 19-B Sector Don Bosco, Distrito Nacional, Rep Dom, Zip-10201
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:info@topodata.com">
+                        <i class="fa fa-envelope"></i>
+                        info@topodata.com
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-mobile"></i>
+                        809-519-4131
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-phone"></i>
+                        809-687-7702
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-phone"></i>
+                        809-682-8728
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-globe"></i>
+                        http://www.topodata.com
+                    </a>
+                </li>
+            </ul>
+            <div class="headline">
+                <h2>Horario</h2>
+            </div>
+            <ul class="list-unstyled margin-bottom-30">
+                <li>
+                    <strong>Lunes-Viernes:</strong>
+                    9:00am a 6:00pm
+                </li>
+                <li>
+                    <strong>Sabados-Domingos:</strong>
+                    Cerrado
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section cssPlugins{
+    <link href="~/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
+    <link href="~/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+}
+
+@section cssPageStyle{
+    <link href="~/css/pages/page_contact.css" rel="stylesheet" />
+}
+
+@section cssTheme{
+    <link href="~/css/theme-skins/dark.css" rel="stylesheet" />
+}
+
+@section PageScripts{
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="~/plugins/gmap/gmap.js"></script>
+    <script src="~/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
+    <script src="~/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+    <script src="~/js/forms/contact.js"></script>
+    <script type="text/javascript" src="~/js/pages/page_contacts.js"></script>
+
+}
+@section documentReady{
+    ContactPage.initMap();
+    ContactForm.initContactForm();
+}

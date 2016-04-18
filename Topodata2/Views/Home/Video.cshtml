@@ -1,0 +1,22 @@
+﻿@section cssPlugins{
+    <link href="~/plugins/youmax-master/css/youmax.css" rel="stylesheet" />
+}
+
+<div id="youmax"></div>
+
+@section PageScripts{
+    <script src="~/plugins/youmax-master/js/youmax.js"></script>
+}
+@section ScriptsFunction{
+    <script type="text/javascript">
+$('#youmax').youmax({
+            apiKey:'AIzaSyCvcRe4dX3rWAQGhz9TFSoqWNcurrspe0A',
+            youTubeChannelURL: "https://www.youtube.com/user/TOPODATA100",
+            youTubePlaylistURL: "https://www.youtube.com/playlist?list=PLBTSHaywY_hU9hef4dwa0o94qCs3mdzrW",
+            youmaxDefaultTab:"UPLOADS", //can be UPLOADS or PLAYLISTS or FEATURED
+            youmaxColumns:3,
+            showVideoInLightbox:false,
+            maxResults:15,
+        });
+</script>
+}
