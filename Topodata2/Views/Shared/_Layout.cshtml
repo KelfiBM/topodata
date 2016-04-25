@@ -1,4 +1,5 @@
-﻿@using Topodata2.Controllers
+﻿@using System.Web.UI.HtmlControls
+@using Topodata2.Controllers
 @{
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
     string urlTwitter = "https://twitter.com/topodata";
@@ -79,14 +80,14 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="list-inline top-v1-data">
-                        <li><a href="http://www.topodata.com"><i class="fa fa-home"></i></a></li>
-                        <li><a href="@urlFacebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i></a></li>
                         <li><a href="@urlTwitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="@urlInstagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
                         <li><a href="@urlYoutube" target="_blank"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="@urlFacebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="@urlFlickr" target="_blank"><i class="fa fa-flickr"></i></a></li>
-                        <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-deviantart"></i></a></li>
+                        <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-ellipsis-h"></i></a></li>
                         <li><a href="#">Mi cuenta</a></li>
                     </ul>
                 </div>
