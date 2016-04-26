@@ -1,6 +1,4 @@
-﻿@using System.Web.UI.HtmlControls
-@using Topodata2.Controllers
-@{
+﻿@{
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
     string urlTwitter = "https://twitter.com/topodata";
     string urlInstagram = "https://www.instagram.com/topodatagis/";
@@ -301,6 +299,7 @@
     });
 </script>
     @RenderSection("ScriptsFunction",false)
+@* ReSharper disable once CoercedEqualsUsing *@
 <script>
     var url = window.location;
     // Will only work if string in href matches with location
