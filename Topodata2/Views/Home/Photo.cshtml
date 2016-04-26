@@ -1,14 +1,19 @@
-﻿@section cssPlugins{
-    <link href="~/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet"/>
-    <link href="~/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
+﻿@{
+    ViewData["Title"] = "Fotos";
+}
+
+@section cssPlugins{
+    <link href="~/resources/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
 }
 <div class="container container-sm">
     <div id="nanoGallery"></div>
 </div>
 @section PageScripts{
-    <script src="~/plugins/nano-gallery/jquery.nanogallery.min.js"></script>
+    <script src="~/resources/plugins/nano-gallery/jquery.nanogallery.min.js"></script>
 }
-@section documentReady{
+@section ScriptsFunction{
+    <script>
     jQuery("#nanoGallery").nanoGallery({
         kind: 'flickr',
         userID: '89639027@N07',
@@ -29,4 +34,5 @@
         },
         thumbnailHoverEffect:'labelSlideUp'
     });
+</script>
 }
