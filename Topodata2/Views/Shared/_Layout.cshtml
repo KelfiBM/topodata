@@ -1,5 +1,4 @@
-﻿@using Topodata2.Controllers
-@{
+﻿@{
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
     string urlTwitter = "https://twitter.com/topodata";
     string urlInstagram = "https://www.instagram.com/topodatagis/";
@@ -21,24 +20,25 @@
     <meta content="" name="author">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="~/favicon.ico">
+    <link rel="shortcut icon" href="~/resources/img/icons/logoDefault.png">
 
     <!-- Web Fonts -->
     <link rel="shortcut" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=cyrillic,latin">
     @RenderSection("fonts",false)
 
     <!-- CSS Global Compulsory -->
-    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="~/css/style.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/resources/css/style.css" rel="stylesheet"/>
 
     <!-- CSS Header and Footer -->
-    <link rel="stylesheet" href="~/css/footers/footer-default.css">
-    <link href="~/css/headers/header-v1.css" rel="stylesheet"/>
+    <link href="~/resources/css/footers/footer-default.css" rel="stylesheet" />
+    <link href="~/resources/css/headers/header-v1.css" rel="stylesheet"/>
 
     <!-- CSS Implementing Plugins -->
-    <link href="~/plugins/animate.css" rel="stylesheet"/>
-    <link href="~/plugins/line-icons/line-icons.css" rel="stylesheet"/>
-    <link href="~/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/animate.css" rel="stylesheet"/>
+
+@*    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet"/>*@
+    <link href="~/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     @RenderSection("cssPlugins", false)
 
     <!--CSS Page Style-->
@@ -46,11 +46,11 @@
 
 
     <!-- CSS Theme -->
-    <link id="style_color" href="~/css/theme-colors/default.css" rel="stylesheet"/>
+    <link id="style_color" href="~/resources/css/theme-colors/default.css" rel="stylesheet"/>
     @RenderSection("cssTheme", false)
 
     <!-- CSS Customization -->
-    <link href="~/css/custom.css" rel="stylesheet"/>
+    <link href="~/resources/css/custom.css" rel="stylesheet"/>
 
     <!--CSS Pages-->
     @RenderSection("PageStyles", false)
@@ -79,14 +79,14 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="list-inline top-v1-data">
-                        <li><a href="http://www.topodata.com"><i class="fa fa-home"></i></a></li>
-                        <li><a href="@urlFacebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i></a></li>
                         <li><a href="@urlTwitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="@urlInstagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
                         <li><a href="@urlYoutube" target="_blank"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="@urlFacebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="@urlFlickr" target="_blank"><i class="fa fa-flickr"></i></a></li>
-                        <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-deviantart"></i></a></li>
+                        <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-ellipsis-h"></i></a></li>
                         <li><a href="#">Mi cuenta</a></li>
                     </ul>
                 </div>
@@ -104,8 +104,8 @@
                     <span class="sr-only">Toggle navigation</span>
                     <span class="fa fa-bars"></span>
                 </button>
-                <a class="navbar-brand" href="http://www.topodata.com">
-                    <img id="logo-header" src="~/img/icons/logoDefault.png" alt="Logo" width="10%" style="margin-top:-15px" >
+                <a class="navbar-brand" href=@Url.Action("Index","Home")>
+                    <img id="logo-header" src="~/resources/img/icons/logoDefault.png" alt="Logo" width="10%" style="margin-top:-15px" >
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -113,11 +113,11 @@
                 <ul class="nav navbar-nav">
                     <!-- Home -->
                     <li>
-                        <a href="http://www.topodata.com">Inicio</a>
+                        @Html.ActionLink("Inicio","Index","Home")
                     </li>
                     <!-- End Home -->
                     <li class="dropdown">
-                        @Html.ActionLink("Galeria", "Photo", "Home")
+                        @Html.ActionLink("Multimedia", "Photo", "Home")
                         <ul class="dropdown-menu">
                             <li>
                                 @Html.ActionLink("Fotos", "Photo", "Home")
@@ -276,20 +276,20 @@
 @*    @RenderSection("scripts", required: false)*@
 </div>
 <!-- JS Global Compulsory -->
-<script src="~/plugins/jquery/jquery.min.js"></script>
-<script src="~/plugins/jquery/jquery-migrate.min.js"></script>
-<script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/resources/plugins/jquery/jquery.min.js"></script>
+<script src="~/resources/plugins/jquery/jquery-migrate.min.js"></script>
+<script src="~/resources/plugins/bootstrap/js/bootstrap.min.js"></script>
 
 
 <!-- JS Implementing Plugins -->
-<script src="~/plugins/back-to-top.js"></script>
-<script src="~/plugins/smoothscroll.js"></script>
+<script src="~/resources/plugins/back-to-top.js"></script>
+<script src="~/resources/plugins/smoothscroll.js"></script>
 
 <!-- JS Customization -->
-<script src="~/js/custom.js"></script>
+<script src="~/resources/js/custom.js"></script>
 
 <!-- JS Page Level -->
-<script src="~/js/app.js"></script>
+<script src="~/resources/js/app.js"></script>
 @RenderSection("PageScripts", false)
 
 <script>
@@ -299,6 +299,7 @@
     });
 </script>
     @RenderSection("ScriptsFunction",false)
+@* ReSharper disable once CoercedEqualsUsing *@
 <script>
     var url = window.location;
     // Will only work if string in href matches with location
