@@ -179,6 +179,11 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -244,10 +249,7 @@
     <Content Include="resources\img\icons\social\xing.png" />
     <Content Include="resources\img\icons\social\yahoo.png" />
     <Content Include="resources\img\icons\social\youtube.png" />
-    <Content Include="img\logo1-default.png" />
-    <Content Include="img\logo1-white.png" />
-    <Content Include="img\logo2-default.png" />
-    <Content Include="img\logoDefault.png" />
+    <Content Include="resources\img\logoDefault.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
     <Content Include="resources\img\mockup\planning2.jpg" />
     <Content Include="resources\img\sliders\agrimensuras.jpg" />
@@ -279,8 +281,6 @@
     <Content Include="resources\img\team\Ramons.png" />
     <Content Include="resources\img\team\roberts.png" />
     <Content Include="resources\img\team\victorm.png" />
-    <Content Include="img\themes\logo1-default.png" />
-    <Content Include="img\themes\logo2-default.png" />
     <Content Include="resources\js\app.js" />
     <Content Include="resources\js\custom.js" />
     <Content Include="resources\js\forms\checkout.js" />
@@ -364,18 +364,10 @@
     <Content Include="resources\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="resources\plugins\bootstrap\js\bootstrap.min.js" />
     <Content Include="resources\plugins\bootstrap\js\npm.js" />
-    <Content Include="plugins\brand-buttons\brand-buttons-inversed.css" />
-    <Content Include="plugins\brand-buttons\brand-buttons.css" />
-    <Content Include="plugins\brand-buttons\css\brand-buttons-inversed.min.css" />
-    <Content Include="plugins\brand-buttons\css\brand-buttons.min.css" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\css\cubeportfolio.css" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\css\cubeportfolio.min.css" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\custom\custom-cubeportfolio.css" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\img\cbp-loading-popup.gif" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\img\cbp-loading.gif" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.png" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.js" />
-    <Content Include="plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.min.js" />
+    <Content Include="resources\plugins\brand-buttons\brand-buttons-inversed.css" />
+    <Content Include="resources\plugins\brand-buttons\brand-buttons.css" />
+    <Content Include="resources\plugins\brand-buttons\css\brand-buttons-inversed.min.css" />
+    <Content Include="resources\plugins\brand-buttons\css\brand-buttons.min.css" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.10.1.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.9.0.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery.mousewheel-3.0.6.pack.js" />
@@ -397,29 +389,29 @@
     <Content Include="resources\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="resources\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="resources\plugins\gmap\gmap.js" />
-    <Content Include="plugins\horizontal-parallax\css\horizontal-parallax.css" />
-    <Content Include="plugins\horizontal-parallax\images\aeroplane.png" />
-    <Content Include="plugins\horizontal-parallax\images\balloon.png" />
-    <Content Include="plugins\horizontal-parallax\images\bg-green.png" />
-    <Content Include="plugins\horizontal-parallax\images\bg-heading.png" />
-    <Content Include="plugins\horizontal-parallax\images\bg-sky.png" />
-    <Content Include="plugins\horizontal-parallax\images\bg-text.png" />
-    <Content Include="plugins\horizontal-parallax\images\bt-next.png" />
-    <Content Include="plugins\horizontal-parallax\images\bt-next1.png" />
-    <Content Include="plugins\horizontal-parallax\images\bt-prev.png" />
-    <Content Include="plugins\horizontal-parallax\images\bt-prev1.png" />
-    <Content Include="plugins\horizontal-parallax\images\kite.png" />
-    <Content Include="plugins\horizontal-parallax\images\sequence-logo.png" />
-    <Content Include="plugins\horizontal-parallax\js\horizontal-parallax.js" />
-    <Content Include="plugins\horizontal-parallax\js\sequence.jquery-min.js" />
-    <Content Include="plugins\html5shiv.js" />
-    <Content Include="plugins\image-hover\css\img-hover.css" />
-    <Content Include="plugins\image-hover\js\modernizr.js" />
-    <Content Include="plugins\image-hover\js\touch.js" />
-    <Content Include="plugins\jquery-appear.js" />
-    <Content Include="plugins\jquery.easing.min.js" />
-    <Content Include="plugins\jquery.mixitup.min.js" />
-    <Content Include="plugins\jquery.parallax.js" />
+    <Content Include="resources\plugins\horizontal-parallax\css\horizontal-parallax.css" />
+    <Content Include="resources\plugins\horizontal-parallax\images\aeroplane.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\balloon.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bg-green.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bg-heading.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bg-sky.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bg-text.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bt-next.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bt-next1.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bt-prev.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\bt-prev1.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\kite.png" />
+    <Content Include="resources\plugins\horizontal-parallax\images\sequence-logo.png" />
+    <Content Include="resources\plugins\horizontal-parallax\js\horizontal-parallax.js" />
+    <Content Include="resources\plugins\horizontal-parallax\js\sequence.jquery-min.js" />
+    <Content Include="resources\plugins\html5shiv.js" />
+    <Content Include="resources\plugins\image-hover\css\img-hover.css" />
+    <Content Include="resources\plugins\image-hover\js\modernizr.js" />
+    <Content Include="resources\plugins\image-hover\js\touch.js" />
+    <Content Include="resources\plugins\jquery-appear.js" />
+    <Content Include="resources\plugins\jquery.easing.min.js" />
+    <Content Include="resources\plugins\jquery.mixitup.min.js" />
+    <Content Include="resources\plugins\jquery.parallax.js" />
     <Content Include="resources\plugins\jquery\jquery-migrate.min.js" />
     <Content Include="resources\plugins\jquery\jquery.min.js" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\blank.gif" />
@@ -433,8 +425,8 @@
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\nothumb.png" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.css" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.png" />
-    <Content Include="plugins\modernizr.custom.js" />
-    <Content Include="plugins\modernizr.js" />
+    <Content Include="resources\plugins\modernizr.custom.js" />
+    <Content Include="resources\plugins\modernizr.js" />
     <Content Include="resources\plugins\nano-gallery\css\font\nano_icon_font3.svg" />
     <Content Include="resources\plugins\nano-gallery\css\loading.gif" />
     <Content Include="resources\plugins\nano-gallery\css\nanogallery.min.css" />
@@ -445,11 +437,11 @@
     <Content Include="resources\plugins\nano-gallery\css\themes\light\nanogallery_light.woff.min.css" />
     <Content Include="resources\plugins\nano-gallery\css\themes\light\nano_logo.png" />
     <Content Include="resources\plugins\nano-gallery\jquery.nanogallery.min.js" />
-    <Content Include="plugins\placeholder-IE-fixes.js" />
-    <Content Include="plugins\respond.js" />
-    <Content Include="plugins\scrollbar\css\jquery.mCustomScrollbar.css" />
-    <Content Include="plugins\scrollbar\js\jquery.mCustomScrollbar.concat.min.js" />
-    <Content Include="plugins\scrollbar\LICENSE.txt" />
+    <Content Include="resources\plugins\placeholder-IE-fixes.js" />
+    <Content Include="resources\plugins\respond.js" />
+    <Content Include="resources\plugins\scrollbar\css\jquery.mCustomScrollbar.css" />
+    <Content Include="resources\plugins\scrollbar\js\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="resources\plugins\scrollbar\LICENSE.txt" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\captcha\button.png" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\css\font-awesome.css" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\css\sky-forms-ie8-rtl.css" />
@@ -467,15 +459,14 @@
     <Content Include="resources\plugins\sky-forms-pro\skyforms\js\jquery.placeholder.min.js" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\js\jquery.validate.min.js" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\js\sky-forms-ie8.js" />
-    <Content Include="plugins\sliding-panel\icon-close.svg" />
-    <Content Include="plugins\sliding-panel\jquery.sliding-panel.js" />
-    <Content Include="plugins\sliding-panel\style.css" />
+    <Content Include="resources\plugins\sliding-panel\icon-close.svg" />
+    <Content Include="resources\plugins\sliding-panel\jquery.sliding-panel.js" />
+    <Content Include="resources\plugins\sliding-panel\style.css" />
     <Content Include="resources\plugins\smoothScroll.js" />
-    <Content Include="plugins\style-switcher\style-switcher.css" />
-    <Content Include="plugins\wow-animations\js\wow.min.js" />
+    <Content Include="resources\plugins\style-switcher\style-switcher.css" />
+    <Content Include="resources\plugins\wow-animations\js\wow.min.js" />
     <Content Include="resources\plugins\youmax-master\css\youmax.css" />
     <Content Include="resources\plugins\youmax-master\js\youmax.js" />
-    <Content Include="resources\logo_footer.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -502,11 +493,11 @@
     <Content Include="resources\plugins\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="resources\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="resources\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="plugins\brand-buttons\.travis.yml" />
-    <Content Include="plugins\brand-buttons\SASS\brand-buttons-inversed.scss" />
-    <Content Include="plugins\brand-buttons\SASS\brand-buttons.scss" />
-    <Content Include="plugins\brand-buttons\SASS\_mixins.scss" />
-    <Content Include="plugins\brand-buttons\SASS\_variables.scss" />
+    <Content Include="resources\plugins\brand-buttons\.travis.yml" />
+    <Content Include="resources\plugins\brand-buttons\SASS\brand-buttons-inversed.scss" />
+    <Content Include="resources\plugins\brand-buttons\SASS\brand-buttons.scss" />
+    <Content Include="resources\plugins\brand-buttons\SASS\_mixins.scss" />
+    <Content Include="resources\plugins\brand-buttons\SASS\_variables.scss" />
     <Content Include="resources\plugins\fancybox\.gitattributes" />
     <Content Include="resources\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="resources\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -546,7 +537,7 @@
     <Content Include="resources\plugins\nano-gallery\css\themes\light\font\nano_icon_font3.eot" />
     <Content Include="resources\plugins\nano-gallery\css\themes\light\font\nano_icon_font3.ttf" />
     <Content Include="resources\plugins\nano-gallery\css\themes\light\font\nano_icon_font3.woff" />
-    <Content Include="plugins\scrollbar\readme.md" />
+    <Content Include="resources\plugins\scrollbar\readme.md" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\captcha\font\anorexia.ttf" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\captcha\image.php" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\captcha\process.php" />
@@ -554,13 +545,17 @@
     <Content Include="resources\plugins\sky-forms-pro\skyforms\icons\fontawesome-webfont.ttf" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\icons\fontawesome-webfont.woff" />
     <Content Include="resources\plugins\sky-forms-pro\skyforms\icons\FontAwesome.otf" />
-    <Content Include="plugins\wow-animations\LICENSE-MIT" />
-    <Content Include="plugins\wow-animations\README.md" />
+    <Content Include="resources\plugins\wow-animations\LICENSE-MIT" />
+    <Content Include="resources\plugins\wow-animations\README.md" />
     <Content Include="resources\plugins\youmax-master\LICENSE" />
     <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\Local1.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -614,8 +609,8 @@
   <ItemGroup>
     <Folder Include="ajax\" />
     <Folder Include="App_Data\" />
-    <Folder Include="plugins\line-icons-pro\" />
     <Folder Include="resources\css\plugins\" />
+    <Folder Include="resources\plugins\line-icons-pro\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
