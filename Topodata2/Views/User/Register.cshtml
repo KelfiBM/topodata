@@ -1,6 +1,6 @@
-﻿
+﻿@model Topodata2.Models.UserViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Login";
 }
 
 @section cssPlugins
@@ -18,8 +18,7 @@
     <!--=== End Header v6 ===-->
     <div class="container content-md">
         <div class="margin-bottom-60 head">
-            <h1>Login or Register an Account</h1>
-            <p>Lorem ipsum dolor sit amet, contetur adipisicing elit, sed do eiusmod tempor incididunt labore. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            <h1>Inicia Sesión o Registrate</h1>
         </div>
         <div class="row space-xlg-hor equal-height-columns">
             <!--login Block-->
@@ -60,34 +59,43 @@
             <!--Reg Block-->
             <div style="height: 606px;" class="form-block reg-block col-md-6 col-sm-12 rounded-right equal-height-column">
                 <div class="form-block-header">
-                    <h2 class="margin-bottom-10">Sign Up</h2>
-                    <p class="margin-bottom-20">Lorem ipsum dolor sit amet, conur sicing elit, seddoet dolore magna. aliqua.</p>
+                    <h2 class="margin-bottom-10">Crear una cuenta nueva</h2>
+                    <p class="margin-bottom-20">Unete a la comunidad Topodata!</p>
                 </div>
                 <div class="input-group margin-bottom-20">
                     <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
-                    <input class="form-control rounded-right" placeholder="Your name" type="text">
+                    @Html.TextBoxFor(m => m.Register.Name, new { @class = "form-control rounded-right", @placeholder = "Nombre" })
+                </div>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
+                    <input class="form-control rounded-right" placeholder="Apellido" type="text">
                 </div>
                 <div class="input-group margin-bottom-20">
                     <span class="input-group-addon rounded-left"><i class="icon-user"></i></span>
-                    <input class="form-control rounded-right" placeholder="Username" type="text">
+                    <input class="form-control rounded-right" placeholder="Nombre de usuario" type="text">
                 </div>
                 <div class="input-group margin-bottom-20">
                     <span class="input-group-addon rounded-left"><i class="icon-envelope"></i></span>
-                    <input class="form-control rounded-right" placeholder="Your email" type="email">
+                    <input class="form-control rounded-right" placeholder="Email" type="email">
                 </div>
                 <div class="input-group margin-bottom-20">
                     <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
-                    <input class="form-control rounded-right" placeholder="Password" type="password">
+                    <input class="form-control rounded-right" placeholder="Contraseña" type="password">
+                </div>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
+                    <input class="form-control rounded-right" placeholder="Confirmar contraseña" type="password">
                 </div>
                 <div class="checkbox margin-bottom-15">
                     <label>
-                        <input type="checkbox">
-                        <p>I agree to terms &amp; conditions</p>
+                        <input type="checkbox" checked>
+                        <p>Acepto los terminos y condiciones</p>
                     </label>
                     <label>
-                        <input type="checkbox">
-                        <p>Subscribe to our newsletter</p>
+                        <input type="checkbox" checked>
+                        <p>Mantenme Informado de las noticias Topodata</p>
                     </label>
+
                 </div>
                 <div class="row">
                     <div class="col-md-12">
