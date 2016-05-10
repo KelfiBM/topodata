@@ -5,6 +5,11 @@ namespace Topodata2.Models
 {
     public class UserModels
     {
+        
+    }
+
+    public class RegisterUserViewModel
+    {
         [Required]
         [Display(Name = "First Name")]
         [DataType(DataType.Text)]
@@ -40,9 +45,8 @@ namespace Topodata2.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Would you like to receive news about Topodata?")]
-        [Range(typeof(bool),"false","true")]
-        public bool Informado { get; set; }
-
+        [Range(typeof(bool), "false", "true")]
+        public bool Informed { get; set; }
     }
 
 }
