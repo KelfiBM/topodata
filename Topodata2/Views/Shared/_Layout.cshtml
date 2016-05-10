@@ -36,8 +36,6 @@
 
     <!-- CSS Implementing Plugins -->
     <link href="~/resources/plugins/animate.css" rel="stylesheet"/>
-
-@*    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet"/>*@
     <link href="~/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     @RenderSection("cssPlugins", false)
 
@@ -273,7 +271,7 @@
     </div><!--/copyright-->
 </div>
 <!--=== End Default Footer ===-->
-@*    @RenderSection("scripts", required: false)*@
+
 </div>
 <!-- JS Global Compulsory -->
 <script src="~/resources/plugins/jquery/jquery.min.js"></script>
@@ -310,7 +308,6 @@
         return this.href == url;
     }).parent().addClass('active');
 </script>
-
 <!-- Twitter script-->
 <script>
     window.twttr = (function(d, s, id) {
@@ -331,12 +328,5 @@
         return t;
     }(document, "script", "twitter-wjs"));
 </script>
-<!--[if lt IE 9]>
-    <script src="~/wwwroot/plugins/respond.js"></script>
-    <script src="~/wwwroot/plugins/html5shiv.js"></script>
-    <script src="~/wwwroot/plugins/placeholder-IE-fixes.js"></script>
-<![endif]-->
-
-
 </body>
 </html>

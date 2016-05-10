@@ -202,6 +202,7 @@
     <Content Include="resources\css\pages\page_about.css" />
     <Content Include="resources\css\pages\page_clients.css" />
     <Content Include="resources\css\pages\page_contact.css" />
+    <Content Include="resources\css\pages\page_log_reg_v3.css" />
     <Content Include="resources\css\pages\page_misc_sticky_footer.css" />
     <Content Include="resources\css\pages\page_one.css" />
     <Content Include="resources\css\pages\page_search.css" />
@@ -429,6 +430,14 @@
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\nothumb.png" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.css" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.png" />
+    <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.dev.svg" />
+    <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.svg" />
+    <Content Include="resources\plugins\line-icons\icons-lte-ie7.js" />
+    <Content Include="resources\plugins\line-icons\index.html" />
+    <Content Include="resources\plugins\line-icons\License.txt" />
+    <Content Include="resources\plugins\line-icons\line-icons.css" />
+    <Content Include="resources\plugins\line-icons\Readme.txt" />
+    <Content Include="resources\plugins\line-icons\style.css" />
     <Content Include="resources\plugins\modernizr.custom.js" />
     <Content Include="resources\plugins\modernizr.js" />
     <Content Include="resources\plugins\nano-gallery\css\font\nano_icon_font3.svg" />
@@ -560,6 +569,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.eot" />
+    <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -615,7 +627,6 @@
     <Folder Include="ajax\" />
     <Folder Include="App_Data\" />
     <Folder Include="resources\css\plugins\" />
-    <Folder Include="resources\plugins\line-icons-pro\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
