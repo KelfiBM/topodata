@@ -17,9 +17,15 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterUserViewModel registerUser)
+        public ActionResult Register(UserViewModel userViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                userViewModel.Register.Password = "";
+                userViewModel.Register.ConfirmPassword = "";
+                return View(userViewModel);
+            }
+            else
             {
                 string connection = @"Data Source=KELFI-PC\SQLINSTANCE;Initial Catalog=Topodata;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework";
                 using (SqlConnection sqlConnection = new SqlConnection(connection))
@@ -27,18 +33,19 @@ namespace Topodata2.Controllers
                     string query =
                         "INSERT INTO [Topodata].[dbo].[Users] VALUES (@name, @lastName, @email, @username, @password, @informed, @regDate)";
                     SqlCommand sqlCommand = new SqlCommand(query,sqlConnection);
-                    sqlCommand.Parameters.AddWithValue("name", registerUser.Name);
-                    sqlCommand.Parameters.AddWithValue("lastName", registerUser.LastName);
-                    sqlCommand.Parameters.AddWithValue("email", registerUser.Email);
-                    sqlCommand.Parameters.AddWithValue("username", registerUser.Username);
-                    sqlCommand.Parameters.AddWithValue("password", registerUser.Password);
-                    sqlCommand.Parameters.AddWithValue("informed", registerUser.Informed);
+                    sqlCommand.Parameters.AddWithValue("name", userViewModel.Register.Name);
+                    sqlCommand.Parameters.AddWithValue("lastName", userViewModel.Register.LastName);
+                    sqlCommand.Parameters.AddWithValue("email", userViewModel.Register.Email);
+                    sqlCommand.Parameters.AddWithValue("username", userViewModel.Register.Username);
+                    sqlCommand.Parameters.AddWithValue("password", userViewModel.Register.Password);
+                    sqlCommand.Parameters.AddWithValue("informed", userViewModel.Register.Informed);
                     sqlCommand.Parameters.AddWithValue("regDate", DateTime.Now);
                     sqlConnection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return View();
+
         }
 
     }

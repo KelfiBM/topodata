@@ -5,8 +5,8 @@
 
 @section cssPlugins
 {
-    <link href="~/resources/plugins/brand-buttons/brand-buttons-inversed.css" rel="stylesheet"/>
-    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/brand-buttons/brand-buttons-inversed.css" rel="stylesheet" />
+    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet" />
 }
 @section cssPageStyle
 {
@@ -57,53 +57,72 @@
             </div>
             <!--End login Block-->
             <!--Reg Block-->
+
             <div style="height: 606px;" class="form-block reg-block col-md-6 col-sm-12 rounded-right equal-height-column">
                 <div class="form-block-header">
                     <h2 class="margin-bottom-10">Crear una cuenta nueva</h2>
                     <p class="margin-bottom-20">Unete a la comunidad Topodata!</p>
                 </div>
-                <div class="input-group margin-bottom-20">
-                    <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
-                    @Html.TextBoxFor(m => m.Register.Name, new { @class = "form-control rounded-right", @placeholder = "Nombre" })
-                </div>
-                <div class="input-group margin-bottom-20">
-                    <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
-                    <input class="form-control rounded-right" placeholder="Apellido" type="text">
-                </div>
-                <div class="input-group margin-bottom-20">
-                    <span class="input-group-addon rounded-left"><i class="icon-user"></i></span>
-                    <input class="form-control rounded-right" placeholder="Nombre de usuario" type="text">
-                </div>
-                <div class="input-group margin-bottom-20">
-                    <span class="input-group-addon rounded-left"><i class="icon-envelope"></i></span>
-                    <input class="form-control rounded-right" placeholder="Email" type="email">
-                </div>
-                <div class="input-group margin-bottom-20">
-                    <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
-                    <input class="form-control rounded-right" placeholder="Contraseña" type="password">
-                </div>
-                <div class="input-group margin-bottom-20">
-                    <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
-                    <input class="form-control rounded-right" placeholder="Confirmar contraseña" type="password">
-                </div>
-                <div class="checkbox margin-bottom-15">
-                    <label>
-                        <input type="checkbox" checked>
-                        <p>Acepto los terminos y condiciones</p>
-                    </label>
-                    <label>
-                        <input type="checkbox" checked>
-                        <p>Mantenme Informado de las noticias Topodata</p>
-                    </label>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="submit" class="btn-u btn-block rounded">Continue</button>
+                @using (Html.BeginForm("Register", "User"))
+                {
+                    @Html.ValidationSummary(true, "Existen campos que no estan correctos")
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
+                        @Html.EditorFor(m => m.Register.Name, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Nombre" } })
+                        @Html.ValidationMessageFor(m => m.Register.Name)
                     </div>
-                </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
+                        @Html.EditorFor(m => m.Register.LastName, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Apellido" } })
+                        @Html.ValidationMessageFor(m => m.Register.LastName)
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-user"></i></span>
+                        @Html.EditorFor(m => m.Register.Username, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Username" } })
+                        @Html.ValidationMessageFor(m => m.Register.Username)
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-envelope"></i></span>
+                        @Html.EditorFor(m => m.Register.Email, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Email" } })
+                        @Html.ValidationMessageFor(m => m.Register.Email)
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
+                        @Html.EditorFor(m => m.Register.Password, new {htmlAttributes = new {@class = "form-control rounded-right", @placeholder = "Contraseña"}})
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Register.Password)
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
+                        @Html.EditorFor(m => m.Register.ConfirmPassword, new {htmlAttributes = new {@class = "form-control rounded-right", @placeholder = "Confirmar contraseña"}})
+
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Register.ConfirmPassword)
+                    <div class="checkbox margin-bottom-15">
+                        <label>
+                            @Html.EditorFor(m => m.Register.TermsAndConditions, new {htmlAttributes = new {}})
+
+                            <p>Acepto los terminos y condiciones</p>
+                        </label>
+                        @Html.ValidationMessageFor(m => m.Register.TermsAndConditions)
+                        <label>
+                            @Html.EditorFor(m => m.Register.Informed, new { htmlAttributes = new { @class = "checked" } })
+                            <p>Mantenme Informado sobre Topodata</p>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn-u btn-block rounded" value="Registrar">Continue</button>
+                        </div>
+                    </div>
+                }
             </div>
+
             <!--End Reg Block-->
         </div>
     </div><!--/container-->
 </div>
+
+@section documentReady
+{
+    $(".checked").prop('checked', true);
+}
