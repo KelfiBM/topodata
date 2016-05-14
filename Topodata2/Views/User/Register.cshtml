@@ -7,6 +7,8 @@
 {
     <link href="~/resources/plugins/brand-buttons/brand-buttons-inversed.css" rel="stylesheet" />
     <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
 }
 @section cssPageStyle
 {
@@ -20,9 +22,9 @@
         <div class="margin-bottom-60 head">
             <h1>Inicia Sesión o Registrate</h1>
         </div>
-        <div class="row space-xlg-hor equal-height-columns">
+        <div id="container" class="row space-xlg-hor equal-height-columns">
             <!--login Block-->
-            <div style="height: 606px;" class="form-block login-block col-md-6 col-sm-12 rounded-left equal-height-column">
+            <div id="loginContainer" style="height: 606px;" class="form-block login-block col-md-6 col-sm-12 rounded-left equal-height-column">
                 <div class="form-block-header">
                     <h2 class="margin-bottom-15">Sign In</h2>
                 </div>
@@ -57,72 +59,147 @@
             </div>
             <!--End login Block-->
             <!--Reg Block-->
-
-            <div style="height: 606px;" class="form-block reg-block col-md-6 col-sm-12 rounded-right equal-height-column">
-                <div class="form-block-header">
-                    <h2 class="margin-bottom-10">Crear una cuenta nueva</h2>
-                    <p class="margin-bottom-20">Unete a la comunidad Topodata!</p>
-                </div>
-                @using (Html.BeginForm("Register", "User"))
-                {
-                    @Html.ValidationSummary(true, "Existen campos que no estan correctos")
-                    <div class="input-group margin-bottom-20">
-                        <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
-                        @Html.EditorFor(m => m.Register.Name, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Nombre" } })
-                        @Html.ValidationMessageFor(m => m.Register.Name)
+            @using (Html.BeginForm("Register", "User", FormMethod.Post, new { @class = "sky-form", @id = "regForm" }))
+            {
+                <div id ="regContainer" style="height: 606px;" class="form-block reg-block col-md-6 col-sm-12 rounded-right equal-height-column">
+                    <div class="form-block-header">
+                        <h2 class="margin-bottom-10">Crear una cuenta nueva</h2>
+                        <p class="margin-bottom-20">Unete a la comunidad Topodata!</p>
                     </div>
-                    <div class="input-group margin-bottom-20">
-                        <span class="input-group-addon rounded-left"><i class="icon-pencil"></i></span>
-                        @Html.EditorFor(m => m.Register.LastName, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Apellido" } })
-                        @Html.ValidationMessageFor(m => m.Register.LastName)
-                    </div>
-                    <div class="input-group margin-bottom-20">
-                        <span class="input-group-addon rounded-left"><i class="icon-user"></i></span>
-                        @Html.EditorFor(m => m.Register.Username, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Username" } })
-                        @Html.ValidationMessageFor(m => m.Register.Username)
-                    </div>
-                    <div class="input-group margin-bottom-20">
-                        <span class="input-group-addon rounded-left"><i class="icon-envelope"></i></span>
-                        @Html.EditorFor(m => m.Register.Email, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Email" } })
-                        @Html.ValidationMessageFor(m => m.Register.Email)
-                    </div>
-                    <div class="input-group margin-bottom-20">
-                        <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
-                        @Html.EditorFor(m => m.Register.Password, new {htmlAttributes = new {@class = "form-control rounded-right", @placeholder = "Contraseña"}})
-                    </div>
-                    @Html.ValidationMessageFor(m => m.Register.Password)
-                    <div class="input-group margin-bottom-20">
-                        <span class="input-group-addon rounded-left"><i class="icon-lock"></i></span>
-                        @Html.EditorFor(m => m.Register.ConfirmPassword, new {htmlAttributes = new {@class = "form-control rounded-right", @placeholder = "Confirmar contraseña"}})
-
-                    </div>
-                    @Html.ValidationMessageFor(m => m.Register.ConfirmPassword)
-                    <div class="checkbox margin-bottom-15">
-                        <label>
-                            @Html.EditorFor(m => m.Register.TermsAndConditions, new {htmlAttributes = new {}})
-
-                            <p>Acepto los terminos y condiciones</p>
+                    @*Html.ValidationSummary(true, "Existen campos que no estan correctos")*@
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-pencil"></i>
+                            @Html.EditorFor(m => m.Register.Name, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Nombre" } })
+                            @Html.ValidationMessageFor(m => m.Register.Name)
                         </label>
-                        @Html.ValidationMessageFor(m => m.Register.TermsAndConditions)
-                        <label>
-                            @Html.EditorFor(m => m.Register.Informed, new { htmlAttributes = new { @class = "checked" } })
-                            <p>Mantenme Informado sobre Topodata</p>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-pencil"></i>
+                            @Html.EditorFor(m => m.Register.LastName, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Apellido" } })
+                            @Html.ValidationMessageFor(m => m.Register.LastName)
                         </label>
-                    </div>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-user"></i>
+                            @Html.EditorFor(m => m.Register.Username, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Username" } })
+                            @Html.ValidationMessageFor(m => m.Register.Username)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-envelope"></i>
+                            @Html.EditorFor(m => m.Register.Email, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Email" } })
+                            @Html.ValidationMessageFor(m => m.Register.Email)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-lock"></i>
+                            @Html.EditorFor(m => m.Register.Password, new {htmlAttributes = new {@class = "form-control rounded", @placeholder = "Contraseña"}})
+                            @Html.ValidationMessageFor(m => m.Register.Password)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-lock"></i>
+                            @Html.EditorFor(m => m.Register.ConfirmPassword, new {htmlAttributes = new {@class = "form-control rounded", @placeholder = "Confirmar contraseña"}})
+                            @Html.ValidationMessageFor(m => m.Register.ConfirmPassword)
+                        </label>
+                    </section>
+                    <section>
+                        @Html.EditorFor(m => m.Register.TermsAndConditions)
+                        Acepto los terminos y condiciones
+                        <p>@Html.ValidationMessageFor(m => m.Register.TermsAndConditions)</p>
+                    </section>
+                    <section>
+                        @Html.EditorFor(m => m.Register.Informed, new { htmlAttributes = new { @class = "checked" } })
+                        Mantenme Informado sobre Topodata
+                    </section>
                     <div class="row">
                         <div class="col-md-12">
                             <button type="submit" class="btn-u btn-block rounded" value="Registrar">Continue</button>
                         </div>
                     </div>
-                }
-            </div>
 
+                </div>
+            }
             <!--End Reg Block-->
         </div>
     </div><!--/container-->
 </div>
 
+@section PageScripts
+{
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+    <script src="~/resources/js/plugins/masking.js"></script>
+    <script src="~/resources/js/plugins/validation.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+}
+
+@section ScriptsFunction
+{
+    <script>
+        $(document).ready(function() {
+            var form = $('#regForm'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings
+                // Store existing event handlers in local variables
+                ,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+
+            settings.errorPlacement = function(label, element) {
+
+                // Call old handler so it can update the HTML
+                oldErrorPlacement(label, element);
+
+                // Add Bootstrap classes to newly added elements
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+                
+            };
+
+            settings.success = function(label) {
+                // Remove error class from <div class="form-group">, but don't worry about
+                // validation error messages as the plugin is going to remove it anyway
+
+                label.parents('label').removeClass('state-error');
+
+                // Call old handler to do rest of the work
+                oldSuccess(label);
+            };
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#regForm").click(function () {
+                EqualHeightColumns();
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        jQuery.validator.unobtrusive.adapters.add("mandatory", function (options) {
+
+            if (options.element.tagName.toUpperCase() == "INPUT" && options.element.type.toUpperCase() == "CHECKBOX") {
+                options.rules["required"] = true;
+                if (options.message)
+                    options.messages["required"] = options.message;
+            }
+
+        });
+    </script>
+}
+
 @section documentReady
 {
     $(".checked").prop('checked', true);
+    Validation.initValidation();
+    Masking.initMasking();
 }

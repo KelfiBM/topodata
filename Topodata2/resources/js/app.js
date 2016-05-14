@@ -125,10 +125,13 @@ var App = function () {
 		}
 
 		EqualHeightColumns();
-		$(window).resize(function() {
-			EqualHeightColumns();
+		$(window).resize(function () {
+		   EqualHeightColumns();
 		});
-		$(window).load(function() {
+	    $(window).click(function() {
+	       EqualHeightColumns();
+	    });
+	    $(window).load(function() {
 			EqualHeightColumns("img.equal-height-column");
 		});
 	}

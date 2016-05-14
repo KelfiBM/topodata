@@ -628,6 +628,7 @@
     <Folder Include="ajax\" />
     <Folder Include="App_Data\" />
     <Folder Include="resources\css\plugins\" />
+    <Folder Include="resources\js\custom\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
