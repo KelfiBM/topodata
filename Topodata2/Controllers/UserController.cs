@@ -21,10 +21,17 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public JsonResult emailExist(string Email)
+        public JsonResult emailExists(UserViewModel Email)
         {
-            var email = Membership.GetUser(Email);
-            return Json(email == null);
+            ItExists itExists = new ItExists();
+            return Json(!itExists.ExistsCheck("Email", Email.Register.Email));
+        }
+
+        [HttpPost]
+        public JsonResult usernameExist(UserViewModel username)
+        {
+            ItExists itExists = new ItExists();
+            return Json(!itExists.ExistsCheck("Username", username.Register.Username));
         }
 
         [HttpPost]

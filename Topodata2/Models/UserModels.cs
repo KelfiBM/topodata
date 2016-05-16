@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -26,7 +30,7 @@ namespace Topodata2.Models
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Email")]
-        [Remote("emailExist", "User", HttpMethod = "POST", ErrorMessage = "Este correo ya esta siendo usado")]
+        [Remote("emailExists", "User", HttpMethod = "POST", ErrorMessage = "Este correo ya esta siendo usado")]
         [EmailAddress(ErrorMessage = "Correo invalido")]
         public string Email { get; set; }
 
@@ -42,7 +46,7 @@ namespace Topodata2.Models
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [DataType(DataType.Password)]
-        [StringLength(255,MinimumLength = 6,ErrorMessage = "La contraseña debe tener minimo 6 caracteres")]
+        [StringLength(255, MinimumLength = 6, ErrorMessage = "La contraseña debe tener minimo 6 caracteres")]
         [MembershipPassword(
             MinRequiredNonAlphanumericCharacters = 0,
             MinRequiredPasswordLength = 6,
@@ -63,44 +67,72 @@ namespace Topodata2.Models
         [Display(Name = "Confirmar Contraseña")]
         public string ConfirmPassword { get; set; }
 
-        [Mandatory(ErrorMessage = "Tienes que aceptar para continuar")]
+        [MustBeTrue(ErrorMessage = "Debe aceptar los terminos y condiciones")]
         [Display(Name = "Acepto los terminos y condiciones")]
-        [Range(typeof (bool), "true", "true", ErrorMessage = "Tienes que aceptar para continuar")]
         public bool TermsAndConditions { get; set; }
 
         [Display(Name = "Acepto recibir noticias Topodata")]
-        [Range(typeof (bool), "false", "true")]
         public bool Informed { get; set; }
     }
-    public class Mandatory : RequiredAttribute, IClientValidatable
+
+    public class MustBeTrueAttribute : ValidationAttribute, IClientValidatable
     {
-
-        public Mandatory()
-        {
-
-        }
-
         public override bool IsValid(object value)
         {
-
-            if (value == null)
-                return false;
-
-            if (value is bool)
-                return (bool)value;
-
-            //Logic for other types goes here
-
-            return false;
-
+            if (value == null) return false;
+            if(value.GetType() != typeof(bool)) throw new InvalidOperationException("Must be boolean");
+            return (bool) value == true;
+            
         }
 
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata,
+            ControllerContext context)
+        {
+            yield return new ModelClientValidationRule()
+            {
+                ErrorMessage = "Debe seleccionar este campo",
+                ValidationType = "mustbetrue"
+            };
+        }
+    }
+
+    public class ItExists
+    {
+        private string connection =
+            @"Data Source=KELFI-PC\SQLINSTANCE;Initial Catalog=Topodata;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework";
+        public bool ExistsCheck(string attrib, string data)
         {
 
-            return new ModelClientValidationRule[] { new ModelClientValidationRule() { ValidationType = "mandatory", ErrorMessage = this.ErrorMessage } };
+            try
+            {
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand com = new SqlCommand();
+                SqlDataReader reader;
+                com.CommandText = string.Format("SELECT * FROM [Users] WHERE " + attrib + " = '{0}'", data);
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
 
+                con.Open();
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Close();
+                    return true;
+                }
+                else
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Close();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
-
     }
 }
