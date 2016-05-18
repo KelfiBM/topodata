@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -11,8 +12,7 @@ namespace Topodata2.Controllers
 {
     public class UserController : Controller
     {
-        private string connection =
-            @"Data Source=KELFI-PC\SQLINSTANCE;Initial Catalog=Topodata;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework";
+        private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         // GET: User
         public ActionResult Register()

@@ -4,16 +4,54 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.ModelBinding;
 using System.Web.Mvc;
 using System.Web.Security;
 using ModelMetadata = System.Web.Mvc.ModelMetadata;
 
 namespace Topodata2.Models
 {
-    public class UserModels
+    public class LoginUserViewModel
     {
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
+        [Required]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Display(Name = "Mantenerme Conectado")]
+        public bool KeepConnected { get; set; }
+
+        public bool IsValid(string username, string password)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                string query = "SELECT [Username] FROM [Users] WHERE [Username] = @u AND [Password] = @p";
+                var com = new SqlCommand(query,con);
+                com.Parameters.Add(new SqlParameter("@u", SqlDbType.NVarChar))
+                    .Value = username;
+                com.Parameters.Add(new SqlParameter("@p", SqlDbType.NVarChar))
+                    .Value = password;
+                con.Open();
+                var reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Dispose();
+                    return true;
+                }
+                else
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Dispose();
+                    return false;
+                }
+
+            }
+        }
     }
 
     public class RegisterUserViewModel
@@ -98,8 +136,9 @@ namespace Topodata2.Models
 
     public class ItExists
     {
-        private string connection =
-            @"Data Source=KELFI-PC\SQLINSTANCE;Initial Catalog=Topodata;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework";
+        private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+
         public bool ExistsCheck(string attrib, string data)
         {
 
@@ -129,7 +168,7 @@ namespace Topodata2.Models
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
