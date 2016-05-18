@@ -12,12 +12,14 @@ namespace Topodata2.Models
 {
     public class LoginUserViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [DataType(DataType.Text)]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
-        [Required]
-        [Display(Name = "Password")]
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
         [Display(Name = "Mantenerme Conectado")]

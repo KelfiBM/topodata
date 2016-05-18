@@ -13,11 +13,41 @@ namespace Topodata2.Controllers
     public class UserController : Controller
     {
         private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
+        
         // GET: User
-        public ActionResult Register()
+        public ActionResult Index()
         {
-            return View();
+           return View("Register");
+        }
+
+        public ActionResult Login()
+        {
+
+            return View("Register");
+        }
+
+        [HttpPost]
+        public ActionResult Login(UserViewModel userViewModel, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                if (userViewModel.Login.IsValid(userViewModel.Login.Username, userViewModel.Login.Password))
+                {
+                    FormsAuthentication.SetAuthCookie(userViewModel.Login.Username, userViewModel.Login.KeepConnected);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("","");
+                }
+            }
+            return View("Register",userViewModel);
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

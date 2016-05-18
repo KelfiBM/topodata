@@ -85,7 +85,15 @@
                         <li><a href="@urlFlickr" target="_blank"><i class="fa fa-flickr"></i></a></li>
                         <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                         <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-ellipsis-h"></i></a></li>
-                        <li><a href="#">Mi cuenta</a></li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li>@Html.Encode(User.Identity.Name)</li>
+                            @Html.ActionLink("(Cerrar)", "Logout", "User")
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Iniciar sesion | Registrarse", "Index", "User", new {returnUrl = Request.Url}, null)</li>
+                        }
                     </ul>
                 </div>
             </div>
