@@ -4,11 +4,11 @@ var Validation = function () {
         
         //Validation
         initValidation: function () {
-	        $("#sky-form1").validate({                   
+            $("#regForm").validate({
 	            // Rules for form validation
 	            rules:
 	            {
-	                required:
+	                RegisterName:
 	                {
 	                    required: true
 	                },
@@ -74,7 +74,7 @@ var Validation = function () {
 	            {
 	                required:
 	                {
-	                    required: 'Please enter something'
+	                    required: 'Este campo es requerido2'
 	                },
 	                email:
 	                {

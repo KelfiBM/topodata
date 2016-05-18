@@ -36,8 +36,6 @@
 
     <!-- CSS Implementing Plugins -->
     <link href="~/resources/plugins/animate.css" rel="stylesheet"/>
-
-@*    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet"/>*@
     <link href="~/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     @RenderSection("cssPlugins", false)
 
@@ -87,7 +85,15 @@
                         <li><a href="@urlFlickr" target="_blank"><i class="fa fa-flickr"></i></a></li>
                         <li><a href="@urlGooglePlus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                         <li><a href="@urlFlipboard" target="_blank"><i class="fa fa-ellipsis-h"></i></a></li>
-                        <li><a href="#">Mi cuenta</a></li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li>@Html.Encode(User.Identity.Name)</li>
+                            @Html.ActionLink("(Cerrar)", "Logout", "User")
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Iniciar sesion | Registrarse", "Index", "User", new {returnUrl = Request.Url}, null)</li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -273,7 +279,7 @@
     </div><!--/copyright-->
 </div>
 <!--=== End Default Footer ===-->
-@*    @RenderSection("scripts", required: false)*@
+
 </div>
 <!-- JS Global Compulsory -->
 <script src="~/resources/plugins/jquery/jquery.min.js"></script>
@@ -310,7 +316,6 @@
         return this.href == url;
     }).parent().addClass('active');
 </script>
-
 <!-- Twitter script-->
 <script>
     window.twttr = (function(d, s, id) {
@@ -331,12 +336,5 @@
         return t;
     }(document, "script", "twitter-wjs"));
 </script>
-<!--[if lt IE 9]>
-    <script src="~/wwwroot/plugins/respond.js"></script>
-    <script src="~/wwwroot/plugins/html5shiv.js"></script>
-    <script src="~/wwwroot/plugins/placeholder-IE-fixes.js"></script>
-<![endif]-->
-
-
 </body>
 </html>

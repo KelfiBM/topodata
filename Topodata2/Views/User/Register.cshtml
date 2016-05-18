@@ -1,0 +1,209 @@
+﻿@model Topodata2.Models.UserViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+@section cssPlugins
+{
+    <link href="~/resources/plugins/brand-buttons/brand-buttons-inversed.css" rel="stylesheet" />
+    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+}
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/page_log_reg_v3.css" rel="stylesheet" />
+}
+
+<div style="position: relative; z-index: 1; background: transparent none repeat scroll 0% 0%;" class="forms-wrapper">
+    <!--=== Header v6 ===-->
+    <!--=== End Header v6 ===-->
+    <div class="container content-md">
+        <div class="margin-bottom-60 head">
+            <h1>Inicia Sesión o Registrate</h1>
+        </div>
+        <div id="container" class="row space-xlg-hor equal-height-columns">
+            <!--login Block-->
+            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @id = "loginForm", @class = "" }))
+            {
+                <div id="loginContainer" style="height: 606px;" class="form-block login-block col-md-6 col-sm-12 rounded-left equal-height-column">
+                    <div class="form-block-header">
+                        <h2 class="margin-bottom-15">Iniciar Sesion</h2>
+                    </div>
+                    @Html.ValidationSummary(true, "El usuario y/o contraseña son incorrectos", new { @style = "color: #fff" })
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-user color-white"></i></span>
+                        @Html.EditorFor(m => m.Login.Username, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Username" } })
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon rounded-left"><i class="icon-lock color-white"></i></span>
+                        @Html.EditorFor(m => m.Login.Password, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Contraseña" } })
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        @Html.EditorFor(m => m.Login.KeepConnected, new { htmlAttributes = new { } })
+                        @Html.LabelFor(m => m.Login.KeepConnected, new {@style = "color: #fff"})
+                        
+                    </div>
+                    <div class="row margin-bottom-70">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn-u btn-u-default btn-block rounded">Sign In</button>
+                        </div>
+                    </div>
+                    @*<div class="social-login">
+                            <div class="or rounded-x">Or</div>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <button class="btn rounded btn-block btn-lg btn-facebook-inversed margin-bottom-20">
+                                        <i class="fa fa-facebook"></i> Sign in with Facebook
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn rounded btn-block btn-lg btn-twitter-inversed">
+                                        <i class="fa fa-twitter"></i> Sign in with Twitter
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>*@
+                </div>
+            }
+            <!--End login Block-->
+            <!--Reg Block-->
+            @using (Html.BeginForm("Register", "User", FormMethod.Post, new { @id = "regForm", @class = "sky-form" }))
+            {
+                <div id="regContainer" style="height: 606px;" class="form-block reg-block col-md-6 col-sm-12 rounded-right equal-height-column">
+                    <div class="form-block-header">
+                        <h2 class="margin-bottom-10">Crear una cuenta nueva</h2>
+                        <p class="margin-bottom-20">Unete a la comunidad Topodata!</p>
+                    </div>
+                    @*Html.ValidationSummary(true, "Existen campos que no estan correctos")*@
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-pencil"></i>
+                            @Html.EditorFor(m => m.Register.Name, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Nombre" } })
+                            @Html.ValidationMessageFor(m => m.Register.Name)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-pencil"></i>
+                            @Html.EditorFor(m => m.Register.LastName, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Apellido" } })
+                            @Html.ValidationMessageFor(m => m.Register.LastName)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-user"></i>
+                            @Html.EditorFor(m => m.Register.Username, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Username" } })
+                            @Html.ValidationMessageFor(m => m.Register.Username)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-envelope"></i>
+                            @Html.EditorFor(m => m.Register.Email, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Email" } })
+                            @Html.ValidationMessageFor(m => m.Register.Email)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-lock"></i>
+                            @Html.EditorFor(m => m.Register.Password, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Contraseña" } })
+                            @Html.ValidationMessageFor(m => m.Register.Password)
+                        </label>
+                    </section>
+                    <section>
+                        <label class="input">
+                            <i class="icon-prepend fa fa-lock"></i>
+                            @Html.EditorFor(m => m.Register.ConfirmPassword, new { htmlAttributes = new { @class = "form-control rounded", @placeholder = "Confirmar contraseña" } })
+                            @Html.ValidationMessageFor(m => m.Register.ConfirmPassword)
+                        </label>
+                    </section>
+                    <section>
+                        @Html.EditorFor(m => m.Register.TermsAndConditions)
+                        Acepto los terminos y condiciones
+                        <p>@Html.ValidationMessageFor(m => m.Register.TermsAndConditions)</p>
+                    </section>
+                    <section>
+                        @Html.EditorFor(m => m.Register.Informed, new { htmlAttributes = new { @class = "checked" } })
+                        Mantenme Informado sobre Topodata
+                    </section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn-u btn-block rounded" value="Registrar">Continue</button>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            <!--End Reg Block-->
+        </div>
+    </div><!--/container-->
+</div>
+
+@section PageScripts
+{
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+    <script src="~/resources/js/plugins/masking.js"></script>
+    <script src="~/resources/js/plugins/validation.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+}
+
+@section ScriptsFunction
+{
+    <script>
+        $(document).ready(function () {
+            var form = $('#regForm'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings
+                // Store existing event handlers in local variables
+                ,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+
+            settings.errorPlacement = function (label, element) {
+
+                // Call old handler so it can update the HTML
+                oldErrorPlacement(label, element);
+
+                // Add Bootstrap classes to newly added elements
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+
+            };
+
+            settings.success = function (label) {
+                // Remove error class from <div class="form-group">, but don't worry about
+                // validation error messages as the plugin is going to remove it anyway
+
+                label.parents('label').removeClass('state-error');
+
+                // Call old handler to do rest of the work
+                oldSuccess(label);
+            };
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#regForm").click(function () {
+                EqualHeightColumns();
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        jQuery.validator.addMethod("mustbetrue", function (value, element, param) {
+            return element.checked;
+        });
+        jQuery.validator.unobtrusive.adapters.addBool("mustbetrue");
+    </script>
+}
+
+@section documentReady
+{
+    $(".checked").prop('checked', true);
+    Validation.initValidation();
+    Masking.initMasking();
+}
