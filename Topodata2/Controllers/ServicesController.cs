@@ -13,9 +13,12 @@ namespace Topodata2.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                
+                return View("Lockout");
             }
-            return View();
+            else
+            {
+                return View("MustLogIn");
+            }
         }
     }
 }

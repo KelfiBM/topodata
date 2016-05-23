@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Must LogIn - 401 Error";
+}
+
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/page_404_error.css" rel="stylesheet"/>
+}
+
+<div class="container content">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="error-v1">
+                <span class="error-v1-title">Sorry</span>
+                <span>No estas autorizado</span>
+                <p>Para poder continuar debes iniciar sesión</p>
+                <a href="@Url.Action("Index", "User")" class="btn-u rounded-2x">Iniciar sesión</a>
+                <a href="@Url.Action("Index","User")" class="btn-u rounded-2x">Registrase</a>
+            </div>
+        </div>
+    </div>
+</div>

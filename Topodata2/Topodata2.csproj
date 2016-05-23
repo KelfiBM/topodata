@@ -201,6 +201,7 @@
     <Content Include="resources\css\footers\footer-default.css" />
     <Content Include="resources\css\headers\header-v1.css" />
     <Content Include="resources\css\ie8.css" />
+    <Content Include="resources\css\pages\page_404_error.css" />
     <Content Include="resources\css\pages\page_about.css" />
     <Content Include="resources\css\pages\page_clients.css" />
     <Content Include="resources\css\pages\page_contact.css" />
@@ -586,7 +587,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -624,13 +627,14 @@
     <Content Include="Views\Home\Photo.cshtml" />
     <Content Include="Views\Home\Video.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\Services\MustLogIn.cshtml" />
+    <Content Include="Views\Shared\MustLogIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
     <Folder Include="App_Data\" />
     <Folder Include="resources\css\plugins\" />
     <Folder Include="resources\js\custom\" />
+    <Folder Include="Views\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
