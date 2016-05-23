@@ -182,8 +182,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\UserModels.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -628,13 +629,13 @@
     <Content Include="Views\Home\Video.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Shared\MustLogIn.cshtml" />
+    <Content Include="Views\Services\Document.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
     <Folder Include="App_Data\" />
     <Folder Include="resources\css\plugins\" />
     <Folder Include="resources\js\custom\" />
-    <Folder Include="Views\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
