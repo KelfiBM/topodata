@@ -202,6 +202,7 @@
     <Content Include="resources\css\footers\footer-default.css" />
     <Content Include="resources\css\headers\header-v1.css" />
     <Content Include="resources\css\ie8.css" />
+    <Content Include="resources\css\pages\blog.css" />
     <Content Include="resources\css\pages\page_404_error.css" />
     <Content Include="resources\css\pages\page_about.css" />
     <Content Include="resources\css\pages\page_clients.css" />

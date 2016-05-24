@@ -1,7 +1,149 @@
-﻿
-@{
-    ViewBag.Title = "Documents";
+﻿@{
+    ViewBag.Title = "Servicios";
+    string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
+    string urlTwitter = "https://twitter.com/topodata";
+    string urlInstagram = "https://www.instagram.com/topodatagis/";
+    string urlYoutube = "https://www.youtube.com/user/TOPODATA100/";
+    string urlGooglePlus = "https://plus.google.com/+TopodataGis/";
+    string urlFlickr = "https://www.flickr.com/people/89639027@N07/";
+    string urlFlipboard = "https://flipboard.com/@topodata";
 }
 
-<h2>Documents</h2>
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/blog.css" rel="stylesheet"/>
+}
 
+<div class="container content">
+    <div class="row blog-page">
+        <div class="col-md-9 md-margin-bottom-40"></div>
+        <div class="col-md-3">
+            <div class="magazine-sb-social margin-bottom-30">
+                <div class="headline headline-md">
+                    <h2>Redes Topodata</h2>
+                </div>
+                <ul class="social-icons social-icons-color">
+                    <li>
+                        <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlInstagram" class="social_instagram" data-original-title="Instagram" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="posts margin-bottom-40">
+                <div class="headline headline-md">
+                    <h2>Ultimas Noticias</h2>
+                </div>
+                <a class="twitter-timeline"
+                   href="https://twitter.com/topodata/lists/geomatica-topografia-ttw"
+                   data-widget-id="697619227469975552"
+                   data-chrome="noheader nofooter noborders"
+                   height="263"></a>
+            </div>
+            <div class="headline headline-md">
+                <h2>Enlaces de Interes</h2>
+            </div>
+            <div class="tab-v2 margin-bottom-40">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a aria-expanded="true" data-toggle="tab" href="#home-1">Categorias</a>
+                    </li>
+                    <li class="">
+                        <a aria-expanded="false" data-toggle="tab" href="#home-2">Sobre Nosotros</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="home-1" class="tab-pane magazine-sb-categories active">
+                        <div class="row">
+                            <ul class="list-unstyled col-xs-6">
+                                <li>@Html.ActionLink("Todas", "Documents", "Services", new {}, null)</li>
+                                <li>@Html.ActionLink("Agrimensura", "Documents", "Services", new {id = 1}, null)</li>
+                                <li>@Html.ActionLink("Estudio", "Documents", "Services", new {id = 2}, null)</li>
+                                <li>@Html.ActionLink("Impacto", "Documents", "Services", new {id = 3}, null)</li>
+                                <li>@Html.ActionLink("Ingenieria", "Documents", "Services", new {id = 4}, null)</li>
+                                <li>@Html.ActionLink("Diseño", "Documents", "Services", new {id = 5}, null)</li>
+                            </ul>
+                            <ul class="list-unstyled col-xs-6">
+                                <li>@Html.ActionLink("Presupuesto", "Documents", "Services", new {id = 6}, null)</li>
+                                <li>@Html.ActionLink("Planificacion", "Documents", "Services", new {id = 7}, null)</li>
+                                <li>@Html.ActionLink("Presentacion", "Documents", "Services", new {id = 8}, null)</li>
+                                <li>@Html.ActionLink("Evaluacion", "Documents", "Services", new {id = 9}, null)</li>
+                                <li>@Html.ActionLink("Construccion", "Documents", "Services", new {id = 10}, null)</li>
+                                <li>@Html.ActionLink("Supervicion", "Documents", "Services", new {id = 11}, null)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="home-2" class="tab-pane magazine-sb-categories">
+                        <div class="row">
+                            <ul class="list-unstyled col-xs-6">
+                                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Informacion", "About", "Home")</li>
+                                <li>@Html.ActionLink("Equipo", "OurTeam", "Home")</li>
+                            </ul>
+                            <ul class="list-unstyled col-xs-6">
+                                <li>@Html.ActionLink("Fotos", "Photo", "Home")</li>
+                                <li>@Html.ActionLink("Videos", "Video", "Home")</li>
+                                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="headline headline-md">
+                <h2>Al Instante Topodata</h2>
+            </div>
+            <div id="nanoGallery1" class="blog-photos margin-bottom-30">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section cssPlugins
+{
+    <link href="~/resources/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet" />
+    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
+}
+@section PageScripts
+{
+    <script src="~/resources/plugins/nano-gallery/jquery.nanogallery.min.js"></script>
+}
+@section ScriptsFunction
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#nanoGallery1").nanoGallery({
+                kind: 'flickr',
+                userID: '89639027@N07',
+                thumbnailHeight: 80,
+                thumbnailWidth: 80,
+                photoset: 'none',
+                theme: 'light',
+                paginationMaxLinesPerPage: 3,
+                paginationDots: true,
+                thumbnailLabel: {
+                    display: false,
+                    displayDescription: false,
+                    position: 'overImageOnBottom'
+                }
+
+            });
+        });
+</script>
+}
