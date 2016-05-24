@@ -631,6 +631,7 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Shared\MustLogIn.cshtml" />
     <Content Include="Views\Services\Document.cshtml" />
+    <Content Include="Views\Services\Documents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

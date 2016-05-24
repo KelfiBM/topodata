@@ -35,9 +35,17 @@ namespace Topodata2.Controllers
             }
         }
 
-        public ActionResult Documents(int id)
+        public ActionResult Documents(int id = 0)
         {
-
+            var serviceDocumentList = new ServiceDocumentViewModel().GetDocumentListByCategorie(id);
+            if (serviceDocumentList != null && serviceDocumentList.Count > 0)
+            {
+                return View(serviceDocumentList);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
             return null;
         }
     }
