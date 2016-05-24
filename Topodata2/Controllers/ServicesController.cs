@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using Topodata2.Models;
 
 namespace Topodata2.Controllers
@@ -35,12 +36,14 @@ namespace Topodata2.Controllers
             }
         }
 
-        public ActionResult Documents(int id = 0)
+        public ActionResult Documents( int? page, int id = 0)
         {
             var serviceDocumentList = new ServiceDocumentViewModel().GetDocumentListByCategorie(id);
             if (serviceDocumentList != null && serviceDocumentList.Count > 0)
             {
-                return View(serviceDocumentList);
+                var pageNumber = page ?? 1;
+                var onePage = serviceDocumentList.ToPagedList(pageNumber, 10);
+                return View(onePage);
             }
             else
             {

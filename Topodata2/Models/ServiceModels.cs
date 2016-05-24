@@ -94,7 +94,8 @@ namespace Topodata2.Models
                         "dbo.DetalleDocumento.FechaPublicacion, " +
                         "dbo.Categoria.Descripcion AS Categoria, " +
                         "dbo.DetalleDocumento.Descripcion, " +
-                        "dbo.Documento.IdDocumento " +
+                        "dbo.Documento.IdDocumento, " +
+                        "dbo.Categoria.IdCategoria " +
                         "FROM dbo.Categoria " +
                         "INNER JOIN dbo.DetalleDocumento " +
                         "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
@@ -110,7 +111,8 @@ namespace Topodata2.Models
                         "dbo.DetalleDocumento.FechaPublicacion, " +
                         "dbo.Categoria.Descripcion AS Categoria, " +
                         "dbo.DetalleDocumento.Descripcion, " +
-                        "dbo.Documento.IdDocumento " +
+                        "dbo.Documento.IdDocumento, " +
+                        "dbo.Categoria.IdCategoria " +
                         "FROM dbo.Categoria " +
                         "INNER JOIN dbo.DetalleDocumento " +
                         "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
@@ -142,6 +144,7 @@ namespace Topodata2.Models
                         serviceDocument.Categoria = reader.GetString(3);
                         serviceDocument.Descripcion = reader.GetString(4);
                         serviceDocument.Id = reader.GetInt32(5);
+                        serviceDocument.IdCategoria = reader.GetInt32(6);
                         serviceDocument.Exists = true;
                         serviceDocumentList.Add(serviceDocument);
                     }

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using PagedList
+@using PagedList.Mvc
+@using Topodata2.Models
+@{
     ViewBag.Title = "Servicios";
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
     string urlTwitter = "https://twitter.com/topodata";
@@ -7,16 +10,50 @@
     string urlGooglePlus = "https://plus.google.com/+TopodataGis/";
     string urlFlickr = "https://www.flickr.com/people/89639027@N07/";
     string urlFlipboard = "https://flipboard.com/@topodata";
+
 }
 
 @section cssPageStyle
 {
-    <link href="~/resources/css/pages/blog.css" rel="stylesheet"/>
+    <link href="~/resources/css/pages/blog.css" rel="stylesheet" />
 }
 
 <div class="container content">
     <div class="row blog-page">
-        <div class="col-md-9 md-margin-bottom-40"></div>
+        <div class="col-md-9 md-margin-bottom-40">
+
+            @foreach (ServiceDocumentViewModel document in Model)
+            {
+                <div class="row blog blog-medium margin-bottom-40">
+                    <div class="col-md-5">
+                        <img class="img-responsive" src="~/resources/img/breadcrumbs/img1.jpg" alt="">
+                    </div>
+                    <div class="col-md-7">
+                        <h2>
+                            @Html.ActionLink(document.Nombre, "Document", "Services", new {id = document.Id}, null)
+                        </h2>
+                        <ul class="list-unstyled list-inline blog-info">
+                            <li><i class="fa fa-calendar"></i> @document.FechaPublicacion</li>
+                            <li><i class="fa fa-tags"></i> @Html.ActionLink(document.Categoria, "Documents", "Services", new {id = document.IdCategoria}, null)</li>
+                        </ul>
+                        @if (document.Descripcion.Length > 200)
+                        {
+                            <p>
+                                @document.Descripcion.Substring(0, 200)...
+                            </p>
+                        }
+                        else
+                        {
+                            <p>@document.Descripcion</p>
+                        }
+                        <p>@Html.ActionLink("Leer mas", "Document", "Services", new {id = document.Id}, new {@class = "btn-u btn-u-sm"})</p>
+                    </div>
+                </div>
+                <hr class="margin-bottom-40">
+            }
+
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Documents",new {page}), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+        </div>
         <div class="col-md-3">
             <div class="magazine-sb-social margin-bottom-30">
                 <div class="headline headline-md">
@@ -73,7 +110,7 @@
                     <div id="home-1" class="tab-pane magazine-sb-categories active">
                         <div class="row">
                             <ul class="list-unstyled col-xs-6">
-                                <li>@Html.ActionLink("Todas", "Documents", "Services", new {}, null)</li>
+                                <li>@Html.ActionLink("Todas", "Documents", "Services", new {id = 0}, null)</li>
                                 <li>@Html.ActionLink("Agrimensura", "Documents", "Services", new {id = 1}, null)</li>
                                 <li>@Html.ActionLink("Estudio", "Documents", "Services", new {id = 2}, null)</li>
                                 <li>@Html.ActionLink("Impacto", "Documents", "Services", new {id = 3}, null)</li>
@@ -145,5 +182,5 @@
 
             });
         });
-</script>
+    </script>
 }
