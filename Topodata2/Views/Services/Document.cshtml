@@ -8,6 +8,7 @@
     string urlGooglePlus = "https://plus.google.com/+TopodataGis/";
     string urlFlickr = "https://www.flickr.com/people/89639027@N07/";
     string urlFlipboard = "https://flipboard.com/@topodata";
+    string urlPdf = "https://docs.google.com/viewer?url=" + Model.Url + "&embedded=true";
 }
 
 <div class="bg-color-light">
@@ -15,6 +16,9 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="news-v3 bg-color-white margin-bottom-30">
+                    <div id="pdf">
+                        <iframe src="@urlPdf" class="full-width" id="pdfobject" frameborder="0" s></iframe>
+                    </div>
                     <div class="news-v3-in">
                         <ul class="list-inline posted-info">
                             <li>Uploaded By Topodata</li>
@@ -79,7 +83,7 @@
 @section cssPlugins
 {
     <link href="~/resources/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet" />
-    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
+    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet"/>
 }
 @section PageScripts
 {
@@ -89,7 +93,7 @@
 @section ScriptsFunction
 {
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#nanoGallery1").nanoGallery({
                 kind: 'flickr',
                 userID: '89639027@N07',
@@ -107,5 +111,9 @@
 
             });
         });
+    </script>
+    <script>
+        var cw = $('#pdfobject').width();
+        $('#pdfobject').css({ 'height': cw + 'px' });
     </script>
 }
