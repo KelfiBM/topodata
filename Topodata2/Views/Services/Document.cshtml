@@ -1,6 +1,111 @@
-﻿@{
-    ViewBag.Title = "";
+﻿@model Topodata2.Models.ServiceDocumentViewModel
+@{
+    ViewBag.Title = Model.Nombre;
+    string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
+    string urlTwitter = "https://twitter.com/topodata";
+    string urlInstagram = "https://www.instagram.com/topodatagis/";
+    string urlYoutube = "https://www.youtube.com/user/TOPODATA100/";
+    string urlGooglePlus = "https://plus.google.com/+TopodataGis/";
+    string urlFlickr = "https://www.flickr.com/people/89639027@N07/";
+    string urlFlipboard = "https://flipboard.com/@topodata";
 }
 
-<h2>Document</h2>
+<div class="bg-color-light">
+    <div class="container content-sm">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="news-v3 bg-color-white margin-bottom-30">
+                    <div class="news-v3-in">
+                        <ul class="list-inline posted-info">
+                            <li>Uploaded By Topodata</li>
+                            <li>En @Html.ActionLink(Model.Categoria, "Documents", "Services", new {id = Model.idCategoria}, null)</li>
+                            <li>Publicado el @Model.FechaPublicacion.ToLongDateString()</li>
+                        </ul>
+                        <h2>
+                            @Model.Nombre
+                        </h2>
+                        <p>@Model.Descripcion</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="headline-v2">
+                    <h2>Redes Topodata</h2>
+                </div>
+                <ul class="social-icons social-icons-color">
+                    <li>
+                        <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlInstagram" class="social_instagram" data-original-title="Instagram" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
+                    </li>
+                    <li>
+                        <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
+                    </li>
+                </ul>
+                <div class="margin-bottom-25"></div>
+                <div class="headline-v2">
+                    <h2>Ultimas Noticias</h2>
+                </div>
+                <a class="twitter-timeline"
+                   href="https://twitter.com/topodata/lists/geomatica-topografia-ttw"
+                   data-widget-id="697619227469975552"
+                   data-chrome="noheader nofooter noborders"
+                   height="263"></a>
+                <div class="margin-bottom-30"></div>
+                <div class="headline-v2">
+                    <h2>Al instante Topodata</h2>
+                </div>
+                <div id="nanoGallery1">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+@section cssPlugins
+{
+    <link href="~/resources/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet" />
+    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
+}
+@section PageScripts
+{
+    <script src="~/resources/plugins/nano-gallery/jquery.nanogallery.min.js"></script>
+}
+
+@section ScriptsFunction
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#nanoGallery1").nanoGallery({
+                kind: 'flickr',
+                userID: '89639027@N07',
+                thumbnailHeight: 80,
+                thumbnailWidth: 80,
+                photoset: 'none',
+                theme: 'light',
+                paginationMaxLinesPerPage: 3,
+                paginationDots: true,
+                thumbnailLabel: {
+                    display: false,
+                    displayDescription: false,
+                    position: 'overImageOnBottom'
+                }
+
+            });
+        });
+    </script>
+}

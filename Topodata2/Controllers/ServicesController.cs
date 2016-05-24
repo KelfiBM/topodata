@@ -21,8 +21,8 @@ namespace Topodata2.Controllers
                 return View("MustLogIn");
             }
         }
-
-        public ActionResult Document(int id)
+        [Route("Documento/{id:int}")]
+        public ActionResult Document(int id = 0)
         {
             var serviceDocument = new ServiceDocumentViewModel().GetDocumentById(id);
             if (serviceDocument.Exists)
@@ -33,6 +33,12 @@ namespace Topodata2.Controllers
             {
                 return HttpNotFound();
             }
+        }
+
+        public ActionResult Documents(int id)
+        {
+
+            return null;
         }
     }
 }

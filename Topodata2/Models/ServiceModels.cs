@@ -18,6 +18,7 @@ namespace Topodata2.Models
         public string Categoria { get; set; }
         public DateTime FechaPublicacion { get; set; }
         public string Url { get; set; }
+        public int idCategoria { get; set; }
         public bool Exists { get; set; }
 
         public ServiceDocumentViewModel GetDocumentById(int id)
@@ -36,7 +37,8 @@ namespace Topodata2.Models
                         "dbo.DetalleDocumento.Descripcion, " +
                         "dbo.Categoria.Descripcion AS Categoria, " +
                         "dbo.DetalleDocumento.FechaPublicacion, " +
-                        "dbo.DetalleDocumento.Url " +
+                        "dbo.DetalleDocumento.Url, " +
+                        "dbo.Categoria.IdCategoria " +
                         "FROM dbo.Categoria INNER JOIN dbo.DetalleDocumento " +
                         "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
                         "INNER JOIN dbo.Documento " +
@@ -56,6 +58,7 @@ namespace Topodata2.Models
                         serviceDocument.Categoria = reader.GetString(2);
                         serviceDocument.FechaPublicacion = reader.GetDateTime(3);
                         serviceDocument.Url = reader.GetString(4);
+                        serviceDocument.idCategoria = reader.GetInt32(5);
                         serviceDocument.Exists = true;
                         return serviceDocument;
                     }

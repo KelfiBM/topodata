@@ -419,6 +419,7 @@
     <Content Include="resources\plugins\image-hover\js\touch.js" />
     <Content Include="resources\plugins\jquery-appear.js" />
     <Content Include="resources\plugins\jquery.easing.min.js" />
+    <Content Include="resources\plugins\jquery.media.js" />
     <Content Include="resources\plugins\jquery.mixitup.min.js" />
     <Content Include="resources\plugins\jquery.parallax.js" />
     <Content Include="resources\plugins\jquery\jquery-migrate.min.js" />
