@@ -23,16 +23,23 @@ namespace Topodata2.Controllers
             }
         }
         [Route("Documento/{id:int}")]
-        public ActionResult Document(int id = 0)
+        public ActionResult Document( int id = 0)
         {
-            var serviceDocument = new ServiceDocumentViewModel().GetDocumentById(id);
-            if (serviceDocument.Exists)
+            if (Request.IsAuthenticated)
             {
-                return View(serviceDocument);
+                var serviceDocument = new ServiceDocumentViewModel().GetDocumentById(id);
+                if (serviceDocument.Exists)
+                {
+                    return View(serviceDocument);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
             }
             else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "User",new {returnUrl = Request.Url});
             }
         }
 

@@ -10,18 +10,53 @@
     string urlGooglePlus = "https://plus.google.com/+TopodataGis/";
     string urlFlickr = "https://www.flickr.com/people/89639027@N07/";
     string urlFlipboard = "https://flipboard.com/@topodata";
-
+    string[] breadcrumbsImages =
+    {
+        "/resources/img/breadcrumbs/img1.jpg",
+        "/resources/img/sliders/agrimensuras.jpg",
+        "/resources/img/sliders/estudioss.jpg",
+        "/resources/img/sliders/impactos.jpg",
+        "/resources/img/sliders/ingenierias.jpg",
+        "/resources/img/sliders/disenoS.png",
+        "/resources/img/sliders/presupuestoss.jpg",
+        "/resources/img/sliders/planificacions.jpg",
+        "/resources/img/sliders/presentacioness.jpg",
+        "/resources/img/sliders/evaluacions.jpg",
+        "/resources/img/sliders/construccions.jpg",
+        "/resources/img/sliders/supervisions.jpg"
+    };
+    string[] breadcrumbsTitles =
+    {
+        "Todos los Servicios",
+        "Agrimensura Geomatica",
+        "Estudio y Mecanica de Suelos",
+        "Impacto Ambiental y Sostenibilidad",
+        "Ingenieria Estructural y Calculos",
+        "Diseños Arquitectonicos y Espacios",
+        "Presupuestos",
+        "Planificacion",
+        "Presentaciones",
+        "Evaluacion de Proyectos",
+        "Procesos de Construccion",
+        "Supervicion de Obras"
+    };
+    int idRoute = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]);
 }
 
 @section cssPageStyle
 {
     <link href="~/resources/css/pages/blog.css" rel="stylesheet" />
 }
+<div class="breadcrumbs-v3" style="background: url(@breadcrumbsImages[idRoute]) no-repeat; background-size: 100% auto">
+    <div class="container">
+        <h1 class="pull-left" style="padding: 10px; font-weight: bold; color: rgb(255, 255, 255); background: rgba(38, 38, 38, 0.7)  ">@breadcrumbsTitles[idRoute]</h1>
+    </div>
+</div>
+
 
 <div class="container content">
     <div class="row blog-page">
         <div class="col-md-9 md-margin-bottom-40">
-
             @foreach (ServiceDocumentViewModel document in Model)
             {
                 <div class="row blog blog-medium margin-bottom-40">
