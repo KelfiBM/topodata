@@ -15,26 +15,27 @@ namespace Topodata2.Controllers
         private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         
         // GET: User
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
-           return View("Register");
+            ViewBag.ReturnUrl = returnUrl;
+            return View("Register");
         }
 
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
-
+            ViewBag.ReturnUrl = returnUrl;
             return View("Register");
         }
 
         [HttpPost]
-        public ActionResult Login(UserViewModel userViewModel, string returnUrl)
+        public ActionResult Login(UserViewModel userViewModel, string returnUrl = "/")
         {
             if (ModelState.IsValid)
             {
                 if (userViewModel.Login.IsValid(userViewModel.Login.Username, userViewModel.Login.Password))
                 {
                     FormsAuthentication.SetAuthCookie(userViewModel.Login.Username, userViewModel.Login.KeepConnected);
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(returnUrl);
                 }
                 else
                 {

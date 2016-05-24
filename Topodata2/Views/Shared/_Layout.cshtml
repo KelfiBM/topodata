@@ -119,7 +119,23 @@
                 <ul class="nav navbar-nav">
                     <!-- Home -->
                     <li>
-                        @Html.ActionLink("Inicio","Index","Home")
+                        @Html.ActionLink("Inicio", "Index", "Home")
+                    </li>
+                    <li class="dropdown">
+                        @Html.ActionLink("Servicios", "Documents", "Services", new {id = 0}, null)
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new {id = 1}, null)</li>
+                            <li>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new {id = 2}, null)</li>
+                            <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new {id = 3}, null)</li>
+                            <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new {id = 4}, null)</li>
+                            <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new {id = 5}, null)</li>
+                            <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new {id = 6}, null)</li>
+                            <li>@Html.ActionLink("Planificacion", "Documents", "Services", new {id = 7}, null)</li>
+                            <li>@Html.ActionLink("Presentaciones", "Documents", "Services", new {id = 8}, null)</li>
+                            <li>@Html.ActionLink("Evaluacion de Proyectos", "Documents", "Services", new {id = 9}, null)</li>
+                            <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new {id = 10}, null)</li>
+                            <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new {id = 11}, null)</li>
+                        </ul>
                     </li>
                     <!-- End Home -->
                     <li class="dropdown">
@@ -161,7 +177,7 @@
                         <div class="search-open">
                             <div class="input-group animated fadeInDown">
                                 <input class="form-control" placeholder="Search" type="text">
-                                <span class="input-group-btn"><button class="btn-u" type="button">Go</button></span>
+                                <span class="input-group-btn"><button class="btn btn-u" type="button">Go</button></span>
                             </div>
                         </div>
                     </li>
@@ -196,7 +212,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Correo Electronico"/>
                             <span class="input-group-btn">
-                                        <button class="btn-u" type="button">Suscribirse</button>
+                                        <button class="btn btn-u" type="button">Suscribirse</button>
                                     </span>
                         </div>
                     </form>
@@ -237,9 +253,6 @@
                     </div>
                     <ul class="social-icons">
                         <li>
-                            <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
-                        </li>
-                        <li>
                             <a href="@urlTwitter" class="social_twitter" data-original-title="Twitter" target="_blank"></a>
                         </li>
                         <li>
@@ -249,13 +262,16 @@
                             <a href="@urlYoutube" class="social_youtube" data-original-title="Youtube" target="_blank"></a>
                         </li>
                         <li>
-                            <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
+                            <a href="@urlFacebook" class="social_facebook" data-original-title="Facebook" target="_blank"></a>
                         </li>
                         <li>
                             <a href="@urlFlickr" class="social_yahoo" data-original-title="Flickr" target="_blank"></a>
                         </li>
                         <li>
                             <a href="@urlFlipboard" class="social_deviantart" data-original-title="Flipboard" target="_blank"></a>
+                        </li>
+                        <li>
+                            <a href="@urlGooglePlus" class="social_googleplus" data-original-title="Google+" target="_blank"></a>
                         </li>
                     </ul>
                 </div>

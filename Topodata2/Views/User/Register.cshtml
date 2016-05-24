@@ -24,7 +24,7 @@
         </div>
         <div id="container" class="row space-xlg-hor equal-height-columns">
             <!--login Block-->
-            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @id = "loginForm", @class = "" }))
+            @using (Html.BeginForm("Login", "User",new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new { @id = "loginForm", @class = "" }))
             {
                 <div id="loginContainer" style="height: 606px;" class="form-block login-block col-md-6 col-sm-12 rounded-left equal-height-column">
                     <div class="form-block-header">
@@ -49,21 +49,6 @@
                             <button type="submit" class="btn-u btn-u-default btn-block rounded">Sign In</button>
                         </div>
                     </div>
-                    @*<div class="social-login">
-                            <div class="or rounded-x">Or</div>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button class="btn rounded btn-block btn-lg btn-facebook-inversed margin-bottom-20">
-                                        <i class="fa fa-facebook"></i> Sign in with Facebook
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="btn rounded btn-block btn-lg btn-twitter-inversed">
-                                        <i class="fa fa-twitter"></i> Sign in with Twitter
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>*@
                 </div>
             }
             <!--End login Block-->
