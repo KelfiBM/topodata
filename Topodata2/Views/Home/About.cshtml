@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Sobre Topodata";
 }
 
 
@@ -7,68 +7,87 @@
     <div class="container">
         <h1>Topodata</h1>
         <p>Tecnologia en Ingenieria</p>
-    </div><!--/end container-->
+    </div>
 </div>
-
 <div class="container content-sm">
     <div class="headline-center margin-bottom-60">
         <h2>TOPODATA</h2>
-        <p>
-            Topodata, es una empresa dedicada a la tecnología en ingeniería aplicada en la creación de diseños,<br/>
-            planos y documentos, que describen y sustentan los proyectos de obras de construcción
-        </p>
+        <div class="text-justify">
+            <p><strong>TOPODATA, Tecnología en Ingeniería…!!!</strong> Novedoso proceso de producción en línea con tecnología de punta, que de manera efectiva, oportuna y en un mismo lugar, logra los documentos y materiales descriptivos que sustentan las bases técnicas y legales para el desarrollo de los proyectos de construcción de obras o sistemas de servicios.</p>
+            <p>El proceso inicia con los estudios técnicos fundamentales, investigaciones, análisis y diagnósticos; continuando con las recomendaciones, soluciones, aplicaciones factibles, levantamientos topográficos, diseños, cálculos, estimaciones de costos, programación de obra y finalmente, la presentación con animación digital para lograr una dimensión virtual del futuro proyecto.</p>
+            <p>Esta producción de documentos y materiales descriptivos de un proyecto, realizado con un sistema de servicios integrados, abarca las obras de construcción de infraestructura, edificaciones de viviendas, comerciales e industriales, vialidad, transporte, sistemas de agua potable, sistema de alcantarillado, sistemas hidráulicos, sistemas eléctricos y energéticos; cuyos resultados documentados deberán ser sometidos y gestionado ante las instituciones reguladoras del sector construcción de Republica Dominicana y obtener sus autorizaciones y permisos legales correspondientes.</p>
+            <p>Para quienes solo requieran una parte del servicio de elaboración de documentos de sus proyectos, disponemos de ofertas que van desde alquiler de equipos electrónicos digitales y ordenadores de alto rendimiento, hasta servicio de digitación, compilación, manejo de archivos electrónicos, impresiones, ploteos, entre otros.</p>
+            <p>Finalmente, nuestro menú de servicios con la elaboración de propuestas de licitaciones y concursos, la fiscalización y supervisión de obras, las auditorias técnicas, los peritajes y experticias, tanto para el sector público como privado, completan la gama de producción en línea de los documentos necesarios del propietario y del proponente.</p>
+            <strong>
+                <p>Propietarios y proponentes obtendran en TOPODATA:</p>
+                <ul>
+                    <li>Suplir las necesidades de servicios tecnologicos de sus proyectos.</li>
+                    <li>Las respuestas a sus preguntas para localizar un lugar seguro, eficiente y oportuno.</li>
+                    <li>La seguridad de encontrar profesionales dedicados al servicio personalizado y discreto.</li>
+                </ul>
+            </strong>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6 md-margin-bottom-50">
             <img class="img-responsive" src="~/resources/img/mockup/planning2.jpg" alt="">
         </div>
-        <div class="col-md-6">
-            <br/>
+        <div class="col-md-6 headline-center">
             <br />
-            <p>Somos una empresa reconocida que busca ofrecer todas las areas sobre la ingenieria aplicada ofreciendo los siguientes servicios:</p><br>
-            <div class="row">
-                <ul class="col-xs-6 list-unstyled lists-v1">
-                    <li><i class="fa fa-angle-right"></i>Diseño</li>
-                    <li><i class="fa fa-angle-right"></i>Estudios del Suelo</li>
-                    <li><i class="fa fa-angle-right"></i>Agrimensura</li>
-                    <li><i class="fa fa-angle-right"></i>Ingeniería Estructural</li>
-                    <li><i class="fa fa-angle-right"></i>Presentaciones</li>
-                    <li><i class="fa fa-angle-right"></i>Supervisión</li>
-                </ul>
-                <ul class="col-xs-6 list-unstyled lists-v1">
-                    <li><i class="fa fa-angle-right"></i>Impacto Ambiental</li>
-                    <li><i class="fa fa-angle-right"></i>Presupuestos</li>
-                    <li><i class="fa fa-angle-right"></i>Planificación</li>
-                    <li><i class="fa fa-angle-right"></i>Evaluación de Proyectos</li>
-                    <li><i class="fa fa-angle-right"></i>Construcción</li>
-                </ul>
+            <br />
+            <div class="text-justify">
+                <p><strong>Somos una empresa reconocida que busca ofrecer todas las areas sobre la ingenieria aplicada ofreciendo los siguientes servicios:</strong></p><br>
+                <div class="row">
+                    <ul class="col-xs-6 list-unstyled lists-v1">
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new { id = 1 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new { id = 2 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new { id = 5 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new { id = 4 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Presupuestos", "Documents", "Services", new { id = 6 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Planificacion", "Documents", "Services", new { id = 7 }, null)</li>
+                    </ul>
+                    <ul class="col-xs-6 list-unstyled lists-v1">
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new { id = 3 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Evaluacion de Proyectos", "Documents", "Services", new { id = 9 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Presentaciones", "Documents", "Services", new { id = 8 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new { id = 11 }, null)</li>
+                        <li><i class="fa fa-angle-right"></i>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new { id = 10 }, null)</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div><!--/end row-->
 </div>
-
 <div class="service-block-v5">
     <div class="container">
         <div class="row equal-height-columns">
             <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
-                <img src="~/resources/img/icons/agrimensura.png" alt="" />
-                <span>Agrimensura</span>
-                <p> Cada punto del planeta tierra es una coordenada precisa, con ellos realizamos la topografía aplicando geomática.</p>
+                <a href="@Url.Action("Documents", "Services", new {id = 1})">
+                    <img src="~/resources/img/icons/agrimensura.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Agrimensura</span>
+                    <p> Cada punto del planeta tierra es una coordenada precisa, con ellos realizamos la topografía aplicando geomática.</p>
+                </a>
             </div>
             <div style="height: 361px;" class="col-md-3 service-inner equal-height-column service-border">
-                <img src="~/resources/img/icons/estudios.png" alt="" />
-                <span>Estudios del Suelo</span>
-                <p>Con la regulación de la Ley 108-05JI de Registro Inmobiliario, gestionamos Certificados de Titulos de Propiedad.</p>
+                <a href="@Url.Action("Documents", "Services", new {id = 2})">
+                    <img src="~/resources/img/icons/estudios.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Estudios del Suelo</span>
+                    <p>Con la regulación de la Ley 108-05JI de Registro Inmobiliario, gestionamos Certificados de Titulos de Propiedad.</p>
+                </a>
             </div>
             <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
-                <img src="~/resources/img/icons/diseno.png" alt="" />
-                <span>Diseño</span>
-                <p>Formulamos los estudios, diseños y planos de Obras de Construcción.</p>
+                <a href="@Url.Action("Documents", "Services", new {id = 5})">
+                    <img src="~/resources/img/icons/diseno.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Diseño</span>
+                    <p>Formulamos los estudios, diseños y planos de Obras de Construcción.</p>
+                </a>
             </div>
             <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
-                <img src="~/resources/img/icons/ingenieria.png" alt="" />
-                <span>Ingenieria</span>
-                <p>Edificamos proyectos ajustados a su presupuesto y programación de obra con seguridad y calidad garantizada.</p>
+                <a href="@Url.Action("Documents", "Services", new {id = 10})">
+                    <img src="~/resources/img/icons/ingenieria.png" alt=""/>
+                    <span style="color: #333; margin-top: 5px">Ingenieria</span>
+                    <p>Edificamos proyectos ajustados a su presupuesto y programación de obra con seguridad y calidad garantizada.</p>
+                </a>
             </div>
         </div><!--/end row-->
     </div><!--/end container-->
@@ -84,8 +103,8 @@
     <div class="text-center">
         <iframe width="853" height="480" src="https://www.youtube.com/embed/uMC5VESsRG0" style="border:0" allowfullscreen></iframe>
     </div>
-    
-    
+
+
 </div>
 
 @section cssPlugins{

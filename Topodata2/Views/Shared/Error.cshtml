@@ -1,17 +1,20 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
 <div class="container content">
     <!--Error Block-->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="error-v1">
-                <span class="error-v1-title">404</span>
+                <span class="error-v1-title">Ups!</span>
                 <span>Hay un Error!</span>
-                <p>La pagina a la que intentas accesar no existe</p>
-                @Html.ActionLink("Regresar a Inicio", "Index", "Home", null, new { @class = "btn-u btn-bordered" })
+                <p>Error inesperado, pongase en contacto con el administrador o intente mas tarde</p>
+                @Html.ActionLink("Regresar a Inicio", "Index", "Home", null, new {@class = "btn-u btn-bordered"})
             </div>
         </div>
     </div>
     <!--End Error Block-->
 </div>
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/page_404_error.css" rel="stylesheet" />
+}
 
