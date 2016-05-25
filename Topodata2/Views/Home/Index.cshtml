@@ -351,7 +351,25 @@
 </div>
 </div>
 </div>
-
+<div class="bg-grey content-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="responsive-video margin-bottom-30">
+                    <iframe src="https://www.youtube.com/embed/uMC5VESsRG0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="300" width="530"></iframe>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="title-v2">Descubre a Topodata!</h2>
+                <p><strong>TOPODATA, Tecnología en Ingeniería…!!!</strong> Novedoso proceso de producción en línea con tecnología de punta, que de manera efectiva, oportuna y en un mismo lugar, logra los documentos y materiales descriptivos que sustentan las bases técnicas y legales para el desarrollo de los proyectos de construcción de obras o sistemas de servicios.
+                </p>
+                <p>El proceso inicia con los estudios técnicos fundamentales, investigaciones, análisis y diagnósticos; continuando con las recomendaciones, soluciones, aplicaciones factibles, levantamientos topográficos, diseños, cálculos, estimaciones de costos, programación de obra y finalmente, la presentación con animación digital para lograr una dimensión virtual del futuro proyecto.</p>
+                <br>
+                @Html.ActionLink("Leer mas", "About", "Home", new {@class = "btn-u"})
+            </div>
+        </div>
+    </div>
+</div>
 @section PageScripts{
     <script src="~/resources/plugins/layer-slider/layerslider/js/greensock.js"></script>
     <script src="~/resources/plugins/layer-slider/layerslider/js/layerslider.transitions.js"></script>
@@ -383,7 +401,7 @@
 
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#nanoGallery1").nanoGallery({
                 kind: 'flickr',
                 userID: '89639027@N07',
@@ -407,7 +425,7 @@
             if ($(this).height() > cw) {
                 cw = $(this).height();
             }
-            
+
         });
         $('.thumbnails.thumbnail-style.thumbnail-kenburn').css({ 'height': cw + 'px' });
     </script>

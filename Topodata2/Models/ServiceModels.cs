@@ -155,7 +155,7 @@ namespace Topodata2.Models
                     return null;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -233,7 +233,7 @@ namespace Topodata2.Models
                     return null;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
