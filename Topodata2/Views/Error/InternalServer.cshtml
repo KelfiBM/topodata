@@ -1,0 +1,18 @@
+﻿<div class="container content">
+    <!--Error Block-->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="error-v1">
+                <span class="error-v1-title">500</span>
+                <span>Hay un Error!</span>
+                <p>Ha habido un error interno del servidor, favor intentar mas tarde</p>
+                @Html.ActionLink("Regresar a Inicio", "Index", "Home", null, new {@class = "btn-u btn-bordered"})
+            </div>
+        </div>
+    </div>
+    <!--End Error Block-->
+</div>
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/page_404_error.css" rel="stylesheet" />
+}

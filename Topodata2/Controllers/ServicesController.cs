@@ -34,7 +34,7 @@ namespace Topodata2.Controllers
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("NotFound","Error");
                 }
             }
             else
@@ -54,9 +54,8 @@ namespace Topodata2.Controllers
             }
             else
             {
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Error");
             }
-            return null;
         }
     }
 }
