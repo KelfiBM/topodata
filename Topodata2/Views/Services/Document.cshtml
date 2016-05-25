@@ -17,12 +17,15 @@
             <div class="col-md-9">
                 <div class="news-v3 bg-color-white margin-bottom-30">
                     <div id="pdf">
-                        <iframe src="@urlPdf" class="full-width" id="pdfobject" frameborder="0" s></iframe>
+                        <iframe src="@urlPdf" class="full-width" id="pdfobject" frameborder="0"></iframe>
+                    </div>
+                    <div class="container">
+                        <h5>Si tiene problemas para visualizar el documento, puede descargarlo usando este <a href="@Model.Url">link</a></h5>
                     </div>
                     <div class="news-v3-in">
                         <ul class="list-inline posted-info">
                             <li>Uploaded By Topodata</li>
-                            <li>En @Html.ActionLink(Model.Categoria, "Documents", "Services", new {id = Model.IdCategoria}, null)</li>
+                            <li>En @Html.ActionLink(Model.Categoria, "Documents", "Services", new { id = Model.IdCategoria }, null)</li>
                             <li>Publicado el @Model.FechaPublicacion.ToLongDateString()</li>
                         </ul>
                         <h2>
@@ -83,7 +86,7 @@
 @section cssPlugins
 {
     <link href="~/resources/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet" />
-    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
 }
 @section PageScripts
 {
