@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Topodata2.Models;
 
 namespace Topodata2.Controllers
 {
@@ -10,7 +11,9 @@ namespace Topodata2.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            List<ServiceDocumentViewModel> serviceDocument =
+                new ServiceDocumentViewModel().GetTopDocumentListByCategorie(0, 4);
+            return View(serviceDocument);
         }
 
         [Route("SobreTopo")]
