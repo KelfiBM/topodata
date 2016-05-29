@@ -30,7 +30,7 @@
                     <div class="form-block-header">
                         <h2 class="margin-bottom-15">Iniciar Sesion</h2>
                     </div>
-                    @Html.ValidationSummary(true, "El usuario y/o contraseña son incorrectos", new { @style = "color: #fff" })
+                    @Html.ValidationSummary(true, "El usuario y/o contraseña son incorrectos", new { @class = "alert alert-danger" })
                     <div class="input-group margin-bottom-20">
                         <span class="input-group-addon rounded-left"><i class="icon-user color-white"></i></span>
                         @Html.EditorFor(m => m.Login.Username, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Username" } })

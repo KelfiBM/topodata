@@ -252,11 +252,13 @@
     <Content Include="resources\img\breadcrumbs\img3.jpg" />
     <Content Include="resources\img\breadcrumbs\img4.jpg" />
     <Content Include="resources\css\theme-skins\dark.css" />
+    <Content Include="resources\img\documents\logoDefault.png" />
     <Content Include="resources\img\icons\agrimensura.png" />
     <Content Include="resources\img\icons\diseno.png" />
     <Content Include="resources\img\icons\estudios.png" />
     <Content Include="resources\img\icons\ingenieria.png" />
     <Content Include="resources\img\icons\logoDefault.png" />
+    <Content Include="resources\img\icons\logoDefault_113px.png" />
     <Content Include="resources\img\icons\social\amazon.png" />
     <Content Include="resources\img\icons\social\behance.png" />
     <Content Include="resources\img\icons\social\blogger.png" />
@@ -483,6 +485,12 @@
     <Content Include="resources\plugins\nano-gallery\css\themes\light\nanogallery_light.woff.min.css" />
     <Content Include="resources\plugins\nano-gallery\css\themes\light\nano_logo.png" />
     <Content Include="resources\plugins\nano-gallery\jquery.nanogallery.min.js" />
+    <Content Include="resources\plugins\owl-carousel\owl-carousel\AjaxLoader.gif" />
+    <Content Include="resources\plugins\owl-carousel\owl-carousel\grabbing.png" />
+    <Content Include="resources\plugins\owl-carousel\owl-carousel\owl.carousel.css" />
+    <Content Include="resources\plugins\owl-carousel\owl-carousel\owl.carousel.js" />
+    <Content Include="resources\plugins\owl-carousel\owl-carousel\owl.carousel.min.js" />
+    <Content Include="resources\plugins\owl-carousel\owl-carousel\owl.theme.css" />
     <Content Include="resources\plugins\placeholder-IE-fixes.js" />
     <Content Include="resources\plugins\respond.js" />
     <Content Include="resources\plugins\scrollbar\css\jquery.mCustomScrollbar.css" />

@@ -155,7 +155,85 @@ namespace Topodata2.Models
                     return null;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<ServiceDocumentViewModel> GetTopDocumentListByCategorie(int id, int count)
+        {
+            string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            string query;
+            if (id == 0)
+            {
+                query = string.Format("SELECT TOP ({0}) dbo.DetalleDocumento.Imagen, " +
+                        "dbo.Documento.Nombre, " +
+                        "dbo.DetalleDocumento.FechaPublicacion, " +
+                        "dbo.Categoria.Descripcion AS Categoria, " +
+                        "dbo.DetalleDocumento.Descripcion, " +
+                        "dbo.Documento.IdDocumento, " +
+                        "dbo.Categoria.IdCategoria " +
+                        "FROM dbo.Categoria " +
+                        "INNER JOIN dbo.DetalleDocumento " +
+                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
+                        "INNER JOIN dbo.Documento " +
+                        "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
+                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC",count);
+            }
+            else
+            {
+                query = string.Format(
+                        "SELECT TOP ({0}) dbo.DetalleDocumento.Imagen, " +
+                        "dbo.Documento.Nombre, " +
+                        "dbo.DetalleDocumento.FechaPublicacion, " +
+                        "dbo.Categoria.Descripcion AS Categoria, " +
+                        "dbo.DetalleDocumento.Descripcion, " +
+                        "dbo.Documento.IdDocumento, " +
+                        "dbo.Categoria.IdCategoria " +
+                        "FROM dbo.Categoria " +
+                        "INNER JOIN dbo.DetalleDocumento " +
+                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
+                        "INNER JOIN dbo.Documento " +
+                        "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
+                        "WHERE (dbo.Categoria.IdCategoria = {1}) " +
+                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC",count, id);
+            }
+            List<ServiceDocumentViewModel> serviceDocumentList = new List<ServiceDocumentViewModel>();
+            try
+            {
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand com = new SqlCommand();
+                SqlDataReader reader;
+                com.CommandText = query;
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var serviceDocument = new ServiceDocumentViewModel();
+
+                        serviceDocument.ImagePath = reader.GetString(0);
+                        serviceDocument.Nombre = reader.GetString(1);
+                        serviceDocument.FechaPublicacion = reader.GetDateTime(2);
+                        serviceDocument.Categoria = reader.GetString(3);
+                        serviceDocument.Descripcion = reader.GetString(4);
+                        serviceDocument.Id = reader.GetInt32(5);
+                        serviceDocument.IdCategoria = reader.GetInt32(6);
+                        serviceDocument.Exists = true;
+                        serviceDocumentList.Add(serviceDocument);
+                    }
+                    return serviceDocumentList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
             {
                 return null;
             }

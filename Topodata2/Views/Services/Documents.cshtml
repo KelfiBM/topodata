@@ -47,21 +47,16 @@
 {
     <link href="~/resources/css/pages/blog.css" rel="stylesheet" />
 }
-<div class="breadcrumbs-v3" style="background: url(@breadcrumbsImages[idRoute]) no-repeat; background-size: 100% auto">
-    <div class="container">
-        <h1 class="pull-left" style="padding: 10px; font-weight: bold; color: rgb(255, 255, 255); background: rgba(38, 38, 38, 0.7)  ">@breadcrumbsTitles[idRoute]</h1>
-    </div>
+<div class="breadcrumbs-v3" style="background: url(@breadcrumbsImages[idRoute]) no-repeat; background-size: 100% auto; padding-top: 150px; padding-bottom: 0px; background-position: center">
+        <h1 class="" style="padding: 10px; padding-left: 40px; font-weight: bold; color: rgb(255, 255, 255); background: rgba(38, 38, 38, 0.7)  ">@breadcrumbsTitles[idRoute]</h1>
 </div>
-
-
 <div class="container content">
     <div class="row blog-page">
-        <div class="col-md-9 md-margin-bottom-40">
+        <div class="col-md-9 md-margin-bottom-40" id="documentList">
             @foreach (ServiceDocumentViewModel document in Model)
             {
                 <div class="row blog blog-medium margin-bottom-40">
-                    <div class="col-md-5">
-                        <img class="img-responsive" src="~/resources/img/breadcrumbs/img1.jpg" alt="">
+                    <div class="col-md-5" style="background: url(@document.ImagePath) no-repeat; background-size: 100% auto; background-position: center ">
                     </div>
                     <div class="col-md-7">
                         <h2>
@@ -216,6 +211,12 @@
                 }
 
             });
+        });
+    </script>
+    <script>
+        $('.row.blog.blog-medium.margin-bottom-40').children('.col-md-5').each(function (index, value) {
+            var cw = $(this).next().height();
+            $(this).css({ 'height': cw + 'px' });
         });
     </script>
 }
