@@ -258,6 +258,7 @@
     <Content Include="resources\img\icons\estudios.png" />
     <Content Include="resources\img\icons\ingenieria.png" />
     <Content Include="resources\img\icons\logoDefault.png" />
+    <Content Include="resources\img\icons\logoDefault_113px.png" />
     <Content Include="resources\img\icons\social\amazon.png" />
     <Content Include="resources\img\icons\social\behance.png" />
     <Content Include="resources\img\icons\social\blogger.png" />

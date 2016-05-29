@@ -103,6 +103,7 @@
             <!-- End Topbar -->
             <!-- Navbar -->
             <div class="navbar navbar-default mega-menu" role="navigation">
+                <div style="height: 25px"></div>
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
@@ -110,11 +111,10 @@
                             <span class="sr-only">Toggle navigation</span>
                             <span class="fa fa-bars"></span>
                         </button>
-                        <a class="navbar-brand" href=@Url.Action("Index","Home")>
-                            <img id="logo-header" src="~/resources/img/icons/logoDefault.png" alt="Logo" width="10%" style="margin-top:-15px">
+                        <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                            <img style="margin-top: -37px" id="logo-header" src="~/resources/img/icons/logoDefault_113px.png" alt="Logo">
                         </a>
                     </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
                         <ul class="nav navbar-nav">
                             <!-- Home -->
@@ -122,19 +122,19 @@
                                 @Html.ActionLink("Inicio", "Index", "Home")
                             </li>
                             <li class="dropdown">
-                                @Html.ActionLink("Servicios", "Documents", "Services", new { id = 0 }, null)
+                                @Html.ActionLink("Servicios", "Documents", "Services", new {id = 0}, null)
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new { id = 1 }, null)</li>
-                                    <li>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new { id = 2 }, null)</li>
-                                    <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new { id = 3 }, null)</li>
-                                    <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new { id = 4 }, null)</li>
-                                    <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new { id = 5 }, null)</li>
-                                    <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new { id = 6 }, null)</li>
-                                    <li>@Html.ActionLink("Planificacion", "Documents", "Services", new { id = 7 }, null)</li>
-                                    <li>@Html.ActionLink("Presentaciones", "Documents", "Services", new { id = 8 }, null)</li>
-                                    <li>@Html.ActionLink("Evaluacion de Proyectos", "Documents", "Services", new { id = 9 }, null)</li>
-                                    <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new { id = 10 }, null)</li>
-                                    <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new { id = 11 }, null)</li>
+                                    <li>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new {id = 1}, null)</li>
+                                    <li>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new {id = 2}, null)</li>
+                                    <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new {id = 5}, null)</li>
+                                    <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new {id = 4}, null)</li>
+                                    <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new {id = 6}, null)</li>
+                                    <li>@Html.ActionLink("Planificacion", "Documents", "Services", new {id = 7}, null)</li>
+                                    <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new {id = 3}, null)</li>
+                                    <li>@Html.ActionLink("Evaluacion de Proyectos", "Documents", "Services", new {id = 9}, null)</li>
+                                    <li>@Html.ActionLink("Presentaciones", "Documents", "Services", new {id = 8}, null)</li>
+                                    <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new {id = 11}, null)</li>
+                                    <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new {id = 10}, null)</li>
                                 </ul>
                             </li>
                             <!-- End Home -->
@@ -223,7 +223,7 @@
                             <a class="twitter-timeline"
                                href="https://twitter.com/topodata/lists/geomatica-topografia-ttw"
                                data-widget-id="697619227469975552"
-                               data-chrome="noheader nofooter noborders noscrollbar transparent"
+                               data-chrome="noheader nofooter noborders transparent"
                                height="263"></a>
 
                         </div>
