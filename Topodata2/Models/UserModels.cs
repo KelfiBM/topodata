@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using ModelMetadata = System.Web.Mvc.ModelMetadata;
@@ -113,6 +115,103 @@ namespace Topodata2.Models
 
         [Display(Name = "Acepto recibir noticias Topodata")]
         public bool Informed { get; set; }
+
+        public bool RegisterUser(RegisterUserViewModel registerUserView)
+        {
+            try
+            {
+                string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
+                {
+                    string query =
+                        "INSERT INTO [Topodata].[dbo].[Users] VALUES (@name, @lastName, @email, @username, @password, @informed, @regDate)";
+                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("name", registerUserView.Name);
+                    sqlCommand.Parameters.AddWithValue("lastName", registerUserView.LastName);
+                    sqlCommand.Parameters.AddWithValue("email", registerUserView.Email);
+                    sqlCommand.Parameters.AddWithValue("username", registerUserView.Username);
+                    sqlCommand.Parameters.AddWithValue("password", registerUserView.Password);
+                    sqlCommand.Parameters.AddWithValue("informed", registerUserView.Informed);
+                    sqlCommand.Parameters.AddWithValue("regDate", DateTime.Now);
+                    sqlConnection.Open();
+                    sqlCommand.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
+    }
+
+    public class SubscribeViewModel
+    {
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Correo Electronico")]
+        [EmailAddress(ErrorMessage = "Correo invalido")]
+        [Remote("emailExistsSubscribe", "User", HttpMethod = "POST", ErrorMessage = "Este correo ya esta suscrito")]
+        public string Email { get; set; }
+
+        public bool Subscribe(SubscribeViewModel subscribeView)
+        {
+            try
+            {
+                string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
+                {
+                    string query = "INSERT INTO [Topodata].[dbo].[Suscrito] VALUES (@email, @informed)";
+                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("email", subscribeView.Email);
+                    sqlCommand.Parameters.AddWithValue("informed", 1);
+                    sqlConnection.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    sqlCommand.Dispose();
+                    sqlConnection.Close();
+                }
+                SendMessage(subscribeView.Email);
+                return true;
+            }
+            catch (Exception es)
+            {
+                return false;
+            }
+        }
+
+        private bool SendMessage(string toMail)
+        {
+            try
+            {
+                const string from = "info@topodata.com";
+                string to = toMail;
+                const string subject = "Gracias por ser parte de Topodata!";
+                const string pass = "Topo.1953";
+
+                string body = "<b>Gracias por unirte la comunidad Topodata</b><br/>";
+                body += "Esperemos que te sientas comodo perteneciendo a nuestra comunidad.<br />";
+                body += "Con esto estaras al tanto de lo que sucede en Topodata y asi mantenerte al dia de los ultimos acontecimientos que esta te ofrece.<br />";
+                body += "<br />Topodata";
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, "Topodata");
+                mailMessage.To.Add(new MailAddress(to));
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Credentials = new NetworkCredential(from,pass);
+                smtpClient.Send(mailMessage);
+                return true;
+            }
+           catch (Exception)
+            {
+
+                return false;
+            }
+        }
     }
 
     public class MustBeTrueAttribute : ValidationAttribute, IClientValidatable
@@ -150,6 +249,40 @@ namespace Topodata2.Models
                 SqlCommand com = new SqlCommand();
                 SqlDataReader reader;
                 com.CommandText = string.Format("SELECT * FROM [Users] WHERE " + attrib + " = '{0}'", data);
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+
+                con.Open();
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Close();
+                    return true;
+                }
+                else
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Close();
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool ExistsCheckSuscribed(string email)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand com = new SqlCommand();
+                SqlDataReader reader;
+                com.CommandText = string.Format("SELECT * FROM [Suscrito] WHERE Email = '{0}'", email);
                 com.CommandType = CommandType.Text;
                 com.Connection = con;
 

@@ -83,24 +83,33 @@ namespace Topodata2.Controllers
             }
             else
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connection))
+                if (userViewModel.Register.RegisterUser(userViewModel.Register))
                 {
-                    string query =
-                        "INSERT INTO [Topodata].[dbo].[Users] VALUES (@name, @lastName, @email, @username, @password, @informed, @regDate)";
-                    SqlCommand sqlCommand = new SqlCommand(query,sqlConnection);
-                    sqlCommand.Parameters.AddWithValue("name", userViewModel.Register.Name);
-                    sqlCommand.Parameters.AddWithValue("lastName", userViewModel.Register.LastName);
-                    sqlCommand.Parameters.AddWithValue("email", userViewModel.Register.Email);
-                    sqlCommand.Parameters.AddWithValue("username", userViewModel.Register.Username);
-                    sqlCommand.Parameters.AddWithValue("password", userViewModel.Register.Password);
-                    sqlCommand.Parameters.AddWithValue("informed", userViewModel.Register.Informed);
-                    sqlCommand.Parameters.AddWithValue("regDate", DateTime.Now);
-                    sqlConnection.Open();
-                    sqlCommand.ExecuteNonQuery();
+                    return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index", "Home");
+                else
+                {
+                    return View(userViewModel);
+                }
             }
 
+        }
+
+        [HttpPost]
+        public ActionResult Subscribe(SubscribeViewModel subscribeView)
+        {
+            if (ModelState.IsValid)
+            {
+                subscribeView.Subscribe(subscribeView);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        [HttpPost]
+        public JsonResult emailExistsSubscribe(SubscribeViewModel subscribeView)
+        {
+            return Json(!new ItExists().ExistsCheckSuscribed(subscribeView.Email));
         }
 
     }

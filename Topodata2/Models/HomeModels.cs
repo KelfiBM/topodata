@@ -32,6 +32,7 @@ namespace Topodata2.Models
                 const string from = "contact@topodata.com";
                 const string to = "info@topodata.com";
                 const string subject = "Correo de un visitante";
+                const string pass = "Topo.1953";
 
                 string body = "<b>De parte de:</b> " + contactUs.Nombre + "<br/>";
                 body += "<b>Email:</b> " + contactUs.Email + "<br/>";
@@ -45,6 +46,7 @@ namespace Topodata2.Models
                 mailMessage.IsBodyHtml = true;
 
                 SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Credentials = new NetworkCredential(from,pass);
                 smtpClient.Send(mailMessage);
                 return true;
             }
