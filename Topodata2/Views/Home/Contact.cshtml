@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Topodata2.Models.ContactUsViewModel
+@{
     ViewData["Title"] = "Contáctenos";
 }
 <div class="container content">
@@ -8,44 +9,51 @@
                  class="map map-box map-box-space margin-bottom-40"
                  style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden">
             </div>
+            @if (ViewData["Error"] != null)
+            {
+                <div class="alert alert-danger fade in alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>Lo sentimos! </strong>
+                    @ViewData["Error"]
+                </div>
+            }
             <h3>
                 <strong>Haznos saber tus inquietudes e intentaremos responderte lo mas antes posible</strong>
             </h3>
             <br/>
-            <form id="sky-form3" class="sky-form contact-style" method="post" action="Home/Contact">
+            @using (Html.BeginForm("Contact", "Home", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form contact-style"}))
+            {
                 <fieldset class="no-padding">
-                    <label>
-                        Nombre
-                        <span class="color-red">*</span>
-                    </label>
+                    @Html.LabelFor(m => m.Nombre)
                     <div class="row sky-space-20">
                         <div class="col-md-7 col-md-offset-0">
                             <div>
-                                <input type="text" name="name" id="name" class="form-control" />
+                                @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@id = "name", @class = "form-control", @name = "name"}})
+                                @Html.ValidationMessageFor(m => m.Nombre, String.Empty, new {@class = "text-danger text-bold"})
                             </div>
                         </div>
                     </div>
-                    <label>Email <span class="color-red">*</span></label>
+                    @Html.LabelFor(m => m.Email)
                     <div class="row sky-space-20">
                         <div class="col-md-7 col-md-offset-0">
                             <div>
-                                <input type="text" name="email" id="mail" class="form-control">
+                                @Html.EditorFor(m => m.Email, new {htmlAttributes = new {@id = "mail", @class = "form-control", @name = "email"}})
+                                @Html.ValidationMessageFor(m => m.Email, String.Empty, new {@class = "text-danger text-bold"})
                             </div>
                         </div>
                     </div>
-                    <label>Mensaje <span class="color-red">*</span></label>
+                    @Html.LabelFor(m => m.Mensaje)
                     <div class="row sky-space-20">
-                        <div class="col-md-11 col-md-offset-0">
+                        <div class="col-md-7 col-md-offset-0">
                             <div>
-                                <textarea rows="8" name="message" id="message" class="form-control"></textarea>
+                                @Html.EditorFor(m => m.Mensaje, new {htmlAttributes = new {@id = "message", @class = "form-control", @name = "message", @rows = "8"}})
+                                @Html.ValidationMessageFor(m => m.Mensaje, String.Empty, new {@class = "text-danger text-bold"})
                             </div>
                         </div>
                     </div>
-                    <p>
-                        <button type="submit" class="btn-u">Enviar Mensaje</button>
-                    </p>
+                    <button class="btn-u" type="submit">Enviar Mensaje</button>
                 </fieldset>
-            </form>
+            }
         </div>
         <div class="col-md-3">
             <div class="headline">
@@ -119,11 +127,19 @@
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script src="~/resources/plugins/gmap/gmap.js"></script>
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
     <script src="~/resources/js/forms/contact.js"></script>
     <script src="~/resources/js/pages/page_contacts.js"></script>
+    
+    
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+    
+    <script src="~/resources/js/plugins/validation.js"></script>
+    
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 }
 @section documentReady{
     ContactPage.initMap();
     ContactForm.initContactForm();
+    Validation.initValidation();
+    
 }

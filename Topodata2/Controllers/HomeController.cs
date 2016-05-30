@@ -32,15 +32,6 @@ namespace Topodata2.Controllers
         }
 
         [HttpGet]
-        [Route("Contacto")]
-        public ActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        [HttpGet]
         [Route("media/fotos")]
         public ActionResult Photo()
         {
@@ -55,11 +46,26 @@ namespace Topodata2.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Contact(string name, string mail, string message)
+        public ActionResult Contact()
         {
-
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(ContactUsViewModel contactUs)
+        {
+            if (ModelState.IsValid)
+            {
+                if (contactUs.SendMessage(contactUs))
+                {
+                    TempData["Success"] = "Tu mensaje ha sido enviado con exito";
+                    return RedirectToAction("Index");
+                }
+                ViewData["Error"] = "Ha sucedido un problema enviando tu mensaje, Intenta mas tarde ";
+                return View(contactUs);
+            }
+            return View(contactUs);
+
         }
 
         public ActionResult Error()
