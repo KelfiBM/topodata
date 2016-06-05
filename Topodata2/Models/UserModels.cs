@@ -124,7 +124,7 @@ namespace Topodata2.Models
                 using (SqlConnection sqlConnection = new SqlConnection(connection))
                 {
                     string query =
-                        "INSERT INTO [Topodata].[dbo].[Users] VALUES (@name, @lastName, @email, @username, @password, @informed, @regDate)";
+                        "INSERT INTO [Topodata].[dbo].[Users] VALUES (@name, @lastName, @email, @username, @password, @informed, @regDate, @role)";
                     SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
                     sqlCommand.Parameters.AddWithValue("name", registerUserView.Name);
                     sqlCommand.Parameters.AddWithValue("lastName", registerUserView.LastName);
@@ -133,6 +133,7 @@ namespace Topodata2.Models
                     sqlCommand.Parameters.AddWithValue("password", registerUserView.Password);
                     sqlCommand.Parameters.AddWithValue("informed", registerUserView.Informed);
                     sqlCommand.Parameters.AddWithValue("regDate", DateTime.Now);
+                    sqlCommand.Parameters.AddWithValue("role", 1);
                     sqlConnection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -180,7 +181,7 @@ namespace Topodata2.Models
             }
         }
 
-        private bool SendMessage(string toMail)
+        public bool SendMessage(string toMail)
         {
             try
             {
@@ -309,4 +310,6 @@ namespace Topodata2.Models
             }
         }
     }
+
+
 }

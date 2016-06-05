@@ -32,7 +32,7 @@ namespace Topodata2.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (userViewModel.Login.IsValid(userViewModel.Login.Username, userViewModel.Login.Password))
+                if (new CustomMerbershipProvider().ValidateUser(userViewModel.Login.Username, userViewModel.Login.Password))
                 {
                     FormsAuthentication.SetAuthCookie(userViewModel.Login.Username, userViewModel.Login.KeepConnected);
                     return Redirect(returnUrl);
@@ -85,6 +85,8 @@ namespace Topodata2.Controllers
             {
                 if (userViewModel.Register.RegisterUser(userViewModel.Register))
                 {
+                    new SubscribeViewModel().SendMessage(userViewModel.Register.Email);
+                    FormsAuthentication.SetAuthCookie(userViewModel.Register.Username,false);
                     return RedirectToAction("Index", "Home");
                 }
                 else

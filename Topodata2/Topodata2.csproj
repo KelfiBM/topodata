@@ -203,6 +203,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CustomMerbershipProvider.cs" />
+    <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -683,6 +685,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Shared\_SubscribeFooter.cshtml" />
+    <Content Include="Views\Services\AddDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

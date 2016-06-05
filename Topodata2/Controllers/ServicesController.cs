@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +23,7 @@ namespace Topodata2.Controllers
                 return View("MustLogIn");
             }
         }
+
         [Route("Documento/{id:int}")]
         public ActionResult Document( int id = 0)
         {
@@ -56,6 +58,66 @@ namespace Topodata2.Controllers
             {
                 return RedirectToAction("NotFound", "Error");
             }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddDocument()
+        {
+            if (User.IsInRole("Admin"))
+            {
+                return View();
+            }
+            return RedirectToAction("NotFound", "Error");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult AddDocument(ServiceDocumentViewModel serviceDocument)
+        {
+            if (serviceDocument.ImageUpload != null)
+            {
+                string[] validImageTypes =
+            {
+                "image/gif",
+                "image/jpeg",
+                "image/pjpeg",
+                "image/png"
+            };
+
+                if (!validImageTypes.Contains(serviceDocument.ImageUpload.ContentType))
+                {
+                    ModelState.AddModelError("ImageUpload", "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                string uploadPath = "~/resources/img/documents";
+                string filename = serviceDocument.ImageUpload.FileName;
+                string imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
+                string tempFileName = filename;
+                if (System.IO.File.Exists(imagePath))
+                {
+                    int counter = 1;
+                    while (System.IO.File.Exists(imagePath))
+                    {
+                        tempFileName = counter.ToString() + filename;
+                        imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
+                        counter++;
+                    }
+                    filename = tempFileName;
+                }
+                string imageUrl = uploadPath + "/" + filename;
+                imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
+                serviceDocument.ImageUpload.SaveAs(imagePath);
+                serviceDocument.ImagePath = imageUrl;
+
+                if (serviceDocument.AddDocument(serviceDocument))
+                {
+                    return RedirectToAction("Document", "Services", new { id = serviceDocument.GetLastDocummentAdded().Id });
+                }
+                return RedirectToAction("InternalServer", "Error");
+            }
+            return View(serviceDocument);
         }
     }
 }
