@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.WebPages;
 
@@ -354,6 +356,41 @@ namespace Topodata2.Models
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public bool SendAddedDocumentMessage()
+        {
+            try
+            {
+                const string from = "info@topodata.com";
+                const string subject = "Topodata ha subido un nuevo documento!";
+                const string pass = "Topo.1953";
+                MessageTemplate messageTemplate = new MessageTemplate();
+                string body = messageTemplate.AddedNewContent(GetLastDocummentAdded());
+                
+
+                Members members = new Members();
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, "Topodata");
+                foreach (string informedMember in members.InformedMembers())
+                {
+                    mailMessage.To.Add(informedMember);
+                }
+                
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Credentials = new NetworkCredential(from, pass);
+                smtpClient.Send(mailMessage);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

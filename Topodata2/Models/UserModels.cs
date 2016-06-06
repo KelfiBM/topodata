@@ -311,5 +311,54 @@ namespace Topodata2.Models
         }
     }
 
+    public class Members
+    {
+        private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+        public List<string> InformedMembers()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand com = new SqlCommand();
+                SqlDataReader reader;
+                List<string> lista = new List<string>();
+
+                com.CommandText = string.Format("SELECT [Email] " +
+                                                "FROM [dbo].[Users] " +
+                                                "WHERE [dbo].[Users].[Informed] = 1 " +
+                                                "UNION " +
+                                                "SELECT[Email] " +
+                                                "FROM [dbo].[Suscrito]");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+
+                con.Open();
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(reader.GetString(0));
+                    }
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Close();
+                    return lista;
+                }
+                else
+                {
+                    reader.Dispose();
+                    com.Dispose();
+                    con.Close();
+                    return lista;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+    }
 
 }

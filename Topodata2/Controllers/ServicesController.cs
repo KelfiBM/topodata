@@ -113,6 +113,7 @@ namespace Topodata2.Controllers
 
                 if (serviceDocument.AddDocument(serviceDocument))
                 {
+                    serviceDocument.SendAddedDocumentMessage();
                     return RedirectToAction("Document", "Services", new { id = serviceDocument.GetLastDocummentAdded().Id });
                 }
                 return RedirectToAction("InternalServer", "Error");

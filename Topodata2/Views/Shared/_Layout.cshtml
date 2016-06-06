@@ -174,8 +174,13 @@
                     </li>
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li>
-                            @Html.ActionLink("Añadir Documento", "AddDocument", "Services")
+                        <li class="dropdown">
+                            <a href="#">Administracion</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Añadir Documento", "AddDocument", "Services")
+                                </li>
+                            </ul>
                         </li>
                     }
                     <!-- Search Block -->
