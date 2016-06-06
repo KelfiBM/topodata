@@ -1,0 +1,84 @@
+﻿@model Topodata2.Models.ServiceDocumentViewModel
+@{
+    ViewBag.Title = "Añadir Documento";
+}
+
+<div class="container content">
+    <div class="headline">
+        <h2>Añadir Documento</h2>
+        @using (Html.BeginForm("AddDocument", "Services", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data" }))
+        {
+            <fieldset>
+                <section>
+                    <label class="label">Nombre del documento</label>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(m => m.Nombre, String.Empty, new {@class = "text-danger text-bold"})
+                    </label>
+                </section>
+                <section>
+                    <label class="label">Descripcion</label>
+                    <label class="textarea textarea-resizable">
+                        @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control", @rows = "5"}})
+                        @Html.ValidationMessageFor(m => m.Descripcion, String.Empty, new {@class = "text-danger text-bold"})
+                    </label>
+                </section>
+                <section>
+                    <label class="label">Servicio</label>
+                    <label class="select">
+                        @Html.DropDownListFor(m => m.IdCategoria, new SelectList(new List<Object>
+                        {
+                            new {value = 1, text = "Agrimensura Geomatica"},
+                            new {value = 2, text = "Estudio y Mecanica de Suelos"},
+                            new {value = 5, text = "Diseños Arquitectonicos y Espacios"},
+                            new {value = 4, text = "Ingenieria Estructural y Calculos"},
+                            new {value = 6, text = "Presupuestos"},
+                            new {value = 7, text = "Planificacion"},
+                            new {value = 3, text = "Impacto Ambiental y Sostenibilidad"},
+                            new {value = 9, text = "Evaluacion de Proyectos"},
+                            new {value = 8, text = "Presentaciones"},
+                            new {value = 11, text = "Supervicion de Obras"},
+                            new {value = 10, text = "Procesos de Construccion"},
+
+                        },
+                            "value", "text"), new {htmlAttributes = new {@class = "form-control"}})
+                        <i></i>
+                        @Html.ValidationMessageFor(m => m.IdCategoria, String.Empty, new {@class = "text-danger text-bold"})
+                    </label>
+                </section>
+                <section>
+                    <label class="label">Url del Documento</label>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Url, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(m => m.Url, String.Empty, new {@class = "text-danger text-bold"})
+                    </label>
+                </section>
+                <section>
+                    <label class="label">Imagen</label>
+                    <label for="file" class="input input-file">
+                        <div class="button">
+                            @Html.TextBoxFor(m => m.ImageUpload, new {@id = "file", @type = "file", @onchange = "this.parentNode.nextElementSibling.value = this.value"})
+                            Seleccionar
+                        </div>
+                        <input readonly type="text">
+                    </label>
+                    @Html.ValidationMessageFor(m => m.ImageUpload, String.Empty, new {@class = "text-danger text-bold"})
+                </section>
+                <button type="submit">Añadir documento</button>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section cssPlugins{
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+}
+
+@section PageScripts{
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+}
+@section documentReady{
+    Validation.initValidation();
+}

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Mail;
+using System.Web;
+using System.Web.WebPages;
 
 namespace Topodata2.Models
 {
@@ -14,14 +19,69 @@ namespace Topodata2.Models
     public class ServiceDocumentViewModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [DataType(DataType.MultilineText)]
         public string Descripcion { get; set; }
+
         public string Categoria { get; set; }
+
         public DateTime FechaPublicacion { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string Url { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
         public int IdCategoria { get; set; }
+
         public bool Exists { get; set; }
+
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase ImageUpload { get; set; }
+
         public string ImagePath { get; set; }
+
+        public bool AddDocument(ServiceDocumentViewModel serviceDocument)
+        {
+            try
+            {
+                string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                using (SqlConnection sqlConnection = new SqlConnection(connection))
+                {
+                    string query =
+                        "BEGIN TRANSACTION " +
+                        "DECLARE @DocumentId int; " +
+                        "INSERT INTO [dbo].[Documento] VALUES (@nombre); " +
+                        "SELECT @DocumentID = scope_identity();" +
+                        "INSERT INTO [dbo].[DetalleDocumento] VALUES (@DocumentID, @descripcion, @idCategoria, @fechaPublicacion, @imagePath, @url);" +
+                        "COMMIT";
+                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                    if (serviceDocument.ImagePath == null || serviceDocument.ImagePath.IsEmpty())
+                    {
+                        serviceDocument.ImagePath = "/resources/img/documents/logoDefault.png";
+                    }
+                    sqlCommand.Parameters.AddWithValue("nombre", serviceDocument.Nombre);
+                    sqlCommand.Parameters.AddWithValue("descripcion", serviceDocument.Descripcion);
+                    sqlCommand.Parameters.AddWithValue("idCategoria", serviceDocument.IdCategoria);
+                    sqlCommand.Parameters.AddWithValue("fechaPublicacion", DateTime.Now);
+                    sqlCommand.Parameters.AddWithValue("imagePath", serviceDocument.ImagePath);
+                    sqlCommand.Parameters.AddWithValue("url", serviceDocument.Url);
+                    sqlConnection.Open();
+                    sqlCommand.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (SqlException es)
+            {
+                return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
         public ServiceDocumentViewModel GetDocumentById(int id)
         {
@@ -61,6 +121,66 @@ namespace Topodata2.Models
                         serviceDocument.FechaPublicacion = reader.GetDateTime(3);
                         serviceDocument.Url = reader.GetString(4);
                         serviceDocument.IdCategoria = reader.GetInt32(5);
+                        serviceDocument.Exists = true;
+                        return serviceDocument;
+                    }
+                    else
+                    {
+                        serviceDocument.Exists = false;
+                        return serviceDocument;
+                    }
+                }
+                else
+                {
+                    serviceDocument.Exists = false;
+                    return serviceDocument;
+                }
+            }
+            catch (Exception)
+            {
+                serviceDocument.Exists = false;
+                return serviceDocument;
+            }
+        }
+
+        public ServiceDocumentViewModel GetLastDocummentAdded()
+        {
+            string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            ServiceDocumentViewModel serviceDocument = new ServiceDocumentViewModel();
+            try
+            {
+                SqlConnection con = new SqlConnection(connection);
+                SqlCommand com = new SqlCommand();
+                SqlDataReader reader;
+                com.CommandText =
+                    string.Format(
+                        "SELECT TOP 1 dbo.Documento.Nombre, " +
+                        "dbo.DetalleDocumento.Descripcion, " +
+                        "dbo.Categoria.Descripcion AS Categoria, " +
+                        "dbo.DetalleDocumento.FechaPublicacion, " +
+                        "dbo.DetalleDocumento.Url, " +
+                        "dbo.Categoria.IdCategoria, " +
+                        "dbo.Documento.IdDocumento " +
+                        "FROM dbo.Categoria INNER JOIN dbo.DetalleDocumento " +
+                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
+                        "INNER JOIN dbo.Documento " +
+                        "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
+                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC");
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        serviceDocument.Nombre = reader.GetString(0);
+                        serviceDocument.Descripcion = reader.GetString(1);
+                        serviceDocument.Categoria = reader.GetString(2);
+                        serviceDocument.FechaPublicacion = reader.GetDateTime(3);
+                        serviceDocument.Url = reader.GetString(4);
+                        serviceDocument.IdCategoria = reader.GetInt32(5);
+                        serviceDocument.Id = reader.GetInt32(6);
                         serviceDocument.Exists = true;
                         return serviceDocument;
                     }
@@ -236,6 +356,41 @@ namespace Topodata2.Models
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public bool SendAddedDocumentMessage()
+        {
+            try
+            {
+                const string from = "info@topodata.com";
+                const string subject = "Topodata ha subido un nuevo documento!";
+                const string pass = "Topo.1953";
+                MessageTemplate messageTemplate = new MessageTemplate();
+                string body = messageTemplate.AddedNewContent(GetLastDocummentAdded());
+                
+
+                Members members = new Members();
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, "Topodata");
+                foreach (string informedMember in members.InformedMembers())
+                {
+                    mailMessage.To.Add(informedMember);
+                }
+                
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Credentials = new NetworkCredential(from, pass);
+                smtpClient.Send(mailMessage);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }
