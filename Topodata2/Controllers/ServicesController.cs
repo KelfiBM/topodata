@@ -56,7 +56,7 @@ namespace Topodata2.Controllers
             }
             else
             {
-                return RedirectToAction("NotFound", "Error");
+                return RedirectToAction("Documents", "Services", new {id = 0});
             }
         }
 
@@ -74,43 +74,51 @@ namespace Topodata2.Controllers
         [HttpPost]
         public ActionResult AddDocument(ServiceDocumentViewModel serviceDocument)
         {
-            if (serviceDocument.ImageUpload != null)
-            {
-                string[] validImageTypes =
-            {
-                "image/gif",
-                "image/jpeg",
-                "image/pjpeg",
-                "image/png"
-            };
-
-                if (!validImageTypes.Contains(serviceDocument.ImageUpload.ContentType))
-                {
-                    ModelState.AddModelError("ImageUpload", "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
-                }
-            }
             if (ModelState.IsValid)
             {
-                string uploadPath = "~/resources/img/documents";
-                string filename = serviceDocument.ImageUpload.FileName;
-                string imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
-                string tempFileName = filename;
-                if (System.IO.File.Exists(imagePath))
+                if (serviceDocument.ImageUpload != null)
                 {
-                    int counter = 1;
-                    while (System.IO.File.Exists(imagePath))
+                    string[] validImageTypes =
                     {
-                        tempFileName = counter.ToString() + filename;
-                        imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
-                        counter++;
-                    }
-                    filename = tempFileName;
-                }
-                string imageUrl = uploadPath + "/" + filename;
-                imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
-                serviceDocument.ImageUpload.SaveAs(imagePath);
-                serviceDocument.ImagePath = imageUrl;
+                        "image/gif",
+                        "image/jpeg",
+                        "image/pjpeg",
+                        "image/png"
+                    };
 
+                    if (!validImageTypes.Contains(serviceDocument.ImageUpload.ContentType))
+                    {
+                        ModelState.AddModelError("ImageUpload",
+                            "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
+                        return View(serviceDocument);
+                    }
+                    else
+                    {
+                        string uploadPath = "~/resources/img/documents";
+                        string filename = serviceDocument.ImageUpload.FileName;
+                        string imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
+                        string tempFileName = filename;
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            int counter = 1;
+                            while (System.IO.File.Exists(imagePath))
+                            {
+                                tempFileName = counter.ToString() + filename;
+                                imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
+                                counter++;
+                            }
+                            filename = tempFileName;
+                        }
+                        string imageUrl = uploadPath + "/" + filename;
+                        imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
+                        serviceDocument.ImageUpload.SaveAs(imagePath);
+                        serviceDocument.ImagePath = imageUrl;
+                    }
+                }
+                else
+                {
+                    serviceDocument.ImagePath = null;
+                }
                 if (serviceDocument.AddDocument(serviceDocument))
                 {
                     serviceDocument.SendAddedDocumentMessage();
