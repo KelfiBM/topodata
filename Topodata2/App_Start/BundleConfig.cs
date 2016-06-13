@@ -27,8 +27,17 @@ namespace Topodata2
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
-
-            BundleTable.EnableOptimizations = true;
+            bundles.Add(new ScriptBundle("~/bundles/SharedLayout/Scripts").Include(
+                "~/resources/plugins/jquery/jquery.min.js",
+                "~/resources/plugins/jquery/jquery-migrate.min.js",
+                "~/resources/plugins/bootstrap/js/bootstrap.min.js",
+                "~/resources/plugins/back-to-top.js",
+                "~/resources/plugins/smoothscroll.js",
+                "~/resources/js/plugins/validation.js",
+                "~/Scripts/jquery.validate.min.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js",
+                "~/resources/js/custom.js",
+                "~/resources/js/app.js"));
         }
     }
 }
