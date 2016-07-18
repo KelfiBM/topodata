@@ -257,6 +257,7 @@
     <Content Include="resources\img\breadcrumbs\img3.jpg" />
     <Content Include="resources\img\breadcrumbs\img4.jpg" />
     <Content Include="resources\css\theme-skins\dark.css" />
+    <Content Include="resources\img\Defaults\defaultUser.png" />
     <Content Include="resources\img\documents\logoDefault.png" />
     <Content Include="resources\img\icons\agrimensura.png" />
     <Content Include="resources\img\icons\diseno.png" />
@@ -690,6 +691,8 @@
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Shared\_SubscribeFooter.cshtml" />
     <Content Include="Views\Services\AddDocument.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\_ProfileLeftPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
