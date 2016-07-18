@@ -1,7 +1,21 @@
 ﻿<div class="col-md-3 md-margin-bottom-40">
     <img src="~/resources/img/Defaults/defaultUser.png" alt="" class="img-responsive profile-img margin-bottom-20" />
-    <ul id="sidebar-nav-1" class="list-group sidebar-nav-v1 margin-bottom-40">
-        <li class="list-group-item active"></li>
-        <li class="list-group-item"></li>
+    <ul id="sidebar-nav-1" class="nav list-group sidebar-nav-v1 margin-bottom-40">
+        <li class="list-group-item">
+            <a href="@Url.Action("ProfileMain", "User")">
+                <i class="fa fa-user"></i>
+                Perfil
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="@Url.Action("ProfileSettings", "User")">
+                <i class="fa fa-cog"></i>
+                Configuracion
+            </a>
+        </li>
     </ul>
+    <form id="sky-form2" class="sky-form">
+        <div id="inline-start">
+        </div>
+    </form>
 </div>

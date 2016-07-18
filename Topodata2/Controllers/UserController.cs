@@ -32,6 +32,11 @@ namespace Topodata2.Controllers
             return View();
         }
 
+        public ActionResult ProfileMain()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(UserViewModel userViewModel, string returnUrl = "/")
         {

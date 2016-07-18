@@ -691,8 +691,9 @@
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Shared\_SubscribeFooter.cshtml" />
     <Content Include="Views\Services\AddDocument.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\ProfileSettings.cshtml" />
     <Content Include="Views\User\_ProfileLeftPanel.cshtml" />
+    <Content Include="Views\User\ProfileMain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
