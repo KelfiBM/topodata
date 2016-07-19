@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Topodata2.Models;
+using Topodata2.Models.User;
 
 namespace Topodata2.Controllers
 {
@@ -29,12 +30,19 @@ namespace Topodata2.Controllers
 
         public ActionResult ProfileSettings()
         {
-            return View();
+            return View("Profile/ProfileSettings");
+        }
+
+        [HttpPost]
+        public ActionResult ProfileSettingsNotification(UserProfileSettingsNotificationViewModel viewModel)
+        {
+
+            return View("Profile/ProfileSettings");
         }
 
         public ActionResult ProfileMain()
         {
-            return View();
+            return View("Profile/ProfileMain");
         }
 
         [HttpPost]

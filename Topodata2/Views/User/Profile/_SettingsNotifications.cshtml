@@ -1,0 +1,20 @@
+﻿@model Topodata2.Models.User.UserProfileSettingsNotificationViewModel
+<div id="settings" class="profile-edit tab-pane fade">
+    <h2 class="heading-md">Notificaciones</h2>
+    <p>Decide que notificaciones quieres recibir</p>
+    <br>
+    @using (Html.BeginForm("ProfileSettingsNotification", "User", FormMethod.Post, new {@class = "sky-form", @id = "sky-form3"}))
+    {
+        <label class="toggle">
+            <input type="checkbox" 
+                   id=@Html.IdFor(m => m.newDocuments)
+                   value="@Html.ValueFor(m => m.newDocuments)"
+                   name="@Html.NameFor(m => m.newDocuments)"
+                   checked=""/>
+            <i class="no-rounded"></i>
+            @Html.DisplayNameFor(m => m.newDocuments)
+        </label>
+        <hr/>
+        <button class="btn-u" type="submit">Guardar cambios</button>
+    }
+</div>

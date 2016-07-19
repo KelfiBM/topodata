@@ -211,6 +211,7 @@
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\UserModels.cs" />
+    <Compile Include="Models\User\UserProfile.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -691,9 +692,10 @@
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Shared\_SubscribeFooter.cshtml" />
     <Content Include="Views\Services\AddDocument.cshtml" />
-    <Content Include="Views\User\ProfileSettings.cshtml" />
-    <Content Include="Views\User\_ProfileLeftPanel.cshtml" />
-    <Content Include="Views\User\ProfileMain.cshtml" />
+    <Content Include="Views\User\Profile\ProfileSettings.cshtml" />
+    <Content Include="Views\User\Profile\_ProfileLeftPanel.cshtml" />
+    <Content Include="Views\User\Profile\ProfileMain.cshtml" />
+    <Content Include="Views\User\Profile\_SettingsNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
