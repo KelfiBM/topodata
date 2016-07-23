@@ -214,6 +214,7 @@
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\User\UserManager.cs" />
     <Compile Include="Models\User\UserProfile.cs" />
+    <Compile Include="Models\User\UserSettingsManager.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

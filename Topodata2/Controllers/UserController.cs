@@ -13,9 +13,7 @@ using Topodata2.Models.User;
 namespace Topodata2.Controllers
 {
     public class UserController : Controller
-    {
-        private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        
+    {   
         // GET: User
         public ActionResult Index(string returnUrl)
         {
@@ -29,15 +27,21 @@ namespace Topodata2.Controllers
             return View("Register");
         }
 
+        [Authorize]
         public ActionResult ProfileSettings()
         {
             return View("Profile/ProfileSettings");
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult ProfileSettingsNotification(UserProfileSettingsNotificationViewModel viewModel)
         {
-
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(500);
+            }
+            UserSettingsManager.SaveUserSettingsNotification(viewModel);
             return View("Profile/ProfileSettings");
         }
 
@@ -67,14 +71,14 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public JsonResult emailExists(UserViewModel Email)
+        public JsonResult EmailExists(UserViewModel email)
         {
             ItExists itExists = new ItExists();
-            return Json(!itExists.ExistsCheck("Email", Email.Register.Email));
+            return Json(!itExists.ExistsCheck("email", email.Register.Email));
         }
 
         [HttpPost]
-        public JsonResult usernameExist(UserViewModel username)
+        public JsonResult UsernameExist(UserViewModel username)
         {
             ItExists itExists = new ItExists();
             return Json(!itExists.ExistsCheck("Username", username.Register.Username));

@@ -6,13 +6,18 @@
     @using (Html.BeginForm("ProfileSettingsNotification", "User", FormMethod.Post, new {@class = "sky-form", @id = "sky-form3"}))
     {
         <label class="toggle">
-            <input type="checkbox" 
-                   id=@Html.IdFor(m => m.newDocuments)
-                   value="@Html.ValueFor(m => m.newDocuments)"
-                   name="@Html.NameFor(m => m.newDocuments)"
-                   checked=""/>
+            <input data-val="true"
+                   id=@Html.IdFor(m => m.NewDocuments)
+                   name="@Html.NameFor(m => m.NewDocuments)"
+                   type="checkbox"
+                   value="true"
+                   @Html.Raw(Model.NewDocuments ? "checked" : "")/>
             <i class="no-rounded"></i>
-            @Html.DisplayNameFor(m => m.newDocuments)
+            <input name="@Html.NameFor(m => m.NewDocuments)"
+                   type="hidden"
+                   value="false"/>
+
+            @Html.DisplayNameFor(m => m.NewDocuments)
         </label>
         <hr/>
         <button class="btn-u" type="submit">Guardar cambios</button>
