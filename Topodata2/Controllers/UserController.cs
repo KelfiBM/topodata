@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Microsoft.AspNet.Identity;
 using Topodata2.Models;
 using Topodata2.Models.User;
 
@@ -50,22 +51,18 @@ namespace Topodata2.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (new CustomMerbershipProvider().ValidateUser(userViewModel.Login.Username, userViewModel.Login.Password))
+                if (UserManager.ValidateUser(userViewModel.Login, Response))
                 {
-                    FormsAuthentication.SetAuthCookie(userViewModel.Login.Username, userViewModel.Login.KeepConnected);
                     return Redirect(returnUrl);
                 }
-                else
-                {
-                    ModelState.AddModelError("","");
-                }
+                ModelState.AddModelError("", "");
             }
-            return View("Register",userViewModel);
+            return View("Register", userViewModel);
         }
 
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
+            UserManager.Logout(Session,Response);
             return RedirectToAction("Index", "Home");
         }
 
