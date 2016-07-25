@@ -1,0 +1,66 @@
+﻿@model Topodata2.Models.User.UserProfileSettingsEditProfileViewModel
+<div id="profile" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Editar Perfil</h2>
+    <p>Informacion de usuario</p>
+    <br>
+    @using (Html.BeginForm("ProfileSettingsEditProfile", "User", FormMethod.Post, new { @class = "sky-form", @id = "sky-form1" }))
+    {
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(m => m.Name)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@placeholder = "Nombre", @class = "changeable"}})
+                        <b class="tooltip tooltip-bottom-right">Nombre</b>
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Lastname)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        @Html.EditorFor(m => m.Lastname, new {htmlAttributes = new {@placeholder = "Apellido", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Apellido</b>
+                        @Html.ValidationMessageFor(m => m.Lastname)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Email)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Email, new {htmlAttributes = new {@placeholder = "Correo Electronico", @disabled = "", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Correo electronico</b>
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Username)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Username, new {htmlAttributes = new {@placeholder = "Nombre de usuario", @disabled = "", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Nombre de usuario</b>
+                        @Html.ValidationMessageFor(m => m.Username)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.RegDate)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.RegDate, new { htmlAttributes = new { @placeholder = "Fecha de registro", @disabled = "", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Fecha de registro</b>
+                        @Html.ValidationMessageFor(m => m.RegDate)
+                    </label>
+                </section>
+            </dd>
+        </dl>
+        <br>
+        <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
+        <button id="submitProfile" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
+    }
+</div>

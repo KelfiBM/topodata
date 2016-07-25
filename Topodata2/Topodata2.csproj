@@ -203,7 +203,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CustomMerbershipProvider.cs" />
+    <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -211,6 +211,10 @@
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\UserModels.cs" />
+    <Compile Include="Models\User\User.cs" />
+    <Compile Include="Models\User\UserManager.cs" />
+    <Compile Include="Models\User\UserProfile.cs" />
+    <Compile Include="Models\User\UserSettingsManager.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -257,6 +261,7 @@
     <Content Include="resources\img\breadcrumbs\img3.jpg" />
     <Content Include="resources\img\breadcrumbs\img4.jpg" />
     <Content Include="resources\css\theme-skins\dark.css" />
+    <Content Include="resources\img\Defaults\defaultUser.png" />
     <Content Include="resources\img\documents\logoDefault.png" />
     <Content Include="resources\img\icons\agrimensura.png" />
     <Content Include="resources\img\icons\diseno.png" />
@@ -690,6 +695,14 @@
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Shared\_SubscribeFooter.cshtml" />
     <Content Include="Views\Services\AddDocument.cshtml" />
+    <Content Include="Views\User\Profile\ProfileSettings.cshtml" />
+    <Content Include="Views\User\Profile\_ProfileLeftPanel.cshtml" />
+    <Content Include="Views\User\Profile\ProfileMain.cshtml" />
+    <Content Include="Views\User\Profile\_SettingsNotifications.cshtml" />
+    <Content Include="Views\User\Profile\_SettingsPassword.cshtml" />
+    <Content Include="Views\Shared\_AlertSuccess.cshtml" />
+    <Content Include="Views\Shared\_AlertError.cshtml" />
+    <Content Include="Views\User\Profile\_SettingsEditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

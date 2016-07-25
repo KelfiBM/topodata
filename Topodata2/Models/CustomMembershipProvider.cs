@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
+using Topodata2.Models.User;
 
 namespace Topodata2.Models
 {
-    public class CustomMerbershipProvider : MembershipProvider
+    public class CustomMembershipProvider : MembershipProvider
     {
+        private static readonly string Connection =
+            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
@@ -30,7 +31,7 @@ namespace Topodata2.Models
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            return UserManager.ChangePassword(username, oldPassword, newPassword);
         }
 
         public override string ResetPassword(string username, string answer)
@@ -45,32 +46,10 @@ namespace Topodata2.Models
 
         public override bool ValidateUser(string username, string password)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-            {
-                string query = "SELECT [Username] FROM [Users] WHERE [Username] = @u AND [Password] = @p";
-                var com = new SqlCommand(query, con);
-                com.Parameters.Add(new SqlParameter("@u", SqlDbType.NVarChar))
-                    .Value = username;
-                com.Parameters.Add(new SqlParameter("@p", SqlDbType.NVarChar))
-                    .Value = password;
-                con.Open();
-                var reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    reader.Dispose();
-                    com.Dispose();
-                    con.Dispose();
-                    return true;
-                }
-                else
-                {
-                    reader.Dispose();
-                    com.Dispose();
-                    con.Dispose();
-                    return false;
-                }
-
-            }
+            var user = UserManager.AuthenticateUser(username, password);
+            if (user == null) return false;
+            HttpContext.Current.Items.Add("User",user);
+            return true;
         }
 
         public override bool UnlockUser(string userName)
@@ -85,7 +64,24 @@ namespace Topodata2.Models
 
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
-            throw new NotImplementedException();
+            if (UserManager.User != null)
+            {
+                return new MembershipUser("CustomMembershipProvider",
+                    UserManager.User.Username,
+                    UserManager.User.Id,
+                    UserManager.User.Email,
+                    null,
+                    null,
+                    true,
+                    false,
+                    DateTime.MinValue, 
+                    DateTime.MinValue,
+                    DateTime.MinValue,
+                    DateTime.MinValue,
+                    DateTime.MinValue
+                    );
+            }
+            return null;
         }
 
         public override string GetUserNameByEmail(string email)
