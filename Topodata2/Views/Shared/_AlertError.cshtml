@@ -1,0 +1,5 @@
+﻿<div class="alert alert-danger fade in alert-dismissable">
+    <button class="close" type="button" data-dismiss="alert" aria-hidden="True">x</button>
+    <strong>Error!</strong> @if (TempData["OperationMessage"] != null){@TempData["OperationMessage"]}
+                            else{@Html.Encode("Ha sucedido un error realizando la operacion.")}
+</div>

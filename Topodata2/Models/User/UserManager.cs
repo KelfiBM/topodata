@@ -12,6 +12,9 @@ namespace Topodata2.Models.User
 {
     public static class UserManager
     {
+        private static readonly string Connection =
+            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
         public static User User
         {
             get
@@ -100,6 +103,64 @@ namespace Topodata2.Models.User
         public static bool IsUserInRole(string role)
         {
             var result = new CustomRoleProvider().IsUserInRole(User.Username, role);
+            return result;
+        }
+
+        public static bool IsActualPassword(string actualPassword)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            SqlDataReader reader;
+            string query = $"SELECT [Password] FROM [Topodata].[dbo].[Users] WHERE (Password = '{actualPassword}') AND (IdUsers = {User.Id})";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.Connection = sqlConnection;
+                sqlConnection.Open();
+                reader = sqlCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            var result = false;
+            if (!IsActualPassword(oldPassword))
+            {
+                return false;
+            }
+            var sqlConnection = new SqlConnection(Connection);
+            string query = $"UPDATE [Topodata].[dbo].[Users] SET Password = '{newPassword}' WHERE IdUsers = {User.Id}";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
             return result;
         }
     }    

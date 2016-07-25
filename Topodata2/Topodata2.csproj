@@ -699,6 +699,10 @@
     <Content Include="Views\User\Profile\_ProfileLeftPanel.cshtml" />
     <Content Include="Views\User\Profile\ProfileMain.cshtml" />
     <Content Include="Views\User\Profile\_SettingsNotifications.cshtml" />
+    <Content Include="Views\User\Profile\_SettingsPassword.cshtml" />
+    <Content Include="Views\Shared\_AlertSuccess.cshtml" />
+    <Content Include="Views\Shared\_AlertError.cshtml" />
+    <Content Include="Views\User\Profile\_SettingsEditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

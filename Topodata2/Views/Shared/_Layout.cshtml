@@ -90,7 +90,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             @*<li>@Html.Encode(User.Identity.Name)</li>*@
-                            <li>@Html.Encode(UserManager.User.Username)</li>
+                            <li>@Html.ActionLink(Html.Encode(UserManager.User.Username),"ProfileSettings","User")</li>
                             @Html.ActionLink("(Cerrar)", "Logout", "User")
                         }
                         else

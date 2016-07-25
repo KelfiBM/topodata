@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Topodata2.Models;
 using Topodata2.Models.User;
@@ -39,12 +40,75 @@ namespace Topodata2.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(500);
+                TempData["OperationStatus"] = "Error";
+                return RedirectToAction("ProfileSettings");
             }
-            UserSettingsManager.SaveUserSettingsNotification(viewModel);
-            return View("Profile/ProfileSettings");
+            if (UserSettingsManager.SaveNotification(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("ProfileSettings");
+            }
+            TempData["OperationStatus"] = "Error";
+            return RedirectToAction("ProfileSettings");
         }
 
+        [Authorize]
+        [HttpPost]
+        public ActionResult ProfileSettingsPassword(UserProfileSettingsPasswordViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("ProfileSettings");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (UserSettingsManager.SavePassword(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("ProfileSettings");
+            }
+            errorMessage = "La contraseña actual introducida es incorrecta";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("ProfileSettings");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ProfileSettingsEditProfile(UserProfileSettingsEditProfileViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("ProfileSettings");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (UserSettingsManager.SaveProfile(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("ProfileSettings");
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("ProfileSettings");
+        }
+
+        [Authorize]
         public ActionResult ProfileMain()
         {
             return View("Profile/ProfileMain");
@@ -53,17 +117,19 @@ namespace Topodata2.Controllers
         [HttpPost]
         public ActionResult Login(UserViewModel userViewModel, string returnUrl = "/")
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (UserManager.ValidateUser(userViewModel.Login, Response))
-                {
-                    return Redirect(returnUrl);
-                }
-                ModelState.AddModelError("", "");
+                return View("Register", userViewModel);
             }
+            if (UserManager.ValidateUser(userViewModel.Login, Response))
+            {
+                return Redirect(returnUrl);
+            }
+            ModelState.AddModelError("", "");
             return View("Register", userViewModel);
         }
 
+        [Authorize]
         public ActionResult Logout()
         {
             UserManager.Logout(Session,Response);

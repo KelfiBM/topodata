@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Topodata2.Models.User;
@@ -12,6 +9,9 @@ namespace Topodata2.Models
 {
     public class CustomMembershipProvider : MembershipProvider
     {
+        private static readonly string Connection =
+            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
@@ -31,7 +31,7 @@ namespace Topodata2.Models
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            return UserManager.ChangePassword(username, oldPassword, newPassword);
         }
 
         public override string ResetPassword(string username, string answer)
@@ -46,13 +46,10 @@ namespace Topodata2.Models
 
         public override bool ValidateUser(string username, string password)
         {
-            User.User user = UserManager.AuthenticateUser(username, password);
-            if (user != null)
-            {
-                HttpContext.Current.Items.Add("User",user);
-                return true;
-            }
-            return false;
+            var user = UserManager.AuthenticateUser(username, password);
+            if (user == null) return false;
+            HttpContext.Current.Items.Add("User",user);
+            return true;
         }
 
         public override bool UnlockUser(string userName)
