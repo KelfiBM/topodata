@@ -194,6 +194,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\Home\HomeManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
@@ -256,6 +258,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="resources\css\style.css" />
     <Content Include="resources\css\theme-colors\default.css" />
+    <Content Include="resources\img\backgrounds\img1.jpg" />
+    <Content Include="resources\img\backgrounds\img2.jpg" />
     <Content Include="resources\img\breadcrumbs\img1.jpg" />
     <Content Include="resources\img\breadcrumbs\img2.jpg" />
     <Content Include="resources\img\breadcrumbs\img3.jpg" />
@@ -299,6 +303,7 @@
     <Content Include="resources\img\icons\social\yahoo.png" />
     <Content Include="resources\img\icons\social\youtube.png" />
     <Content Include="resources\img\logoDefault.png" />
+    <Content Include="resources\img\mockup\imac_t.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
     <Content Include="resources\img\mockup\planning2.jpg" />
     <Content Include="resources\img\sliders\agrimensuras.jpg" />
@@ -475,6 +480,13 @@
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\nothumb.png" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.css" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.png" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.svg" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\icons-reference.html" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\styles.css" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.svg" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\icons-reference.html" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\styles.css" />
+    <Content Include="resources\plugins\line-icons-pro\styles.css" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.dev.svg" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.svg" />
     <Content Include="resources\plugins\line-icons\icons-lte-ie7.js" />
@@ -630,6 +642,12 @@
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.eot" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.woff" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.eot" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.ttf" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.woff" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.eot" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.ttf" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.woff" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -703,6 +721,10 @@
     <Content Include="Views\Shared\_AlertSuccess.cshtml" />
     <Content Include="Views\Shared\_AlertError.cshtml" />
     <Content Include="Views\User\Profile\_SettingsEditProfile.cshtml" />
+    <Content Include="Views\Home\Index\_HomeText.cshtml" />
+    <Content Include="Views\Administration\Index.cshtml" />
+    <Content Include="Views\Administration\HomeText.cshtml" />
+    <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

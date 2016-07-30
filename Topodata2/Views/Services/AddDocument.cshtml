@@ -4,9 +4,20 @@
 }
 
 <div class="container content">
+    @if (TempData["OperationStatus"] != null)
+            {
+                if (TempData["OperationStatus"].ToString() == "Error")
+                {
+                    Html.RenderPartial("_AlertError");
+                }
+                if (TempData["OperationStatus"].ToString() == "Success")
+                {
+                    Html.RenderPartial("_AlertSuccess");
+                }
+            }
     <div class="headline">
         <h2>Añadir Documento</h2>
-        @using (Html.BeginForm("AddDocument", "Services", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("AddDocument", "Services", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data"}))
         {
             <fieldset>
                 <section>
@@ -33,10 +44,7 @@
                             new {value = 5, text = "Diseños Arquitectonicos y Espacios"},
                             new {value = 4, text = "Ingenieria Estructural y Calculos"},
                             new {value = 6, text = "Presupuestos"},
-                            new {value = 7, text = "Planificacion"},
                             new {value = 3, text = "Impacto Ambiental y Sostenibilidad"},
-                            new {value = 9, text = "Evaluacion de Proyectos"},
-                            new {value = 8, text = "Presentaciones"},
                             new {value = 11, text = "Supervicion de Obras"},
                             new {value = 10, text = "Procesos de Construccion"},
 

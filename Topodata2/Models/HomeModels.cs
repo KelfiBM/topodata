@@ -57,4 +57,35 @@ namespace Topodata2.Models
             }
         }
     }
+
+    public class HomeTextPrincipalViewModel
+    {
+        [Required(ErrorMessage = "No puede estar en blanco")]
+        [Display(Name = "Agrimensura")]
+        [DataType(DataType.MultilineText)]
+        [StringLength(200,ErrorMessage = "Debe tener un maximo de 200 caracteres")]
+        public string Agrimensura { get; set; }
+
+        [Required(ErrorMessage = "No puede estar en blanco")]
+        [Display(Name = "Estudio del Suelo")]
+        [DataType(DataType.MultilineText)]
+        [StringLength(200, ErrorMessage = "Debe tener un maximo de 200 caracteres")]
+        public string EstudioSuelo { get; set; }
+
+        [Required(ErrorMessage = "No puede estar en blanco")]
+        [Display(Name = "Diseño")]
+        [DataType(DataType.MultilineText)]
+        [StringLength(200, ErrorMessage = "Debe tener un maximo de 200 caracteres")]
+        public string Diseno { get; set; }
+
+        [Required(ErrorMessage = "No puede estar en blanco")]
+        [Display(Name = "Ingenieria")]
+        [DataType(DataType.MultilineText)]
+        [StringLength(200, ErrorMessage = "Debe tener un maximo de 200 caracteres")]
+        public string Ingenieria { get; set; }
+
+        public int IdHomeText { get; set; }
+
+        public DateTime RegDate { get; set; }
+    }
 }

@@ -1,0 +1,31 @@
+﻿@model Topodata2.Models.HomeTextPrincipalViewModel
+<div class="row text-center margin-bottom-60">
+    <div class="col-md-3 md-margin-bottom-50">
+        <a href="@Url.Action("Documents", "Services", new {id = 1})">
+            <img src="~/resources/img/icons/agrimensura.png" alt="" class="image-md margin-bottom-20" />
+            <h2 style="color: #333;" class="title-v3-md margin-bottom-10">Agrimensura</h2>
+            <p>@Model.Agrimensura</p>
+        </a>
+    </div>
+    <div class="col-md-3 flat-service md-margin-bottom-50">
+        <a href="@Url.Action("Documents", "Services", new {id = 2})">
+            <img alt="" src="~/resources/img/icons/estudios.png" class="image-md margin-bottom-20">
+            <h2 style="color: #333;" class="title-v3-md margin-bottom-10">Estudios del Suelo</h2>
+            <p>@Model.EstudioSuelo</p>
+        </a>
+    </div>
+    <div class="col-md-3 flat-service">
+        <a href="@Url.Action("Documents", "Services", new {id = 5})">
+            <img alt="" src="~/resources/img/icons/diseno.png" class="image-md margin-bottom-20">
+            <h2 style="color: #333;" class="title-v3-md margin-bottom-10">Diseño</h2>
+            <p>@Model.Diseno</p>
+        </a>
+    </div>
+    <div class="col-md-3 md-margin-bottom-50">
+        <a href="@Url.Action("Documents", "Services", new {id = 4})">
+            <img alt="" src="~/resources/img/icons/ingenieria.png" class="image-md margin-bottom-20">
+            <h2 style="color: #333;" class="title-v3-md margin-bottom-10">Ingenieria</h2>
+            <p>@Model.Ingenieria</p>
+        </a>
+    </div>
+</div>
