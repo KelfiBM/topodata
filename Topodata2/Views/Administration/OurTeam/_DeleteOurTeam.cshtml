@@ -1,0 +1,78 @@
+﻿@using Topodata2.Models
+@using Topodata2.Models.Home
+@model OurTeamViewModel
+<div id="delete" class="profile-edit tab-pane fade">
+    <h2 class="heading-md">Eliminar Equipo</h2>
+    <p>Eliminar</p>
+    <br>
+   @* @using (Html.BeginForm("DeleteOurTeam", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3" }))
+    {
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(m => m.Nombre)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @placeholder = "Nombre", @class = "changeable", @readonly = "" } })
+                        <b class="tooltip tooltip-bottom-right">Nombre</b>
+                        @Html.ValidationMessageFor(m => m.Nombre)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Cargo)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Cargo, new { htmlAttributes = new { @placeholder = "Cargo ocupado", @class = "changeable", @readonly = "" } })
+                        <b class="tooltip tooltip-bottom-right">Cargo que ocupa la persona</b>
+                        @Html.ValidationMessageFor(m => m.Cargo)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Email)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @placeholder = "Correo electronico", @class = "changeable", @readonly = "" } })
+                        <b class="tooltip tooltip-bottom-right">Correo electronico</b>
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </label>
+                </section>
+            </dd>
+            <dd hidden="">
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.IdOurTeam, new { htmlAttributes = new { @placeholder = "Correo electronico", @class = "changeable", @readonly="" } })
+                        <b class="tooltip tooltip-bottom-right">Id</b>
+                        @Html.ValidationMessageFor(m => m.IdOurTeam)
+                    </label>
+                </section>
+            </dd>
+        </dl>
+        <br>
+        
+        <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
+        <button id="submitProfile" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Eliminar Seleccionado</button>
+    }*@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Correo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ourTeam in HomeManager.GetAllOurTeam())
+            {
+                <tr>
+                    <td>@ourTeam.Nombre</td>
+                    <td>@ourTeam.Cargo</td>
+                    <td>@ourTeam.Email</td>
+                    <td>@Html.ActionLink("Eliminar", "DeleteOurTeam", "Administration", new { id = ourTeam.IdOurTeam }, new { @class = "btn btn-danger btn-xs", @style = "color: #FFF"})</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

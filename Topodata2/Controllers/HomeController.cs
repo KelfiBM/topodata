@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Topodata2.Models;
+using Topodata2.Models.Home;
 
 namespace Topodata2.Controllers
 {
@@ -27,8 +28,7 @@ namespace Topodata2.Controllers
         [Route("NuestroEquipo")]
         public ActionResult OurTeam()
         {
-
-            return View();
+            return View(HomeManager.GetAllOurTeam());
         }
 
         [HttpGet]

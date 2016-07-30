@@ -31,6 +31,7 @@ namespace Topodata2.Models
         public DateTime FechaPublicacion { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
+        [DataType(DataType.Url)]
         public string Url { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]

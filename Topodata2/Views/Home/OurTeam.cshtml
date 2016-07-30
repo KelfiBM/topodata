@@ -1,7 +1,7 @@
-﻿@{
+﻿@model List<Topodata2.Models.OurTeamViewModel>
+@{
     ViewData["Title"] = "Nuestro Equipo";
 }
-
 <div class="breadcrumbs-v3 img-v2 margin-bottom-60">
     <div class="container text-center">
         <p>Conoce a nuestro equipo</p>
@@ -9,200 +9,52 @@
     </div><!--/end container-->
 </div>
 <div class="container">
-    <div class="headline-center margin-bottom-60">
-        <h2>DIRECTIVOS</h2>
+    <div id="grid-container">
+        @foreach (var ourteam in Model)
+        {
+            if (ourteam.ImagePath != "Ignorar")
+            {
+                <div class="cbp-item">
+                    <div class="cbp-item-wrapper">
+                        <a href="#" title="@ourteam.Nombre" class="cbp-caption cbp-singlePage">
+                            <img src="@ourteam.ImagePath" alt="" width="200" height="200"/>
+                        </a>
+                        <a class="cbp-singlePage cbp-l-grid-team-name">
+                            @ourteam.Nombre
+                        </a>
+                        <div class="cbp-l-grid-team-position">
+                            @ourteam.Cargo
+                        </div>
+                        <a href="mailto:@ourteam.Email"></a>
+                    </div>
+                </div>
+            }
+        }
     </div>
-    <div class="row team-v5 margin-bottom-30">
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/fortuna.png" alt="">
-            </div>
-            <span>José Fortuna Quiñones</span>
-            <small>Presidente</small>
-            <p>Correo: <a href="mailto:fortuna@topodata.com">fortuna@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/olga.png" alt="">
-            </div>
-            <span>Olga M. Polanco Pérez</span>
-            <small>Dirección de Proyectos</small>
-            <p>Correo: <a href="mailto:olga@topodata.com">olga@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/paul.png" alt="">
-            </div>
-            <span>Evan Paul Fortuna</span>
-            <small>Dirección de Proyectos</small>
-            <p>Correo <a href="mailto:paul@topodata.com">paul@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/margot.png" alt="">
-            </div>
-            <span>Margarita Fortuna Q.</span>
-            <small>Dirección de Proyectos</small>
-            <p>Correo: <a href="mailto:margot@topodata.com">margot@topodata.com</a>
-            </p>
-        </div>
-    </div><!--/end team v5-->
+    <hr class="margin-bottom-60">
 </div>
-<hr class="margin-bottom-60">
 
-<div class="container">
-    <div class="headline-center margin-bottom-60">
-        <h2>INGENIERIA, ARQUITECTURA Y ADMINISTRACION</h2>
-    </div>
-    <div class="row team-v5 margin-bottom-30">
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/paolaf.png" alt="">
-            </div>
-            <span>Paola Fortuna</span>
-            <small>Dirección y Diseños</small>
-            <p>
-                Correo: <a href="mailto:paola@topodata.com">paola@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/beatrizj.png" alt="">
-            </div>
-            <span>Beatriz Jiménez</span>
-            <small>Depto. de Contabilidad</small>
-            <p>
-                Correo: <a href="mailto:beatriz@topodata.com">beatriz@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/carlosa.png" alt="">
-            </div>
-            <span>CARLOS ALBURQUERQUE</span>
-            <small>Coordinación</small>
-            <p>
-                Correo <a href="mailto:carlos@topodata.com">carlos@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/jotanh.png" alt="">
-            </div>
-            <span>Jotan Hiciano Hernandez</span>
-            <small>Coordinación</small>
-            <p>
-                Correo: <a href="mailto:jotan@topodata.com">jotan@topodata.com</a>
-            </p>
-        </div>
-    </div><!--/end team v5-->
-    <div class="row team-v5 margin-bottom-30">
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/arielf.png" alt="">
-            </div>
-            <span>Ariel Fernández Fortuna</span>
-            <small>Coordinación</small>
-            <p>
-                Correo: <a href="mailto:ariel@topodata.com">ariel@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/josef.png" alt="">
-            </div>
-            <span>Jose Fortuna Polanco</span>
-            <small>Coordinación</small>
-            <p>
-                Correo: <a href="mailto:jefortunap@topodata.com">jefortunap@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/ramons.png" alt="">
-            </div>
-            <span>Juan Ramon Sanchez F.</span>
-            <small>Agrimensor</small>
-            <p>
-                Correo <a href="mailto:ramon@topodata.com">ramon@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/enyelw.png" alt="">
-            </div>
-            <span>Enyel Wimot</span>
-            <small>Arquitecto</small>
-            <p>
-                Correo: <a href="mailto:enyel@topodata.com">enyel@topodata.com</a>
-            </p>
-        </div>
-    </div><!--/end team v5-->
-    <div class="row team-v5 margin-bottom-30">
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/juanc.png" alt="">
-            </div>
-            <span>Juan Camejo</span>
-            <small>Arquitecto</small>
-            <p>
-                Correo: <a href="mailto:camejo@topodata.com">camejo@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/gilc.png" alt="">
-            </div>
-            <span>Gil Caceres</span>
-            <small>Arquitecto</small>
-            <p>
-                Correo: <a href="mailto:gilcaceres@topodata.com">gilcaceres@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/roberts.png" alt="">
-            </div>
-            <span>Robert Suero Baez</span>
-            <small>Agrimensor</small>
-            <p>
-                Correo <a href="mailto:robert@topodata.com">robert@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/gabrielp2.png" alt="">
-            </div>
-            <span>Gabriel Perez</span>
-            <small>Coordinación</small>
-            <p>
-                Correo: <a href="mailto:gabriel@topodata.com">gabriel@topodata.com</a>
-            </p>
-        </div>
-    </div><!--/end team v5-->
-    <div class="row team-v5 margin-bottom-30">
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/victorm.png" alt="">
-            </div>
-            <span>Victor Manuel Baez G.</span>
-            <small>Coordinación</small>
-            <p>
-                Correo: <a href="mailto:manolin@topodata.com">manolin@topodata.com</a>
-            </p>
-        </div>
-        <div class="col-sm-3 sm-margin-bottom-50">
-            <div class="team-img">
-                <img class="img-responsive" src="~/resources/img/team/jonnym.png" alt="">
-            </div>
-            <span>Johnny Mejia G.</span>
-            <small>Coordinación</small>
-            <p>
-                Correo: <a href="mailto:johnnym@topodata.com">johnnym@topodata.com</a>
-            </p>
-        </div>
-    </div><!--/end team v5-->
-</div>
+@section cssPlugins
+{
+    <link href="~/resources/plugins/cube-portfolio/cubeportfolio/css/cubeportfolio.min.css" rel="stylesheet"/>
+}
+
+@section PageScripts
+{
+    <script src="~/resources/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+}
+
+@section ScriptsFunction
+{
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery('#grid-container').cubeportfolio({
+                // options
+                gridAdjustment: 'responsive',
+                mediaQueries: [{ width: 1440, cols: 5 }, { width: 1024, cols: 4 }, { width: 768, cols: 3 }, { width: 480, cols: 2 }, { width: 320, cols: 1 }],
+                gapHorizontal: 30,
+                gapVertical: 30
+            });
+        });
+    </script>
+}

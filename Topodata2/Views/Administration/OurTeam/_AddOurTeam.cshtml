@@ -1,0 +1,58 @@
+﻿@model Topodata2.Models.OurTeamViewModel
+<div id="add" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Añadir Equipo</h2>
+    <p>Añadir</p>
+    <br>
+    @using (Html.BeginForm("AddOurTeam", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
+    {
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(m => m.Nombre)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @placeholder = "Nombre", @class = "changeable"} })
+                        <b class="tooltip tooltip-bottom-right">Nombre</b>
+                        @Html.ValidationMessageFor(m => m.Nombre)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Cargo)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Cargo, new { htmlAttributes = new { @placeholder = "Cargo ocupado", @class = "changeable"} })
+                        <b class="tooltip tooltip-bottom-right">Cargo que ocupa la persona</b>
+                        @Html.ValidationMessageFor(m => m.Cargo)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Email)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @placeholder = "Correo electronico", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Correo electronico</b>
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.ImageUpload)</dt>
+            <dd>
+                <section>
+                    <label class="label">Imagen</label>
+                    <label for="file" class="input input-file">
+                        <div class="button">
+                            @Html.TextBoxFor(m => m.ImageUpload, new { @id = "file", @type = "file", @onchange = "this.parentNode.nextElementSibling.value = this.value" })
+                            Seleccionar
+                        </div>
+                        <input readonly type="text">
+                        @Html.ValidationMessageFor(m => m.ImageUpload)
+                    </label>
+                </section>
+            </dd>
+        </dl>
+        <br>
+        <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
+        <button id="submitProfile" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
+    }
+</div>

@@ -422,6 +422,12 @@
     <Content Include="resources\plugins\brand-buttons\brand-buttons.css" />
     <Content Include="resources\plugins\brand-buttons\css\brand-buttons-inversed.min.css" />
     <Content Include="resources\plugins\brand-buttons\css\brand-buttons.min.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\css\cubeportfolio.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\css\cubeportfolio.min.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\custom\custom-cubeportfolio.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.png" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.js" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.10.1.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.9.0.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery.mousewheel-3.0.6.pack.js" />
@@ -648,6 +654,7 @@
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.eot" />
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.ttf" />
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.woff" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.psd" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -726,6 +733,9 @@
     <Content Include="Views\Administration\HomeText.cshtml" />
     <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
     <Content Include="Views\Administration\HomeSlide.cshtml" />
+    <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
+    <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
+    <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

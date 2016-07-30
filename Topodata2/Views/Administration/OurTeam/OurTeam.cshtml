@@ -1,0 +1,168 @@
+﻿@model Topodata2.Models.OurTeamViewModel
+@{
+    ViewBag.Title = "OurTeam";
+}
+<div class="container content profile">
+
+    @if (TempData["OperationStatus"] != null)
+    {
+        if (TempData["OperationStatus"].ToString() == "Error")
+        {
+            Html.RenderPartial("_AlertError");
+        }
+        if (TempData["OperationStatus"].ToString() == "Success")
+        {
+            Html.RenderPartial("_AlertSuccess");
+        }
+    }
+    <div class="profile-body margin-bottom-20">
+        <div class="tab-v1">
+            <ul class="nav nav-justified nav-tabs">
+                <li><a data-toggle="tab" href="#add">Añadir Equipo</a></li>
+                @*<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>*@
+                <li><a data-toggle="tab" href="#delete">Borrar Equipo</a></li>
+            </ul>
+            <div class="tab-content">
+                @{Html.RenderPartial("OurTeam/_AddOurTeam", Model, ViewData);}
+                @{Html.RenderPartial("OurTeam/_DeleteOurTeam", Model, ViewData);}
+            </div>
+        </div>
+    </div>
+</div>
+
+@section cssPlugins
+{
+    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+}
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/profile.css" rel="stylesheet" />
+}
+@section PageScripts
+{
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
+    <script src="~/resources/js/forms/checkout.js"></script>
+    <script src="~/resources/js/forms/reg.js"></script>
+}
+@section documentReady
+{
+    RegForm.initRegForm();
+    CheckoutForm.initCheckoutForm();
+}
+@section ScriptsFunction
+{
+    <script>
+        $(document).ready(function() {
+            var form = $('#sky-form3'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings
+                // Store existing event handlers in local variables
+                ,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+
+            settings.errorPlacement = function(label, element) {
+
+                // Call old handler so it can update the HTML
+                oldErrorPlacement(label, element);
+
+                // Add Bootstrap classes to newly added elements
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+
+            };
+
+            settings.success = function(label) {
+                // Remove error class from <div class="form-group">, but don't worry about
+                // validation error messages as the plugin is going to remove it anyway
+
+                label.parents('label').removeClass('state-error');
+
+                // Call old handler to do rest of the work
+                oldSuccess(label);
+            };
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var form = $('#sky-form1'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings
+                // Store existing event handlers in local variables
+                ,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+
+            settings.errorPlacement = function(label, element) {
+
+                // Call old handler so it can update the HTML
+                oldErrorPlacement(label, element);
+
+                // Add Bootstrap classes to newly added elements
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+
+            };
+
+            settings.success = function(label) {
+                // Remove error class from <div class="form-group">, but don't worry about
+                // validation error messages as the plugin is going to remove it anyway
+
+                label.parents('label').removeClass('state-error');
+
+                // Call old handler to do rest of the work
+                oldSuccess(label);
+            };
+        });
+    </script>
+    <script>
+        (function($) {
+
+            //re-set all client validation given a jQuery selected form or child
+            $.fn.resetValidation = function() {
+
+                var $form = this.closest('form');
+
+
+                //reset jQuery Validate's internals
+                $form.validate().resetForm();
+
+                //reset unobtrusive validation summary, if it exists
+                $form.find("[data-valmsg-summary=true]")
+                    .removeClass("validation-summary-errors")
+                    .addClass("validation-summary-valid")
+                    .find("ul").empty();
+
+                //reset unobtrusive field level, if it exists
+                $form.find("[data-valmsg-replace]")
+                    .removeClass("field-validation-error")
+                    .addClass("field-validation-valid")
+                    .empty();
+                $form.find('label').removeClass('state-error');
+
+                return $form;
+            };
+        })(jQuery);
+    </script>
+    @*<script>
+            $(".nextEditable").click(function() {
+                $(this).next().prop('readonly', false);
+                $(this).next().prop('disabled', false);
+            });
+        </script>*@
+    <script>
+        $('.changeable').keyup(function() {
+            if ($(this).val()) {
+                $("#submitProfile").removeAttr('disabled');
+                $("#submitProfile").removeAttr('style');
+            }
+        });
+        $(document).on("click", "button[type='reset']", function (e) {
+            $("#submitProfile").attr('disabled', "");
+            $("#submitProfile").attr('style', "opacity: 0.5");
+        });
+    </script>
+}

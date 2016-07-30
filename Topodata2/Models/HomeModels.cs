@@ -111,4 +111,33 @@ namespace Topodata2.Models
                 return false;
         }
     }
+
+    public class OurTeamViewModel
+    {
+        public int IdOurTeam { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Nombre")]
+        [DataType(DataType.Text)]
+        [StringLength(50,ErrorMessage = "Debe tener maximo 50 caracteres")]
+        public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Cargo que ocupa")]
+        [DataType(DataType.Text)]
+        [StringLength(50, ErrorMessage = "Debe tener maximo 50 caracteres")]
+        public string Cargo { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Correo Electronico")]
+        [EmailAddress(ErrorMessage = "Correo invalido")]
+        [StringLength(50, ErrorMessage = "Debe tener maximo 50 caracteres")]
+        public string Email { get; set; }
+
+        public string ImagePath { get; set; }
+
+        [Required(ErrorMessage = "Debe agregar una foto")]
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase ImageUpload { get; set; }
+    }
 }

@@ -152,5 +152,158 @@ namespace Topodata2.Models.Home
             }
             return result;
         }
+
+        public static bool AddOurTeam(OurTeamViewModel viewmodel)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "INSERT INTO [Topodata].[dbo].[OurTeam] (Nombre, Cargo, Email, Imagen) " +
+                "VALUES (@nombre, @cargo, @email, @imagen)";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("nombre", viewmodel.Nombre);
+                sqlCommand.Parameters.AddWithValue("cargo", viewmodel.Cargo);
+                sqlCommand.Parameters.AddWithValue("email", viewmodel.Email);
+                sqlCommand.Parameters.AddWithValue("imagen", viewmodel.ImagePath);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static List<OurTeamViewModel> GetAllOurTeam()
+        {
+            List<OurTeamViewModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT * FROM dbo.OurTeam";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<OurTeamViewModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new OurTeamViewModel()
+                        {
+                            IdOurTeam = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Cargo = reader.GetString(2),
+                            Email = reader.GetString(3),
+                            ImagePath = reader.GetString(4)
+                        });
+                    }
+                }
+                else
+                {
+                    AddOurTeam(new OurTeamViewModel()
+                    {
+                        Nombre = "Ignorar",
+                        Cargo = "Ignorar",
+                        Email = "Ignorar",
+                        ImagePath = "Ignorar"
+                    });
+                    result = GetAllOurTeam();
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static bool DeleteOurTeam(OurTeamViewModel viewmodel)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "DELETE FROM [Topodata].[dbo].[OurTeam] " +
+                "WHERE IdOurTeam = @id";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                if (System.IO.File.Exists(GetImagePathOurTeam(viewmodel)))
+                {
+                    System.IO.File.Delete(GetImagePathOurTeam(viewmodel));
+                }
+                sqlCommand.Parameters.AddWithValue("id", viewmodel.IdOurTeam);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        private static string GetImagePathOurTeam(OurTeamViewModel viewmodel)
+        {
+            string result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT Imagen FROM dbo.OurTeam WHERE (IdOurTeam = @id)";
+                com.CommandType = CommandType.Text;
+                com.Parameters.AddWithValue("id", viewmodel.IdOurTeam);
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        result = reader.GetString(0);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
     }
 }
