@@ -725,6 +725,7 @@
     <Content Include="Views\Administration\Index.cshtml" />
     <Content Include="Views\Administration\HomeText.cshtml" />
     <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
+    <Content Include="Views\Administration\HomeSlide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

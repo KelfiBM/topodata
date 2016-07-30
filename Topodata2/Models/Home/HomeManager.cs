@@ -57,6 +57,47 @@ namespace Topodata2.Models.Home
             return result;
         }
 
+        public static HomeSliderViewModel GetCurrentHomeSlider()
+        {
+            HomeSliderViewModel result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT TOP (1) IdVideoHome, UrlVideo, regDate FROM dbo.HomeSlide ORDER BY regDate DESC";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        result = new HomeSliderViewModel()
+                        {
+                            IdVideoHome = reader.GetInt32(0),
+                            UrlVideo = reader.GetString(1),
+                            RegDate = reader.GetDateTime(2)
+                        };
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
         public static bool AddHomeText(HomeTextPrincipalViewModel viewmodel)
         {
             var result = false;
@@ -70,6 +111,32 @@ namespace Topodata2.Models.Home
                 sqlCommand.Parameters.AddWithValue("estudiosuelo", viewmodel.EstudioSuelo);
                 sqlCommand.Parameters.AddWithValue("diseno", viewmodel.Diseno);
                 sqlCommand.Parameters.AddWithValue("ingenieria", viewmodel.Ingenieria);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static bool AddHomeSlideVideo(HomeSliderViewModel viewmodel)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "INSERT INTO [Topodata].[dbo].[HomeSlide] (UrlVideo) VALUES (@urlVideo)";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("urlVideo", viewmodel.UrlVideo);
                 sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 result = true;

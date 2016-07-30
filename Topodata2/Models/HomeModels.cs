@@ -88,4 +88,27 @@ namespace Topodata2.Models
 
         public DateTime RegDate { get; set; }
     }
+
+    public class HomeSliderViewModel
+    {
+        public int IdVideoHome { get; set; }
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Link (embed) del video en youtube")]
+        [DataType(DataType.Url)]
+        [MustContainString(ErrorMessage = "Debe ser el link embed")]
+        public string UrlVideo { get; set; }
+        public DateTime RegDate { get; set; }
+    }
+
+    public class MustContainString : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (value.ToString().Contains("/embed/"))
+            {
+                return true;
+            }
+                return false;
+        }
+    }
 }

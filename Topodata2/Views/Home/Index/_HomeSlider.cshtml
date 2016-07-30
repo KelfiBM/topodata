@@ -1,34 +1,34 @@
-﻿<div id="layerslider" class="ls-fullwidthdark" style="width: 2000px; height: 750px; margin: 0 auto;">
+﻿@model Topodata2.Models.HomeSliderViewModel
+<div id="layerslider" class="ls-fullwidthdark" style="width: 2000px; height: 700px; margin: 0 auto;">
 
-    <div class="ls-slide" data-ls="slidedelay: 7000; transition2d: 1,5,15;">
-        <img src="~/resources/img/backgrounds/img1.jpg" class="ls-bg" />
-        <img src="~/resources/img/mockup/imac_t.png" class="ls-l" style="top: 50%; left: 70%" width="751"/>
-        <div class="ls-l" style="top: 38%; left: 70%" data-ls="offsetxin: 0; offsetyin: 0;">
-            @* ReSharper disable once Html.Obsolete *@
-            <iframe src="https://www.youtube.com/embed/uMC5VESsRG0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="432" width="700"></iframe>
-        </div>
-        <h1 class="ls-l" style="top: 30%; left: 30%; padding: 10px 40px 10px 40px; font-size: 100px; background: #262626; background: rgba(38, 38, 38, 0.9); font-weight: bold;  color: #FFF " >
+    <div class="ls-slide" data-ls="slidedelay: 10000; transition2d: 1,5,15;">
+        <img src="~/resources/img/backgrounds/img1.jpg" class="ls-bg"/>
+        <img src="~/resources/img/mockup/imac_t.png" class="ls-l" data-ls="offsetxin:300;durationin:2000;delayin:0;" style="top: 51%; left: 70%" width="751"/>
+        <h1 class="ls-l" data-ls="offsetxin:-300;durationin:3000;delayin:0;offsetxout:-50;durationout:1000;" style="top: 30%; left: 30%; padding: 10px 40px 10px 40px; font-size: 100px; background: #262626; background: rgba(38, 38, 38, 0.9); font-weight: bold; color: #FFF">
             ¡Informate!
         </h1>
-        <h2 class="ls-l" style="top: 48%; left: 36%; padding: 10px 10px 10px 40px; font-size: 50px;  background: #FFFFFF; background: rgba(255, 255, 255, 0.9); font-weight: bold;">
-            Mira lo ultimo en
+        <h2 class="ls-l" data-ls="offsetxin:50;durationin:1000;delayin:1000;skewxin:-60;offsetxout:-50;durationout:1000;skewxout:-60;" style="top: 48%; left: 31%; padding: 10px 40px 10px 40px; font-size: 50px; background: #FFFFFF; background: rgba(255, 255, 255, 0.9); font-weight: bold;">
+            MIRA LO ULTIMO EN
         </h2>
-        <h2 class="ls-l" style="top: 68%; left: 28%; padding: 10px 40px 10px 40px; font-size: 130px; background: #72c02c; background: rgba(114, 192, 44, 0.9); color: #FFF; font-weight: bold;">
+        <h2 class="ls-l" data-ls="offsetxin:0;durationin:2000;delayin:1500;scalexin:0;scaleyin:0;offsetxout:0;scalexout:0;scaleyout:0;" style="top: 68%; left: 26%; padding: 10px 40px 10px 40px; font-size: 130px; background: #72c02c; background: rgba(114, 192, 44, 0.9); color: #FFF; font-weight: bold;">
             TOPODATA
         </h2>
-        @*<h1 class="ls-l" style="top: 30%; left: 30%; padding: 10px 40px 10px 40px; font-size: 100px; font-weight: bold; background: #72c02c; background: rgba(114, 192, 44, 0.9); color: #FFF">
-            Topodata
-        </h1>*@
+        <div class="ls-l" style="top: 38%; left: 70%" data-ls="offsetxin:300;durationin:2000;delayin:0;">
+            @* ReSharper disable once Html.Obsolete *@
+            <iframe src="@Model.UrlVideo" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="432" width="700"></iframe>
+        </div>
     </div>
-    @*<div class="ls-slide" data-ls="slidedelay: 6000; transition2d: 1,5,15;">
+    <div class="ls-slide" data-ls="slidedelay: 6000; transition2d: 1,5,15;">
         <img src="~/resources/img/sliders/agrimensuras.jpg" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 1 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             AGRIMENSURA
         </h1>
         <h2 class="ls-l"
-            style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Levantamientos Topográficos y Parcelarios con métodos cinematecos (GPS).
         </h2>
     </div>
@@ -36,11 +36,13 @@
         <img src="~/resources/img/sliders/estudioss.jpg" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 2 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             ESTUDIOS DE SUELO
         </h1>
         <h2 class="ls-l"
-            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Mística en la práctica del Estudio y Comportamiento de los Suelos y Materiales en República Dominicana.
         </h2>
     </div>
@@ -48,11 +50,13 @@
         <img src="~/resources/img/sliders/disenos.png" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 5 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             DISEÑO
         </h1>
         <h2 class="ls-l"
-            style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Arquitectónicos, Vial, Hidráulicos, Eléctricos y Sanitarios.
         </h2>
     </div>
@@ -60,11 +64,13 @@
         <img src="~/resources/img/sliders/ingenierias.jpg" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 4 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             INGENIERÍA ESTRUCTURAL
         </h1>
         <h2 class="ls-l"
-            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Aplicaciones con medios continuos manejada con prudencia y adecuación para estructuras de obras.
         </h2>
     </div>
@@ -72,11 +78,13 @@
         <img src="~/resources/img/sliders/presupuestoss.jpg" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 6 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             PRESUPUESTOS
         </h1>
         <h2 class="ls-l"
-            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Aplicación de software avanzado para la elaboración de Presupuestos de Obras en toda su dimensión...
         </h2>
     </div>
@@ -84,11 +92,13 @@
         <img src="~/resources/img/sliders/impactos.jpg" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 3 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             IMPACTO AMBIENTAL
         </h1>
         <h2 class="ls-l"
-            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Cuantificar y proponer las medidas mitigadoras y compensatorias ambientales y sociales.
         </h2>
     </div>
@@ -96,11 +106,13 @@
         <img src="~/resources/img/sliders/supervisions.jpg" class="ls-bg" />
         @Html.ActionLink(" ", "Documents", "Services", new { id = 11 }, new { @class = "ls-link" })
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             SUPERVISIÓN
         </h1>
         <h2 class="ls-l"
-            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Gerencia de Supervisión de Proyectos bajo el mando de los más capacitados profesionales...
         </h2>
     </div>
@@ -108,13 +120,14 @@
         <img src="~/resources/img/sliders/construccions.jpg" class="ls-bg"/>
         @Html.ActionLink(" ", "Documents", "Services", new {id = 10}, new {@class = "ls-link"})
         <h1 class="ls-l"
-            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 50%; left: 40%; width: 50%; padding: 12px 20px; font-size: 500%; font-weight: bold; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="durationin:1000;delayin:0;rotatein:20;rotatexin:30;scalexin:1.5;scaleyin:1.5;transformoriginin:left 50% 0;durationout:750;rotateout:20;rotatexout:-30;scalexout:0;scaleyout:0;transformoriginout:left 50% 0;">
             CONSTRUCCIÓN
         </h1>
         <h2 class="ls-l"
-            style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF">
+            style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
+            data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
             Deje en nuestras manos la construcción de su obra...
         </h2>
-    </div>*@
-    
+    </div>
 </div>
