@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Topodata2.Models;
 using Topodata2.Models.Home;
+using Topodata2.Models.Mail;
 
 namespace Topodata2.Controllers
 {
@@ -76,6 +75,35 @@ namespace Topodata2.Controllers
         public ActionResult Deslinder()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult Deslinder(DeslinderViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("Deslinder", "Home");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (MailManager.SendDeslinderRegistrationAdmin(viewModel))
+            {
+                if (MailManager.SendDeslinderRegistrationUser(viewModel))
+                {
+                    TempData["OperationStatus"] = "Success";
+                    return RedirectToAction("Deslinder", "Home");
+                }
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("Deslinder", "Home");
         }
     }
 }

@@ -209,6 +209,8 @@
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\Home\HomeManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Mail\MailManager.cs" />
+    <Compile Include="Models\Mail\MailModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
@@ -232,6 +234,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredAdmin.html" />
+    <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredUser.html" />
+    <Content Include="EmailTemplates\Deslinder\images\81.jpg" />
+    <Content Include="EmailTemplates\Deslinder\images\logoDefault.png" />
     <Content Include="EmailTemplates\NewContentAdded.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="resources\css\app.css" />
@@ -245,6 +251,7 @@
     <Content Include="resources\css\pages\page_about.css" />
     <Content Include="resources\css\pages\page_clients.css" />
     <Content Include="resources\css\pages\page_contact.css" />
+    <Content Include="resources\css\pages\page_log_reg_v1.css" />
     <Content Include="resources\css\pages\page_log_reg_v3.css" />
     <Content Include="resources\css\pages\page_misc_sticky_footer.css" />
     <Content Include="resources\css\pages\page_one.css" />

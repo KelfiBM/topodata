@@ -160,4 +160,57 @@ namespace Topodata2.Models
             return value.ToString().Contains("flipboard.com/@topodata/");
         }
     }
+
+    public class DeslinderViewModel
+    {
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Nombres")]
+        [DataType(DataType.Text)]
+        public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Apellidos")]
+        [DataType(DataType.Text)]
+        public string Apellido { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Direccion/Ubicacion exacta del terreno (Indique referencias)")]
+        [DataType(DataType.Text)]
+        public string Ubicacion { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Telefono")]
+        [DataType(DataType.PhoneNumber)]
+        public string Telefono { get; set; }
+
+        [Display(Name = "Movil")]
+        [DataType(DataType.PhoneNumber)]
+        public string Movil { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Correo Electronico")]
+        [EmailAddress(ErrorMessage = "Correo invalido")]
+        [DataType(DataType.EmailAddress)]
+        public string Correo { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "No. Matrical del titulo")]
+        [DataType(DataType.Text)]
+        public string NoMatrical { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "No. de Parsela (Del Terreno)")]
+        [DataType(DataType.Text)]
+        public string NoParsela { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "No. de Distrito Catastral")]
+        [DataType(DataType.Text)]
+        public string NoDistrito { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Area en Metros Cuadrados")]
+        [DataType(DataType.Text)]
+        public string Area { get; set; }
+    }
 }
