@@ -268,6 +268,7 @@
     <Content Include="resources\img\Defaults\defaultUser.png" />
     <Content Include="resources\img\documents\logoDefault.png" />
     <Content Include="resources\img\icons\agrimensura.png" />
+    <Content Include="resources\img\icons\deslinder.jpg" />
     <Content Include="resources\img\icons\diseno.png" />
     <Content Include="resources\img\icons\estudios.png" />
     <Content Include="resources\img\icons\ingenieria.png" />
@@ -736,6 +737,11 @@
     <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
+    <Content Include="Views\Administration\Flipboard\Flipboard.cshtml" />
+    <Content Include="Views\Administration\Flipboard\_AddFlipboard.cshtml" />
+    <Content Include="Views\Administration\Flipboard\_DeleteFlipboard.cshtml" />
+    <Content Include="Views\Home\Index\_HomeFlipboard.cshtml" />
+    <Content Include="Views\Home\Deslinder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

@@ -72,5 +72,10 @@ namespace Topodata2.Controllers
         {
             return View();
         }
+
+        public ActionResult Deslinder()
+        {
+            return View();
+        }
     }
 }

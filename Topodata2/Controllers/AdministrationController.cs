@@ -34,6 +34,11 @@ namespace Topodata2.Controllers
             return View("OurTeam/OurTeam");
         }
 
+        public ActionResult Flipboard()
+        {
+            return View("Flipboard/Flipboard");
+        }
+
         [HttpPost]
         public ActionResult HomeText(HomeTextPrincipalViewModel viewModel)
         {
@@ -182,6 +187,52 @@ namespace Topodata2.Controllers
             TempData["OperationMessage"] = errorMessage;
             return RedirectToAction("OurTeam", "Administration");
 
+        }
+
+        [HttpPost]
+        public ActionResult AddFlipboard(FlipboardViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("Flipboard", "Administration");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (HomeManager.AddFlipboard(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Flipboard", "Administration");
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("Flipboard", "Administration");
+        }
+
+        public ActionResult DeleteFlipboard(int id)
+        {
+            FlipboardViewModel viewModel = new FlipboardViewModel()
+            {
+                IdFlipboard = Convert.ToInt32(id)
+            };
+
+            if (HomeManager.DeleteFlipboard(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Flipboard", "Administration");
+            }
+            var errorMessage = string.Join("; ",
+                ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+            TempData["OperationStatus"] = "Error";
+            TempData["OperationMessage"] = errorMessage;
+            return RedirectToAction("Flipboard", "Administration");
         }
     }
 }

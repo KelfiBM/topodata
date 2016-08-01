@@ -1,0 +1,25 @@
+﻿@using Topodata2.Models
+@model List<FlipboardViewModel>
+<div class="headline">
+    <h2>Revistas Topodata</h2>
+</div>
+<div class="row margin-bottom-20">
+    <div class="row margin-bottom-20">
+        <div class="owl-carousel-v2 owl-carousel-style-v2 margin-bottom-50">
+            <div class="owl-slider-v2">
+                @foreach (var flipboard in Model)
+                {
+                    <div class="item">
+                        <a data-flip-widget="mag" href="@Html.Encode(flipboard.Url)">View my Flipboard Magazine.</a>
+                    </div>
+                }
+            </div>
+            <div class="owl-navigation">
+                <div class="customNavigation">
+                    <a class="owl-btn prev-v2"><i class="fa fa-angle-left"></i></a>
+                    <a class="owl-btn next-v2"><i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -95,20 +95,16 @@ namespace Topodata2.Models
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Link (embed) del video en youtube")]
         [DataType(DataType.Url)]
-        [MustContainString(ErrorMessage = "Debe ser el link embed")]
+        [MustContainEmbedYoutube(ErrorMessage = "Debe ser el link embed")]
         public string UrlVideo { get; set; }
         public DateTime RegDate { get; set; }
     }
 
-    public class MustContainString : ValidationAttribute
+    public class MustContainEmbedYoutube : ValidationAttribute
     {
         public override bool IsValid(object value)
         {
-            if (value.ToString().Contains("/embed/"))
-            {
-                return true;
-            }
-                return false;
+            return value.ToString().Contains("/embed/");
         }
     }
 
@@ -139,5 +135,29 @@ namespace Topodata2.Models
         [Required(ErrorMessage = "Debe agregar una foto")]
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
+    }
+
+    public class FlipboardViewModel
+    {
+        public int IdFlipboard { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Link de la revista")]
+        [DataType(DataType.Url)]
+        [MustContainFlipboard(ErrorMessage = "Debe ser un link de una revista de topodata en Flipboard")]
+        public string Url { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        public string Name { get; set; }
+
+        public DateTime RegDate { get; set; }
+    }
+
+    public class MustContainFlipboard : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            return value.ToString().Contains("flipboard.com/@topodata/");
+        }
     }
 }

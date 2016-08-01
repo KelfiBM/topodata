@@ -305,5 +305,100 @@ namespace Topodata2.Models.Home
             return result;
         }
 
+        public static bool AddFlipboard(FlipboardViewModel viewModel)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "INSERT INTO [Topodata].[dbo].[Flipboard] (Nombre, url) VALUES (@nombre, @url)";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("nombre", viewModel.Name);
+                sqlCommand.Parameters.AddWithValue("url", viewModel.Url);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static bool DeleteFlipboard(FlipboardViewModel viewmodel)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "DELETE FROM [Topodata].[dbo].[Flipboard] " +
+                "WHERE IdFlipboard = @id";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("id", viewmodel.IdFlipboard);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static List<FlipboardViewModel> GetAllFlipboard()
+        {
+            List<FlipboardViewModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT * FROM dbo.Flipboard";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<FlipboardViewModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new FlipboardViewModel()
+                        {
+                            IdFlipboard = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Url = reader.GetString(2),
+                            RegDate = reader.GetDateTime(3).Date
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        } 
     }
 }

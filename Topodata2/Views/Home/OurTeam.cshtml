@@ -10,25 +10,21 @@
 </div>
 <div class="container">
     <div id="grid-container">
-        @foreach (var ourteam in Model)
+        @foreach (var ourteam in Model.Where(ourteam => ourteam.ImagePath != "Ignorar"))
         {
-            if (ourteam.ImagePath != "Ignorar")
-            {
-                <div class="cbp-item">
-                    <div class="cbp-item-wrapper">
-                        <a href="#" title="@ourteam.Nombre" class="cbp-caption cbp-singlePage">
-                            <img src="@ourteam.ImagePath" alt="" width="200" height="200"/>
-                        </a>
-                        <a class="cbp-singlePage cbp-l-grid-team-name">
-                            @ourteam.Nombre
-                        </a>
-                        <div class="cbp-l-grid-team-position">
-                            @ourteam.Cargo
-                        </div>
-                        <a href="mailto:@ourteam.Email"></a>
+            <div class="cbp-item">
+                <div class="cbp-item-wrapper">
+                    <div title="@ourteam.Nombre" class="cbp-caption">
+                        <img src="@ourteam.ImagePath" alt="" width="200" height="200"/>
+                    </div>
+                    <a class="cbp-l-grid-team-name">
+                        @ourteam.Nombre
+                    </a>
+                    <div class="cbp-l-grid-team-position">
+                        @ourteam.Cargo
                     </div>
                 </div>
-            }
+            </div>
         }
     </div>
     <hr class="margin-bottom-60">

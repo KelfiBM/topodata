@@ -1,0 +1,32 @@
+﻿@using Topodata2.Models.Home
+@model Topodata2.Models.FlipboardViewModel
+<div id="delete" class="profile-edit tab-pane fade">
+    <h2 class="heading-md">Eliminar Revista</h2>
+    <p>Eliminar</p>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Url</th>
+                <th>Registrado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (HomeManager.GetAllFlipboard() != null)
+        {
+            foreach (var flipboard in HomeManager.GetAllFlipboard())
+            {
+                <tr>
+                    <td>@flipboard.Name</td>
+                    <td>@flipboard.Url</td>
+                    <td>@flipboard.RegDate</td>
+                    <td>@Html.ActionLink("Eliminar", "DeleteFlipboard", "Administration", new { id = flipboard.IdFlipboard }, new { @class = "btn btn-danger btn-xs", @style = "color: #FFF" })</td>
+                </tr>
+            }
+        }
+        
+        </tbody>
+    </table>
+</div>
