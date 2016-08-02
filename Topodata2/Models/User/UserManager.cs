@@ -208,6 +208,45 @@ namespace Topodata2.Models.User
             return result;
         }
 
+        public static List<UserModel> GetSuscribedInformed()
+        {
+            List<UserModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT Email FROM dbo.Suscrito WHERE (Informed = 1)";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<UserModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new UserModel()
+                        {
+                            Email = reader.GetString(0),
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
         public static List<UserModel> GetAllUsers()
         {
             List<UserModel> result = null;

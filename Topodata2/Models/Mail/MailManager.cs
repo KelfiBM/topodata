@@ -145,9 +145,19 @@ namespace Topodata2.Models.Mail
                     IsBodyHtml = true
                 };
                 mail.AlternateViews.Add(view);
-                foreach (var informedUser in UserManager.GetAllInformedUsers())
+                if (UserManager.GetAllInformedUsers() != null)
                 {
-                    mail.To.Add(informedUser.Email);
+                    foreach (var informedUser in UserManager.GetAllInformedUsers())
+                    {
+                        mail.To.Add(informedUser.Email);
+                    }
+                }
+                if (UserManager.GetSuscribedInformed() != null)
+                {
+                    foreach (var informedUser in UserManager.GetSuscribedInformed())
+                    {
+                        mail.To.Add(informedUser.Email);
+                    }
                 }
                 var smtp = new SmtpClient
                 {
