@@ -1,0 +1,34 @@
+﻿@model Topodata2.Models.FlipboardViewModel
+<div id="add" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Añadir Revista de Flipboard</h2>
+    <p>Añadir</p>
+    <br>
+    @using (Html.BeginForm("AddFlipboard", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
+    {
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(m => m.Url)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Url, new { htmlAttributes = new { @placeholder = "Url de la revista", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Link de la revista en flipboard</b>
+                        @Html.ValidationMessageFor(m => m.Url)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Name)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @placeholder = "Nombre de la revista", @class = "changeable" } })
+                        <b class="tooltip tooltip-bottom-right">Nombre de la revista en Flipboard</b>
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </label>
+                </section>
+            </dd>
+        </dl>
+        <br>
+        <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
+        <button id="submitProfile" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
+    }
+</div>

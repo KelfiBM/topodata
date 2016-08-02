@@ -1,0 +1,33 @@
+﻿@using Topodata2.Models
+@using Topodata2.Models.Home
+@model OurTeamViewModel
+<div id="delete" class="profile-edit tab-pane fade">
+    <h2 class="heading-md">Eliminar Equipo</h2>
+    <p>Eliminar</p>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Correo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (HomeManager.GetAllOurTeam() != null)
+        {
+            foreach (var ourTeam in HomeManager.GetAllOurTeam())
+            {
+                <tr>
+                    <td>@ourTeam.Nombre</td>
+                    <td>@ourTeam.Cargo</td>
+                    <td>@ourTeam.Email</td>
+                    <td>@Html.ActionLink("Eliminar", "DeleteOurTeam", "Administration", new { id = ourTeam.IdOurTeam }, new { @class = "btn btn-danger btn-xs", @style = "color: #FFF" })</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+</div>

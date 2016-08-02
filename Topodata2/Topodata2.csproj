@@ -194,6 +194,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -206,13 +207,17 @@
     <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\Home\HomeManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Mail\MailManager.cs" />
+    <Compile Include="Models\Mail\MailModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\User\UserManager.cs" />
+    <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserProfile.cs" />
     <Compile Include="Models\User\UserSettingsManager.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -230,7 +235,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="EmailTemplates\AddedContent\NewDocumentAdded.html" />
+    <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredAdmin.html" />
+    <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredUser.html" />
+    <Content Include="EmailTemplates\Deslinder\images\81.jpg" />
+    <Content Include="EmailTemplates\Deslinder\images\logoDefault.png" />
     <Content Include="EmailTemplates\NewContentAdded.html" />
+    <Content Include="EmailTemplates\Registration\RegistrationDoneUser.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="resources\css\app.css" />
     <Content Include="resources\css\blocks.css" />
@@ -243,6 +254,7 @@
     <Content Include="resources\css\pages\page_about.css" />
     <Content Include="resources\css\pages\page_clients.css" />
     <Content Include="resources\css\pages\page_contact.css" />
+    <Content Include="resources\css\pages\page_log_reg_v1.css" />
     <Content Include="resources\css\pages\page_log_reg_v3.css" />
     <Content Include="resources\css\pages\page_misc_sticky_footer.css" />
     <Content Include="resources\css\pages\page_one.css" />
@@ -256,6 +268,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="resources\css\style.css" />
     <Content Include="resources\css\theme-colors\default.css" />
+    <Content Include="resources\img\backgrounds\img1.jpg" />
+    <Content Include="resources\img\backgrounds\img2.jpg" />
     <Content Include="resources\img\breadcrumbs\img1.jpg" />
     <Content Include="resources\img\breadcrumbs\img2.jpg" />
     <Content Include="resources\img\breadcrumbs\img3.jpg" />
@@ -263,7 +277,9 @@
     <Content Include="resources\css\theme-skins\dark.css" />
     <Content Include="resources\img\Defaults\defaultUser.png" />
     <Content Include="resources\img\documents\logoDefault.png" />
+    <Content Include="resources\img\email\architect.jpg" />
     <Content Include="resources\img\icons\agrimensura.png" />
+    <Content Include="resources\img\icons\deslinder.jpg" />
     <Content Include="resources\img\icons\diseno.png" />
     <Content Include="resources\img\icons\estudios.png" />
     <Content Include="resources\img\icons\ingenieria.png" />
@@ -299,6 +315,7 @@
     <Content Include="resources\img\icons\social\yahoo.png" />
     <Content Include="resources\img\icons\social\youtube.png" />
     <Content Include="resources\img\logoDefault.png" />
+    <Content Include="resources\img\mockup\imac_t.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
     <Content Include="resources\img\mockup\planning2.jpg" />
     <Content Include="resources\img\sliders\agrimensuras.jpg" />
@@ -417,6 +434,12 @@
     <Content Include="resources\plugins\brand-buttons\brand-buttons.css" />
     <Content Include="resources\plugins\brand-buttons\css\brand-buttons-inversed.min.css" />
     <Content Include="resources\plugins\brand-buttons\css\brand-buttons.min.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\css\cubeportfolio.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\css\cubeportfolio.min.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\custom\custom-cubeportfolio.css" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.png" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.js" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.10.1.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.9.0.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery.mousewheel-3.0.6.pack.js" />
@@ -475,6 +498,13 @@
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\nothumb.png" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.css" />
     <Content Include="resources\plugins\layer-slider\layerslider\skins\fullwidthdark\skin.png" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.svg" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\icons-reference.html" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\styles.css" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.svg" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\icons-reference.html" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\styles.css" />
+    <Content Include="resources\plugins\line-icons-pro\styles.css" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.dev.svg" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.svg" />
     <Content Include="resources\plugins\line-icons\icons-lte-ie7.js" />
@@ -630,6 +660,13 @@
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.eot" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="resources\plugins\line-icons\fonts\Simple-Line-Icons.woff" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.eot" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.ttf" />
+    <Content Include="resources\plugins\line-icons-pro\education\webfont\fonts\education-48.woff" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.eot" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.ttf" />
+    <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.woff" />
+    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.psd" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -703,6 +740,21 @@
     <Content Include="Views\Shared\_AlertSuccess.cshtml" />
     <Content Include="Views\Shared\_AlertError.cshtml" />
     <Content Include="Views\User\Profile\_SettingsEditProfile.cshtml" />
+    <Content Include="Views\Home\Index\_HomeText.cshtml" />
+    <Content Include="Views\Administration\Index.cshtml" />
+    <Content Include="Views\Administration\HomeText.cshtml" />
+    <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
+    <Content Include="Views\Administration\HomeSlide.cshtml" />
+    <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
+    <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
+    <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
+    <Content Include="Views\Administration\Flipboard\Flipboard.cshtml" />
+    <Content Include="Views\Administration\Flipboard\_AddFlipboard.cshtml" />
+    <Content Include="Views\Administration\Flipboard\_DeleteFlipboard.cshtml" />
+    <Content Include="Views\Home\Index\_HomeFlipboard.cshtml" />
+    <Content Include="Views\Home\Deslinder.cshtml" />
+    <Content Include="Views\Administration\Users\AllUsers.cshtml" />
+    <Content Include="Views\Administration\Users\ViewAllUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

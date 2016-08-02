@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Topodata2.Models;
+using Topodata2.Models.Mail;
 
 namespace Topodata2.Controllers
 {
@@ -63,6 +64,7 @@ namespace Topodata2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddDocument()
         {
+
             if (User.IsInRole("Admin"))
             {
                 return View();
@@ -74,59 +76,56 @@ namespace Topodata2.Controllers
         [HttpPost]
         public ActionResult AddDocument(ServiceDocumentViewModel serviceDocument)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(serviceDocument);
+            if (serviceDocument.ImageUpload != null)
             {
-                if (serviceDocument.ImageUpload != null)
+                string[] validImageTypes =
                 {
-                    string[] validImageTypes =
-                    {
-                        "image/gif",
-                        "image/jpeg",
-                        "image/pjpeg",
-                        "image/png"
-                    };
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
 
-                    if (!validImageTypes.Contains(serviceDocument.ImageUpload.ContentType))
-                    {
-                        ModelState.AddModelError("ImageUpload",
-                            "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
-                        return View(serviceDocument);
-                    }
-                    else
-                    {
-                        string uploadPath = "~/resources/img/documents";
-                        string filename = serviceDocument.ImageUpload.FileName;
-                        string imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
-                        string tempFileName = filename;
-                        if (System.IO.File.Exists(imagePath))
-                        {
-                            int counter = 1;
-                            while (System.IO.File.Exists(imagePath))
-                            {
-                                tempFileName = counter.ToString() + filename;
-                                imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
-                                counter++;
-                            }
-                            filename = tempFileName;
-                        }
-                        string imageUrl = uploadPath + "/" + filename;
-                        imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
-                        serviceDocument.ImageUpload.SaveAs(imagePath);
-                        serviceDocument.ImagePath = imageUrl;
-                    }
+                if (!validImageTypes.Contains(serviceDocument.ImageUpload.ContentType))
+                {
+                    ModelState.AddModelError("ImageUpload",
+                        "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
+                    return View(serviceDocument);
                 }
                 else
                 {
-                    serviceDocument.ImagePath = null;
+                    var uploadPath = "~/resources/img/documents";
+                    var filename = serviceDocument.ImageUpload.FileName;
+                    var imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
+                    var tempFileName = filename;
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        var counter = 1;
+                        while (System.IO.File.Exists(imagePath))
+                        {
+                            tempFileName = counter.ToString() + filename;
+                            imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
+                            counter++;
+                        }
+                        filename = tempFileName;
+                    }
+                    var imageUrl = uploadPath + "/" + filename;
+                    imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
+                    serviceDocument.ImageUpload.SaveAs(imagePath);
+                    serviceDocument.ImagePath = imageUrl;
                 }
-                if (serviceDocument.AddDocument(serviceDocument))
-                {
-                    serviceDocument.SendAddedDocumentMessage();
-                    return RedirectToAction("Document", "Services", new { id = serviceDocument.GetLastDocummentAdded().Id });
-                }
-                return RedirectToAction("InternalServer", "Error");
             }
-            return View(serviceDocument);
+            else
+            {
+                serviceDocument.ImagePath = null;
+            }
+            if (serviceDocument.AddDocument(serviceDocument))
+            {
+                MailManager.SendNewDocumentMessage(serviceDocument.GetLastDocummentAdded());
+                return RedirectToAction("Document", "Services", new { id = serviceDocument.GetLastDocummentAdded().Id });
+            }
+            return RedirectToAction("InternalServer", "Error");
         }
     }
 }

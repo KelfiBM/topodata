@@ -163,5 +163,122 @@ namespace Topodata2.Models.User
             }
             return result;
         }
+
+        public static List<UserModel> GetAllInformedUsers()
+        {
+            List<UserModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.Users.Name, dbo.Users.LastName, dbo.Users.Email, dbo.Users.Username, dbo.Users.Informed, dbo.Roles.Descripcion FROM dbo.Users INNER JOIN dbo.Roles ON dbo.Users.idRole = dbo.Roles.idRole WHERE (dbo.Users.Informed = 1)";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<UserModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new UserModel()
+                        {
+                            Name = reader.GetString(0),
+                            LastName = reader.GetString(1),
+                            Email = reader.GetString(2),
+                            UserName = reader.GetString(3),
+                            Informed = reader.GetBoolean(4),
+                            Rol = reader.GetString(5)
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static List<UserModel> GetAllUsers()
+        {
+            List<UserModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.Users.Name, dbo.Users.LastName, dbo.Users.Email, dbo.Users.Username, dbo.Users.Informed, dbo.Users.RegDate, dbo.Roles.Descripcion, dbo.Users.IdUsers FROM dbo.Users INNER JOIN dbo.Roles ON dbo.Users.idRole = dbo.Roles.idRole";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<UserModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new UserModel()
+                        {
+                            Name = reader.GetString(0),
+                            LastName = reader.GetString(1),
+                            Email = reader.GetString(2),
+                            UserName = reader.GetString(3),
+                            Informed = reader.GetBoolean(4),
+                            RegDate = reader.GetDateTime(5),
+                            Rol = reader.GetString(6),
+                            IdUser = reader.GetInt32(7),
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static bool DeleteUser(UserModel model)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "DELETE FROM [Topodata].[dbo].[Users] " +
+                "WHERE IdUsers = @id";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("id", model.IdUser);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
     }    
 }

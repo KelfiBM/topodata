@@ -90,7 +90,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             @*<li>@Html.Encode(User.Identity.Name)</li>*@
-                            <li>@Html.ActionLink(Html.Encode(UserManager.User.Username),"ProfileSettings","User")</li>
+                            <li>@Html.ActionLink(UserManager.User.Username,"ProfileSettings","User")</li>
                             @Html.ActionLink("(Cerrar)", "Logout", "User")
                         }
                         else
@@ -132,10 +132,7 @@
                             <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new {id = 5}, null)</li>
                             <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new {id = 4}, null)</li>
                             <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new {id = 6}, null)</li>
-                            <li>@Html.ActionLink("Planificacion", "Documents", "Services", new {id = 7}, null)</li>
                             <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new {id = 3}, null)</li>
-                            <li>@Html.ActionLink("Evaluacion de Proyectos", "Documents", "Services", new {id = 9}, null)</li>
-                            <li>@Html.ActionLink("Presentaciones", "Documents", "Services", new {id = 8}, null)</li>
                             <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new {id = 11}, null)</li>
                             <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new {id = 10}, null)</li>
                         </ul>
@@ -181,6 +178,10 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     @Html.ActionLink("Añadir Documento", "AddDocument", "Services")
+                                    @Html.ActionLink("Textos Inicio", "HomeText", "Administration")
+                                    @Html.ActionLink("Video Slide", "HomeSlide", "Administration")
+                                    @Html.ActionLink("Nuestro Equipo", "OurTeam", "Administration")
+                                    @Html.ActionLink("Flipboard", "Flipboard", "Administration")
                                 </li>
                             </ul>
                         </li>
