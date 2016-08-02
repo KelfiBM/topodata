@@ -161,7 +161,8 @@ namespace Topodata2.Models
                         "dbo.DetalleDocumento.FechaPublicacion, " +
                         "dbo.DetalleDocumento.Url, " +
                         "dbo.Categoria.IdCategoria, " +
-                        "dbo.Documento.IdDocumento " +
+                        "dbo.Documento.IdDocumento," +
+                        "dbo.DetalleDocumento.Imagen " +
                         "FROM dbo.Categoria INNER JOIN dbo.DetalleDocumento " +
                         "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
                         "INNER JOIN dbo.Documento " +
@@ -182,6 +183,7 @@ namespace Topodata2.Models
                         serviceDocument.Url = reader.GetString(4);
                         serviceDocument.IdCategoria = reader.GetInt32(5);
                         serviceDocument.Id = reader.GetInt32(6);
+                        serviceDocument.ImagePath = reader.GetString(7);
                         serviceDocument.Exists = true;
                         return serviceDocument;
                     }

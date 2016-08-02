@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Topodata2.Models;
+using Topodata2.Models.Mail;
 
 namespace Topodata2.Controllers
 {
@@ -94,13 +95,13 @@ namespace Topodata2.Controllers
                 }
                 else
                 {
-                    string uploadPath = "~/resources/img/documents";
-                    string filename = serviceDocument.ImageUpload.FileName;
-                    string imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
-                    string tempFileName = filename;
+                    var uploadPath = "~/resources/img/documents";
+                    var filename = serviceDocument.ImageUpload.FileName;
+                    var imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
+                    var tempFileName = filename;
                     if (System.IO.File.Exists(imagePath))
                     {
-                        int counter = 1;
+                        var counter = 1;
                         while (System.IO.File.Exists(imagePath))
                         {
                             tempFileName = counter.ToString() + filename;
@@ -109,7 +110,7 @@ namespace Topodata2.Controllers
                         }
                         filename = tempFileName;
                     }
-                    string imageUrl = uploadPath + "/" + filename;
+                    var imageUrl = uploadPath + "/" + filename;
                     imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
                     serviceDocument.ImageUpload.SaveAs(imagePath);
                     serviceDocument.ImagePath = imageUrl;
@@ -121,7 +122,7 @@ namespace Topodata2.Controllers
             }
             if (serviceDocument.AddDocument(serviceDocument))
             {
-                serviceDocument.SendAddedDocumentMessage();
+                MailManager.SendNewDocumentMessage(serviceDocument.GetLastDocummentAdded());
                 return RedirectToAction("Document", "Services", new { id = serviceDocument.GetLastDocummentAdded().Id });
             }
             return RedirectToAction("InternalServer", "Error");

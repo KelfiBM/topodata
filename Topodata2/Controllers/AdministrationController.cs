@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Topodata2.Models;
 using Topodata2.Models.Home;
+using Topodata2.Models.User;
 
 namespace Topodata2.Controllers
 {
@@ -233,6 +234,30 @@ namespace Topodata2.Controllers
             TempData["OperationStatus"] = "Error";
             TempData["OperationMessage"] = errorMessage;
             return RedirectToAction("Flipboard", "Administration");
+        }
+
+        public ActionResult AllUser()
+        {
+            return View("Users/AllUsers");
+        }
+        public ActionResult DeleteUser(int id)
+        {
+            var viewModel = new UserModel()
+            {
+                IdUser = Convert.ToInt32(id)
+            };
+
+            if (UserManager.DeleteUser(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("AllUser", "Administration");
+            }
+            var errorMessage = string.Join("; ",
+                ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+            TempData["OperationStatus"] = "Error";
+            TempData["OperationMessage"] = errorMessage;
+            return RedirectToAction("AllUser", "Administration");
+
         }
     }
 }

@@ -217,6 +217,7 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\User\UserManager.cs" />
+    <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserProfile.cs" />
     <Compile Include="Models\User\UserSettingsManager.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -234,11 +235,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="EmailTemplates\AddedContent\NewDocumentAdded.html" />
     <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredAdmin.html" />
     <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredUser.html" />
     <Content Include="EmailTemplates\Deslinder\images\81.jpg" />
     <Content Include="EmailTemplates\Deslinder\images\logoDefault.png" />
     <Content Include="EmailTemplates\NewContentAdded.html" />
+    <Content Include="EmailTemplates\Registration\RegistrationDoneUser.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="resources\css\app.css" />
     <Content Include="resources\css\blocks.css" />
@@ -274,6 +277,7 @@
     <Content Include="resources\css\theme-skins\dark.css" />
     <Content Include="resources\img\Defaults\defaultUser.png" />
     <Content Include="resources\img\documents\logoDefault.png" />
+    <Content Include="resources\img\email\architect.jpg" />
     <Content Include="resources\img\icons\agrimensura.png" />
     <Content Include="resources\img\icons\deslinder.jpg" />
     <Content Include="resources\img\icons\diseno.png" />
@@ -749,6 +753,8 @@
     <Content Include="Views\Administration\Flipboard\_DeleteFlipboard.cshtml" />
     <Content Include="Views\Home\Index\_HomeFlipboard.cshtml" />
     <Content Include="Views\Home\Deslinder.cshtml" />
+    <Content Include="Views\Administration\Users\AllUsers.cshtml" />
+    <Content Include="Views\Administration\Users\ViewAllUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

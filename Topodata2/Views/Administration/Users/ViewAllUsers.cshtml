@@ -1,0 +1,39 @@
+﻿@using Topodata2.Models.User
+@model List<Topodata2.Models.User.UserModel>
+<div id="all" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Todos los usuarios</h2>
+    <p>Ver Usuarios</p>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Nombre de usuario</th>
+                <th>Notificaciones</th>
+                <th>Fecha de Registro</th>
+                <th>Rol de usuario</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (UserManager.GetAllUsers() != null)
+            {
+                foreach (var user in UserManager.GetAllUsers())
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Informed</td>
+                        <td>@user.RegDate.Date</td>
+                        <td>@user.Rol</td>
+                        <td>@Html.ActionLink("Eliminar", "DeleteUser", "Administration", new { id = user.IdUser }, new { @class = "btn btn-danger btn-xs", @style = "color: #FFF" })</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

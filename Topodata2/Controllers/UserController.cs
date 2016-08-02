@@ -9,6 +9,7 @@ using System.Web.Security;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Topodata2.Models;
+using Topodata2.Models.Mail;
 using Topodata2.Models.User;
 
 namespace Topodata2.Controllers
@@ -170,8 +171,14 @@ namespace Topodata2.Controllers
             {
                 if (userViewModel.Register.RegisterUser(userViewModel.Register))
                 {
-                    new SubscribeViewModel().SendMessage(userViewModel.Register.Email);
-                    FormsAuthentication.SetAuthCookie(userViewModel.Register.Username,false);
+
+                    MailManager.SendRegistrationDone(new UserModel()
+                    {
+                        Email = userViewModel.Register.Email,
+                        Informed = userViewModel.Register.Informed,
+                        Name = userViewModel.Register.Name,
+                        LastName = userViewModel.Register.LastName
+                    });
                     return RedirectToAction("Index", "Home");
                 }
                 else

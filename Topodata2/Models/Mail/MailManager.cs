@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using Topodata2.Models.User;
 
 namespace Topodata2.Models.Mail
 {
@@ -69,7 +70,7 @@ namespace Topodata2.Models.Mail
                 var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~/EmailTemplates/Deslinder/images/logoDefault.png"));
                 img1.ContentId = Guid.NewGuid().ToString();
                 var img2 = new LinkedResource(HttpContext.Current.Server.MapPath("~/EmailTemplates/Deslinder/images/81.jpg"));
-                img1.ContentId = Guid.NewGuid().ToString();
+                img2.ContentId = Guid.NewGuid().ToString();
 
                 body = body.Replace("{img1}", img1.ContentId);
                 body = body.Replace("{img2}", img2.ContentId);
@@ -93,6 +94,124 @@ namespace Topodata2.Models.Mail
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new NetworkCredential("info@topodata.com", "Topo.1953");
                 smtp.EnableSsl = false;
+                smtp.Send(mail);
+                smtp.Dispose();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                //Ignore
+            }
+            return result;
+        }
+
+        public static bool SendNewDocumentMessage(ServiceDocumentViewModel viewModel)
+        {
+            var result = false;
+            try
+            {
+                string body;
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/AddedContent/NewDocumentAdded.html")))
+                {
+                    body = sr.ReadToEnd();
+                }
+                body = body.Replace("{title1}", viewModel.Nombre);
+                body = body.Replace("{categoria1}", viewModel.Categoria);
+                body = body.Replace("{descripcion1}", viewModel.Descripcion);
+                body = body.Replace("{urlDocument}", "topodata.com/Services/Document/" + viewModel.Id);
+
+                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath("~/resources/img/logoDefault.png"))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~" + viewModel.ImagePath))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                body = body.Replace("{img0}", img0.ContentId);
+                body = body.Replace("{img1}", img1.ContentId);
+
+                var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+                view.LinkedResources.Add(img0);
+                view.LinkedResources.Add(img1);
+
+
+                var mail = new MailMessage
+                {
+                    From = new MailAddress("info@topodata.com"),
+                    Subject = "Nuevo documento añadido",
+                    Body = body,
+                    IsBodyHtml = true
+                };
+                mail.AlternateViews.Add(view);
+                foreach (var informedUser in UserManager.GetAllInformedUsers())
+                {
+                    mail.To.Add(informedUser.Email);
+                }
+                var smtp = new SmtpClient
+                {
+                    Host = "mail.topodata.com",
+                    Port = 587,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("info@topodata.com", "Topo.1953"),
+                    EnableSsl = false
+                };
+                smtp.Send(mail);
+                smtp.Dispose();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                //Ignore
+            }
+            return result;
+        }
+
+        public static bool SendRegistrationDone(UserModel model)
+        {
+            var result = false;
+            try
+            {
+                string body;
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/Registration/RegistrationDoneUser.html")))
+                {
+                    body = sr.ReadToEnd();
+                }
+                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath("~/resources/img/logoDefault.png"))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~/resources/img/email/architect.jpg"))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                body = body.Replace("{img0}", img0.ContentId);
+                body = body.Replace("{img1}", img1.ContentId);
+
+                var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+                view.LinkedResources.Add(img0);
+                view.LinkedResources.Add(img1);
+
+
+                var mail = new MailMessage
+                {
+                    From = new MailAddress("info@topodata.com"),
+                    Subject = "Introducete a TOPODATA",
+                    Body = body,
+                    IsBodyHtml = true
+                };
+                mail.AlternateViews.Add(view);
+                mail.To.Add(model.Email);
+                var smtp = new SmtpClient
+                {
+                    Host = "mail.topodata.com",
+                    Port = 587,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("info@topodata.com", "Topo.1953"),
+                    EnableSsl = false
+                };
                 smtp.Send(mail);
                 smtp.Dispose();
                 result = true;
