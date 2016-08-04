@@ -16,8 +16,8 @@
             @using (Html.BeginForm("Deslinder", "Home", FormMethod.Post, new { @class = "reg-page", @id = "sky-form1" }))
             {
                 <div class="reg-header">
-                    <h2>Obten tu titulo de propiedad!</h2>
-                    <p>Registrate para iniciar el proceso de gestion de titulo de propiedad</p>
+                    <h2>Obten tu Título de propiedad!</h2>
+                    <p>Registrate para iniciar el proceso de gestion de Título de propiedad</p>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -58,9 +58,16 @@
                 <label>@Html.DisplayNameFor(m => m.NoDistrito)</label>
                 @Html.EditorFor(m => m.NoDistrito, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nuemero de distrito" } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoDistrito)</p>
+                <label>@Html.DisplayNameFor(m => m.Municipio)</label>
+                @Html.EditorFor(m => m.Municipio, new { htmlAttributes = new { @class = "form-control", @placeholder = "Municipio" } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Municipio)</p>
+                <label>@Html.DisplayNameFor(m => m.Provincia)</label>
+                @Html.EditorFor(m => m.Provincia, new { htmlAttributes = new { @class = "form-control", @placeholder = "Provincia" } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Provincia)</p>
                 <label>@Html.DisplayNameFor(m => m.Area)</label>
                 @Html.EditorFor(m => m.Area, new { htmlAttributes = new { @class = "form-control", @placeholder = "Area en Metros cuadrados" } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Area)</p>
+                <label>*Usted puede enviar un Share Location/Compartir Ubicacion desde Whatsapp al número 829-972-4131</label>
                 <div class="row">
                     <div class="col-lg-6"></div>
                     <div class="col-lg-6 text-right">

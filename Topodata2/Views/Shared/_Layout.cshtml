@@ -125,21 +125,22 @@
                         @Html.ActionLink("Inicio", "Index", "Home")
                     </li>
                     <li class="dropdown">
-                        @Html.ActionLink("Servicios", "Documents", "Services", new {id = 0}, null)
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Servicios</a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new {id = 1}, null)</li>
-                            <li>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new {id = 2}, null)</li>
-                            <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new {id = 5}, null)</li>
-                            <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new {id = 4}, null)</li>
-                            <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new {id = 6}, null)</li>
-                            <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new {id = 3}, null)</li>
-                            <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new {id = 11}, null)</li>
-                            <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new {id = 10}, null)</li>
+                            <li>@Html.ActionLink("Todas las categorias", "Documents", "Services", new { id = 0 }, null)</li>
+                            <li>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new { id = 1 }, null)</li>
+                            <li>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new { id = 2 }, null)</li>
+                            <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new { id = 5 }, null)</li>
+                            <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new { id = 4 }, null)</li>
+                            <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new { id = 6 }, null)</li>
+                            <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new { id = 3 }, null)</li>
+                            <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new { id = 11 }, null)</li>
+                            <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new { id = 10 }, null)</li>
                         </ul>
                     </li>
                     <!-- End Home -->
                     <li class="dropdown">
-                        @Html.ActionLink("Multimedia", "Photo", "Home")
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Multimedia</a>
                         <ul class="dropdown-menu">
                             <li>
                                 @Html.ActionLink("Fotos", "Photo", "Home")
@@ -156,7 +157,7 @@
                     <!--End Contacto-->
                     <!--About Us-->
                     <li class="dropdown">
-                        @Html.ActionLink("Conócenos", "About", "Home")
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Conócenos</a>
                         <ul class="dropdown-menu">
                             <li>
                                 @Html.ActionLink("Sobre Topodata", "About", "Home")
@@ -174,7 +175,7 @@
                     @if (Request.IsAuthenticated && UserManager.IsUserInRole("Admin"))
                     {
                         <li class="dropdown">
-                            <a href="#">Administracion</a>
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Administracion</a>
                             <ul class="dropdown-menu">
                                 <li>
                                     @Html.ActionLink("Añadir Documento", "AddDocument", "Services")
@@ -251,7 +252,7 @@
                         <br/>
                         Telefono 2: 809-682-8728
                         <br/>
-                        Movil: 809-519-4131
+                        Movil: 829-972-4131
                         <br/>
                         <br/>
                         Email: <a href="mailto:info@topodata.com">info@topodata.com</a>

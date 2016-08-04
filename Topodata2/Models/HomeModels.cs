@@ -194,12 +194,12 @@ namespace Topodata2.Models
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
-        [Display(Name = "No. Matrical del titulo")]
+        [Display(Name = "No. Matrícula del Título")]
         [DataType(DataType.Text)]
         public string NoMatrical { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
-        [Display(Name = "No. de Parsela (Del Terreno)")]
+        [Display(Name = "No. de Parcela (Del Terreno)")]
         [DataType(DataType.Text)]
         public string NoParsela { get; set; }
 
@@ -207,6 +207,16 @@ namespace Topodata2.Models
         [Display(Name = "No. de Distrito Catastral")]
         [DataType(DataType.Text)]
         public string NoDistrito { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Municipio")]
+        [DataType(DataType.Text)]
+        public string Municipio { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Provincia")]
+        [DataType(DataType.Text)]
+        public string Provincia { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Area en Metros Cuadrados")]

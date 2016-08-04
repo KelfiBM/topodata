@@ -1,0 +1,45 @@
+﻿@using Topodata2.Models
+@model List<ServiceDocumentViewModel>
+<div class="headline">
+    <h2>Documentos Recientes</h2>
+</div>
+<div class="row margin-bottom-20">
+    <div class="row margin-bottom-20">
+        <div class="owl-carousel-v2 owl-carousel-style-v2 margin-bottom-50">
+            <div class="owl-slider-v2">
+                @foreach (var document in Model)
+                {
+                    <div class="item">
+                        <div class="thumbnails thumbnail-style thumbnail-kenburn" style="height: 220px">
+                            <div class="thumbnail-img">
+                                <div class="overflow-hidden">
+                                    <img src="" alt="" style="height: 100px; width: 200px; background: url(@document.ImagePath) no-repeat; background-size: cover; background-position: center center;"/>
+                                </div>
+                                @Html.ActionLink("ver mas +", "Document", "Services", new {id = document.Id}, new {@class = "btn-more hover-effect"})
+                            </div>
+                            <div class="caption" >
+                                <h3>
+                                    @Html.ActionLink(document.Nombre, "Document", "Services", new {id = document.Id}, new {@class = "hover-effect"})
+                                </h3>
+                                @if (document.Descripcion.Length > 100)
+                                {
+                                    <p>@document.Descripcion.Substring(0, 100)...</p>
+                                }
+                                else
+                                {
+                                    <p>@document.Descripcion</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="owl-navigation">
+                <div class="customNavigation">
+                    <a class="owl-btn prev-v2"><i class="fa fa-angle-left"></i></a>
+                    <a class="owl-btn next-v2"><i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

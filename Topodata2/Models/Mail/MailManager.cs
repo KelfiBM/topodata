@@ -30,6 +30,8 @@ namespace Topodata2.Models.Mail
                     viewModel.NoMatrical,
                     viewModel.NoParsela,
                     viewModel.NoDistrito,
+                    viewModel.Municipio,
+                    viewModel.Provincia,
                     viewModel.Area
                     );
                 MailMessage mail = new MailMessage();
@@ -83,7 +85,7 @@ namespace Topodata2.Models.Mail
                 MailMessage mail = new MailMessage();
                 mail.To.Add(viewModel.Correo);
                 mail.From = new MailAddress("info@topodata.com");
-                mail.Subject = "Proceso de gestion de titulo iniciado";
+                mail.Subject = "Proceso de gestion de Título iniciado";
                 mail.Body = body;
                 mail.IsBodyHtml = true;
                 mail.AlternateViews.Add(view);

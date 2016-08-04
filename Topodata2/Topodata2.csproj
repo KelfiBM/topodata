@@ -214,6 +214,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
+    <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\User\UserManager.cs" />
@@ -279,7 +280,6 @@
     <Content Include="resources\img\documents\logoDefault.png" />
     <Content Include="resources\img\email\architect.jpg" />
     <Content Include="resources\img\icons\agrimensura.png" />
-    <Content Include="resources\img\icons\deslinder.jpg" />
     <Content Include="resources\img\icons\diseno.png" />
     <Content Include="resources\img\icons\estudios.png" />
     <Content Include="resources\img\icons\ingenieria.png" />
@@ -314,6 +314,8 @@
     <Content Include="resources\img\icons\social\xing.png" />
     <Content Include="resources\img\icons\social\yahoo.png" />
     <Content Include="resources\img\icons\social\youtube.png" />
+    <Content Include="resources\img\icons\volantetopogis.jpg" />
+    <Content Include="resources\img\icons\volantetopogis2.jpg" />
     <Content Include="resources\img\logoDefault.png" />
     <Content Include="resources\img\mockup\imac_t.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
@@ -755,6 +757,7 @@
     <Content Include="Views\Home\Deslinder.cshtml" />
     <Content Include="Views\Administration\Users\AllUsers.cshtml" />
     <Content Include="Views\Administration\Users\ViewAllUsers.cshtml" />
+    <Content Include="Views\Home\Index\_HomeRecentDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

@@ -1,5 +1,6 @@
 ﻿@using Topodata2.Models
 @using Topodata2.Models.Home
+@using Topodata2.Models.Service
 @model List<ServiceDocumentViewModel>
 @{
     ViewData["Title"] = "Inicio";
@@ -14,15 +15,24 @@
 }
 
 @{Html.RenderPartial("Index/_HomeSlider", HomeManager.GetCurrentHomeSlider());}
-<div class="content-md">
-    <div class="container container-sm">
-        <div class="row text-center margin-bottom-60">
-            <div class="col-md-7">
-                <h1>
-                    @Html.ActionLink("Desea gestionar titulo de propiedad?","Deslinder","Home", new { @style = "font-size: 36px", @id = "deslinder" })
+<div class="container-fluid bg-color-darker">
+    <div class="row equal-height-columns no-gutter">
+        <div class="col-md-6 col-md-offset-1 equal-height-column text-center dp-table" style="height: 323px;">
+            <div class="content-boxes-v3 dp-table-cell quote-v1 parallaxBg" style="background-position: 50% 118px;">
+                <h1 style="font-size: 40px">
+                    <a href="@Url.Action("Deslinder", "Home")">Desea usted que le gestionemos su Título de Propiedad de un Terreno? HAGA CLICK AQUI!</a>
                 </h1>
             </div>
         </div>
+        <div class="col-md-3 col-md-offset-1">
+            <a href="@Url.Action("Deslinder", "Home")">
+                <img class="img-responsive full-width equal-height-column" src="~/resources/img/icons/volantetopogis2.jpg" alt="" style="height: 323px;">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="content-md">
+    <div class="container container-sm">
         @{Html.RenderPartial("Index/_HomeText", HomeManager.GetLastHomeText());}
         <div class="row">
             <div class="col-md-8">
@@ -129,49 +139,20 @@
                     <h2>Al Instante Topodata</h2>
                 </div>
                 <div id="nanoGallery1">
-
                 </div>
-                <h3>@Html.ActionLink("Ver todas", "Photo", "Home")</h3>
+                <div class="heading heading-v1 margin-bottom-40">
+                    <h2>@Html.ActionLink("Ver todas", "Photo", "Home")</h2>
+                </div>
             </div>
         </div>
         @if (HomeManager.GetAllFlipboard() != null)
         {
             Html.RenderPartial("Index/_HomeFlipboard", HomeManager.GetAllFlipboard());
         }
-         @if (Model.Count > 0)
-         {
-            <div class="headline">
-                <h2>Documentos Recientes</h2>
-            </div>
-            <div class="row margin-bottom-20">
-                @foreach (ServiceDocumentViewModel document in Model)
-                {
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnails thumbnail-style thumbnail-kenburn">
-                            <div class="thumbnail-img">
-                                <div class="overflow-hidden">
-                                    <img src="@document.ImagePath" alt="" class="img-responsive" />
-                                </div>
-                                @Html.ActionLink("ver mas +", "Document", "Services", new { id = document.Id }, new { @class = "btn-more hover-effect" })
-                            </div>
-                            <div class="caption">
-                                <h3>
-                                    @Html.ActionLink(document.Nombre, "Document", "Services", new { id = document.Id }, new { @class = "hover-effect" })
-                                </h3>
-                                @if (document.Descripcion.Length > 100)
-                                {
-                                    <p>@document.Descripcion.Substring(0, 100)...</p>
-                                }
-                                else
-                                {
-                                    <p>@document.Descripcion</p>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-         }
+        @if (ServiceManager.GetLastDocumentsAdded(0,10) != null || ServiceManager.GetLastDocumentsAdded(0, 10).Count > 0)
+        {
+            Html.RenderPartial("Index/_HomeRecentDocument",ServiceManager.GetLastDocumentsAdded(0,10));
+        }
     </div>
 </div>
 <div class="bg-grey content-sm">
@@ -233,7 +214,7 @@
             });
         });
     </script>
-    <script>
+    @*<script>
         var cw = 0;
         $('.thumbnails.thumbnail-style.thumbnail-kenburn').each(function (index, value) {
             if ($(this).height() > cw) {
@@ -242,19 +223,5 @@
 
         });
         $('.thumbnails.thumbnail-style.thumbnail-kenburn').css({ 'height': cw + 'px' });
-    </script>
-    <script>
-        (function () {
-            var s = document.getElementById('deslinder').style,
-                f = false,
-                c1 = '#000000',
-                c2 = '#ffff00';
-
-            setInterval(function () {
-                s.backgroundColor = f ? c1 : c2;
-                s.color = f ? c2 : c1;
-                f = !f;
-            }, 1000);
-        })();
-    </script>
+    </script>*@
 }
