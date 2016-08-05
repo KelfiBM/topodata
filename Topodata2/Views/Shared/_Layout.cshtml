@@ -124,20 +124,7 @@
                     <li>
                         @Html.ActionLink("Inicio", "Index", "Home")
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Servicios</a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Todas las categorias", "Documents", "Services", new { id = 0 }, null)</li>
-                            <li>@Html.ActionLink("Agrimensura Geomatica", "Documents", "Services", new { id = 1 }, null)</li>
-                            <li>@Html.ActionLink("Estudio y Mecanica de Suelos", "Documents", "Services", new { id = 2 }, null)</li>
-                            <li>@Html.ActionLink("Diseños Arquitectonicos y Espacios", "Documents", "Services", new { id = 5 }, null)</li>
-                            <li>@Html.ActionLink("Ingenieria Estructural y Calculos", "Documents", "Services", new { id = 4 }, null)</li>
-                            <li>@Html.ActionLink("Presupuestos", "Documents", "Services", new { id = 6 }, null)</li>
-                            <li>@Html.ActionLink("Impacto Ambiental y Sostenibilidad", "Documents", "Services", new { id = 3 }, null)</li>
-                            <li>@Html.ActionLink("Supervicion de Obras", "Documents", "Services", new { id = 11 }, null)</li>
-                            <li>@Html.ActionLink("Procesos de Construccion", "Documents", "Services", new { id = 10 }, null)</li>
-                        </ul>
-                    </li>
+                    @{Html.RenderPartial("Layout/_Categories");}
                     <!-- End Home -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Multimedia</a>

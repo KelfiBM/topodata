@@ -80,6 +80,7 @@ namespace Topodata2.Controllers
         public ActionResult Deslinder(DeslinderViewModel viewModel)
         {
             string errorMessage;
+            viewModel.RegDate = System.DateTime.Now;
             if (!ModelState.IsValid)
             {
                 errorMessage = string.Join("; ",

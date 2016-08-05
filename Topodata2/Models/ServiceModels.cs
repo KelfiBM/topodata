@@ -11,11 +11,6 @@ using System.Web.WebPages;
 
 namespace Topodata2.Models
 {
-    public class ServiceModels
-    {
-
-    }
-
     public class ServiceDocumentViewModel
     {
         public int Id { get; set; }
@@ -396,5 +391,17 @@ namespace Topodata2.Models
                 return false;
             }
         }
+    }
+
+    public class SubCategorieModel
+    {
+        public int Id { get; set; }
+        public string Descripcion { get; set; }
+    }
+
+    public class CategorieModel
+    {
+        public int Id { get; set; }
+        public string Descripcion { get; set; }
     }
 }

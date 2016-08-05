@@ -32,7 +32,8 @@ namespace Topodata2.Models.Mail
                     viewModel.NoDistrito,
                     viewModel.Municipio,
                     viewModel.Provincia,
-                    viewModel.Area
+                    viewModel.Area,
+                    viewModel.RegDate.Date
                     );
                 MailMessage mail = new MailMessage();
                 mail.To.Add("deslinde@topodata.com");

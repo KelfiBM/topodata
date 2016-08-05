@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Topodata2.Models.Service
 {
@@ -81,6 +79,7 @@ namespace Topodata2.Models.Service
                     }
                 }
             }
+                // ReSharper disable once UnusedVariable
             catch (Exception exception)
             {
                 //Ignore
@@ -93,5 +92,88 @@ namespace Topodata2.Models.Service
             }
             return result;
         }
+
+        public static List<SubCategorieModel> GetSubCategoriesByCategorieId(CategorieModel model)
+        {
+            List<SubCategorieModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.SubCategoria.IdSubCategoria, dbo.SubCategoria.Descripcion AS SubCategoria FROM dbo.Categoria_SubCategoria INNER JOIN dbo.Categoria ON dbo.Categoria_SubCategoria.IdCategoria = dbo.Categoria.IdCategoria INNER JOIN dbo.SubCategoria ON dbo.Categoria_SubCategoria.IdSubCategoria = dbo.SubCategoria.IdSubCategoria WHERE (dbo.Categoria_SubCategoria.IdCategoria = @id)";
+                com.CommandType = CommandType.Text;
+                com.Parameters.AddWithValue("id", model.Id);
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<SubCategorieModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new SubCategorieModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Descripcion = reader.GetString(1)
+                        });
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static List<CategorieModel> GetAllCategories()
+        {
+            List<CategorieModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.Categoria.* FROM dbo.Categoria";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<CategorieModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new CategorieModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Descripcion = reader.GetString(1)
+                        });
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        } 
     }
 }

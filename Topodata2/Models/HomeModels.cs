@@ -222,5 +222,7 @@ namespace Topodata2.Models
         [Display(Name = "Area en Metros Cuadrados")]
         [DataType(DataType.Text)]
         public string Area { get; set; }
+
+        public DateTime RegDate { get; set; }
     }
 }
