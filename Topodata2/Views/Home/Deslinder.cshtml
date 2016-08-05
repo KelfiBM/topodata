@@ -44,28 +44,28 @@
                     </div>
                 </div>
                 <label>@Html.DisplayNameFor(m => m.Correo)</label>
-                @Html.EditorFor(m => m.Correo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                @Html.EditorFor(m => m.Correo, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Correo) } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Correo)</p>
                 <label>@Html.DisplayNameFor(m => m.Ubicacion)</label>
                 @Html.EditorFor(m => m.Ubicacion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Direccion" } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Ubicacion)</p>
                 <label>@Html.DisplayNameFor(m => m.NoMatrical)</label>
-                @Html.EditorFor(m => m.NoMatrical, new { htmlAttributes = new { @class = "form-control", @placeholder = "Numero Matrialcal" } })
+                @Html.EditorFor(m => m.NoMatrical, new { htmlAttributes = new { @class = "form-control", @placeholder = "No. de Matricula" } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoMatrical)</p>
                 <label>@Html.DisplayNameFor(m => m.NoParsela)</label>
-                @Html.EditorFor(m => m.NoParsela, new { htmlAttributes = new { @class = "form-control", @placeholder = "Numero de parsela" } })
+                @Html.EditorFor(m => m.NoParsela, new { htmlAttributes = new { @class = "form-control", @placeholder = "No. de Parcela" } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoParsela)</p>
                 <label>@Html.DisplayNameFor(m => m.NoDistrito)</label>
-                @Html.EditorFor(m => m.NoDistrito, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nuemero de distrito" } })
+                @Html.EditorFor(m => m.NoDistrito, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.NoDistrito) } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoDistrito)</p>
                 <label>@Html.DisplayNameFor(m => m.Municipio)</label>
-                @Html.EditorFor(m => m.Municipio, new { htmlAttributes = new { @class = "form-control", @placeholder = "Municipio" } })
+                @Html.EditorFor(m => m.Municipio, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Municipio) } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Municipio)</p>
                 <label>@Html.DisplayNameFor(m => m.Provincia)</label>
-                @Html.EditorFor(m => m.Provincia, new { htmlAttributes = new { @class = "form-control", @placeholder = "Provincia" } })
+                @Html.EditorFor(m => m.Provincia, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Provincia) } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Provincia)</p>
                 <label>@Html.DisplayNameFor(m => m.Area)</label>
-                @Html.EditorFor(m => m.Area, new { htmlAttributes = new { @class = "form-control", @placeholder = "Area en Metros cuadrados" } })
+                @Html.EditorFor(m => m.Area, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Area) } })
                 <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Area)</p>
                 <label>*Usted puede enviar un Share Location/Compartir Ubicacion desde Whatsapp al número 829-972-4131</label>
                 <div class="row">

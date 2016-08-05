@@ -35,9 +35,9 @@ namespace Topodata2.Models.Mail
                     viewModel.Area
                     );
                 MailMessage mail = new MailMessage();
-                mail.To.Add("deslinder@topodata.com");
+                mail.To.Add("deslinde@topodata.com");
                 mail.From = new MailAddress("info@topodata.com");
-                mail.Subject = "Usuario Deslinder Registrado";
+                mail.Subject = "Usuario Deslinde Registrado";
                 mail.Body = body;
                 mail.IsBodyHtml = true;
 
