@@ -1,4 +1,5 @@
 ﻿@using Topodata2.Models
+@using Topodata2.Models.Service
 @using Topodata2.Models.User
 @{
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
@@ -124,7 +125,7 @@
                     <li>
                         @Html.ActionLink("Inicio", "Index", "Home")
                     </li>
-                    @{Html.RenderPartial("Layout/_Categories");}
+                    @{Html.RenderPartial("Layout/_Categories",ServiceManager.GetAllCategories());}
                     <!-- End Home -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Multimedia</a>

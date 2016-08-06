@@ -135,6 +135,48 @@ namespace Topodata2.Models.Service
             return result;
         }
 
+        public static List<ContenidoModel> GetAllContenidoBySubcategorieId(SubCategorieModel model)
+        {
+            List<ContenidoModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.Contenido.IdContenido, dbo.Contenido.Descripcion FROM dbo.SubCategoria_Contenido INNER JOIN dbo.SubCategoria ON dbo.SubCategoria_Contenido.IdSubCategoria = dbo.SubCategoria.IdSubCategoria INNER JOIN dbo.Contenido ON dbo.SubCategoria_Contenido.IdContenido = dbo.Contenido.IdContenido WHERE (dbo.SubCategoria_Contenido.IdSubCategoria = @id) ORDER BY dbo.Contenido.Descripcion";
+                com.CommandType = CommandType.Text;
+                com.Parameters.AddWithValue("id", model.Id);
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<ContenidoModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new ContenidoModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Descripcion = reader.GetString(1)
+                        });
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
         public static List<CategorieModel> GetAllCategories()
         {
             List<CategorieModel> result = null;
@@ -174,6 +216,46 @@ namespace Topodata2.Models.Service
                 con.Close();
             }
             return result;
-        } 
+        }
+
+        public static SubCategorieModel GetSubCategorieById(int id)
+        {
+            SubCategorieModel result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.SubCategoria.* FROM dbo.SubCategoria WHERE (IdSubCategoria = @id)";
+                com.CommandType = CommandType.Text;
+                com.Parameters.AddWithValue("id", id);
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        result = new SubCategorieModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Descripcion = reader.GetString(1)
+                        };
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
     }
 }

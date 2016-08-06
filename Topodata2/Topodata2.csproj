@@ -759,6 +759,8 @@
     <Content Include="Views\Administration\Users\ViewAllUsers.cshtml" />
     <Content Include="Views\Home\Index\_HomeRecentDocument.cshtml" />
     <Content Include="Views\Shared\Layout\_Categories.cshtml" />
+    <Content Include="Views\Services\Contenido.cshtml" />
+    <Content Include="Views\Services\_ListContenido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

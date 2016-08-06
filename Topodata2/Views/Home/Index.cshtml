@@ -149,10 +149,10 @@
         {
             Html.RenderPartial("Index/_HomeFlipboard", HomeManager.GetAllFlipboard());
         }
-        @if (ServiceManager.GetLastDocumentsAdded(0,10) != null || ServiceManager.GetLastDocumentsAdded(0, 10).Count > 0)
+        @*@if (ServiceManager.GetLastDocumentsAdded(0,10) != null || ServiceManager.GetLastDocumentsAdded(0, 10).Count > 0)
         {
             Html.RenderPartial("Index/_HomeRecentDocument",ServiceManager.GetLastDocumentsAdded(0,10));
-        }
+        }*@
     </div>
 </div>
 <div class="bg-grey content-sm">

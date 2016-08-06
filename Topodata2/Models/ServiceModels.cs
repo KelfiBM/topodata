@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.WebPages;
+using Topodata2.Models.Service;
 
 namespace Topodata2.Models
 {
@@ -400,6 +401,13 @@ namespace Topodata2.Models
     }
 
     public class CategorieModel
+    {
+        public int Id { get; set; }
+        public string Descripcion { get; set; }
+        public List<SubCategorieModel> SubCategories => ServiceManager.GetSubCategoriesByCategorieId(this);
+    }
+
+    public class ContenidoModel
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using PagedList;
 using Topodata2.Models;
 using Topodata2.Models.Mail;
+using Topodata2.Models.Service;
 
 namespace Topodata2.Controllers
 {
@@ -126,6 +127,12 @@ namespace Topodata2.Controllers
                 return RedirectToAction("Document", "Services", new { id = serviceDocument.GetLastDocummentAdded().Id });
             }
             return RedirectToAction("InternalServer", "Error");
+        }
+
+        public ActionResult Contenido(int id)
+        {
+
+            return View("Contenido",ServiceManager.GetSubCategorieById(id));
         }
     }
 }

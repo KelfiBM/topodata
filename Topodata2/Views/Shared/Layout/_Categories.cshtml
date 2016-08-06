@@ -1,20 +1,22 @@
 ﻿@using Topodata2.Models.Service
+@model List<Topodata2.Models.CategorieModel>
 <li class="dropdown">
     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Servicios</a>
     <ul class="dropdown-menu">
-        @foreach (var categorie in ServiceManager.GetAllCategories())
+        @foreach (var categorieModel in Model)
         {
             <li class="dropdown-submenu">
-                <a href="javascript:void(0);">@categorie.Descripcion</a>
+                <a href="javascript:void(0);">@categorieModel.Descripcion</a>
                 <ul class="dropdown-menu">
-                    @foreach (var subcategorie in ServiceManager.GetSubCategoriesByCategorieId(categorie))
+                    @foreach (var subCategorie in categorieModel.SubCategories)
                     {
                         <li>
-                            <a href="#">@subcategorie.Descripcion</a>
+                            @Html.ActionLink(subCategorie.Descripcion, "Contenido", "Services", new {id = subCategorie.Id}, null)
                         </li>
                     }
                 </ul>
             </li>
         }
+
     </ul>
 </li>

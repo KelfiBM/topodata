@@ -1,0 +1,28 @@
+﻿@model Topodata2.Models.SubCategorieModel
+@using Topodata2.Models.Service
+@{
+    ViewBag.Title = "Contenido";
+}
+<div class="service-block-v6 bg-color-light">
+    <div class="container content-sm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="headline-left margin-bottom-30">
+                    <h2 class="headline-brd">@Model.Descripcion</h2>
+                </div>
+                @{Html.RenderPartial("_ListContenido", ServiceManager.GetAllContenidoBySubcategorieId(Model));}
+            </div>
+        </div><!--/end row-->
+    </div><!--/end container-->
+</div>
+@*<div class="container content-sm">
+    <div class="text-center margin-bottom-50">
+        <h2 class="title-v2 title-center">@Model.Descripcion</h2>
+        <p class="space-lg-hor">Aqui esta todo el contenido que tenemos de @Model.Descripcion</p>
+    </div>
+    
+</div>*@
+@section cssPlugins
+{
+    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet"/>
+}
