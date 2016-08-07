@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.WebPages;
 
 namespace Topodata2.Models.Service
 {
@@ -372,6 +373,150 @@ namespace Topodata2.Models.Service
                         };
                     }
                 }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static bool AddDocument(DocumentViewModel model)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "INSERT INTO [Topodata].[dbo].[Documento] (Nombre, Descripcion, ImagePath, Url, IdSubCategoria, IdContenido) " +
+                "VALUES (@nombre, @descripcion, @imagepath, @url, @idsubcategoria, @idcontenido)";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                if (model.ImagePath == null || model.ImagePath.IsEmpty())
+                {
+                    model.ImagePath = "/resources/img/documents/logoDefault.png";
+                }
+
+                sqlCommand.Parameters.AddWithValue("nombre", model.Nombre);
+                sqlCommand.Parameters.AddWithValue("descripcion", model.Descripcion);
+                sqlCommand.Parameters.AddWithValue("imagepath", model.ImagePath);
+                sqlCommand.Parameters.AddWithValue("url", model.Url);
+                sqlCommand.Parameters.AddWithValue("idsubcategoria", model.IdSubCategoria);
+                sqlCommand.Parameters.AddWithValue("idcontenido", model.IdContenido);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static DocumentModel GetLastDocument()
+        {
+            DocumentModel result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT TOP (1) dbo.Documento.IdDocumento, " +
+                                  $"dbo.Documento.Nombre, " +
+                                  $"dbo.Documento.Descripcion, " +
+                                  $"dbo.Documento.ImagePath, " +
+                                  $"dbo.Documento.Url, " +
+                                  $"dbo.SubCategoria.Descripcion AS SubCategoria, " +
+                                  $"dbo.Contenido.Descripcion AS Contenido, " +
+                                  $"dbo.Documento.RegDate, " +
+                                  $"dbo.SubCategoria.ImagePath AS SubCategorieImage, " +
+                                  $"dbo.Documento.IdSubCategoria " +
+                                  $"FROM dbo.SubCategoria " +
+                                  $"INNER JOIN dbo.Contenido " +
+                                  $"INNER JOIN dbo.SubCategoria_Contenido " +
+                                  $"ON dbo.Contenido.IdContenido = dbo.SubCategoria_Contenido.IdContenido " +
+                                  $"ON dbo.SubCategoria.IdSubCategoria = dbo.SubCategoria_Contenido.IdSubCategoria " +
+                                  $"INNER JOIN dbo.Documento " +
+                                  $"ON dbo.SubCategoria_Contenido.IdSubCategoria = dbo.Documento.IdSubCategoria " +
+                                  $"AND dbo.SubCategoria_Contenido.IdContenido = dbo.Documento.IdContenido " +
+                                  $"ORDER BY dbo.Documento.RegDate DESC ";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        result = new DocumentModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Descripcion = reader.GetString(2),
+                            ImagePath = reader.GetString(3),
+                            Url = reader.GetString(4),
+                            SubCategoria = reader.GetString(5),
+                            Contenido = reader.GetString(6),
+                            RegDate = reader.GetDateTime(7),
+                            SubCategorieImagePath = reader.GetString(8),
+                            IdSubCategorie = reader.GetInt32(9)
+                        };
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static List<SubCategorieModel> GetAllSubCategories()
+        {
+            List<SubCategorieModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT dbo.SubCategoria.* FROM dbo.SubCategoria";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<SubCategorieModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new SubCategorieModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Descripcion = reader.GetString(1),
+                            ImagePath = reader.GetString(2)
+                        });
+                    }
+                }
+
             }
             catch (Exception)
             {

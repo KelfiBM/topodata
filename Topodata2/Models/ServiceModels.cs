@@ -398,6 +398,7 @@ namespace Topodata2.Models
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        public string ImagePath { get; set; }
     }
 
     public class CategorieModel
@@ -426,5 +427,6 @@ namespace Topodata2.Models
         public DateTime RegDate { get; set; }
         public string SubCategorieImagePath { get; set; }
         public int IdSubCategorie { get; set; }
+        public int IdContenido { get; set; }
     }
 }

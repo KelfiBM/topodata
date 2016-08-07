@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using Topodata2.Models.Service;
 using Topodata2.Models.User;
 
 namespace Topodata2.Models.Mail
@@ -108,7 +109,7 @@ namespace Topodata2.Models.Mail
             return result;
         }
 
-        public static bool SendNewDocumentMessage(ServiceDocumentViewModel viewModel)
+        public static bool SendNewDocumentMessage(DocumentModel viewModel)
         {
             var result = false;
             try
@@ -119,7 +120,7 @@ namespace Topodata2.Models.Mail
                     body = sr.ReadToEnd();
                 }
                 body = body.Replace("{title1}", viewModel.Nombre);
-                body = body.Replace("{categoria1}", viewModel.Categoria);
+                body = body.Replace("{categoria1}", viewModel.SubCategoria);
                 body = body.Replace("{descripcion1}", viewModel.Descripcion);
                 body = body.Replace("{urlDocument}", "topodata.com/Services/Document/" + viewModel.Id);
 

@@ -1,4 +1,5 @@
-﻿@model Topodata2.Models.ServiceDocumentViewModel
+﻿@model Topodata2.Models.Service.DocumentViewModel
+@using Topodata2.Models.Service
 @{
     ViewBag.Title = "Añadir Documento";
 }
@@ -17,52 +18,46 @@
             }
     <div class="headline">
         <h2>Añadir Documento</h2>
-        @using (Html.BeginForm("AddDocument", "Services", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("AddDocument", "Administration", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data"}))
         {
             <fieldset>
                 <section>
-                    <label class="label">Nombre del documento</label>
+                    <label class="label">@Html.DisplayNameFor(m => m.Nombre)</label>
                     <label class="input">
                         @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@class = "form-control"}})
                         @Html.ValidationMessageFor(m => m.Nombre, String.Empty, new {@class = "text-danger text-bold"})
                     </label>
                 </section>
                 <section>
-                    <label class="label">Descripcion</label>
+                    <label class="label">@Html.DisplayNameFor(m => m.Descripcion)</label>
                     <label class="textarea textarea-resizable">
                         @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control", @rows = "5"}})
                         @Html.ValidationMessageFor(m => m.Descripcion, String.Empty, new {@class = "text-danger text-bold"})
                     </label>
                 </section>
                 <section>
-                    <label class="label">Servicio</label>
+                    <label class="label">@Html.DisplayNameFor(m => m.IdSubCategoria)</label>
                     <label class="select">
-                        @Html.DropDownListFor(m => m.IdCategoria, new SelectList(new List<Object>
-                        {
-                            new {value = 1, text = "Agrimensura Geomatica"},
-                            new {value = 2, text = "Estudio y Mecanica de Suelos"},
-                            new {value = 5, text = "Diseños Arquitectonicos y Espacios"},
-                            new {value = 4, text = "Ingenieria Estructural y Calculos"},
-                            new {value = 6, text = "Presupuestos"},
-                            new {value = 3, text = "Impacto Ambiental y Sostenibilidad"},
-                            new {value = 11, text = "Supervicion de Obras"},
-                            new {value = 10, text = "Procesos de Construccion"},
-
-                        },
-                            "value", "text"), new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion","Seleecione un Sector"), new {@class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);"})
                         <i></i>
-                        @Html.ValidationMessageFor(m => m.IdCategoria, String.Empty, new {@class = "text-danger text-bold"})
+                        @Html.ValidationMessageFor(m => m.IdSubCategoria, String.Empty, new {@class = "text-danger text-bold"})
                     </label>
                 </section>
                 <section>
-                    <label class="label">Url del Documento</label>
+                    <label class="label">@Html.DisplayNameFor(m => m.IdContenido)</label>
+                    <label class="select">
+                        <select id="idcontenido" name="idcontenido"></select>
+                    </label>
+                </section>
+                <section>
+                    <label class="label">@Html.DisplayNameFor(m => m.Url)</label>
                     <label class="input">
                         @Html.EditorFor(m => m.Url, new {htmlAttributes = new {@class = "form-control"}})
                         @Html.ValidationMessageFor(m => m.Url, String.Empty, new {@class = "text-danger text-bold"})
                     </label>
                 </section>
                 <section>
-                    <label class="label">Imagen</label>
+                    <label class="label">@Html.DisplayNameFor(m => m.ImageUpload)</label>
                     <label for="file" class="input input-file">
                         <div class="button">
                             @Html.TextBoxFor(m => m.ImageUpload, new {@id = "file", @type = "file", @onchange = "this.parentNode.nextElementSibling.value = this.value"})
@@ -124,5 +119,30 @@
                 oldSuccess(label);
             };
         });
+    </script>
+<script language="javascript" type="text/javascript">
+    function GetContenido(_subcategorieId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#idcontenido").html(procemessage).show();
+        var url = "/Administration/GetContenidoBySubCategorie/";
+
+        $.ajax({
+            url: url,
+            data: { subCategorie: _subcategorieId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Seleccionar Grupo</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#idcontenido").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
 </script>
 }
