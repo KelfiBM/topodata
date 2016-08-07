@@ -31,10 +31,10 @@ namespace Topodata2.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                var serviceDocument = new ServiceDocumentViewModel().GetDocumentById(id);
-                if (serviceDocument.Exists)
+                var document = ServiceManager.GetDocument(id);
+                if (document != null)
                 {
-                    return View(serviceDocument);
+                    return View(document);
                 }
                 else
                 {
@@ -47,18 +47,18 @@ namespace Topodata2.Controllers
             }
         }
 
-        public ActionResult Documents( int? page, int id = 0)
+        public ActionResult Documents( int? page, int idSub = 0, int idContenido = 0)
         {
-            var serviceDocumentList = new ServiceDocumentViewModel().GetDocumentListByCategorie(id);
-            if (serviceDocumentList != null && serviceDocumentList.Count > 0)
+            var documentList = ServiceManager.GetDocuments(idSub, idContenido);
+            if (documentList != null && documentList.Count > 0)
             {
                 var pageNumber = page ?? 1;
-                var onePage = serviceDocumentList.ToPagedList(pageNumber, 10);
+                var onePage = documentList.ToPagedList(pageNumber, 15);
                 return View(onePage);
             }
             else
             {
-                return RedirectToAction("Documents", "Services", new {id = 0});
+                return RedirectToAction("NotFound","Error");
             }
         }
 
@@ -131,7 +131,6 @@ namespace Topodata2.Controllers
 
         public ActionResult Contenido(int id)
         {
-
             return View("Contenido",ServiceManager.GetSubCategorieById(id));
         }
     }

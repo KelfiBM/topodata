@@ -1,6 +1,7 @@
 ﻿@using PagedList
 @using PagedList.Mvc
 @using Topodata2.Models
+@model IPagedList<DocumentModel>
 @{
     ViewBag.Title = "Servicios";
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
@@ -47,24 +48,28 @@
 {
     <link href="~/resources/css/pages/blog.css" rel="stylesheet" />
 }
-<div class="breadcrumbs-v3" style="background: url(@breadcrumbsImages[idRoute]) no-repeat; background-size: 100% auto; padding-top: 150px; padding-bottom: 0px; background-position: center">
-        <h1 class="" style="padding: 10px; padding-left: 40px; font-weight: bold; color: rgb(255, 255, 255); background: rgba(38, 38, 38, 0.7)  ">@breadcrumbsTitles[idRoute]</h1>
+
+<div class="breadcrumbs-v3 img-v1" style="background: url(@Model[0].SubCategorieImagePath) no-repeat; background-size: 100% auto; padding-top: 150px; padding-bottom: 0px; background-position: center">
+    <div style="color: rgb(255, 255, 255); background: rgba(38, 38, 38, 0.7)">
+        <p style="padding-left: 40px; text-transform: capitalize">@Model[0].SubCategoria</p>
+        <h1 class="" style="padding: 10px; padding-left: 40px; font-weight: bold;">@Model[0].Contenido</h1>
+    </div>
 </div>
 <div class="container content">
     <div class="row blog-page">
         <div class="col-md-9 md-margin-bottom-40" id="documentList">
-            @foreach (ServiceDocumentViewModel document in Model)
+            @foreach (DocumentModel document in Model)
             {
                 <div class="row blog blog-medium margin-bottom-40">
                     <div class="col-md-5" style="background: url(@document.ImagePath) no-repeat; background-size: 100% auto; background-position: center ">
                     </div>
                     <div class="col-md-7">
                         <h2>
-                            @Html.ActionLink(document.Nombre, "Document", "Services", new {id = document.Id}, null)
+                            @Html.ActionLink(document.Nombre, "Document", "Services", new { id = document.Id }, null)
                         </h2>
                         <ul class="list-unstyled list-inline blog-info">
-                            <li><i class="fa fa-calendar"></i> @document.FechaPublicacion</li>
-                            <li><i class="fa fa-tags"></i> @Html.ActionLink(document.Categoria, "Documents", "Services", new {id = document.IdCategoria}, null)</li>
+                            <li><i class="fa fa-calendar"></i> @document.RegDate</li>
+                            <li><i class="fa fa-tags"></i> @Html.ActionLink(document.SubCategoria, "Contenido", "Services", new { id = document.IdSubCategorie }, null)</li>
                         </ul>
                         @if (document.Descripcion.Length > 200)
                         {
@@ -76,13 +81,13 @@
                         {
                             <p>@document.Descripcion</p>
                         }
-                        <p>@Html.ActionLink("Leer mas", "Document", "Services", new {id = document.Id}, new {@class = "btn-u btn-u-sm"})</p>
+                        <p>@Html.ActionLink("Leer mas", "Document", "Services", new { id = document.Id }, new { @class = "btn-u btn-u-sm" })</p>
                     </div>
                 </div>
                 <hr class="margin-bottom-40">
             }
 
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Documents",new {page}), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Documents", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
         </div>
         <div class="col-md-3">
             <div class="magazine-sb-social margin-bottom-30">
@@ -194,7 +199,7 @@
 @section ScriptsFunction
 {
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#nanoGallery1").nanoGallery({
                 kind: 'flickr',
                 userID: '89639027@N07',

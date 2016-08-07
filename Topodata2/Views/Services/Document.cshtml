@@ -1,4 +1,4 @@
-﻿@model Topodata2.Models.ServiceDocumentViewModel
+﻿@model Topodata2.Models.DocumentModel
 @{
     ViewBag.Title = Model.Nombre;
     string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
@@ -25,8 +25,8 @@
                     <div class="news-v3-in">
                         <ul class="list-inline posted-info">
                             <li>Uploaded By Topodata</li>
-                            <li>En @Html.ActionLink(Model.Categoria, "Documents", "Services", new { id = Model.IdCategoria }, null)</li>
-                            <li>Publicado el @Model.FechaPublicacion.ToLongDateString()</li>
+                            <li>En @Html.ActionLink(Model.SubCategoria, "Contenido", "Services", new { id = Model.IdSubCategorie }, null)</li>
+                            <li>Publicado el @Model.RegDate.ToLongDateString()</li>
                         </ul>
                         <h2>
                             @Model.Nombre

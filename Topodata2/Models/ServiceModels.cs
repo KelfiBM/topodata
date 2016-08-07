@@ -411,5 +411,20 @@ namespace Topodata2.Models
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        public int IdSubCategorie { get; set; }
+    }
+
+    public class DocumentModel
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string ImagePath { get; set; }
+        public string Url { get; set; }
+        public string SubCategoria { get; set; }
+        public string Contenido { get; set; }
+        public DateTime RegDate { get; set; }
+        public string SubCategorieImagePath { get; set; }
+        public int IdSubCategorie { get; set; }
     }
 }
