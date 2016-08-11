@@ -36,4 +36,15 @@ namespace Topodata2.Models.Service
 
         public string ImagePath { get; set; }
     }
+
+    public class SubCategorieViewModel
+    {
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Sector")]
+        public int IdSubCategoria { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [Display(Name = "Nuevo nombre")]
+        public string Descripcion { get; set; }
+    }
 }

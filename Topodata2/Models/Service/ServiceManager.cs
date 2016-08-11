@@ -530,5 +530,61 @@ namespace Topodata2.Models.Service
             }
             return result;
         }
+
+        public static bool DeleteSubCategorie(int id)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            var query =
+                "BEGIN;" +
+                "DELETE FROM [Topodata].[dbo].[SubCategoria_Contenido] " +
+                "WHERE IdSubCategoria = @id; " +
+                "DELETE FROM [Topodata].[dbo].[SubCategoria] " +
+                "WHERE IdSubCategoria = @id; " +
+                "COMMIT;";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("id", id);
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static bool EditCategorie(int id, string descripcion)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            string query = $"UPDATE [Topodata].[dbo].[SubCategoria] SET Descripcion = '{descripcion}' WHERE IdSubCategoria = {id}";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
     }
 }

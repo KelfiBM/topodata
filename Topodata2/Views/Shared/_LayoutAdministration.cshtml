@@ -30,16 +30,16 @@
     @RenderSection("fonts", false)
 
     <!-- CSS Global Compulsory -->
-    <link href="~/resources/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="~/resources/css/style.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/resources/css/style.css" rel="stylesheet" />
 
     <!-- CSS Header and Footer -->
-    <link href="~/resources/css/footers/footer-default.css" rel="stylesheet"/>
-    <link href="~/resources/css/headers/header-v1.css" rel="stylesheet"/>
+    <link href="~/resources/css/footers/footer-default.css" rel="stylesheet" />
+    <link href="~/resources/css/headers/header-v1.css" rel="stylesheet" />
 
     <!-- CSS Implementing Plugins -->
-    <link href="~/resources/plugins/animate.css" rel="stylesheet"/>
-    <link href="~/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/animate.css" rel="stylesheet" />
+    <link href="~/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     @RenderSection("cssPlugins", false)
 
     <!--CSS Page Style-->
@@ -47,11 +47,11 @@
 
 
     <!-- CSS Theme -->
-    <link id="style_color" href="~/resources/css/theme-colors/default.css" rel="stylesheet"/>
+    <link id="style_color" href="~/resources/css/theme-colors/default.css" rel="stylesheet" />
     @RenderSection("cssTheme", false)
 
     <!-- CSS Customization -->
-    <link href="~/resources/css/custom.css" rel="stylesheet"/>
+    <link href="~/resources/css/customAdmin.css" rel="stylesheet" />
 
     <!--CSS Pages-->
     @RenderSection("PageStyles", false)
@@ -171,7 +171,7 @@
                                         <li>@Html.ActionLink("Nuestro Equipo", "OurTeam", "Administration")</li>
                                         <li>@Html.ActionLink("Flipboard", "Flipboard", "Administration")</li>
                                         <li>@Html.ActionLink("Usuarios", "AllUser", "Administration")</li>
-                                        <li>@Html.ActionLink("Sectores", "Sectores", "Administration")</li>
+                                        <li>@Html.ActionLink("Sectores","Sectores","Administration")</li>
                                     </ul>
                                 </li>
                             }
@@ -300,6 +300,7 @@
     <script src="~/resources/js/plugins/validation.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/resources/js/plugins/paging.js"></script>
 
     <!-- JS Customization -->
     <script src="~/resources/js/custom.js"></script>
@@ -311,6 +312,7 @@
     <script>
         jQuery(document).ready(function () {
             App.init();
+            $('table').paging({ limit: 50 });
             @RenderSection("documentReady", false)
         });
     </script>

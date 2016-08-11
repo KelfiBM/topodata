@@ -144,7 +144,7 @@ namespace Topodata2.Models.Mail
                 var mail = new MailMessage
                 {
                     From = new MailAddress("info@topodata.com"),
-                    Subject = "Nuevo documento añadido",
+                    Subject = "NUEVO!! Documento Técnico",
                     Body = body,
                     IsBodyHtml = true
                 };

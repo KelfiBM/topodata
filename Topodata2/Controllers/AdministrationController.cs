@@ -344,5 +344,51 @@ namespace Topodata2.Controllers
                 "Id", "Descripcion");
             return Json(contenido);
         }
+
+        public ActionResult Sectores()
+        {
+            return View("Sectores/Sectores");
+        }
+
+        public ActionResult DeleteSubcategorie(int id)
+        {
+            if (ServiceManager.DeleteSubCategorie(id))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Sectores", "Administration");
+            }
+            var errorMessage = string.Join("; ",
+                ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+            TempData["OperationStatus"] = "Error";
+            TempData["OperationMessage"] = errorMessage;
+            return RedirectToAction("Sectores", "Administration");
+        }
+
+        [HttpPost]
+        public ActionResult EditSubCategorie(SubCategorieViewModel model)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("Sectores", "Administration");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (ServiceManager.EditCategorie(model.IdSubCategoria,model.Descripcion))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Sectores", "Administration");
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("Sectores", "Administration");
+        }
     }
 }

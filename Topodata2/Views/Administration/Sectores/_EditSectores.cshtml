@@ -1,0 +1,30 @@
+﻿@using Topodata2.Models.Service
+@model Topodata2.Models.Service.SubCategorieViewModel
+<div id="edit" class="profile-edit tab-pane fade">
+    <h2 class="heading-md">Todos los Sectores</h2>
+    <p>Sectores</p>
+    <br>
+    @using (Html.BeginForm("EditSubCategorie", "Administration", null, FormMethod.Post, new { @id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data" }))
+    {
+        <fieldset>
+            <section>
+                <label class="label">@Html.DisplayNameFor(m => m.IdSubCategoria)</label>
+                <label class="select">
+                    @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new { @class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);" })
+                    <i></i>
+                    @Html.ValidationMessageFor(m => m.IdSubCategoria, String.Empty, new { @class = "text-danger text-bold" })
+                </label>
+            </section>
+            <section>
+                <label class="label">@Html.DisplayNameFor(m => m.Descripcion)</label>
+                <label class="input">
+                    @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control changeable"}})
+                    @Html.ValidationMessageFor(m => m.Descripcion, String.Empty, new {@class = "text-danger text-bold"})
+                </label>
+            </section>
+            <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
+            <button id="submitProfile" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
+        </fieldset>
+    }
+</div>
+
