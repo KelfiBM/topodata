@@ -248,6 +248,8 @@
     <Content Include="EmailTemplates\Deslinder\images\logoDefault.png" />
     <Content Include="EmailTemplates\NewContentAdded.html" />
     <Content Include="EmailTemplates\Registration\RegistrationDoneUser.html" />
+    <Content Include="EmailTemplates\Subscribe\SubscribedDone\SubscribedDone.html" />
+    <Content Include="EmailTemplates\Subscribe\SubscribedDone\SubscribedDoneMin.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="resources\css\app.css" />
     <Content Include="resources\css\blocks.css" />
@@ -277,6 +279,7 @@
     <Content Include="resources\css\theme-colors\default.css" />
     <Content Include="resources\img\backgrounds\img1.jpg" />
     <Content Include="resources\img\backgrounds\img2.jpg" />
+    <Content Include="resources\img\breadcrumbs\engineering-min.jpg" />
     <Content Include="resources\img\breadcrumbs\img1.jpg" />
     <Content Include="resources\img\breadcrumbs\img2.jpg" />
     <Content Include="resources\img\breadcrumbs\img3.jpg" />
@@ -285,6 +288,7 @@
     <Content Include="resources\img\Defaults\defaultUser.png" />
     <Content Include="resources\img\documents\logoDefault.png" />
     <Content Include="resources\img\email\architect.jpg" />
+    <Content Include="resources\img\email\subscribeDone.jpg" />
     <Content Include="resources\img\icons\agrimensura.png" />
     <Content Include="resources\img\icons\diseno.png" />
     <Content Include="resources\img\icons\estudios.png" />
@@ -773,6 +777,10 @@
     <Content Include="Views\Administration\Sectores\_AllSectores.cshtml" />
     <Content Include="Views\Administration\Sectores\_EditSectores.cshtml" />
     <Content Include="Views\Shared\_LayoutAdministration.cshtml" />
+    <Content Include="Views\Home\Index\_HomeSectores.cshtml" />
+    <Content Include="Views\Home\Index\_HomeDeslinder.cshtml" />
+    <Content Include="Views\Home\Index\_HomeNanoGallery.cshtml" />
+    <Content Include="Views\Services\Sectores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

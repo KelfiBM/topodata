@@ -405,6 +405,7 @@ namespace Topodata2.Models
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        public string HtmlIcon { get; set; }
         public List<SubCategorieModel> SubCategories => ServiceManager.GetSubCategoriesByCategorieId(this);
     }
 

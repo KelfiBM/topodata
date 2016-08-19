@@ -1,0 +1,50 @@
+﻿@model List<Topodata2.Models.CategorieModel>
+<div class="headline">
+    <h2>Sectores</h2>
+</div>
+<div class="row category margin-bottom-20">
+    @{
+        int col1;
+        if (Model.Count%2 > 0)
+        {
+            col1 = (Model.Count/2) + 1;
+        }
+        else
+        {
+            col1 = (Model.Count/2);
+        }
+        var col2 = col1 + (Model.Count/2);
+        <div class="col-md-6 col-sm-6">
+            @for (int i = 0; i < col1; i++)
+            {
+                <div class="content-boxes-v3 margin-bottom-20 md-margin-bottom-20">
+                    @Html.Raw(Model[i].HtmlIcon)
+                    <div class="content-boxes-in-v3">
+                        <a href="@Url.Action("Sectores", "Services", new {id = Model[i].Id})">
+                            <h3>
+                                @Model[i].Descripcion
+                            </h3>
+                            <p style="color: #72c02c">Ver más...</p>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-6 col-sm-6 md-margin-bottom-40">
+            @for (int i = col1; i < col2; i++)
+            {
+                <div class="content-boxes-v3 margin-bottom-20 md-margin-bottom-20">
+                    @Html.Raw(Model[i].HtmlIcon)
+                    <div class="content-boxes-in-v3">
+                        <a href="@Url.Action("Sectores", "Services", new {id = Model[i].Id})">
+                            <h3>
+                                @Model[i].Descripcion
+                            </h3>
+                            <p style="color: #72c02c">Ver más...</p>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

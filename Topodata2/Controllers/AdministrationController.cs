@@ -159,12 +159,7 @@ namespace Topodata2.Controllers
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("OurTeam", "Administration");
             }
-            return RedirectToAction("InternalServer", "Error");
-            if (HomeManager.AddOurTeam(viewModel))
-            {
-                TempData["OperationStatus"] = "Success";
-                return RedirectToAction("OurTeam", "Administration");
-            }
+            
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
@@ -266,6 +261,7 @@ namespace Topodata2.Controllers
         {
             return View("AddDocument");
         }
+
         [HttpPost]
         public ActionResult AddDocument(DocumentViewModel model)
         {
@@ -276,7 +272,7 @@ namespace Topodata2.Controllers
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
                 TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("AddDocument", "Administration");
+                return View("AddDocument", model);
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
@@ -331,7 +327,7 @@ namespace Topodata2.Controllers
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("AddDocument", "Administration");
+            return View("AddDocument", model);
         }
 
         [HttpPost]

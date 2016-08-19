@@ -1,5 +1,5 @@
-﻿@model Topodata2.Models.Service.DocumentViewModel
-@using Topodata2.Models.Service
+﻿@using Topodata2.Models.Service
+@model DocumentViewModel
 @{
     ViewBag.Title = "Añadir Documento";
 }
@@ -18,42 +18,44 @@
             }
     <div class="headline">
         <h2>Añadir Documento</h2>
-        @using (Html.BeginForm("AddDocument", "Administration", null, FormMethod.Post, new {@id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("AddDocument", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
         {
             <fieldset>
                 <section>
                     <label class="label">@Html.DisplayNameFor(m => m.Nombre)</label>
                     <label class="input">
                         @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@class = "form-control"}})
-                        @Html.ValidationMessageFor(m => m.Nombre, String.Empty, new {@class = "text-danger text-bold"})
+                        @Html.ValidationMessageFor(m => m.Nombre)
                     </label>
                 </section>
                 <section>
                     <label class="label">@Html.DisplayNameFor(m => m.Descripcion)</label>
                     <label class="textarea textarea-resizable">
                         @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control", @rows = "5"}})
-                        @Html.ValidationMessageFor(m => m.Descripcion, String.Empty, new {@class = "text-danger text-bold"})
+                        @Html.ValidationMessageFor(m => m.Descripcion)
                     </label>
                 </section>
                 <section>
                     <label class="label">@Html.DisplayNameFor(m => m.IdSubCategoria)</label>
                     <label class="select">
-                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion","Seleecione un Sector"), new {@class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);"})
+                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion","Seleecione un Sector"), new {@class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);" })
                         <i></i>
-                        @Html.ValidationMessageFor(m => m.IdSubCategoria, String.Empty, new {@class = "text-danger text-bold"})
+                        @Html.ValidationMessageFor(m => m.IdSubCategoria)
                     </label>
                 </section>
                 <section>
                     <label class="label">@Html.DisplayNameFor(m => m.IdContenido)</label>
                     <label class="select">
                         <select id="idcontenido" name="idcontenido"></select>
+                        <i></i>
+                        @Html.ValidationMessageFor(m => m.IdContenido)
                     </label>
                 </section>
                 <section>
                     <label class="label">@Html.DisplayNameFor(m => m.Url)</label>
                     <label class="input">
                         @Html.EditorFor(m => m.Url, new {htmlAttributes = new {@class = "form-control"}})
-                        @Html.ValidationMessageFor(m => m.Url, String.Empty, new {@class = "text-danger text-bold"})
+                        @Html.ValidationMessageFor(m => m.Url)
                     </label>
                 </section>
                 <section>
@@ -65,7 +67,7 @@
                         </div>
                         <input readonly type="text">
                     </label>
-                    @Html.ValidationMessageFor(m => m.ImageUpload, String.Empty, new {@class = "text-danger text-bold"})
+                    @Html.ValidationMessageFor(m => m.ImageUpload)
                 </section>
                 <button type="submit" class="btn btn-u">Añadir documento</button>
             </fieldset>
@@ -79,8 +81,7 @@
 }
 
 @section PageScripts{
-    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
 }
 @section documentReady{
     Validation.initValidation();
@@ -88,7 +89,7 @@
 
 @section ScriptsFunction
 {
-    <script>
+   <script>
         $(document).ready(function() {
             var form = $('#sky-form3'),
                 formData = $.data(form[0]),
@@ -119,30 +120,36 @@
                 oldSuccess(label);
             };
         });
-    </script>
-<script language="javascript" type="text/javascript">
-    function GetContenido(_subcategorieId) {
-        var procemessage = "<option value='0'> Please wait...</option>";
-        $("#idcontenido").html(procemessage).show();
-        var url = "/Administration/GetContenidoBySubCategorie/";
-
-        $.ajax({
-            url: url,
-            data: { subCategorie: _subcategorieId },
-            cache: false,
-            type: "POST",
-            success: function (data) {
-                var markup = "<option value='0'>Seleccionar Grupo</option>";
-                for (var x = 0; x < data.length; x++) {
-                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                }
-                $("#idcontenido").html(markup).show();
-            },
-            error: function (reponse) {
-                alert("error : " + reponse);
-            }
-        });
-
-    }
 </script>
+    <script language="javascript" type="text/javascript">
+        function GetContenido(_subcategorieId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#idcontenido").html(procemessage).show();
+            var url = "/Administration/GetContenidoBySubCategorie/";
+
+            $.ajax({
+                url: url,
+                data: { subCategorie: _subcategorieId },
+                cache: false,
+                type: "POST",
+                success: function(data) {
+                    var markup = "<option value=''>Seleccionar Grupo</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#idcontenido").html(markup).show();
+                },
+                error: function(reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+    </script>
+    <script type="text/javascript">
+        window.addEventListener("load", function() {
+            document.getElementById("subcategorielist").onchange();
+        }, false);
+    </script>
+
 }

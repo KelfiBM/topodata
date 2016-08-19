@@ -1,0 +1,58 @@
+﻿@using System.Text.RegularExpressions
+@model List<Topodata2.Models.CategorieModel>
+@{
+    ViewBag.Title = "Sectores";
+}
+<div class="breadcrumbs-v3 img-v1" style="background-image: url('../../resources/img/breadcrumbs/engineering-min.jpg')">
+    <div class="container text-center">
+        <p>Sectores que ofrece TOPODATA</p>
+        <h1>Sectores</h1>
+    </div>
+</div>
+<div class="cube-portfolio container margin-bottom-60">
+    <div class="content-xs">
+        <div id="filters-container" class="cbp-l-filters-text content-xs">
+            <div data-filter="*" class="cbp-filter-item-active cbp-filter-item"> Todos </div> |
+        @foreach (var sector in Model)
+        {
+            <div data-filter=".@Regex.Replace(sector.Descripcion, @"\s+", "")" class="cbp-filter-item">@sector.Descripcion</div>
+        }
+        </div>
+    </div>
+    <div id="grid-container" class="cbp-l-grid-agency">
+        @foreach (var sector in Model)
+        {
+            foreach (var grupo in sector.SubCategories)
+            {
+                <div class="cbp-item @Regex.Replace(sector.Descripcion, @"\s+", "")">
+                    <div class="cbp-caption">
+                        <div class="cbp-caption-defaultWrap">
+                            <img src="@grupo.ImagePath" alt="">
+                        </div>
+                        <div class="cbp-caption-activeWrap">
+                            <div class="cbp-l-caption-alignCenter">
+                                <div class="cbp-l-caption-body">
+                                    <ul class="link-captions">
+                                        <li><a href="@Url.Action("Contenido","Services", new {id = grupo.Id}, null)"><i class="rounded-x fa fa-link"></i></a></li>
+                                        <li><a href="@grupo.ImagePath" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+                                    </ul>
+                                    <div class="cbp-l-grid-agency-title">@grupo.Descripcion</div>
+                                    <div class="cbp-l-grid-agency-desc"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+@section cssPlugins{
+    <link href="~/resources/plugins/cube-portfolio/cubeportfolio/css/cubeportfolio.min.css" rel="stylesheet" />
+    <link href="~/resources/plugins/cube-portfolio/cubeportfolio/custom/custom-cubeportfolio.css" rel="stylesheet" />
+}
+@section PageScripts
+{
+    <script src="~/resources/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+    <script src="~/resources/js/plugins/cube-portfolio/cube-portfolio-3.js"></script>
+}

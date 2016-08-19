@@ -195,9 +195,10 @@ namespace Topodata2.Controllers
             if (ModelState.IsValid)
             {
                 subscribeView.Subscribe(subscribeView);
-                return Redirect(Request.UrlReferrer.ToString());
+                MailManager.SendSubscribeDone(subscribeView.Email);
+                return Redirect(Request.UrlReferrer?.ToString());
             }
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect(Request.UrlReferrer?.ToString());
         }
 
         [HttpPost]

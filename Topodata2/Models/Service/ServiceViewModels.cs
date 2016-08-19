@@ -10,11 +10,17 @@ namespace Topodata2.Models.Service
     {
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Nombre del documento")]
+        [StringLength(500,
+            MinimumLength = 5,
+            ErrorMessage = "El nombre del documento debe tener maximo 500 caracteres y minimo 5")]
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripcion")]
+        [StringLength(4000,
+            MinimumLength = 5,
+            ErrorMessage = "La descripcion debe tener maximo 4000 caracteres y minimo 5")]
         public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]

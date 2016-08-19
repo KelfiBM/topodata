@@ -18,37 +18,24 @@ namespace Topodata2.Models.Service
             string query;
             if (id == 0)
             {
-                query = string.Format("SELECT TOP ({0}) dbo.DetalleDocumento.Imagen, " +
-                        "dbo.Documento.Nombre, " +
-                        "dbo.DetalleDocumento.FechaPublicacion, " +
-                        "dbo.Categoria.Descripcion AS Categoria, " +
-                        "dbo.DetalleDocumento.Descripcion, " +
-                        "dbo.Documento.IdDocumento, " +
-                        "dbo.Categoria.IdCategoria " +
-                        "FROM dbo.Categoria " +
-                        "INNER JOIN dbo.DetalleDocumento " +
-                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
-                        "INNER JOIN dbo.Documento " +
+                query = $"SELECT TOP ({count}) dbo.DetalleDocumento.Imagen, " + "dbo.Documento.Nombre, " +
+                        "dbo.DetalleDocumento.FechaPublicacion, " + "dbo.Categoria.Descripcion AS Categoria, " +
+                        "dbo.DetalleDocumento.Descripcion, " + "dbo.Documento.IdDocumento, " +
+                        "dbo.Categoria.IdCategoria " + "FROM dbo.Categoria " + "INNER JOIN dbo.DetalleDocumento " +
+                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " + "INNER JOIN dbo.Documento " +
                         "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
-                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC", count);
+                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC";
             }
             else
             {
-                query = string.Format(
-                        "SELECT TOP ({0}) dbo.DetalleDocumento.Imagen, " +
-                        "dbo.Documento.Nombre, " +
-                        "dbo.DetalleDocumento.FechaPublicacion, " +
-                        "dbo.Categoria.Descripcion AS Categoria, " +
-                        "dbo.DetalleDocumento.Descripcion, " +
-                        "dbo.Documento.IdDocumento, " +
-                        "dbo.Categoria.IdCategoria " +
-                        "FROM dbo.Categoria " +
-                        "INNER JOIN dbo.DetalleDocumento " +
-                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " +
-                        "INNER JOIN dbo.Documento " +
+                query = $"SELECT TOP ({count}) dbo.DetalleDocumento.Imagen, " + "dbo.Documento.Nombre, " +
+                        "dbo.DetalleDocumento.FechaPublicacion, " + "dbo.Categoria.Descripcion AS Categoria, " +
+                        "dbo.DetalleDocumento.Descripcion, " + "dbo.Documento.IdDocumento, " +
+                        "dbo.Categoria.IdCategoria " + "FROM dbo.Categoria " + "INNER JOIN dbo.DetalleDocumento " +
+                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " + "INNER JOIN dbo.Documento " +
                         "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
-                        "WHERE (dbo.Categoria.IdCategoria = {1}) " +
-                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC", count, id);
+                        $"WHERE (dbo.Categoria.IdCategoria = {id}) " +
+                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC";
             }
             var con = new SqlConnection(Connection);
             SqlCommand com = new SqlCommand();
@@ -102,7 +89,7 @@ namespace Topodata2.Models.Service
             SqlDataReader reader = null;
             try
             {
-                com.CommandText = $"SELECT dbo.SubCategoria.IdSubCategoria, dbo.SubCategoria.Descripcion AS SubCategoria FROM dbo.Categoria_SubCategoria INNER JOIN dbo.Categoria ON dbo.Categoria_SubCategoria.IdCategoria = dbo.Categoria.IdCategoria INNER JOIN dbo.SubCategoria ON dbo.Categoria_SubCategoria.IdSubCategoria = dbo.SubCategoria.IdSubCategoria WHERE (dbo.Categoria_SubCategoria.IdCategoria = @id)";
+                com.CommandText = $"SELECT dbo.SubCategoria.IdSubCategoria, dbo.SubCategoria.Descripcion AS SubCategoria, dbo.SubCategoria.ImagePath FROM dbo.Categoria_SubCategoria INNER JOIN dbo.Categoria ON dbo.Categoria_SubCategoria.IdCategoria = dbo.Categoria.IdCategoria INNER JOIN dbo.SubCategoria ON dbo.Categoria_SubCategoria.IdSubCategoria = dbo.SubCategoria.IdSubCategoria WHERE (dbo.Categoria_SubCategoria.IdCategoria = @id)";
                 com.CommandType = CommandType.Text;
                 com.Parameters.AddWithValue("id", model.Id);
                 com.Connection = con;
@@ -117,13 +104,14 @@ namespace Topodata2.Models.Service
                         result.Add(new SubCategorieModel
                         {
                             Id = reader.GetInt32(0),
-                            Descripcion = reader.GetString(1)
+                            Descripcion = reader.GetString(1),
+                            ImagePath = reader.GetString(2)
                         });
                     }
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // ignored
             }
@@ -210,8 +198,9 @@ namespace Topodata2.Models.Service
                         result.Add(new CategorieModel
                         {
                             Id = reader.GetInt32(0),
-                            Descripcion = reader.GetString(1)
-                        });
+                            Descripcion = reader.GetString(1),
+                            HtmlIcon = reader.GetString(2)
+                    });
                     }
                 }
 
@@ -296,7 +285,8 @@ namespace Topodata2.Models.Service
                                   $"ON dbo.SubCategoria_Contenido.IdSubCategoria = dbo.Documento.IdSubCategoria " +
                                   $"AND dbo.SubCategoria_Contenido.IdContenido = dbo.Documento.IdContenido " +
                                   $"WHERE (dbo.Documento.IdSubCategoria = @subid) " +
-                                  $"AND (dbo.Documento.IdContenido = @contenidoid)";
+                                  $"AND (dbo.Documento.IdContenido = @contenidoid) " +
+                                  $"ORDER BY dbo.Documento.RegDate DESC";
                 com.CommandType = CommandType.Text;
                 com.Connection = con;
                 com.Parameters.AddWithValue("subid", subCategorieId);

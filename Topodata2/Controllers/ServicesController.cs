@@ -66,5 +66,14 @@ namespace Topodata2.Controllers
         {
             return View("Contenido",ServiceManager.GetSubCategorieById(id));
         }
+
+        /*public ActionResult Sectores(int id)
+        {
+            return View();
+        }*/
+        public ActionResult Sectores()
+        {
+            return View(ServiceManager.GetAllCategories());
+        }
     }
 }

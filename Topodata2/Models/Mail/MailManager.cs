@@ -236,5 +236,60 @@ namespace Topodata2.Models.Mail
             }
             return result;
         }
+
+        public static bool SendSubscribeDone(string email)
+        {
+            var result = false;
+            try
+            {
+                string body;
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/Subscribe/SubscribedDone/SubscribedDoneMin.html")))
+                {
+                    body = sr.ReadToEnd();
+                }
+                var imgLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/resources/img/logoDefault.png"))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~/resources/img/email/subscribeDone.jpg"))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                body = body.Replace("{imgLogo}", imgLogo.ContentId);
+                body = body.Replace("{img1}", img1.ContentId);
+                body = body.Replace("{url1}", "www.topodata.com");
+                var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+                view.LinkedResources.Add(imgLogo);
+                view.LinkedResources.Add(img1);
+
+
+                var mail = new MailMessage
+                {
+                    From = new MailAddress("info@topodata.com"),
+                    Subject = "Gracias por Suscribirte a TOPODATA!",
+                    Body = body,
+                    IsBodyHtml = true
+                };
+                mail.AlternateViews.Add(view);
+                mail.To.Add(email);
+                var smtp = new SmtpClient
+                {
+                    Host = "mail.topodata.com",
+                    Port = 587,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("info@topodata.com", "Topo.1953"),
+                    EnableSsl = false
+                };
+                smtp.Send(mail);
+                smtp.Dispose();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                //Ignore
+            }
+            return result;
+        }
     }
 }

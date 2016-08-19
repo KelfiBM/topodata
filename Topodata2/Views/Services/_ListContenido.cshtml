@@ -30,30 +30,3 @@
         </div>
     }
 }
-@*@{
-        int rows = Model.Count / 3;
-        var current = -3;
-        if (rows % 3 > 0)
-        {
-            rows++;
-        }
-        for (int row = 0; row < rows; row++)
-        {
-            <div class="row content-boxes-v4 content-boxes-v4-sm margin-bottom-30">
-                @for (int col = 0; col < 3; col++)
-                {
-                    if (current + 3 < Model.Count)
-                    {
-                        <div class="col-md-4 md-margin-bottom-40">
-                            <div class="content-boxes-in-v4">
-                                <a href="#">
-                                    <h2>@Model[current + 3].Descripcion</h2>
-                                </a>
-                            </div>
-                        </div>
-                    }
-                    current++;
-                }
-            </div>
-        }
-    }*@
