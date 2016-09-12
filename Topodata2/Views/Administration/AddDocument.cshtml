@@ -6,39 +6,25 @@
 
 <div class="container content">
     @if (TempData["OperationStatus"] != null)
-            {
-                if (TempData["OperationStatus"].ToString() == "Error")
-                {
-                    Html.RenderPartial("_AlertError");
-                }
-                if (TempData["OperationStatus"].ToString() == "Success")
-                {
-                    Html.RenderPartial("_AlertSuccess");
-                }
-            }
+    {
+        if (TempData["OperationStatus"].ToString() == "Error")
+        {
+            Html.RenderPartial("_AlertError");
+        }
+        if (TempData["OperationStatus"].ToString() == "Success")
+        {
+            Html.RenderPartial("_AlertSuccess");
+        }
+    }
     <div class="headline">
         <h2>Añadir Documento</h2>
-        @using (Html.BeginForm("AddDocument", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("AddDocument", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data"}))
         {
             <fieldset>
                 <section>
-                    <label class="label">@Html.DisplayNameFor(m => m.Nombre)</label>
-                    <label class="input">
-                        @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@class = "form-control"}})
-                        @Html.ValidationMessageFor(m => m.Nombre)
-                    </label>
-                </section>
-                <section>
-                    <label class="label">@Html.DisplayNameFor(m => m.Descripcion)</label>
-                    <label class="textarea textarea-resizable">
-                        @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control", @rows = "5"}})
-                        @Html.ValidationMessageFor(m => m.Descripcion)
-                    </label>
-                </section>
-                <section>
                     <label class="label">@Html.DisplayNameFor(m => m.IdSubCategoria)</label>
                     <label class="select">
-                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion","Seleecione un Sector"), new {@class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);" })
+                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new {@class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);"})
                         <i></i>
                         @Html.ValidationMessageFor(m => m.IdSubCategoria)
                     </label>
@@ -56,6 +42,20 @@
                     <label class="input">
                         @Html.EditorFor(m => m.Url, new {htmlAttributes = new {@class = "form-control"}})
                         @Html.ValidationMessageFor(m => m.Url)
+                    </label>
+                </section>
+                <section>
+                    <label class="label">@Html.DisplayNameFor(m => m.Nombre)</label>
+                    <label class="input">
+                        @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(m => m.Nombre)
+                    </label>
+                </section>
+                <section>
+                    <label class="label">@Html.DisplayNameFor(m => m.Descripcion)</label>
+                    <label class="textarea textarea-resizable">
+                        @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control", @rows = "5"}})
+                        @Html.ValidationMessageFor(m => m.Descripcion)
                     </label>
                 </section>
                 <section>

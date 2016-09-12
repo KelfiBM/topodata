@@ -140,27 +140,38 @@ namespace Topodata2.Models.Mail
                 view.LinkedResources.Add(img0);
                 view.LinkedResources.Add(img1);
 
+                List<MailMessage> mailMessages = new List<MailMessage>();
 
-                var mail = new MailMessage
-                {
-                    From = new MailAddress("info@topodata.com"),
-                    Subject = "NUEVO!! Documento Técnico",
-                    Body = body,
-                    IsBodyHtml = true
-                };
-                mail.AlternateViews.Add(view);
-                if (UserManager.GetAllInformedUsers() != null)
+                if (UserManager.ExistsInformedUsers())
                 {
                     foreach (var informedUser in UserManager.GetAllInformedUsers())
                     {
+                        MailMessage mail = new MailMessage
+                        {
+                            From = new MailAddress("info@topodata.com"),
+                            Subject = "NUEVO!! Documento Técnico",
+                            Body = body,
+                            IsBodyHtml = true
+                        };
                         mail.To.Add(informedUser.Email);
+                        mail.AlternateViews.Add(view);
+                        mailMessages.Add(mail);
                     }
                 }
-                if (UserManager.GetSuscribedInformed() != null)
+                if (UserManager.ExistsSuscribedInformed())
                 {
                     foreach (var informedUser in UserManager.GetSuscribedInformed())
                     {
+                        MailMessage mail = new MailMessage
+                        {
+                            From = new MailAddress("info@topodata.com"),
+                            Subject = "NUEVO!! Documento Técnico",
+                            Body = body,
+                            IsBodyHtml = true
+                        };
                         mail.To.Add(informedUser.Email);
+                        mail.AlternateViews.Add(view);
+                        mailMessages.Add(mail);
                     }
                 }
                 var smtp = new SmtpClient
@@ -171,7 +182,10 @@ namespace Topodata2.Models.Mail
                     Credentials = new NetworkCredential("info@topodata.com", "Topo.1953"),
                     EnableSsl = false
                 };
-                smtp.Send(mail);
+                foreach (MailMessage mailMessage in mailMessages)
+                {
+                    smtp.Send(mailMessage);
+                }
                 smtp.Dispose();
                 result = true;
             }
