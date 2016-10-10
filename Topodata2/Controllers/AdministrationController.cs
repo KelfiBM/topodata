@@ -87,6 +87,7 @@ namespace Topodata2.Controllers
             if (HomeManager.AddHomeSlideVideo(viewModel))
             {
                 TempData["OperationStatus"] = "Success";
+                MailManager.SendHomeVideoUpload(viewModel);
                 return RedirectToAction("HomeSlide", "Administration");
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
@@ -237,6 +238,7 @@ namespace Topodata2.Controllers
         {
             return View("Users/AllUsers");
         }
+
         public ActionResult DeleteUser(int id)
         {
             var viewModel = new UserModel()
@@ -257,9 +259,28 @@ namespace Topodata2.Controllers
 
         }
 
+        public ActionResult Documents()
+        {
+            return View("Documents/Documents");
+        }
+
         public ActionResult AddDocument()
         {
             return View("AddDocument");
+        }
+
+        public ActionResult DeleteDocument(int id)
+        {
+            if (ServiceManager.DeleteDocument(id))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Documents", "Administration");
+            }
+            var errorMessage = string.Join("; ",
+                ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+            TempData["OperationStatus"] = "Error";
+            TempData["OperationMessage"] = errorMessage;
+            return RedirectToAction("Documents", "Administration");
         }
 
         [HttpPost]
@@ -272,7 +293,7 @@ namespace Topodata2.Controllers
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
                 TempData["OperationMessage"] = errorMessage;
-                return View("AddDocument", model);
+                return View("Documents/Documents", model);
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
@@ -289,9 +310,13 @@ namespace Topodata2.Controllers
 
                 if (!validImageTypes.Contains(model.ImageUpload.ContentType))
                 {
+                    errorMessage = "Tiene que seleccionar una imagen de formato GIF, JPG o PNG";
+                    TempData["OperationStatus"] = "Error";
+                    TempData["OperationMessage"] = errorMessage;
+
                     ModelState.AddModelError("ImageUpload",
                         "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
-                    return View("AddDocument",model);
+                    return View("Documents/Documents",model);
                 }
                 const string uploadPath = "~/resources/img/documents";
                 var filename = model.ImageUpload.FileName;
@@ -302,7 +327,7 @@ namespace Topodata2.Controllers
                     var counter = 1;
                     while (System.IO.File.Exists(imagePath))
                     {
-                        tempFileName = counter.ToString() + filename;
+                        tempFileName = counter + filename;
                         imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
                         counter++;
                     }
@@ -327,7 +352,7 @@ namespace Topodata2.Controllers
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
-            return View("AddDocument", model);
+            return View("Documents/Documents", model);
         }
 
         [HttpPost]

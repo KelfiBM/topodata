@@ -8,6 +8,13 @@ using System.Net.Mail;
 
 namespace Topodata2.Models
 {
+    public class ContactUsModel
+    {
+        public string Nombre { get; set; }
+        public string Email { get; set; }
+        public string Mensaje { get; set; }
+    }
+
     public class ContactUsViewModel
     {
         [Required(ErrorMessage = "Este campo es requerido")]

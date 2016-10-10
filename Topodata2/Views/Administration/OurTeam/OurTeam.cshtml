@@ -3,6 +3,41 @@
     ViewBag.Title = "OurTeam";
 }
 <div class="container content profile">
+    <div class="row">
+        <div class="col-md-3 md-margin-bottom-40">
+            @{
+                Html.RenderPartial("_AdministrationLeftPanel");
+            }
+        </div>
+        <div class="col-md-9">
+            @if (TempData["OperationStatus"] != null)
+            {
+                if (TempData["OperationStatus"].ToString() == "Error")
+                {
+                    Html.RenderPartial("_AlertError");
+                }
+                if (TempData["OperationStatus"].ToString() == "Success")
+                {
+                    Html.RenderPartial("_AlertSuccess");
+                }
+            }
+            <div class="profile-body margin-bottom-20">
+                <div class="tab-v1">
+                    <ul class="nav nav-justified nav-tabs">
+                        <li><a data-toggle="tab" href="#add">Añadir Equipo</a></li>
+                        @*<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>*@
+                        <li><a data-toggle="tab" href="#delete">Borrar Equipo</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        @{Html.RenderPartial("OurTeam/_AddOurTeam", Model, ViewData);}
+                        @{Html.RenderPartial("OurTeam/_DeleteOurTeam", Model, ViewData);}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="container content profile">
 
     @if (TempData["OperationStatus"] != null)
     {
@@ -19,7 +54,7 @@
         <div class="tab-v1">
             <ul class="nav nav-justified nav-tabs">
                 <li><a data-toggle="tab" href="#add">Añadir Equipo</a></li>
-                @*<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>*@
+                $1$<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>#1#
                 <li><a data-toggle="tab" href="#delete">Borrar Equipo</a></li>
             </ul>
             <div class="tab-content">
@@ -28,7 +63,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @section cssPlugins
 {
@@ -46,11 +81,13 @@
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
     <script src="~/resources/js/forms/checkout.js"></script>
     <script src="~/resources/js/forms/reg.js"></script>
+    <script src="~/resources/js/plugins/datepicker.js"></script>
 }
 @section documentReady
 {
     RegForm.initRegForm();
     CheckoutForm.initCheckoutForm();
+    Datepicker.initDatepicker();
 }
 @section ScriptsFunction
 {

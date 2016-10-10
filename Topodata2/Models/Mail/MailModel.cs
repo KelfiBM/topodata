@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Topodata2.Models.Mail
+﻿namespace Topodata2.Models.Mail
 {
     public class MailModel
     {

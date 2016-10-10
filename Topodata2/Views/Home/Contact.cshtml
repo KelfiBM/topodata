@@ -1,4 +1,5 @@
-﻿@model Topodata2.Models.ContactUsViewModel
+﻿@using Recaptcha.Web.Mvc
+@model Topodata2.Models.ContactUsViewModel
 @{
     ViewData["Title"] = "Contáctenos";
 }
@@ -9,13 +10,16 @@
                  class="map map-box map-box-space margin-bottom-40"
                  style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden">
             </div>
-            @if (ViewData["Error"] != null)
+            @if (TempData["OperationStatus"] != null)
             {
-                <div class="alert alert-danger fade in alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <strong>Lo sentimos! </strong>
-                    @ViewData["Error"]
-                </div>
+                if (TempData["OperationStatus"].ToString() == "Error")
+                {
+                    Html.RenderPartial("_AlertError");
+                }
+                if (TempData["OperationStatus"].ToString() == "Success")
+                {
+                    Html.RenderPartial("_AlertSuccess");
+                }
             }
             <h3>
                 <strong>Haznos saber tus inquietudes e intentaremos responderte lo mas antes posible</strong>
@@ -51,6 +55,13 @@
                             </div>
                         </div>
                     </div>
+                    @*<div class="row sky-space-20">
+                        <div class="col-md-7 col-md-offset-0">
+                            <div>
+                                @Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Clean);
+                            </div>
+                        </div>
+                    </div>*@
                     <button class="btn-u" type="submit">Enviar Mensaje</button>
                 </fieldset>
             }
@@ -130,6 +141,7 @@
     <script src="~/resources/js/forms/contact.js"></script>
     <script src="~/resources/js/pages/page_contacts.js"></script>
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=es"></script>
 }
 @section documentReady{
     ContactPage.initMap();

@@ -12,33 +12,69 @@ namespace Topodata2.Models.Service
         private static string Connection { get; } =
             ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        public static List<ServiceDocumentViewModel> GetLastDocumentsAdded(int id, int count)
+        public static bool DocumentsExist()
         {
-            List<ServiceDocumentViewModel> result = null;
-            string query;
-            if (id == 0)
+            var result = false;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
             {
-                query = $"SELECT TOP ({count}) dbo.DetalleDocumento.Imagen, " + "dbo.Documento.Nombre, " +
-                        "dbo.DetalleDocumento.FechaPublicacion, " + "dbo.Categoria.Descripcion AS Categoria, " +
-                        "dbo.DetalleDocumento.Descripcion, " + "dbo.Documento.IdDocumento, " +
-                        "dbo.Categoria.IdCategoria " + "FROM dbo.Categoria " + "INNER JOIN dbo.DetalleDocumento " +
-                        "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " + "INNER JOIN dbo.Documento " +
-                        "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
-                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC";
+                com.CommandText = "SELECT TOP 1 * FROM LastDocuments";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static List<DocumentModel> GetLastDocumentsAdded(int id = 0, int count = 0)
+        {
+            List<DocumentModel> result = null;
+            string query = $"SELECT TOP ";
+            if (count == 0)
+            {
+                query = query + "(100) PERCENT ";
             }
             else
             {
-                query = $"SELECT TOP ({count}) dbo.DetalleDocumento.Imagen, " + "dbo.Documento.Nombre, " +
+                query = query + $"({count}) ";
+            }
+            query = query + "* FROM LastDocuments ";
+            if (id != 0)
+            {
+                query = query + $"WHERE IdSubCategoria = {id} ";
+            }
+            query = query + "ORDER BY RegDate DESC";
+
+                /*query = $"SELECT TOP ({count}) dbo.DetalleDocumento.Imagen, " + "dbo.Documento.Nombre, " +
                         "dbo.DetalleDocumento.FechaPublicacion, " + "dbo.Categoria.Descripcion AS Categoria, " +
                         "dbo.DetalleDocumento.Descripcion, " + "dbo.Documento.IdDocumento, " +
                         "dbo.Categoria.IdCategoria " + "FROM dbo.Categoria " + "INNER JOIN dbo.DetalleDocumento " +
                         "ON dbo.Categoria.IdCategoria = dbo.DetalleDocumento.IdCategoria " + "INNER JOIN dbo.Documento " +
                         "ON dbo.DetalleDocumento.idDocumento = dbo.Documento.IdDocumento " +
                         $"WHERE (dbo.Categoria.IdCategoria = {id}) " +
-                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC";
-            }
+                        "ORDER BY dbo.DetalleDocumento.FechaPublicacion DESC";*/
+            
             var con = new SqlConnection(Connection);
-            SqlCommand com = new SqlCommand();
+            var com = new SqlCommand();
             SqlDataReader reader = null;
             try
             {
@@ -50,19 +86,20 @@ namespace Topodata2.Models.Service
                 reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    result = new List<ServiceDocumentViewModel>();
+                    result = new List<DocumentModel>();
                     while (reader.Read())
                     {
-                        result.Add(new ServiceDocumentViewModel()
+                        result.Add(new DocumentModel
                         {
-                            ImagePath = reader.GetString(0),
+                            Id = reader.GetInt32(0),
                             Nombre = reader.GetString(1),
-                            FechaPublicacion = reader.GetDateTime(2),
-                            Categoria = reader.GetString(3),
-                            Descripcion = reader.GetString(4),
-                            Id = reader.GetInt32(5),
-                            IdCategoria = reader.GetInt32(6),
-                            Exists = true
+                            Descripcion = reader.GetString(2),
+                            ImagePath = reader.GetString(3),
+                            RegDate = reader.GetDateTime(4),
+                            SubCategoria = reader.GetString(5),
+                            IdSubCategorie = reader.GetInt32(6),
+                            Contenido = reader.GetString(7),
+                            IdContenido = reader.GetInt32(8)
                         });
                     }
                 }
@@ -560,6 +597,34 @@ namespace Topodata2.Models.Service
             var sqlCommand = new SqlCommand(query, sqlConnection);
             try
             {
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Dispose();
+            }
+            return result;
+        }
+
+        public static bool DeleteDocument(int id)
+        {
+            var result = false;
+            var sqlConnection = new SqlConnection(Connection);
+            const string query = "BEGIN TRANSACTION " +
+                                 "DELETE FROM [Topodata].[dbo].[Documento] " +
+                                 "WHERE IdDocumento = @id " +
+                                 "COMMIT";
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            try
+            {
+                sqlCommand.Parameters.AddWithValue("id", id);
                 sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 result = true;

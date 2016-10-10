@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -36,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -74,6 +77,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Recaptcha.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=171a6ec5fa4b1644, processorArchitecture=MSIL">
+      <HintPath>..\packages\RecaptchaNet.2.1.0\lib\net45\Recaptcha.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -226,6 +233,21 @@
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserProfile.cs" />
     <Compile Include="Models\User\UserSettingsManager.cs" />
+    <Compile Include="resources\Strings\DomainSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DomainSettings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resources\Strings\General.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resources\Strings\Paths.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Paths.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -242,15 +264,31 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="EmailTemplates\AddedContent\NewDocumentAdded.html" />
+    <Content Include="EmailTemplates\baseCorporate.html" />
+    <Content Include="EmailTemplates\ContactUsAdmin.html" />
     <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredAdmin.html" />
     <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredUser.html" />
-    <Content Include="EmailTemplates\Deslinder\images\81.jpg" />
+    <Content Include="EmailTemplates\Deslinder\images\people.jpg" />
     <Content Include="EmailTemplates\Deslinder\images\logoDefault.png" />
+    <Content Include="EmailTemplates\HomeVideo.html" />
+    <Content Include="EmailTemplates\img\block_img\picture1.jpg" />
+    <Content Include="EmailTemplates\img\block_img\picture2.jpg" />
+    <Content Include="EmailTemplates\img\buttons\upgrade_green.png" />
+    <Content Include="EmailTemplates\img\headliner\headliner_green.jpg" />
+    <Content Include="EmailTemplates\img\icons\icon_facebook.png" />
+    <Content Include="EmailTemplates\img\icons\icon_layers_green.png" />
+    <Content Include="EmailTemplates\img\icons\icon_layers_grey.png" />
+    <Content Include="EmailTemplates\img\icons\icon_plane_green.png" />
+    <Content Include="EmailTemplates\img\icons\icon_plane_grey.png" />
+    <Content Include="EmailTemplates\img\icons\icon_twitter.png" />
+    <Content Include="EmailTemplates\img\icons\icon_youtube.png" />
     <Content Include="EmailTemplates\NewContentAdded.html" />
+    <Content Include="EmailTemplates\Registration\RegistrationDoneUserAdmin.html" />
     <Content Include="EmailTemplates\Registration\RegistrationDoneUser.html" />
     <Content Include="EmailTemplates\Subscribe\SubscribedDone\SubscribedDone.html" />
     <Content Include="EmailTemplates\Subscribe\SubscribedDone\SubscribedDoneMin.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="RecaptchaNet.Readme.txt" />
     <Content Include="resources\css\app.css" />
     <Content Include="resources\css\blocks.css" />
     <Content Include="resources\css\custom.css" />
@@ -454,6 +492,9 @@
     <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.png" />
     <Content Include="resources\plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.js" />
     <Content Include="resources\plugins\cube-portfolio\cubeportfolio\js\jquery.cubeportfolio.min.js" />
+    <Content Include="resources\plugins\cube-portfolio\templates\agency\ajax-agency\loadMore.html" />
+    <Content Include="resources\plugins\cube-portfolio\templates\agency\index.html" />
+    <Content Include="resources\plugins\cube-portfolio\templates\agency\js\main.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.10.1.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery-1.9.0.min.js" />
     <Content Include="resources\plugins\fancybox\lib\jquery.mousewheel-3.0.6.pack.js" />
@@ -781,10 +822,16 @@
     <Content Include="Views\Home\Index\_HomeDeslinder.cshtml" />
     <Content Include="Views\Home\Index\_HomeNanoGallery.cshtml" />
     <Content Include="Views\Services\Sectores.cshtml" />
+    <Content Include="Views\Administration\Documents\Documents.cshtml" />
+    <Content Include="Views\Administration\_AdministrationLeftPanel.cshtml" />
+    <Content Include="Views\Administration\Documents\_AllDocuments.cshtml" />
+    <Content Include="Views\Administration\Documents\_AddDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
     <Folder Include="App_Data\" />
+    <Folder Include="EmailTemplates\img\brands\" />
+    <Folder Include="EmailTemplates\img\logo\" />
     <Folder Include="resources\css\plugins\" />
     <Folder Include="resources\js\custom\" />
   </ItemGroup>
@@ -794,6 +841,21 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resources\Strings\DomainSettings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DomainSettings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Strings\General.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Strings\Paths.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Paths.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -399,6 +399,38 @@ namespace Topodata2.Models.Home
                 con.Close();
             }
             return result;
-        } 
+        }
+
+        public static bool FlipboardExists()
+        {
+            var result = false;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT TOP (1) * FROM dbo.Flipboard";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model Topodata2.Models.UserViewModel
+@using Recaptcha.Web.Mvc;
 @{
     ViewBag.Title = "Login";
 }
@@ -24,13 +25,13 @@
         </div>
         <div id="container" class="row space-xlg-hor equal-height-columns">
             <!--login Block-->
+            @Html.ValidationSummary(true,"", new { @class = "alert alert-danger" })
             @using (Html.BeginForm("Login", "User",new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new { @id = "loginForm", @class = "" }))
             {
                 <div id="loginContainer" style="height: 606px;" class="form-block login-block col-md-6 col-sm-12 rounded-left equal-height-column">
                     <div class="form-block-header">
                         <h2 class="margin-bottom-15">Iniciar Sesion</h2>
                     </div>
-                    @Html.ValidationSummary(true, "El usuario y/o contraseña son incorrectos", new { @class = "alert alert-danger" })
                     <div class="input-group margin-bottom-20">
                         <span class="input-group-addon rounded-left"><i class="icon-user color-white"></i></span>
                         @Html.EditorFor(m => m.Login.Username, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "Username" } })
@@ -109,8 +110,11 @@
                         <p>@Html.ValidationMessageFor(m => m.Register.TermsAndConditions)</p>
                     </section>
                     <section>
-                        @Html.EditorFor(m => m.Register.Informed, new { htmlAttributes = new { @class = "checked" } })
+                        @Html.EditorFor(m => m.Register.Informed, new {htmlAttributes = new {@class = "checked"}})
                         Mantenme Informado sobre Topodata
+                    </section>
+                    <section>
+                        @Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Clean);
                     </section>
                     <div class="row">
                         <div class="col-md-12">
@@ -131,6 +135,7 @@
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
     <script src="~/resources/js/plugins/masking.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
     
 
 }

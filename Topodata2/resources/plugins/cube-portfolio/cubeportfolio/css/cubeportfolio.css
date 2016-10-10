@@ -1,15 +1,15 @@
 /*!
  * Cube Portfolio - Responsive jQuery Grid Plugin
  *
- * version: 3.5.1 (30 January, 2016)
+ * version: 3.7.1 (28 June, 2016)
  * require: jQuery v1.7+
  *
- * Copyright 2013-2015, Mihai Buricea (http://scriptpie.com/cubeportfolio/live-preview/)
+ * Copyright 2013-2016, Mihai Buricea (http://scriptpie.com/cubeportfolio/live-preview/)
  * Licensed under CodeCanyon License (http://codecanyon.net/licenses)
  *
  */
 .cbp, .cbp *,
-.cbp *:after, .cbp:after, .cbp-l-filters-alignCenter, .cbp-l-filters-alignCenter *, .cbp-l-filters-alignCenter .cbp-filter-counter:after, .cbp-l-filters-alignLeft, .cbp-l-filters-alignLeft *, .cbp-l-filters-alignRight, .cbp-l-filters-alignRight *, .cbp-l-filters-alignRight .cbp-filter-counter:after, .cbp-l-filters-button, .cbp-l-filters-button *, .cbp-l-filters-button .cbp-filter-counter:after, .cbp-l-filters-buttonCenter, .cbp-l-filters-buttonCenter *, .cbp-l-filters-buttonCenter .cbp-filter-counter:after, .cbp-l-filters-dropdown, .cbp-l-filters-dropdown *, .cbp-l-filters-dropdownHeader:after, .cbp-l-filters-list, .cbp-l-filters-list *, .cbp-l-filters-work, .cbp-l-filters-work *, .cbp-l-filters-big, .cbp-l-filters-big *, .cbp-l-filters-text, .cbp-l-filters-text *, .cbp-l-filters-text .cbp-filter-counter:after, .cbp-l-filters-underline, .cbp-l-filters-underline *, .cbp-popup-wrap, .cbp-popup-wrap *, .cbp-popup-wrap:before, .cbp-popup-loadingBox:after, .cbp-l-loadMore-bgbutton, .cbp-l-loadMore-bgbutton *, .cbp-l-loadMore-button, .cbp-l-loadMore-button *, .cbp-l-loadMore-text, .cbp-l-loadMore-text *, .cbp-search, .cbp-search *, .cbp-search-icon:after {
+.cbp *:after, .cbp:after, .cbp-l-filters-alignCenter, .cbp-l-filters-alignCenter *, .cbp-l-filters-alignCenter .cbp-filter-counter:after, .cbp-l-filters-alignLeft, .cbp-l-filters-alignLeft *, .cbp-l-filters-alignRight, .cbp-l-filters-alignRight *, .cbp-l-filters-alignRight .cbp-filter-counter:after, .cbp-l-filters-button, .cbp-l-filters-button *, .cbp-l-filters-button .cbp-filter-counter:after, .cbp-l-filters-buttonCenter, .cbp-l-filters-buttonCenter *, .cbp-l-filters-buttonCenter .cbp-filter-counter:after, .cbp-l-filters-dropdown, .cbp-l-filters-dropdown *, .cbp-l-filters-dropdownHeader:after, .cbp-l-filters-list, .cbp-l-filters-list *, .cbp-l-filters-work, .cbp-l-filters-work *, .cbp-l-filters-big, .cbp-l-filters-big *, .cbp-l-filters-text, .cbp-l-filters-text *, .cbp-l-filters-text .cbp-filter-counter:after, .cbp-l-filters-underline, .cbp-l-filters-underline *, .cbp-popup-wrap, .cbp-popup-wrap *, .cbp-popup-wrap:before, .cbp-popup-loadingBox:after, .cbp-l-loadMore-bgbutton, .cbp-l-loadMore-bgbutton *, .cbp-l-loadMore-button, .cbp-l-loadMore-button *, .cbp-l-loadMore-text, .cbp-l-loadMore-text *, .cbp-search, .cbp-search * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -143,18 +143,22 @@
   height: auto;
   border: 0; }
 
-.cbp-addItems {
+.cbp-updateItems {
   -webkit-transition: height .5s ease-in-out !important;
   transition: height .5s ease-in-out !important;
   will-change: height; }
-  .cbp-addItems .cbp-item {
+  .cbp-updateItems .cbp-item {
     -webkit-transition: top .5s ease-in-out, left .5s ease-in-out;
     transition: top .5s ease-in-out, left .5s ease-in-out; }
-  .cbp-addItems .cbp-item-loading {
+  .cbp-updateItems .cbp-item-loading {
     -webkit-animation: fadeIn .5s ease-in-out;
     animation: fadeIn .5s ease-in-out;
     -webkit-transition: none;
     transition: none; }
+
+.cbp-removeItem {
+  -webkit-animation: fadeOut .5s ease-in-out;
+  animation: fadeOut .5s ease-in-out; }
 
 /*  END - Default style for plugin. Please change them carefully! */
 .cbp-panel {
@@ -187,6 +191,18 @@
     transform: rotate(0deg); }
   100% {
     transform: rotate(360deg); } }
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
 
 .clearfix:after {
   content: " ";
@@ -562,13 +578,10 @@
   color: #474747;
   padding: 12px 0 11px 26px; }
 
-.cbp-caption-expand .cbp-caption-defaultWrap .fa {
+.cbp-caption-expand .cbp-caption-defaultWrap svg {
   position: absolute;
   top: 16px;
-  left: 0;
-  width: 16px;
-  text-align: center;
-  font-size: 14px; }
+  left: 0; }
 
 .cbp-caption-expand .cbp-l-caption-body {
   font: 400 13px/21px "Roboto", sans-serif;
@@ -2604,16 +2617,6 @@
   float: left;
   width: 62%; }
 
-.cbp-l-project-social-wrapper,
-.cbp-l-inline-social-wrapper {
-  display: inline-block;
-  width: 100px;
-  height: 20px;
-  overflow: hidden; }
-
-.cbp-l-inline-social-wrapper {
-  margin-top: 5px; }
-
 .cbp-l-project-details {
   float: right;
   width: 38%;
@@ -2879,7 +2882,7 @@
   color: #757575; }
 
 .cbp-l-inline-details {
-  margin-top: 15px;
+  margin-bottom: 15px;
   font: 13px/22px "Open Sans", sans-serif; }
 
 /* default state */
@@ -3495,11 +3498,9 @@
 
 .cbp-l-grid-slider-team-social {
   float: right;
-  margin-top: 16px; }
+  margin-top: 22px; }
   .cbp-l-grid-slider-team-social a {
-    color: #737373;
-    line-height: 30px;
-    margin-left: 6px; }
+    margin-left: 4px; }
   .cbp-l-grid-slider-team-social a:hover {
     opacity: 0.8; }
 
@@ -3591,11 +3592,11 @@
   pointer-events: none; }
 
 .cbp-search-icon:after {
-  content: '\f002';
-  font-family: 'FontAwesome';
-  font-size: 14px;
-  color: #797979;
-  line-height: 36px;
+  content: '';
+  display: block;
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNzkyIDE3OTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzczNzM3MyIgZD0iTTEyMTYgODMycTAtMTg1LTEzMS41LTMxNi41VDc2OCAzODQgNDUxLjUgNTE1LjUgMzIwIDgzMnQxMzEuNSAzMTYuNVQ3NjggMTI4MHQzMTYuNS0xMzEuNVQxMjE2IDgzMnptNTEyIDgzMnEwIDUyLTM4IDkwdC05MCAzOHEtNTQgMC05MC0zOGwtMzQzLTM0MnEtMTc5IDEyNC0zOTkgMTI0LTE0MyAwLTI3My41LTU1LjV0LTIyNS0xNTAtMTUwLTIyNVQ2NCA4MzJ0NTUuNS0yNzMuNSAxNTAtMjI1IDIyNS0xNTBUNzY4IDEyOHQyNzMuNSA1NS41IDIyNSAxNTAgMTUwIDIyNVQxNDcyIDgzMnEwIDIyMC0xMjQgMzk5bDM0MyAzNDNxMzcgMzcgMzcgOTB6Ii8+PC9zdmc+") no-repeat scroll center center;
+  width: 100%;
+  height: 100%;
   pointer-events: none; }
 
 .cbp-search-input {
@@ -3611,7 +3612,7 @@
   pointer-events: auto; }
 
 .cbp-search-input[value] + .cbp-search-icon:after {
-  content: '\f00d'; }
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNzkyIDE3OTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzczNzM3MyIgZD0iTTE0OTAgMTMyMnEwIDQwLTI4IDY4bC0xMzYgMTM2cS0yOCAyOC02OCAyOHQtNjgtMjhsLTI5NC0yOTQtMjk0IDI5NHEtMjggMjgtNjggMjh0LTY4LTI4bC0xMzYtMTM2cS0yOC0yOC0yOC02OHQyOC02OGwyOTQtMjk0LTI5NC0yOTRxLTI4LTI4LTI4LTY4dDI4LTY4bDEzNi0xMzZxMjgtMjggNjgtMjh0NjggMjhsMjk0IDI5NCAyOTQtMjk0cTI4LTI4IDY4LTI4dDY4IDI4bDEzNiAxMzZxMjggMjggMjggNjh0LTI4IDY4bC0yOTQgMjk0IDI5NCAyOTRxMjggMjggMjggNjh6Ii8+PC9zdmc+"); }
 
 .cbp-search-nothing {
   position: absolute;
@@ -3621,27 +3622,40 @@
   width: 100%;
   font: 13px "Open Sans", sans-serif; }
 
-.cbp-l-project-social a {
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  line-height: 32px;
-  text-align: center;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 14px;
-  margin-right: 7px; }
-  .cbp-l-project-social a:hover {
-    opacity: .8; }
+.cbp-l-project-social {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
 
-.cbp-social-fb {
-  background-color: #5070B4; }
-
-.cbp-social-twitter {
-  background-color: #55acee; }
-
-.cbp-social-googleplus {
-  background-color: #E57371; }
-
+.cbp-social-fb,
+.cbp-social-twitter,
+.cbp-social-googleplus,
 .cbp-social-pinterest {
-  background-color: #cb2027; }
+  margin-right: 9px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .cbp-social-fb:hover,
+  .cbp-social-twitter:hover,
+  .cbp-social-googleplus:hover,
+  .cbp-social-pinterest:hover {
+    opacity: .8; }
+  .cbp-social-fb:focus,
+  .cbp-social-twitter:focus,
+  .cbp-social-googleplus:focus,
+  .cbp-social-pinterest:focus {
+    outline: none; }
+
+.cbp-social-fb path {
+  fill: #415C9B; }
+
+.cbp-social-twitter path {
+  fill: #55acee; }
+
+.cbp-social-googleplus path {
+  fill: #E57371; }
+
+.cbp-social-pinterest path {
+  fill: #cb2027; }

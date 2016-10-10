@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using System.Web.Security;
-using System.Web.UI.WebControls;
-using Microsoft.AspNet.Identity;
 using Topodata2.Models;
 using Topodata2.Models.Mail;
 using Topodata2.Models.User;
+using Recaptcha.Web;
+using Recaptcha.Web.Mvc;
 
 namespace Topodata2.Controllers
 {
@@ -29,9 +23,12 @@ namespace Topodata2.Controllers
             return View("Register");
         }
 
-        [Authorize]
-        public ActionResult ProfileSettings()
+        
+        public ActionResult ProfileSettings(string tab = "")
         {
+            var returnUrl = Request.Url + "#" + tab;
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Index", new {returnUrl});
+
             return View("Profile/ProfileSettings");
         }
 
@@ -126,7 +123,7 @@ namespace Topodata2.Controllers
             {
                 return Redirect(returnUrl);
             }
-            ModelState.AddModelError("", "");
+            ModelState.AddModelError("", "El usuario y/o contraseña son incorrectos");
             return View("Register", userViewModel);
         }
 
@@ -154,6 +151,20 @@ namespace Topodata2.Controllers
         [HttpPost]
         public ActionResult Register(UserViewModel userViewModel)
         {
+            var recaptchaHelper = this.GetRecaptchaVerificationHelper();
+
+            if (string.IsNullOrEmpty(recaptchaHelper.Response))
+            {
+                ModelState.AddModelError("", "Comprueba que no eres un robot.");
+                return View(userViewModel);
+            }
+
+            var recaptchaResult = recaptchaHelper.VerifyRecaptchaResponse();
+
+            if (recaptchaResult != RecaptchaVerificationResult.Success)
+            {
+                ModelState.AddModelError("", "Respuesta incorrecta.");
+            }
             if (!ModelState.IsValid)
             {
                 if (!ModelState.IsValidField("Register.Password"))
@@ -167,26 +178,19 @@ namespace Topodata2.Controllers
                 }
                 return View(userViewModel);
             }
-            else
+            if (!userViewModel.Register.RegisterUser(userViewModel.Register)) return View(userViewModel);
+            var user = new UserModel
             {
-                if (userViewModel.Register.RegisterUser(userViewModel.Register))
-                {
-
-                    MailManager.SendRegistrationDone(new UserModel()
-                    {
-                        Email = userViewModel.Register.Email,
-                        Informed = userViewModel.Register.Informed,
-                        Name = userViewModel.Register.Name,
-                        LastName = userViewModel.Register.LastName
-                    });
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return View(userViewModel);
-                }
-            }
-
+                Email = userViewModel.Register.Email,
+                Informed = userViewModel.Register.Informed,
+                LastName = userViewModel.Register.LastName,
+                Name = userViewModel.Register.Name,
+                Password = userViewModel.Register.Password,
+                UserName = userViewModel.Register.Username
+            };
+            MailManager.SendRegistrationDone(user);
+            MailManager.SendRegistrationDoneAdmin(user);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

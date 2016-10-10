@@ -1,0 +1,86 @@
+﻿@using Topodata2.Models.Service
+@model DocumentViewModel
+<div id="addDocument" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Añadir Documento</h2>
+    <p>Documento Nuevo</p>
+    <br>
+    @using (Html.BeginForm("AddDocument", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
+    {
+        <dl class="dl-horizontal">
+
+            <dt>@Html.DisplayNameFor(m => m.IdSubCategoria)</dt>
+            <dd>
+                <section>
+                    <label class="select">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new { @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);" })
+                        <i></i>
+                        @Html.ValidationMessageFor(m => m.IdSubCategoria)
+                    </label>
+                </section>
+
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.IdContenido)</dt>
+            <dd>
+                <section>
+                    <label class="select">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        <select id="idcontenido" name="idcontenido"></select>
+                        <i></i>
+                        @Html.ValidationMessageFor(m => m.IdContenido)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Url)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        @Html.EditorFor(m => m.Url, new { htmlAttributes = new { @placeholder = "Url", } })
+                        <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Url)</b>
+                        @Html.ValidationMessageFor(m => m.Url)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Nombre)</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @placeholder = "Nombre", } })
+                        <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Nombre)</b>
+                        @Html.ValidationMessageFor(m => m.Nombre)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.Descripcion)</dt>
+            <dd>
+                <section>
+                    <label class="textarea">
+                        <a href="#" class="nextEditable"><i class="icon-append fa fa-pencil"></i></a>
+                        @Html.EditorFor(m => m.Descripcion, new { htmlAttributes = new { @rows = "5" } })
+                        <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Descripcion)</b>
+                        @Html.ValidationMessageFor(m => m.Descripcion)
+                    </label>
+                </section>
+            </dd>
+            <dt>@Html.DisplayNameFor(m => m.ImageUpload)</dt>
+            <dd>
+                <section>
+                    <label for="file" class="input input-file">
+                        <div class="button">
+                            @Html.TextBoxFor(m => m.ImageUpload, new { @id = "file", @type = "file", @onchange = "this.parentNode.nextElementSibling.value = this.value" })
+                            Seleccionar
+                        </div>
+                        <input readonly type="text">
+                    </label>
+                    @Html.ValidationMessageFor(m => m.ImageUpload)
+                </section>
+            </dd>
+        </dl>
+        <br>
+        <button type="submit" class="btn btn-u">Añadir documento</button>
+    }
+</div>
+
+

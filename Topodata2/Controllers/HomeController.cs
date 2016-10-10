@@ -53,18 +53,30 @@ namespace Topodata2.Controllers
         [HttpPost]
         public ActionResult Contact(ContactUsViewModel contactUs)
         {
-            if (ModelState.IsValid)
+            string errorMessage;
+            if (!ModelState.IsValid)
             {
-                if (contactUs.SendMessage(contactUs))
-                {
-                    TempData["Success"] = "Tu mensaje ha sido enviado con exito";
-                    return RedirectToAction("Index");
-                }
-                ViewData["Error"] = "Ha sucedido un problema enviando tu mensaje, Intenta mas tarde ";
-                return View(contactUs);
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("Contact", "Home");
             }
-            return View(contactUs);
-
+            if (MailManager.SendContactUs(new ContactUsModel
+            {
+                Email = contactUs.Email,
+                Nombre = contactUs.Nombre,
+                Mensaje = contactUs.Mensaje
+            }))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Contact", "Home");
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("Contact", "Home");
         }
 
         public ActionResult Error()

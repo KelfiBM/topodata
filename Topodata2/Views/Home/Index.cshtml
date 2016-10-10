@@ -27,12 +27,12 @@
                 @{Html.RenderPartial("Index/_HomeNanoGallery");}
             </div>
         </div>
-        @if (HomeManager.GetAllFlipboard() != null && HomeManager.GetAllFlipboard().Count > 0)
+        @if (HomeManager.FlipboardExists())
         {
             Html.RenderPartial("Index/_HomeFlipboard", HomeManager.GetAllFlipboard());
         }
 
-        @if (ServiceManager.GetLastDocumentsAdded(0, 10) != null && ServiceManager.GetLastDocumentsAdded(0, 10).Count > 0)
+        @if (ServiceManager.DocumentsExist())
         {
             Html.RenderPartial("Index/_HomeRecentDocument", ServiceManager.GetLastDocumentsAdded(0, 10));
         }
