@@ -1,4 +1,4 @@
-﻿@model Topodata2.Models.HomeTextPrincipalViewModel
+﻿@model Topodata2.Models.Home.TextoHomeViewModel
 @{
     ViewBag.Title = "HomeText";
 }
@@ -15,7 +15,7 @@
                 }
             }
     <div class="headline">
-        <h2>Añadir Documento</h2>
+        <h2>Modificar Categorias Principales</h2>
         @using (Html.BeginForm("HomeText", "Administration", null, FormMethod.Post, new { @id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data" }))
         {
             <fieldset>
@@ -48,7 +48,7 @@
                     </label>
                 </section>
                 <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
-                <button id="submitProfile" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
+                <button id="submitButton" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
             </fieldset>
         }
     </div>
@@ -135,15 +135,15 @@
             });
         </script>*@
     <script>
-        $('.changeable').keyup(function () {
+        $('.changeable').on('input', function () {
             if ($(this).val()) {
-                $("#submitProfile").removeAttr('disabled');
-                $("#submitProfile").removeAttr('style');
+                $("#submitButton").removeAttr('disabled');
+                $("#submitButton").removeAttr('style');
             }
         });
         $(document).on("click", "button[type='reset']", function (e) {
-            $("#submitProfile").attr('disabled', "");
-            $("#submitProfile").attr('style', "opacity: 0.5");
+            $("#submitButton").attr('disabled', "");
+            $("#submitButton").attr('style', "opacity: 0.5");
         });
     </script>
 }

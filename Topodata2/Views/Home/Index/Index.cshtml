@@ -1,0 +1,102 @@
+﻿
+@using Topodata2.Models
+@using Topodata2.Models.Home
+@using Topodata2.Models.Service
+@model List<ServiceDocumentViewModel>
+@{
+    ViewData["Title"] = "Inicio";
+}
+@section cssPlugins{
+    <link href="~/resources/plugins/layer-slider/layerslider/css/layerslider.css" rel="stylesheet" />
+    <link href="~/resources/plugins/layer-slider/layerslider/skins/fullwidthdark/skin.css" rel="stylesheet" />
+    <link href="~/resources/plugins/nano-gallery/css/nanogallery.min.css" rel="stylesheet" />
+    <link href="~/resources/plugins/nano-gallery/css/themes/light/nanogallery_light.min.css" rel="stylesheet" />
+    <link href="~/resources/plugins/line-icons-pro/styles.css" rel="stylesheet" />
+    <link href="~/resources/plugins/owl-carousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
+}
+
+@{ Html.RenderPartial("Index/_HomeSlider", HomeManager.GetLastHomeSliderData());}
+@{ Html.RenderPartial("Index/_HomeDeslinder");}
+<div class="content-md">
+    <div class="container container-sm">
+        @{Html.RenderPartial("Index/_HomeText", HomeManager.GetLastHomeText());}
+        <div class="row">
+            <div class="col-md-8">
+                @{Html.RenderPartial("Index/_HomeSectores", ServiceManager.GetAllCategories());}
+            </div>
+            <div class="col-md-4">
+                @{Html.RenderPartial("Index/_HomeNanoGallery");}
+            </div>
+        </div>
+        @if (HomeManager.FlipboardExists())
+        {
+            Html.RenderPartial("Index/_HomeFlipboard", HomeManager.GetAllFlipboard());
+        }
+
+        @if (ServiceManager.DocumentsExist())
+        {
+            Html.RenderPartial("Index/_HomeRecentDocument", ServiceManager.GetLastDocumentsAdded(0, 10));
+        }
+    </div>
+</div>
+<div class="bg-grey content-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="responsive-video margin-bottom-30">
+                    <iframe src="https://www.youtube.com/embed/uMC5VESsRG0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="300" width="530"></iframe>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="title-v2">Descubre a TOPODATA!</h2>
+                <p>
+                    <strong>TOPODATA, Tecnología en Ingeniería…!!!</strong> Novedoso proceso de producción en línea con tecnología de punta, que de manera efectiva, oportuna y en un mismo lugar, logra los documentos y materiales descriptivos que sustentan las bases técnicas y legales para el desarrollo de los proyectos de construcción de obras o sistemas de servicios.
+                </p>
+                <p>El proceso inicia con los estudios técnicos fundamentales, investigaciones, análisis y diagnósticos; continuando con las recomendaciones, soluciones, aplicaciones factibles, levantamientos topográficos, diseños, cálculos, estimaciones de costos, programación de obra y finalmente, la presentación con animación digital para lograr una dimensión virtual del futuro proyecto.</p>
+                <br>
+                @Html.ActionLink("Leer mas", "About", "Home", new { @class = "btn-u" })
+            </div>
+        </div>
+    </div>
+</div>
+@section PageScripts{
+    <script src="~/resources/plugins/layer-slider/layerslider/js/greensock.js"></script>
+    <script src="~/resources/plugins/layer-slider/layerslider/js/layerslider.transitions.js"></script>
+    <script src="~/resources/plugins/layer-slider/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
+    <script src="~/resources/plugins/nano-gallery/jquery.nanogallery.min.js"></script>
+    <script src="~/resources/plugins/owl-carousel/owl-carousel/owl.carousel.js"></script>
+    <script src="~/resources/js/plugins/owl-carousel.js"></script>
+    <script src="https://cdn.flipboard.com/web/buttons/js/flbuttons.min.js" type="text/javascript"></script>
+}
+@section ScriptsFunction{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OwlCarousel.initOwlCarousel();
+            $('#layerslider').layerSlider({
+                thumbnailNavigation: 'hover',
+                startInViewport: false,
+                twoWaySlideshow: true,
+                globalBGColor: 'black',
+                autoPlayVideos: false,
+                autoPauseSlideshow: true,
+                navStartStop: false
+            });
+            $("#nanoGallery1").nanoGallery({
+                kind: 'flickr',
+                userID: '89639027@N07',
+                thumbnailHeight: 86,
+                thumbnailWidth: 86,
+                photoset: 'none',
+                theme: 'light',
+                paginationMaxLinesPerPage: 3,
+                thumbnailLabel: {
+                    display: false,
+                    displayDescription: false,
+                    position: 'overImageOnBottom'
+                }
+
+            });
+        });
+    </script>
+
+}

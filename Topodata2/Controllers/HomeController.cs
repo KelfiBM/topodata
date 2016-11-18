@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Topodata2.Models;
 using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
+using Topodata2.resources.Strings;
 
 namespace Topodata2.Controllers
 {
@@ -11,9 +13,9 @@ namespace Topodata2.Controllers
     {
         public ActionResult Index()
         {
-            List<ServiceDocumentViewModel> serviceDocument =
+            var serviceDocument =
                 new ServiceDocumentViewModel().GetTopDocumentListByCategorie(0, 4);
-            return View(serviceDocument);
+            return View("Index/Index",serviceDocument);
         }
 
         [Route("SobreTopo")]
@@ -21,13 +23,14 @@ namespace Topodata2.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View("About/About");
         }
 
         [Route("NuestroEquipo")]
         public ActionResult OurTeam()
         {
-            return View(HomeManager.GetAllOurTeam());
+            var model = HomeManager.GetAllOurTeam();
+            return View(model ?? new List<OurTeam>());
         }
 
         [HttpGet]
@@ -47,11 +50,11 @@ namespace Topodata2.Controllers
 
         public ActionResult Contact()
         {
-            return View();
+            return View("Contact");
         }
 
         [HttpPost]
-        public ActionResult Contact(ContactUsViewModel contactUs)
+        public ActionResult Contact(ContactUsViewModel viewModel)
         {
             string errorMessage;
             if (!ModelState.IsValid)
@@ -62,15 +65,15 @@ namespace Topodata2.Controllers
                 TempData["OperationMessage"] = errorMessage;
                 return RedirectToAction("Contact", "Home");
             }
-            if (MailManager.SendContactUs(new ContactUsModel
+            try
             {
-                Email = contactUs.Email,
-                Nombre = contactUs.Nombre,
-                Mensaje = contactUs.Mensaje
-            }))
-            {
+                new MailManager().SendMail(MailType.ContactUs, viewModel);
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("Contact", "Home");
+            }
+            catch (Exception)
+            {
+                // ignored
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
@@ -86,36 +89,39 @@ namespace Topodata2.Controllers
 
         public ActionResult Deslinder()
         {
-            return View();
+            return View("Deslinder");
         }
         [HttpPost]
         public ActionResult Deslinder(DeslinderViewModel viewModel)
         {
-            string errorMessage;
-            viewModel.RegDate = System.DateTime.Now;
+            string message;
+            viewModel.RegDate = DateTime.Now;
             if (!ModelState.IsValid)
             {
-                errorMessage = string.Join("; ",
+                message = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
-                TempData["OperationMessage"] = errorMessage;
+                TempData["OperationMessage"] = message;
                 return RedirectToAction("Deslinder", "Home");
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
             }
-            if (MailManager.SendDeslinderRegistrationAdmin(viewModel))
+            try
             {
-                if (MailManager.SendDeslinderRegistrationUser(viewModel))
-                {
-                    TempData["OperationStatus"] = "Success";
-                    return RedirectToAction("Deslinder", "Home");
-                }
+                new MailManager().SendMail(MailType.DeslinderRegistrationAdmin, viewModel)
+                    .SendMail(MailType.DeslinderRegistrationUser, viewModel);
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Deslinder", "Home");
             }
-            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
-            TempData["OperationMessage"] = errorMessage;
+            catch
+            {
+                // ignored
+            }
+            message = Messages.ErrorDesconocido;
+            TempData["OperationMessage"] = message;
             TempData["OperationStatus"] = "Error";
-            ViewBag.OperationStatus = errorMessage;
+            ViewBag.OperationStatus = message;
             return RedirectToAction("Deslinder", "Home");
         }
     }

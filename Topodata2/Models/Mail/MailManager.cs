@@ -4,322 +4,241 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
+using Topodata2.Classes;
+using Topodata2.Models.Home;
 using Topodata2.Models.User;
 using Topodata2.resources.Strings;
+using WebGrease;
 
 namespace Topodata2.Models.Mail
 {
-    public class MailManager
+    public class MailManager : IDisposable
     {
+        private const int Clientcount = 15;
+        private readonly SmtpClient[] _smtpClients = new SmtpClient[Clientcount + 1];
+        private CancellationTokenSource _cancelToken;
 
-
-        private static string GetYouTubeImage(string videoUrl)
+        public MailManager()
         {
-            var mInd = videoUrl.IndexOf("/embed/", StringComparison.Ordinal);
-            if (mInd == -1) return "";
-
-            var strVideoCode = videoUrl.Substring(videoUrl.IndexOf("/embed/", StringComparison.Ordinal) + 7);
-            var ind = strVideoCode.IndexOf("?", StringComparison.Ordinal);
-            strVideoCode = strVideoCode.Substring(0, ind == -1 ? strVideoCode.Length : ind);
-            return "https://img.youtube.com/vi/" + strVideoCode + "/0.jpg";
+            SetupSmtpClients();
         }
 
-        private static MailMessage MakeMailMessage(string subject, string body, string to, AlternateView view = null,
-            Attachment attachment = null)
+        ~MailManager()
         {
-            var mail = new MailMessage
-            {
-                From = new MailAddress(DomainSettings.EmailInfo),
-                Subject = subject,
-                Body = body,
-                To = {to},
-                IsBodyHtml = true
-            };
-            if (view != null)
-            {
-                mail.AlternateViews.Add(view);
-            }
-            if (attachment != null)
-            {
-                mail.Attachments.Add(attachment);
-            }
-            return mail;
+            DisposeSmtpClients();
         }
 
-        private static bool SendMessage(string subject, string body, IEnumerable<string> to, AlternateView view = null,
-            Attachment attachment = null)
+        private void SetupSmtpClients()
         {
-            var result = false;
-            var smtp = new SmtpClient
+            for (var i = 0; i <= Clientcount; i++)
             {
-                Host = DomainSettings.HostEmail,
-                Port = int.Parse(DomainSettings.HostPortSend),
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(DomainSettings.EmailInfo, DomainSettings.EmailInfoPassword),
-                EnableSsl = false
-            };
-            try
-            {
-                foreach (var recipent in to)
+                try
                 {
-                    smtp.Send(MakeMailMessage(subject, body, recipent, view, attachment));
+                    var client = new SmtpClient
+                    {
+                        Host = DomainSettings.HostEmail,
+                        Port = int.Parse(DomainSettings.HostPortSend),
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(DomainSettings.EmailInfo, DomainSettings.EmailInfoPassword),
+                        EnableSsl = false
+                    };
+                    _smtpClients[i] = client;
                 }
-
-                result = true;
+                catch (Exception ex)
+                {
+                    // ignored
+                }
             }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                smtp.Dispose();
-            }
-            return result;
         }
 
-        public static bool SendDeslinderRegistrationAdmin(DeslinderViewModel viewModel)
+        private void DisposeSmtpClients()
         {
-            var result = false;
+            for (var i = 0; i <= Clientcount; i++)
+            {
+                try
+                {
+                    _smtpClients[i].Dispose();
+                }
+                catch (Exception ex)
+                {
+                    //Log Exception
+                }
+            }
+        }
+
+        public void CancelEmailRun()
+        {
+            _cancelToken.Cancel();
+        }
+
+        private void Send(MailMessage mailMessage)
+        {
+            using (mailMessage)
+            {
+                var gotlocked = false;
+                while (!gotlocked)
+                {
+                    //Keep looping through all smtp client connections until one becomes available
+                    for (var i = 0; i <= Clientcount; i++)
+                    {
+                        if (!Monitor.TryEnter(_smtpClients[i])) continue;
+                        try
+                        {
+                            _smtpClients[i].Send(mailMessage);
+                        }
+                        finally
+                        {
+                            Monitor.Exit(_smtpClients[i]);
+                        }
+                        gotlocked = true;
+                        break;
+                    }
+                    //Do this to make sure CPU doesn't ramp up to 100%
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
+        private void SendMessage(string subject, string body, IEnumerable<string> to, AlternateView view = null,
+            IEnumerable<Attachment> attachment = null)
+        {
+            var po = new ParallelOptions();
+            //Create a cancellation token so you can cancel the task.
+            _cancelToken = new CancellationTokenSource();
+            po.CancellationToken = _cancelToken.Token;
+            //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
+            po.MaxDegreeOfParallelism = Environment.ProcessorCount*2;
+            Parallel.ForEach(to, po, recipent =>
+            {
+                Send(MakeMailMessage(subject, body, recipent, view, attachment));
+            });
+
+        }
+
+        private void SendContactUs(ContactUsModel model, ContactUsViewModel viewModel = null)
+        {
+            if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new ContactUsModel
+                    {
+                        Email = viewModel.Email,
+                        Nombre = viewModel.Nombre,
+                        Mensaje = viewModel.Mensaje
+                    };
+                }
+                else
+                {
+                    return;
+                }
+            }
             try
             {
                 string body;
-                using (
-                    var sr =
-                        new StreamReader(
-                            HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredAdmin)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateContactUsAdmin)))
                 {
                     body = sr.ReadToEnd();
                 }
                 body = string.Format(body,
-                    viewModel.Nombre,
-                    viewModel.Apellido,
-                    viewModel.Telefono,
-                    viewModel.Movil,
-                    viewModel.Correo,
-                    viewModel.Ubicacion,
-                    viewModel.NoMatrical,
-                    viewModel.NoParsela,
-                    viewModel.NoDistrito,
-                    viewModel.Municipio,
-                    viewModel.Provincia,
-                    viewModel.Area,
-                    viewModel.RegDate.Date
+                    model.Nombre,
+                    model.Email,
+                    model.Mensaje
                     );
-
-                if (SendMessage(DomainSettings.EmailSubjectSendDeslindeRegistrationAdmin, body,
-                    new[] {DomainSettings.EmailDeslinde}))
-                {
-                    result = true;
-                }
+                SendMessage(DomainSettings.EmailSubjectSendContactUs,
+                    body,
+                    new[] {DomainSettings.EmailContact});
             }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
+            catch (Exception)
             {
-                //Ignore
+                //ignored
             }
-            return result;
         }
 
-        public static bool SendDeslinderRegistrationUser(DeslinderViewModel viewModel)
+        private void SendHomeVideoUpload(HomeSliderVideo model, HomeSliderVideoViewModel viewModel = null)
         {
-            var result = false;
+            if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new HomeSliderVideo
+                    {
+                        UrlVideo = viewModel.UrlVideo,
+                    };
+                }
+                else
+                {
+                    return;
+                }
+            }
             try
             {
                 string body;
-                using (
-                    var sr =
-                        new StreamReader(
-                            HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredUser)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateHomeVideoAdded)))
                 {
                     body = sr.ReadToEnd();
                 }
-                body = body.Replace("{0}", viewModel.Correo);
 
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
+                var logo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
                 {
                     ContentId = Guid.NewGuid().ToString()
                 };
-                var img2 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgDeslindePeople))
+                var iconFacebook = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconFacebook))
                 {
                     ContentId = Guid.NewGuid().ToString()
                 };
-
-                body = body.Replace("{img1}", img1.ContentId);
-                body = body.Replace("{img2}", img2.ContentId);
-
-                var view = AlternateView.CreateAlternateViewFromString(
-                    body,
-                    null,
-                    DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(img1);
-                view.LinkedResources.Add(img2);
-
-                if (SendMessage(DomainSettings.EmailSubjectSendDeslindeRegistrationUser,
-                    body,
-                    new[] {viewModel.Correo},
-                    view))
-                {
-                    result = true;
-                }
-            }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
-            {
-                //Ignore
-            }
-            return result;
-        }
-
-        public static bool SendNewDocumentMessage(DocumentModel viewModel)
-        {
-            var result = false;
-            try
-            {
-                string body;
-                using (
-                    var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateNewDocumentAdded)))
-                {
-                    body = sr.ReadToEnd();
-                }
-                body = body.Replace("{title1}", viewModel.Nombre);
-                body = body.Replace("{categoria1}", viewModel.SubCategoria);
-                body = body.Replace("{descripcion1}", viewModel.Descripcion);
-                body = body.Replace("{urlDocument}", "topodata.com/Services/Document/" + viewModel.Id);
-
-                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
+                var iconTwitter = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconTwitter))
                 {
                     ContentId = Guid.NewGuid().ToString()
                 };
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~" + viewModel.ImagePath))
+                var iconYoutube = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconYoutube))
                 {
                     ContentId = Guid.NewGuid().ToString()
                 };
 
-                body = body.Replace("{img0}", img0.ContentId);
-                body = body.Replace("{img1}", img1.ContentId);
+                body = body.Replace("{logo}", logo.ContentId);
+                body = body.Replace("{imgVideo}", Youtube.GetImageFromId(model.UrlVideo));
+                body = body.Replace("{iconFacebook}", iconFacebook.ContentId);
+                body = body.Replace("{iconTwitter}", iconTwitter.ContentId);
+                body = body.Replace("{iconYoutube}", iconYoutube.ContentId);
 
                 var view = AlternateView.CreateAlternateViewFromString(body, null,
                     DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(img0);
-                view.LinkedResources.Add(img1);
+                view.LinkedResources.Add(logo);
+                view.LinkedResources.Add(iconFacebook);
+                view.LinkedResources.Add(iconTwitter);
+                view.LinkedResources.Add(iconYoutube);
 
                 var informedUsers = new List<UserModel>();
 
-                if (UserManager.ExistsInformedUsers())
+                var informed = UserManager.GetAllInformedUsers();
+                if (informed != null)
                 {
-                    informedUsers.AddRange(UserManager.GetAllInformedUsers());
+                    informedUsers.AddRange(informed);
                 }
-                if (UserManager.ExistsSuscribedInformed())
+                informed = UserManager.GetSuscribedInformed();
+                if (informed != null)
                 {
-                    informedUsers.AddRange(UserManager.GetSuscribedInformed());
+                    informedUsers.AddRange(informed);
                 }
-                if (informedUsers.Count > 0)
-                {
-                    var emails = informedUsers.Select(informedUser => informedUser.Email).ToList();
-                    SendMessage(DomainSettings.EmailSubjectSendNewDocumentMessage,
-                        body,
-                        emails,
-                        view,
-                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis)));
-                    result = true;
-                }
+                if (informedUsers.Count <= 0) return;
+                var emails = informedUsers.Select(i => i.Email).ToList();
+                SendMessage(DomainSettings.EmailSubjectSendHomeVideoUpload,
+                    body,
+                    emails,
+                    view);
             }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
+            catch
             {
-                //Ignore
+                // ignored
             }
-            return result;
         }
 
-        public static bool SendRegistrationDone(UserModel model)
+        private void SendSubscribeDone(string email)
         {
-            var result = false;
-            try
-            {
-                string body;
-                using (
-                    var sr =
-                        new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUser)))
-                {
-                    body = sr.ReadToEnd();
-                }
-                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgEmailArchitect))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{img0}", img0.ContentId);
-                body = body.Replace("{img1}", img1.ContentId);
-
-                var view = AlternateView.CreateAlternateViewFromString(
-                    body,
-                    null,
-                    DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(img0);
-                view.LinkedResources.Add(img1);
-
-                SendMessage(DomainSettings.EmailSubjectSendRegistrationDone,
-                    body,
-                    new[] {model.Email},
-                    view,
-                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis)));
-
-                result = true;
-            }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
-            {
-                //Ignore
-            }
-            return result;
-        }
-
-        public static bool SendRegistrationDoneAdmin(UserModel model)
-        {
-            var result = false;
-            try
-            {
-                string body;
-                using (
-                    var sr =
-                        new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUserAdmin))
-                    )
-                {
-                    body = sr.ReadToEnd();
-                }
-                body = string.Format(body,
-                    model.Name,
-                    model.LastName,
-                    model.Email,
-                    model.UserName,
-                    model.RegDate.Date
-                    );
-
-                SendMessage(DomainSettings.EmailSubjectSendRegistrationDoneAdmin,
-                    body,
-                    new[] {DomainSettings.EmailRegistrados});
-                result = true;
-            }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
-            {
-                //Ignore
-            }
-
-            return result;
-        }
-
-        public static bool SendSubscribeDone(string email)
-        {
-            var result = false;
             try
             {
                 string body;
@@ -349,118 +268,431 @@ namespace Topodata2.Models.Mail
                     body,
                     new[] {email},
                     view,
-                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis)));
-                result = true;
+                    new[]
+                    {
+                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
+                    });
             }
-                // ReSharper disable once UnusedVariable
-            catch (Exception e)
+            catch
             {
-                //Ignore
+                // ignored
             }
-            return result;
         }
 
-        public static bool SendHomeVideoUpload(HomeSliderViewModel model)
+        private void SendRegistrationDoneAdmin(UserModel model, UserViewModel viewModel = null)
         {
-            var result = false;
+            if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new UserModel
+                    {
+
+                    };
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             try
             {
                 string body;
-                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateHomeVideoAdded)))
+                using (var sr =
+                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUserAdmin)))
                 {
                     body = sr.ReadToEnd();
                 }
-
-                var logo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                /*var imgVideo = new LinkedResource()
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };*/
-                var iconFacebook = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconFacebook))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconTwitter = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconTwitter))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconYoutube = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconYoutube))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{logo}", logo.ContentId);
-                body = body.Replace("{imgVideo}", GetYouTubeImage(model.UrlVideo));
-                body = body.Replace("{iconFacebook}", iconFacebook.ContentId);
-                body = body.Replace("{iconTwitter}", iconTwitter.ContentId);
-                body = body.Replace("{iconYoutube}", iconYoutube.ContentId);
-
-                var view = AlternateView.CreateAlternateViewFromString(body, null,
-                    DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(logo);
-                view.LinkedResources.Add(iconFacebook);
-                view.LinkedResources.Add(iconTwitter);
-                view.LinkedResources.Add(iconYoutube);
-
-                var informedUsers = new List<UserModel>();
-
-                if (UserManager.ExistsInformedUsers())
-                {
-                    informedUsers.AddRange(UserManager.GetAllInformedUsers());
-                }
-                if (UserManager.ExistsSuscribedInformed())
-                {
-                    informedUsers.AddRange(UserManager.GetSuscribedInformed());
-                }
-                if (informedUsers.Count > 0)
-                {
-                    var emails = informedUsers.Select(i => i.Email).ToList();
-                    SendMessage(DomainSettings.EmailSubjectSendHomeVideoUpload,
-                        body,
-                        emails,
-                        view);
-                    result = true;
-                }
+                body = string.Format(body,
+                    model.Name,
+                    model.LastName,
+                    model.Email,
+                    model.UserName,
+                    model.RegDate.Date
+                    );
+                SendMessage(DomainSettings.EmailSubjectSendRegistrationDoneAdmin,
+                    body,
+                    new[]
+                    {
+                        DomainSettings.EmailRegistrados
+                    });
             }
                 // ReSharper disable once UnusedVariable
             catch (Exception e)
             {
                 //Ignore
             }
-            return result;
         }
 
-        public static bool SendContactUs(ContactUsModel model)
+        private void SendRegistrationDoneUser(UserModel model, UserViewModel viewModel = null)
         {
-            var result = false;
+            /*if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new UserModel
+                    {
+                        Email = viewModel.
+                        Apellido = viewModel.Apellido,
+                        Area = viewModel.Area,
+                        Correo = viewModel.Correo,
+                        Movil = viewModel.Movil,
+                        Municipio = viewModel.Municipio,
+                        NoDistrito = viewModel.NoDistrito,
+                        NoMatrical = viewModel.NoMatrical,
+                        Nombre = viewModel.Nombre,
+                        NoParsela = viewModel.NoParsela,
+                        Provincia = viewModel.Provincia,
+                        Telefono = viewModel.Telefono,
+                        Ubicacion = viewModel.Ubicacion
+                    };
+                }
+                else
+                {
+                    return;
+                }
+
+            }*/
+
             try
             {
                 string body;
-                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateContactUsAdmin)))
+                using (var sr =
+                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUser)))
+                {
+                    body = sr.ReadToEnd();
+                }
+                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgEmailArchitect))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                body = body.Replace("{img0}", img0.ContentId);
+                body = body.Replace("{img1}", img1.ContentId);
+                body = body.Replace("{username}", model.UserName);
+                body = body.Replace("{contra}", model.Password);
+
+                var view = AlternateView.CreateAlternateViewFromString(
+                    body,
+                    null,
+                    DomainSettings.EmailAlternativeViewMediaType);
+                view.LinkedResources.Add(img0);
+                view.LinkedResources.Add(img1);
+
+                SendMessage(DomainSettings.EmailSubjectSendRegistrationDone,
+                    body,
+                    new[] {model.Email},
+                    view,
+                    new[]
+                    {
+                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
+                    });
+
+            }
+                // ReSharper disable once UnusedVariable
+            catch (Exception e)
+            {
+                //Ignore
+            }
+        }
+
+        private void SendNewDocumentMessage(DocumentModel model)
+        {
+            try
+            {
+                string body;
+                using (var sr =
+                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateNewDocumentAdded)))
+                {
+                    body = sr.ReadToEnd();
+                }
+                body = body.Replace("{title1}", model.Nombre);
+                body = body.Replace("{categoria1}", model.SubCategoria);
+                body = body.Replace("{descripcion1}", model.Descripcion);
+                body = body.Replace("{urlDocument}", "topodata.com/Services/Document/" + model.Id);
+
+                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~" + model.ImagePath))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                body = body.Replace("{img0}", img0.ContentId);
+                body = body.Replace("{img1}", img1.ContentId);
+
+                var view = AlternateView.CreateAlternateViewFromString(body, null,
+                    DomainSettings.EmailAlternativeViewMediaType);
+                view.LinkedResources.Add(img0);
+                view.LinkedResources.Add(img1);
+
+                var informedUsers = new List<UserModel>();
+
+                var informed = UserManager.GetAllInformedUsers();
+                if (informed != null)
+                {
+                    informedUsers.AddRange(informed);
+                }
+                informed = UserManager.GetSuscribedInformed();
+                if (informed != null)
+                {
+                    informedUsers.AddRange(informed);
+                }
+                if (informedUsers.Count <= 0) return;
+                var emails = informedUsers.Select(informedUser => informedUser.Email).ToList();
+                SendMessage(DomainSettings.EmailSubjectSendNewDocumentMessage,
+                    body,
+                    emails,
+                    view,
+                    new[]
+                    {
+                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
+                    });
+            }
+            catch (Exception e)
+            {
+                //Ignore
+            }
+        }
+
+        private void SendDeslinderRegistrationUser(DeslinderModel model, DeslinderViewModel viewModel = null)
+        {
+            if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new DeslinderModel
+                    {
+                        Apellido = viewModel.Apellido,
+                        Area = viewModel.Area,
+                        Correo = viewModel.Correo,
+                        Movil = viewModel.Movil,
+                        Municipio = viewModel.Municipio,
+                        NoDistrito = viewModel.NoDistrito,
+                        NoMatrical = viewModel.NoMatrical,
+                        Nombre = viewModel.Nombre,
+                        NoParsela = viewModel.NoParsela,
+                        Provincia = viewModel.Provincia,
+                        Telefono = viewModel.Telefono,
+                        Ubicacion = viewModel.Ubicacion
+                    };
+                }
+                else
+                {
+                    return;
+                }
+            }
+            try
+            {
+                string body;
+                using (var sr =
+                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredUser)))
+                {
+                    body = sr.ReadToEnd();
+                }
+                body = body.Replace("{modelCorreo}", model.Correo);
+
+                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+                var img2 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgDeslindePeople))
+                {
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                body = body.Replace("{img1}", img1.ContentId);
+                body = body.Replace("{img2}", img2.ContentId);
+
+                var view = AlternateView.CreateAlternateViewFromString(
+                    body,
+                    null,
+                    DomainSettings.EmailAlternativeViewMediaType);
+                view.LinkedResources.Add(img1);
+                view.LinkedResources.Add(img2);
+
+                SendMessage(DomainSettings.EmailSubjectSendDeslindeRegistrationUser,
+                    body,
+                    new[] {model.Correo},
+                    view);
+            }
+                // ReSharper disable once UnusedVariable
+            catch (Exception e)
+            {
+                //Ignore
+            }
+        }
+
+        private void SendDeslinderRegistrationAdmin(DeslinderModel model, DeslinderViewModel viewModel = null)
+        {
+            if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new DeslinderModel
+                    {
+                        Apellido = viewModel.Apellido,
+                        Area = viewModel.Area,
+                        Correo = viewModel.Correo,
+                        Movil = viewModel.Movil,
+                        Municipio = viewModel.Municipio,
+                        NoDistrito = viewModel.NoDistrito,
+                        NoMatrical = viewModel.NoMatrical,
+                        Nombre = viewModel.Nombre,
+                        NoParsela = viewModel.NoParsela,
+                        Provincia = viewModel.Provincia,
+                        Telefono = viewModel.Telefono,
+                        Ubicacion = viewModel.Ubicacion
+                    };
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+            try
+            {
+                string body;
+                using (var sr =
+                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredAdmin))
+                    )
                 {
                     body = sr.ReadToEnd();
                 }
                 body = string.Format(body,
                     model.Nombre,
-                    model.Email,
-                    model.Mensaje
+                    model.Apellido,
+                    model.Telefono,
+                    model.Movil,
+                    model.Correo,
+                    model.Ubicacion,
+                    model.NoMatrical,
+                    model.NoParsela,
+                    model.NoDistrito,
+                    model.Municipio,
+                    model.Provincia,
+                    model.Area,
+                    model.RegDate.Date
                     );
-
-                if (SendMessage(DomainSettings.EmailSubjectSendContactUs, body,
-                    new[] {DomainSettings.EmailContact}))
-                {
-                    result = true;
-                }
+                SendMessage(DomainSettings.EmailSubjectSendDeslindeRegistrationAdmin,
+                    body,
+                    new[]
+                    {
+                        DomainSettings.EmailDeslinde
+                    });
             }
-                // ReSharper disable once UnusedVariable
             catch (Exception e)
             {
                 //Ignore
             }
-            return result;
         }
+
+        private static MailMessage MakeMailMessage(string subject, string body, string to, AlternateView view = null,
+            IEnumerable<Attachment> attachment = null)
+        {
+            var mail = new MailMessage
+            {
+                From = new MailAddress(DomainSettings.EmailInfo),
+                Subject = subject,
+                Body = body,
+                To = {to},
+                IsBodyHtml = true
+            };
+            if (view != null)
+            {
+                mail.AlternateViews.Add(view);
+            }
+            if (attachment == null) return mail;
+            foreach (var a in attachment)
+            {
+                mail.Attachments.Add(a);
+            }
+            return mail;
+        }
+
+        public MailManager SendMail(MailType mailType, object model)
+        {
+            switch (mailType)
+            {
+                case MailType.DeslinderRegistrationAdmin:
+                    var dRegistrationAdmin = model as DeslinderModel;
+                    var dRegistrationAdminView = model as DeslinderViewModel;
+                    if (dRegistrationAdmin != null || dRegistrationAdminView != null)
+                    {
+                        SendDeslinderRegistrationAdmin(dRegistrationAdmin, dRegistrationAdminView);
+                    }
+                    break;
+                case MailType.DeslinderRegistrationUser:
+                    var dRegistrationUser = model as DeslinderModel;
+                    var dRegistrationUserView = model as DeslinderViewModel;
+                    if (dRegistrationUser != null || dRegistrationUserView != null)
+                    {
+                        SendDeslinderRegistrationUser(dRegistrationUser, dRegistrationUserView);
+                    }
+                    break;
+                case MailType.NewDocumentMessage:
+                    var document = model as DocumentModel;
+                    if (document != null)
+                    {
+                        SendNewDocumentMessage(document);
+                    }
+                    break;
+                case MailType.RegistrationDoneUser:
+                    var doneUser = model as UserModel;
+                    if (doneUser != null)
+                    {
+                        SendRegistrationDoneUser(doneUser);
+                    }
+                    break;
+                case MailType.RegistrationDoneAdmin:
+                    var doneAdmin = model as UserModel;
+                    if (doneAdmin != null)
+                    {
+                        SendRegistrationDoneAdmin(doneAdmin);
+                    }
+                    break;
+                case MailType.SubscribeDone:
+                    var subscribeDone = model as string;
+                    if (subscribeDone != null)
+                    {
+                        SendSubscribeDone(subscribeDone);
+                    }
+                    break;
+                case MailType.HomeVideoUpload:
+                    var videoUpload = model as HomeSliderVideo;
+                    var videoUploadView = model as HomeSliderVideoViewModel;
+                    if (videoUpload != null || videoUploadView != null)
+                    {
+                        SendHomeVideoUpload(videoUpload,videoUploadView);
+                    }
+                    break;
+                case MailType.ContactUs:
+                    var contactus = model as ContactUsModel;
+                    var contactUsView = model as ContactUsViewModel;
+                    if (contactus != null || contactUsView != null)
+                    {
+                        SendContactUs(contactus,contactUsView);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mailType), mailType, null);
+            }
+            return this;
+        }
+
+        public void Dispose()
+        {
+            DisposeSmtpClients();
+        }
+
+
     }
 }

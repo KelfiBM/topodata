@@ -1,0 +1,47 @@
+﻿@model List<Topodata2.Models.CategorieModel>
+<div class="row">
+    <div class="col-md-6 md-margin-bottom-50">
+        <img class="img-responsive" src="~/resources/img/mockup/planning2.jpg" alt="">
+    </div>
+    <div class="col-md-6 headline-center">
+        <br />
+        <br />
+        <div class="text-justify">
+            <p>
+                <strong>Somos una empresa reconocida que busca ofrecer todas las areas sobre la ingenieria aplicada ofreciendo los siguientes servicios:</strong>
+            </p><br>
+            <div class="row">
+                @{
+                    int col1;
+                    if (Model.Count % 2 > 0)
+                    {
+                        col1 = (Model.Count / 2) + 1;
+                    }
+                    else
+                    {
+                        col1 = (Model.Count / 2);
+                    }
+                    var col2 = col1 + (Model.Count / 2);
+                }
+                <ul class="col-xs-6 list-unstyled lists-v1">
+                    @for (var i = 0; i < col1; i++)
+                    {
+                        <li>
+                            <i class="fa fa-angle-right"></i>
+                            <a href="@Url.Action("Sectores", "Services", new {id = Model[i].Id})">@Model[i].Descripcion</a>
+                        </li>
+                    }
+                </ul>
+                <ul class="col-xs-6 list-unstyled lists-v1">
+                    @for (var i = col1; i < col2; i++)
+                    {
+                        <li>
+                            <i class="fa fa-angle-right"></i>
+                            <a href="@Url.Action("Sectores", "Services", new {id = Model[i].Id})">@Model[i].Descripcion</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

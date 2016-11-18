@@ -1,435 +1,241 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using Topodata2.Classes;
+using Topodata2.Managers;
+using Topodata2.resources.Strings;
 
 namespace Topodata2.Models.Home
 {
     public static class HomeManager
     {
-        private static readonly string Connection =
-            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-        public static HomeTextPrincipalViewModel GetLastHomeText()
+        public static HomeSlider GetLastHomeSliderData()
         {
-            HomeTextPrincipalViewModel result = null;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
-            {
-                com.CommandText = $"SELECT TOP (100) PERCENT dbo.TextoHome.* FROM dbo.TextoHome ORDER BY regDate DESC";
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-                con.Open();
-
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    if (reader.Read())
-                    {
-                        result = new HomeTextPrincipalViewModel()
-                        {
-                            IdHomeText = reader.GetInt32(0),
-                            Agrimensura = reader.GetString(1),
-                            EstudioSuelo = reader.GetString(2),
-                            Diseno = reader.GetString(3),
-                            Ingenieria = reader.GetString(4),
-                            RegDate = reader.GetDateTime(5).Date
-                        };
-                    }
-                }
-
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            finally
-            {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
-            }
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.HomeSlider,
+                DatabaseParameters.GetLastHomeSliderData);
+            if (value.Count == 0) return null;
+            var result = value.ConvertAll(i => (HomeSlider) i)[0];
             return result;
         }
 
-        public static HomeSliderViewModel GetCurrentHomeSlider()
+        public static TextoHome GetLastHomeText()
         {
-            HomeSliderViewModel result = null;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
-            {
-                com.CommandText = $"SELECT TOP (1) IdVideoHome, UrlVideo, regDate FROM dbo.HomeSlide ORDER BY regDate DESC";
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-                con.Open();
-
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    if (reader.Read())
-                    {
-                        result = new HomeSliderViewModel()
-                        {
-                            IdVideoHome = reader.GetInt32(0),
-                            UrlVideo = reader.GetString(1),
-                            RegDate = reader.GetDateTime(2)
-                        };
-                    }
-                }
-
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            finally
-            {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
-            }
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.TextoHome,
+                DatabaseParameters.GetLastHomeText);
+            if (value.Count == 0) return null;
+            var result = value.ConvertAll(i => (TextoHome) i)[0];
             return result;
         }
 
-        public static bool AddHomeText(HomeTextPrincipalViewModel viewmodel)
+        public static TextoHomeViewModel GetLastHomeTextViewModel()
+        {
+            var value = GetLastHomeText();
+            if (value == null) return null;
+            var result = new TextoHomeViewModel
+            {
+                EstudioSuelo = value.EstudioSuelo,
+                Diseno = value.Diseno,
+                Agrimensura = value.Agrimensura,
+                Ingenieria = value.Ingenieria
+            };
+            return result;
+        }
+
+        public static bool AddHomeText(TextoHome model)
         {
             var result = false;
-            var sqlConnection = new SqlConnection(Connection);
-            var query =
-                "INSERT INTO [Topodata].[dbo].[TextoHome] (Agrimensura, EstudioSuelo, Diseno, Ingenieria) VALUES (@agrimensura, @estudiosuelo, @diseno, @ingenieria)";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            try
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.InsertTextoHome,
+                model.Agrimensura, model.EstudioSuelo, model.Diseno, model.Ingenieria);
+            if (value.Count > 0)
             {
-                sqlCommand.Parameters.AddWithValue("agrimensura", viewmodel.Agrimensura);
-                sqlCommand.Parameters.AddWithValue("estudiosuelo", viewmodel.EstudioSuelo);
-                sqlCommand.Parameters.AddWithValue("diseno", viewmodel.Diseno);
-                sqlCommand.Parameters.AddWithValue("ingenieria", viewmodel.Ingenieria);
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
                 result = true;
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
             }
             return result;
         }
 
-        public static bool AddHomeSlideVideo(HomeSliderViewModel viewmodel)
+        public static bool AddHomeText(TextoHomeViewModel viewModel)
+        {
+            return AddHomeText(new TextoHome
+            {
+                Agrimensura = viewModel.Agrimensura,
+                Diseno = viewModel.Diseno,
+                EstudioSuelo = viewModel.EstudioSuelo,
+                Ingenieria = viewModel.Ingenieria
+            });
+        }
+
+        public static List<OurTeam> GetAllOurTeam()
+        {
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.OurTeam,
+                DatabaseParameters.GetAllOurTeam);
+            if (value.Count == 0) return null;
+            var result = value.ConvertAll(i => (OurTeam) i);
+            return result;
+        }
+
+        public static bool AddOurTeam(OurTeam model)
         {
             var result = false;
-            var sqlConnection = new SqlConnection(Connection);
-            var query =
-                "INSERT INTO [Topodata].[dbo].[HomeSlide] (UrlVideo) VALUES (@urlVideo)";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            try
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.InsertOurTeam,
+                model.Nombre, model.Cargo, model.Email, model.ImagePath);
+            if (value.Count > 0)
             {
-                sqlCommand.Parameters.AddWithValue("urlVideo", viewmodel.UrlVideo);
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
                 result = true;
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
             }
             return result;
         }
 
-        public static bool AddOurTeam(OurTeamViewModel viewmodel)
+        public static bool AddOurTeam(OurTeamViewModel viewModel)
+        {
+            return AddOurTeam(new OurTeam
+            {
+                Nombre = viewModel.Nombre,
+                Cargo = viewModel.Cargo,
+                Email = viewModel.Email,
+                ImagePath = viewModel.ImagePath
+            });
+        }
+
+        public static bool DeleteOurTeam(OurTeam model)
+        {
+            var file = GetImagePathOurTeam(model);
+            if (System.IO.File.Exists(file))
+            {
+                System.IO.File.Delete(file);
+            }
+
+            var result = false;
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.DeleteOurTeam,
+                model.Id.ToString());
+            if (value.Count > 0)
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        private static string GetImagePathOurTeam(OurTeam model)
+        {
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.OurTeam,
+                DatabaseParameters.GetImagePathOurTeam, model.Id.ToString());
+            if (value.Count == 0) return null;
+            var result = value.ConvertAll(i => (OurTeam) i)[0].ImagePath;
+            return result;
+        }
+
+        public static HomeSliderVideo GetCurrentHomeSliderVideo()
+        {
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.HomeSliderVideo,
+                DatabaseParameters.GetCurrentHomeSliderVideo);
+            if (value.Count == 0) return null;
+            var result = value.ConvertAll(i => (HomeSliderVideo) i)[0];
+            return result;
+        }
+
+        public static HomeSliderVideoViewModel GetCurrentHomeSliderVideoViewModel()
+        {
+            var value = GetCurrentHomeSliderVideo();
+            if (value == null) return null;
+            var result = new HomeSliderVideoViewModel
+            {
+                UrlVideo = value.UrlVideo
+            };
+            return result;
+        }
+
+        public static bool AddHomeSliderVideo(HomeSliderVideo model)
         {
             var result = false;
-            var sqlConnection = new SqlConnection(Connection);
-            var query =
-                "INSERT INTO [Topodata].[dbo].[OurTeam] (Nombre, Cargo, Email, Imagen) " +
-                "VALUES (@nombre, @cargo, @email, @imagen)";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            try
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.InsertHomeSlideVideo,
+                Youtube.GetVideoId(model.UrlVideo));
+            if (value.Count > 0)
             {
-                sqlCommand.Parameters.AddWithValue("nombre", viewmodel.Nombre);
-                sqlCommand.Parameters.AddWithValue("cargo", viewmodel.Cargo);
-                sqlCommand.Parameters.AddWithValue("email", viewmodel.Email);
-                sqlCommand.Parameters.AddWithValue("imagen", viewmodel.ImagePath);
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
                 result = true;
             }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
-            }
             return result;
         }
 
-        public static List<OurTeamViewModel> GetAllOurTeam()
+        public static bool AddHomeSlideVideo(HomeSliderVideoViewModel viewModel)
         {
-            List<OurTeamViewModel> result = null;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
+            return AddHomeSliderVideo(new HomeSliderVideo
             {
-                com.CommandText = $"SELECT * FROM dbo.OurTeam";
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-                con.Open();
+                UrlVideo = viewModel.UrlVideo
+            });
+        }
 
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    result = new List<OurTeamViewModel>();
-                    while (reader.Read())
-                    {
-                        result.Add(new OurTeamViewModel()
-                        {
-                            IdOurTeam = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
-                            Cargo = reader.GetString(2),
-                            Email = reader.GetString(3),
-                            ImagePath = reader.GetString(4)
-                        });
-                    }
-                }
-                else
-                {
-                    AddOurTeam(new OurTeamViewModel()
-                    {
-                        Nombre = "Ignorar",
-                        Cargo = "Ignorar",
-                        Email = "Ignorar",
-                        ImagePath = "Ignorar"
-                    });
-                    result = GetAllOurTeam();
-                }
-
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            finally
-            {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
-            }
+        public static List<Flipboard> GetAllFlipboard()
+        {
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.Flipboard,
+                DatabaseParameters.GetAllFlipboard);
+            if (value.Count == 0) return null;
+            var result = value.ConvertAll(i => (Flipboard) i);
             return result;
         }
 
-        public static bool DeleteOurTeam(OurTeamViewModel viewmodel)
+        public static bool AddFlipboard(Flipboard model)
         {
             var result = false;
-            var sqlConnection = new SqlConnection(Connection);
-            var query =
-                "DELETE FROM [Topodata].[dbo].[OurTeam] " +
-                "WHERE IdOurTeam = @id";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            try
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.InsertFlipboard,
+                model.Name, model.Url);
+            if (value.Count > 0)
             {
-                if (System.IO.File.Exists(GetImagePathOurTeam(viewmodel)))
-                {
-                    System.IO.File.Delete(GetImagePathOurTeam(viewmodel));
-                }
-                sqlCommand.Parameters.AddWithValue("id", viewmodel.IdOurTeam);
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
                 result = true;
             }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
-            }
             return result;
         }
 
-        private static string GetImagePathOurTeam(OurTeamViewModel viewmodel)
+        public static bool AddFlipboard(FlipboardViewModel model)
         {
-            string result = null;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
+            return AddFlipboard(new Flipboard
             {
-                com.CommandText = $"SELECT Imagen FROM dbo.OurTeam WHERE (IdOurTeam = @id)";
-                com.CommandType = CommandType.Text;
-                com.Parameters.AddWithValue("id", viewmodel.IdOurTeam);
-                com.Connection = con;
-                con.Open();
-
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    if (reader.Read())
-                    {
-                        result = reader.GetString(0);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            finally
-            {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
-            }
-            return result;
+                Name = model.Name,
+                Url = model.Url
+            });
         }
 
-        public static bool AddFlipboard(FlipboardViewModel viewModel)
+        public static bool DeleteFlipboard(Flipboard model)
         {
             var result = false;
-            var sqlConnection = new SqlConnection(Connection);
-            var query =
-                "INSERT INTO [Topodata].[dbo].[Flipboard] (Nombre, url) VALUES (@nombre, @url)";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            try
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.DeleteFlipboard,
+                model.Id.ToString());
+            if (value.Count > 0)
             {
-                sqlCommand.Parameters.AddWithValue("nombre", viewModel.Name);
-                sqlCommand.Parameters.AddWithValue("url", viewModel.Url);
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
                 result = true;
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
-            }
-            return result;
-        }
-
-        public static bool DeleteFlipboard(FlipboardViewModel viewmodel)
-        {
-            var result = false;
-            var sqlConnection = new SqlConnection(Connection);
-            var query =
-                "DELETE FROM [Topodata].[dbo].[Flipboard] " +
-                "WHERE IdFlipboard = @id";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            try
-            {
-                sqlCommand.Parameters.AddWithValue("id", viewmodel.IdFlipboard);
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
-                result = true;
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
-            }
-            return result;
-        }
-
-        public static List<FlipboardViewModel> GetAllFlipboard()
-        {
-            List<FlipboardViewModel> result = null;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
-            {
-                com.CommandText = $"SELECT * FROM dbo.Flipboard";
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-                con.Open();
-
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    result = new List<FlipboardViewModel>();
-                    while (reader.Read())
-                    {
-                        result.Add(new FlipboardViewModel()
-                        {
-                            IdFlipboard = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            Url = reader.GetString(2),
-                            RegDate = reader.GetDateTime(3).Date
-                        });
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            finally
-            {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
             }
             return result;
         }
 
         public static bool FlipboardExists()
         {
-            var result = false;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
-            {
-                com.CommandText = $"SELECT TOP (1) * FROM dbo.Flipboard";
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-                con.Open();
+            var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.Flipboard,
+                DatabaseParameters.GetFlipboardExists);
+            return value.Count != 0;
+        }
 
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    result = true;
-                }
-            }
-            catch (Exception)
+        public static bool AddHomeSlideImageSeason(HomeSliderImageSeason model)
+        {
+            var result = false;
+            var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
+                DatabaseParameters.InsertHomeImageSeason,
+                model.ImagePath);
+            if (value.Count > 0)
             {
-                // ignored
+                result = true;
             }
-            finally
+            return result;
+        }
+
+        public static bool AddHomeSlideImageSeason(HomeSliderImageSeasonViewModel viewModel)
+        {
+            var result = AddHomeSlideImageSeason(new HomeSliderImageSeason
             {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
-            }
+                ImagePath = viewModel.ImagePath
+            });
             return result;
         }
     }

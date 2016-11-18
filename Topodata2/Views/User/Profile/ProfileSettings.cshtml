@@ -167,13 +167,13 @@
     <script>
         $('.changeable').keyup(function() {
             if ($(this).val()) {
-                $("#submitProfile").removeAttr('disabled');
-                $("#submitProfile").removeAttr('style');
+                $("#submitButton").removeAttr('disabled');
+                $("#submitButton").removeAttr('style');
             }
         });
         $(document).on("click", "button[type='reset']", function(e) {
-            $("#submitProfile").attr('disabled', "");
-            $("#submitProfile").attr('style', "opacity: 0.5");
+            $("#submitButton").attr('disabled', "");
+            $("#submitButton").attr('style', "opacity: 0.5");
         });
         // Javascript to enable link to tab
         var url = document.location.toString();

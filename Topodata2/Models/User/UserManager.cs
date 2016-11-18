@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using Topodata2.Models.Mail;
 
 namespace Topodata2.Models.User
 {
@@ -38,8 +39,7 @@ namespace Topodata2.Models.User
                 var con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString)
                 )
             {
-                string query =
-                    "SELECT [IdUsers],[Name],[Lastname],[Email],[Username] FROM [Users] WHERE [Username] = @u AND [Password] = @p";
+                const string query = "SELECT [IdUsers],[Name],[Lastname],[Email],[Username] FROM [Users] WHERE ([Username] = @u AND [Password] = @p) OR ([Email] = @u AND [Password] = @p)";
                 var com = new SqlCommand(query, con);
                 com.Parameters.Add(new SqlParameter("@u", SqlDbType.NVarChar))
                     .Value = username;
@@ -204,7 +204,7 @@ namespace Topodata2.Models.User
             SqlDataReader reader = null;
             try
             {
-                com.CommandText = $"SELECT 1 FROM dbo.Suscrito WHERE (Informed = 1)";
+                com.CommandText = $"SELECT 1 FROM viewSubscribedInformed";
                 com.CommandType = CommandType.Text;
                 com.Connection = con;
                 con.Open();
@@ -228,50 +228,6 @@ namespace Topodata2.Models.User
             return result;
         }
 
-        public static List<UserModel> GetAllInformedUsers()
-        {
-            List<UserModel> result = null;
-            var con = new SqlConnection(Connection);
-            var com = new SqlCommand();
-            SqlDataReader reader = null;
-            try
-            {
-                com.CommandText = $"SELECT dbo.Users.Name, dbo.Users.LastName, dbo.Users.Email, dbo.Users.Username, dbo.Users.Informed, dbo.Roles.Descripcion FROM dbo.Users INNER JOIN dbo.Roles ON dbo.Users.idRole = dbo.Roles.idRole WHERE (dbo.Users.Informed = 1)";
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-                con.Open();
-
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    result = new List<UserModel>();
-                    while (reader.Read())
-                    {
-                        result.Add(new UserModel()
-                        {
-                            Name = reader.GetString(0),
-                            LastName = reader.GetString(1),
-                            Email = reader.GetString(2),
-                            UserName = reader.GetString(3),
-                            Informed = reader.GetBoolean(4),
-                            Rol = reader.GetString(5)
-                        });
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            finally
-            {
-                reader?.Dispose();
-                com.Dispose();
-                con.Close();
-            }
-            return result;
-        }
-
         public static List<UserModel> GetSuscribedInformed()
         {
             List<UserModel> result = null;
@@ -280,7 +236,7 @@ namespace Topodata2.Models.User
             SqlDataReader reader = null;
             try
             {
-                com.CommandText = $"SELECT Email FROM dbo.Suscrito WHERE (Informed = 1)";
+                com.CommandText = $"SELECT Email FROM viewSubscribedInformed";
                 com.CommandType = CommandType.Text;
                 com.Connection = con;
                 con.Open();
@@ -311,7 +267,7 @@ namespace Topodata2.Models.User
             return result;
         }
 
-        public static List<UserModel> GetAllUsers()
+        public static List<UserModel> GetAllInformedUsers()
         {
             List<UserModel> result = null;
             var con = new SqlConnection(Connection);
@@ -319,7 +275,7 @@ namespace Topodata2.Models.User
             SqlDataReader reader = null;
             try
             {
-                com.CommandText = $"SELECT dbo.Users.Name, dbo.Users.LastName, dbo.Users.Email, dbo.Users.Username, dbo.Users.Informed, dbo.Users.RegDate, dbo.Roles.Descripcion, dbo.Users.IdUsers FROM dbo.Users INNER JOIN dbo.Roles ON dbo.Users.idRole = dbo.Roles.idRole";
+                com.CommandText = $"SELECT * FROM viewAllUsers WHERE viewAllUsers.Informed = 1";
                 com.CommandType = CommandType.Text;
                 com.Connection = con;
                 con.Open();
@@ -340,6 +296,7 @@ namespace Topodata2.Models.User
                             RegDate = reader.GetDateTime(5),
                             Rol = reader.GetString(6),
                             IdUser = reader.GetInt32(7),
+                            Password = reader.GetString(8)
                         });
                     }
                 }
@@ -356,6 +313,102 @@ namespace Topodata2.Models.User
             }
             return result;
         }
+        
+        public static List<UserModel> GetAllUsers()
+        {
+            List<UserModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT * FROM viewAllUsers";
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<UserModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new UserModel()
+                        {
+                            Name = reader.GetString(0),
+                            LastName = reader.GetString(1),
+                            Email = reader.GetString(2),
+                            UserName = reader.GetString(3),
+                            Informed = reader.GetBoolean(4),
+                            RegDate = reader.GetDateTime(5),
+                            Rol = reader.GetString(6),
+                            IdUser = reader.GetInt32(7),
+                            Password = reader.GetString(8)
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        }
+
+        public static List<UserModel> GetAllUsers(DateTime fromDate)
+        {
+            List<UserModel> result = null;
+            var con = new SqlConnection(Connection);
+            var com = new SqlCommand();
+            SqlDataReader reader = null;
+            try
+            {
+                com.CommandText = $"SELECT * FROM viewAllUsers " +
+                                  $"WHERE viewAllUsers.RegDate >= '" + fromDate.ToString("yyyy-MM-dd") + "'";
+
+                com.CommandType = CommandType.Text;
+                com.Connection = con;
+                con.Open();
+
+                reader = com.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = new List<UserModel>();
+                    while (reader.Read())
+                    {
+                        result.Add(new UserModel()
+                        {
+                            Name = reader.GetString(0),
+                            LastName = reader.GetString(1),
+                            Email = reader.GetString(2),
+                            UserName = reader.GetString(3),
+                            Informed = reader.GetBoolean(4),
+                            RegDate = reader.GetDateTime(5),
+                            Rol = reader.GetString(6),
+                            IdUser = reader.GetInt32(7),
+                            Password = reader.GetString(8)
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                reader?.Dispose();
+                com.Dispose();
+                con.Close();
+            }
+            return result;
+        } 
 
         public static bool DeleteUser(UserModel model)
         {

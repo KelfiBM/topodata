@@ -1,5 +1,4 @@
-﻿@model Topodata2.Models.OurTeamViewModel
-@{
+﻿@{
     ViewBag.Title = "OurTeam";
 }
 <div class="container content profile">
@@ -29,8 +28,8 @@
                         <li><a data-toggle="tab" href="#delete">Borrar Equipo</a></li>
                     </ul>
                     <div class="tab-content">
-                        @{Html.RenderPartial("OurTeam/_AddOurTeam", Model, ViewData);}
-                        @{Html.RenderPartial("OurTeam/_DeleteOurTeam", Model, ViewData);}
+                        @{Html.RenderPartial("OurTeam/_AddOurTeam");}
+                        @{Html.RenderPartial("OurTeam/_DeleteOurTeam");}
                     </div>
                 </div>
             </div>
@@ -191,15 +190,15 @@
             });
         </script>*@
     <script>
-        $('.changeable').keyup(function() {
+        $('.changeable').on('input', function () {
             if ($(this).val()) {
-                $("#submitProfile").removeAttr('disabled');
-                $("#submitProfile").removeAttr('style');
+                $("#submitButton").removeAttr('disabled');
+                $("#submitButton").removeAttr('style');
             }
         });
         $(document).on("click", "button[type='reset']", function (e) {
-            $("#submitProfile").attr('disabled', "");
-            $("#submitProfile").attr('style', "opacity: 0.5");
+            $("#submitButton").attr('disabled', "");
+            $("#submitButton").attr('style', "opacity: 0.5");
         });
     </script>
 }

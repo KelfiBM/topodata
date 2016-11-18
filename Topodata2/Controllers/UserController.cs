@@ -179,7 +179,7 @@ namespace Topodata2.Controllers
                 return View(userViewModel);
             }
             if (!userViewModel.Register.RegisterUser(userViewModel.Register)) return View(userViewModel);
-            var user = new UserModel
+            var model = new UserModel
             {
                 Email = userViewModel.Register.Email,
                 Informed = userViewModel.Register.Informed,
@@ -188,20 +188,17 @@ namespace Topodata2.Controllers
                 Password = userViewModel.Register.Password,
                 UserName = userViewModel.Register.Username
             };
-            MailManager.SendRegistrationDone(user);
-            MailManager.SendRegistrationDoneAdmin(user);
+            new MailManager().SendMail(MailType.RegistrationDoneUser,model)
+                .SendMail(MailType.RegistrationDoneAdmin, model);
             return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult Subscribe(SubscribeViewModel subscribeView)
         {
-            if (ModelState.IsValid)
-            {
-                subscribeView.Subscribe(subscribeView);
-                MailManager.SendSubscribeDone(subscribeView.Email);
-                return Redirect(Request.UrlReferrer?.ToString());
-            }
+            if (!ModelState.IsValid) return Redirect(Request.UrlReferrer?.ToString());
+            subscribeView.Subscribe(subscribeView);
+            new MailManager().SendMail(MailType.SubscribeDone, subscribeView.Email);
             return Redirect(Request.UrlReferrer?.ToString());
         }
 

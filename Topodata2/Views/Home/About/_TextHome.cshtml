@@ -1,0 +1,35 @@
+﻿@model Topodata2.Models.Home.TextoHome
+<div class="service-block-v5">
+    <div class="container">
+        <div class="row equal-height-columns">
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
+                <a href="@Url.Action("Sectores", "Services", new {id = 1})">
+                    <img src="~/resources/img/icons/agrimensura.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Agrimensura</span>
+                    <p>@Model.Agrimensura</p>
+                </a>
+            </div>
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column service-border">
+                <a href="@Url.Action("Sectores", "Services", new {id = 2})">
+                    <img src="~/resources/img/icons/estudios.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Estudios del Suelo</span>
+                    <p>@Model.EstudioSuelo</p>
+                </a>
+            </div>
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
+                <a href="@Url.Action("Sectores", "Services", new {id = 5})">
+                    <img src="~/resources/img/icons/diseno.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Diseño</span>
+                    <p>@Model.Diseno</p>
+                </a>
+            </div>
+            <div style="height: 361px;" class="col-md-3 service-inner equal-height-column">
+                <a href="@Url.Action("Sectores", "Services", new {id = 4})">
+                    <img src="~/resources/img/icons/ingenieria.png" alt="" />
+                    <span style="color: #333; margin-top: 5px">Ingenieria</span>
+                    <p>@Model.Ingenieria</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

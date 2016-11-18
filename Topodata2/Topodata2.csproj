@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -37,7 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -204,35 +203,54 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Classes\Model.cs" />
+    <Compile Include="Classes\ModelType.cs" />
+    <Compile Include="Classes\Youtube.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Managers\DatabaseManager.cs" />
+    <Compile Include="Managers\TestManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Models\CustomRoleProvider.cs" />
-    <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\Home\HomeManager.cs" />
+    <Compile Include="Models\Home\HomeModels.cs" />
+    <Compile Include="Models\Home\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Mail\MailManager.cs" />
     <Compile Include="Models\Mail\MailModel.cs" />
+    <Compile Include="Models\Mail\MailType.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\Service\ServiceViewModels.cs" />
+    <Compile Include="Models\Test\TestModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\User\UserManager.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\User\UserProfile.cs" />
     <Compile Include="Models\User\UserSettingsManager.cs" />
+    <Compile Include="resources\Strings\DatabaseParameters.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseParameters.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resources\Strings\Displays.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Displays.resx</DependentUpon>
+    </Compile>
     <Compile Include="resources\Strings\DomainSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +260,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="resources\Strings\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="resources\Strings\Paths.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -751,7 +774,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\About\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -799,7 +822,7 @@
     <Content Include="Views\Administration\Index.cshtml" />
     <Content Include="Views\Administration\HomeText.cshtml" />
     <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
-    <Content Include="Views\Administration\HomeSlide.cshtml" />
+    <Content Include="Views\Administration\HomeSlide\HomeSliderVideo.cshtml" />
     <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
@@ -826,6 +849,11 @@
     <Content Include="Views\Administration\_AdministrationLeftPanel.cshtml" />
     <Content Include="Views\Administration\Documents\_AllDocuments.cshtml" />
     <Content Include="Views\Administration\Documents\_AddDocument.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\RegistrationDoneUser.cshtml" />
+    <Content Include="Views\Home\Index\Index.cshtml" />
+    <Content Include="Views\Home\About\_TextHome.cshtml" />
+    <Content Include="Views\Home\About\_Sectores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
@@ -843,6 +871,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="resources\Strings\DatabaseParameters.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DatabaseParameters.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Strings\Displays.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Displays.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="resources\Strings\DomainSettings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DomainSettings.Designer.cs</LastGenOutput>
@@ -850,6 +888,11 @@
     <EmbeddedResource Include="resources\Strings\General.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>General.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Strings\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="resources\Strings\Paths.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,0 +1,13 @@
+﻿@model Topodata2.Models.Test.SendRegistrationDone
+@using (Html.BeginForm("RegistrationDoneUser", "Test", FormMethod.Post))
+{
+        <div class="input-group margin-bottom-20">
+            <span class="input-group-addon rounded-left"><i class="icon-user color-white"></i></span>
+            @Html.EditorFor(m => m.Fecha, new { htmlAttributes = new { @class = "form-control rounded-right", @placeholder = "fecha" } })
+        </div>
+        <div class="row margin-bottom-70">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-u btn-u-default rounded">Enviar</button>
+            </div>
+        </div>
+}

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using Topodata2.Classes;
 using Topodata2.Models;
 using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
 using Topodata2.Models.Service;
 using Topodata2.Models.User;
+using Topodata2.resources.Strings;
 
 namespace Topodata2.Controllers
 {
@@ -24,12 +27,12 @@ namespace Topodata2.Controllers
 
         public ActionResult HomeText()
         {
-            return View(HomeManager.GetLastHomeText());
+            return View(HomeManager.GetLastHomeTextViewModel());
         }
 
-        public ActionResult HomeSlide()
+        public ActionResult HomeSliderVideo()
         {
-            return View(HomeManager.GetCurrentHomeSlider());
+            return View("HomeSlide/HomeSliderVideo",HomeManager.GetCurrentHomeSliderVideoViewModel());
         }
 
         public ActionResult OurTeam()
@@ -43,7 +46,7 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public ActionResult HomeText(HomeTextPrincipalViewModel viewModel)
+        public ActionResult HomeText(TextoHomeViewModel viewModel)
         {
             string errorMessage;
             if (!ModelState.IsValid)
@@ -70,7 +73,7 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public ActionResult HomeSlide(HomeSliderViewModel viewModel)
+        public ActionResult HomeSliderVideo(HomeSliderVideoViewModel viewModel)
         {
             string errorMessage;
             if (!ModelState.IsValid)
@@ -79,7 +82,7 @@ namespace Topodata2.Controllers
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
                 TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("HomeSlide", "Administration");
+                return RedirectToAction("HomeSliderVideo", "Administration");
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
@@ -87,14 +90,15 @@ namespace Topodata2.Controllers
             if (HomeManager.AddHomeSlideVideo(viewModel))
             {
                 TempData["OperationStatus"] = "Success";
-                MailManager.SendHomeVideoUpload(viewModel);
-                return RedirectToAction("HomeSlide", "Administration");
+                viewModel.UrlVideo = Youtube.GetVideoId(viewModel.UrlVideo);
+                new MailManager().SendMail(MailType.HomeVideoUpload, viewModel);
+                return RedirectToAction("HomeSliderVideo", "Administration");
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("HomeSlide", "Administration");
+            return RedirectToAction("HomeSliderVideo", "Administration");
         }
 
         [HttpPost]
@@ -170,12 +174,12 @@ namespace Topodata2.Controllers
 
         public ActionResult DeleteOurTeam(int id)
         {
-            OurTeamViewModel viewModel = new OurTeamViewModel()
+            var model = new OurTeam
             {
-                IdOurTeam = Convert.ToInt32(id)
+                Id = Convert.ToInt32(id)
             };
 
-            if (HomeManager.DeleteOurTeam(viewModel))
+            if (HomeManager.DeleteOurTeam(model))
             {
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("OurTeam", "Administration");
@@ -217,12 +221,12 @@ namespace Topodata2.Controllers
 
         public ActionResult DeleteFlipboard(int id)
         {
-            FlipboardViewModel viewModel = new FlipboardViewModel()
+            var model = new Flipboard
             {
-                IdFlipboard = Convert.ToInt32(id)
+                Id = Convert.ToInt32(id)
             };
 
-            if (HomeManager.DeleteFlipboard(viewModel))
+            if (HomeManager.DeleteFlipboard(model))
             {
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("Flipboard", "Administration");
@@ -315,7 +319,7 @@ namespace Topodata2.Controllers
                     TempData["OperationMessage"] = errorMessage;
 
                     ModelState.AddModelError("ImageUpload",
-                        "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
+                        Messages.TieneFormatoImagen);
                     return View("Documents/Documents",model);
                 }
                 const string uploadPath = "~/resources/img/documents";
@@ -345,8 +349,9 @@ namespace Topodata2.Controllers
             if (ServiceManager.AddDocument(model))
             {
                 TempData["OperationStatus"] = "Success";
-                MailManager.SendNewDocumentMessage(ServiceManager.GetLastDocument());
-                return RedirectToAction("Document", "Services", new { id = ServiceManager.GetLastDocument().Id });
+                var lastDocument = ServiceManager.GetLastDocument();
+                new MailManager().SendMail(MailType.NewDocumentMessage, lastDocument);
+                return RedirectToAction("Document", "Services", new { id = lastDocument.Id });
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
