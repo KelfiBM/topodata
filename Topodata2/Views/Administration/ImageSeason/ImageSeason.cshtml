@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "OurTeam";
+    ViewBag.Title = "ImageSeason";
 }
 <div class="container content profile">
     <div class="row">
@@ -23,13 +23,11 @@
             <div class="profile-body margin-bottom-20">
                 <div class="tab-v1">
                     <ul class="nav nav-justified nav-tabs">
-                        <li><a data-toggle="tab" href="#add">Añadir Equipo</a></li>
+                        <li><a data-toggle="tab" href="#add">Añadir Imagen</a></li>
                         @*<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>*@
-                        <li><a data-toggle="tab" href="#delete">Borrar Equipo</a></li>
                     </ul>
                     <div class="tab-content">
-                        @{Html.RenderPartial("OurTeam/_AddOurTeam");}
-                        @{Html.RenderPartial("OurTeam/_DeleteOurTeam");}
+                        @{Html.RenderPartial("ImageSeason/_AddImageSeason");}
                     </div>
                 </div>
             </div>
@@ -154,23 +152,5 @@
                 return $form;
             };
         })(jQuery);
-    </script>
-    @*<script>
-            $(".nextEditable").click(function() {
-                $(this).next().prop('readonly', false);
-                $(this).next().prop('disabled', false);
-            });
-        </script>*@
-    <script>
-        $('.changeable').on('input', function () {
-            if ($(this).val()) {
-                $("#submitButton").removeAttr('disabled');
-                $("#submitButton").removeAttr('style');
-            }
-        });
-        $(document).on("click", "button[type='reset']", function (e) {
-            $("#submitButton").attr('disabled', "");
-            $("#submitButton").attr('style', "opacity: 0.5");
-        });
     </script>
 }

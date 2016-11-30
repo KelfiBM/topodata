@@ -30,9 +30,9 @@ namespace Topodata2.Controllers
             return View(HomeManager.GetLastHomeTextViewModel());
         }
 
-        public ActionResult HomeSliderVideo()
+        public ActionResult HomeSlideVideo()
         {
-            return View("HomeSlide/HomeSliderVideo",HomeManager.GetCurrentHomeSliderVideoViewModel());
+            return View("HomeSlide/HomeSlideVideo",HomeManager.GetCurrentHomeSliderVideoViewModel());
         }
 
         public ActionResult OurTeam()
@@ -43,6 +43,66 @@ namespace Topodata2.Controllers
         public ActionResult Flipboard()
         {
             return View("Flipboard/Flipboard");
+        }
+
+        public ActionResult ImageSeason()
+        {
+            return View("ImageSeason/ImageSeason");
+        }
+
+        [HttpPost]
+        public ActionResult ImageSeason(HomeSliderImageSeasonViewModel viewModel)
+        {
+            var errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("ImageSeason", "Administration");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            try
+            {
+                if (viewModel.ImageUpload != null)
+                {
+                    string[] validImageTypes =
+                    {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                };
+
+                    if (!validImageTypes.Contains(viewModel.ImageUpload.ContentType))
+                    {
+                        ModelState.AddModelError("ImageUpload",
+                            Messages.TieneFormatoImagen);
+                        return View("ImageSeason/ImageSeason", viewModel);
+                    }
+                    const string uploadPath = "/resources/img/season";
+                    const string filename = "season.jpg";
+                    var imagePath = Path.Combine(Server.MapPath("~" + uploadPath), filename);
+                    viewModel.ImageUpload.SaveAs(imagePath);
+                    TempData["OperationStatus"] = "Success";
+                    return RedirectToAction("ImageSeason", "Administration");
+                }
+            }
+            catch
+            {
+                TempData["OperationMessage"] = errorMessage;
+                TempData["OperationStatus"] = "Error";
+                ViewBag.OperationStatus = errorMessage;
+                return RedirectToAction("ImageSeason", "Administration");
+            }
+            
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("ImageSeason", "Administration");
         }
 
         [HttpPost]
@@ -73,7 +133,7 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public ActionResult HomeSliderVideo(HomeSliderVideoViewModel viewModel)
+        public ActionResult HomeSlideVideo(HomeSlideVideoViewModel viewModel)
         {
             string errorMessage;
             if (!ModelState.IsValid)
@@ -82,7 +142,7 @@ namespace Topodata2.Controllers
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
                 TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("HomeSliderVideo", "Administration");
+                return RedirectToAction("HomeSlideVideo", "Administration");
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
@@ -91,20 +151,25 @@ namespace Topodata2.Controllers
             {
                 TempData["OperationStatus"] = "Success";
                 viewModel.UrlVideo = Youtube.GetVideoId(viewModel.UrlVideo);
-                new MailManager().SendMail(MailType.HomeVideoUpload, viewModel);
-                return RedirectToAction("HomeSliderVideo", "Administration");
+                /*var t1 = new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;*/
+                    new MailManager().SendMail(MailType.HomeVideoUpload, viewModel);
+                /*});
+                t1.Start();*/
+                return RedirectToAction("HomeSlideVideo", "Administration");
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("HomeSliderVideo", "Administration");
+            return RedirectToAction("HomeSlideVideo", "Administration");
         }
 
         [HttpPost]
         public ActionResult AddOurTeam(OurTeamViewModel viewModel)
         {
-            string errorMessage;
+            var errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             if (!ModelState.IsValid)
             {
                 errorMessage = string.Join("; ",
@@ -129,31 +194,28 @@ namespace Topodata2.Controllers
                 if (!validImageTypes.Contains(viewModel.ImageUpload.ContentType))
                 {
                     ModelState.AddModelError("ImageUpload",
-                        "Tiene que seleccionar una imagen de formato GIF, JPG o PNG");
+                        Messages.TieneFormatoImagen);
                     return View("OurTeam/OurTeam",viewModel);
                 }
-                else
+                const string uploadPath = "~/resources/img/team";
+                var filename = viewModel.ImageUpload.FileName;
+                var imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
+                var tempFileName = filename;
+                if (System.IO.File.Exists(imagePath))
                 {
-                    string uploadPath = "~/resources/img/team";
-                    string filename = viewModel.ImageUpload.FileName;
-                    string imagePath = Path.Combine(Server.MapPath(uploadPath), filename);
-                    string tempFileName = filename;
-                    if (System.IO.File.Exists(imagePath))
+                    var counter = 1;
+                    while (System.IO.File.Exists(imagePath))
                     {
-                        int counter = 1;
-                        while (System.IO.File.Exists(imagePath))
-                        {
-                            tempFileName = counter.ToString() + filename;
-                            imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
-                            counter++;
-                        }
-                        filename = tempFileName;
+                        tempFileName = counter + filename;
+                        imagePath = Path.Combine(Server.MapPath(uploadPath), tempFileName);
+                        counter++;
                     }
-                    string imageUrl = uploadPath + "/" + filename;
-                    imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
-                    viewModel.ImageUpload.SaveAs(imagePath);
-                    viewModel.ImagePath = imageUrl;
+                    filename = tempFileName;
                 }
+                var imageUrl = uploadPath + "/" + filename;
+                imageUrl = imageUrl.Substring(1, imageUrl.Length - 1);
+                viewModel.ImageUpload.SaveAs(imagePath);
+                viewModel.ImagePath = imageUrl;
             }
             else
             {
@@ -165,7 +227,6 @@ namespace Topodata2.Controllers
                 return RedirectToAction("OurTeam", "Administration");
             }
             
-            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;

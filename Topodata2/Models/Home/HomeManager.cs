@@ -134,18 +134,18 @@ namespace Topodata2.Models.Home
             return result;
         }
 
-        public static HomeSliderVideoViewModel GetCurrentHomeSliderVideoViewModel()
+        public static HomeSlideVideoViewModel GetCurrentHomeSliderVideoViewModel()
         {
             var value = GetCurrentHomeSliderVideo();
             if (value == null) return null;
-            var result = new HomeSliderVideoViewModel
+            var result = new HomeSlideVideoViewModel
             {
                 UrlVideo = value.UrlVideo
             };
             return result;
         }
 
-        public static bool AddHomeSliderVideo(HomeSliderVideo model)
+        public static bool AddHomeSlideVideo(HomeSliderVideo model)
         {
             var result = false;
             var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
@@ -158,9 +158,9 @@ namespace Topodata2.Models.Home
             return result;
         }
 
-        public static bool AddHomeSlideVideo(HomeSliderVideoViewModel viewModel)
+        public static bool AddHomeSlideVideo(HomeSlideVideoViewModel viewModel)
         {
-            return AddHomeSliderVideo(new HomeSliderVideo
+            return AddHomeSlideVideo(new HomeSliderVideo
             {
                 UrlVideo = viewModel.UrlVideo
             });

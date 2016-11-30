@@ -313,6 +313,33 @@ namespace Topodata2.Models.User
             }
             return result;
         }
+
+        public static List<List<UserModel>> GetAllInformedSeparated(int count)
+        {
+            var informed = new List<UserModel>();
+            var informedUsers = GetAllInformedUsers();
+            if (informedUsers != null)
+            {
+                informed.AddRange(informedUsers);
+            }
+            var informedSubscribed = GetSuscribedInformed();
+            if (informedSubscribed != null)
+            {
+                informed.AddRange(informedSubscribed);
+            }
+            if (informed.Count < 1) return null;
+            var list = new List<UserModel>();
+            var result = new List<List<UserModel>>();
+            foreach (var i in informed)
+            {
+                list.Add(i);
+                if (list.Count != count) continue;
+                result.Add(list);
+                list.Clear();
+            }
+            result.Add(list);
+            return result;
+        }
         
         public static List<UserModel> GetAllUsers()
         {

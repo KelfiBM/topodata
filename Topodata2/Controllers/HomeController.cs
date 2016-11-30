@@ -92,7 +92,7 @@ namespace Topodata2.Controllers
             return View("Deslinder");
         }
         [HttpPost]
-        public ActionResult Deslinder(DeslinderViewModel viewModel)
+        public ActionResult Deslinder(DeslindeViewModel viewModel)
         {
             string message;
             viewModel.RegDate = DateTime.Now;

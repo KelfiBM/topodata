@@ -1,5 +1,5 @@
 ﻿@using Topodata2.Classes
-@model Topodata2.Models.Home.HomeSliderVideoViewModel
+@model Topodata2.Models.Home.HomeSlideVideoViewModel
 @{
     ViewBag.Title = "HomeSlide";
     Model.UrlVideo = Youtube.GetWatchFromId(Model.UrlVideo);
@@ -18,7 +18,7 @@
             }
     <div class="headline">
         <h2>Cambiar Video Slide</h2>
-        @using (Html.BeginForm("HomeSliderVideo", "Administration", null, FormMethod.Post, new { @id = "sky-form3", @class = "sky-form" }))
+        @using (Html.BeginForm("HomeSlideVideo", "Administration", null, FormMethod.Post, new { @id = "sky-form3", @class = "sky-form" }))
         {
             <fieldset>
                 <section>

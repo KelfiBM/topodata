@@ -8,9 +8,13 @@ namespace Topodata2.Models.Home
     public class HomeSliderImageSeasonViewModel
     {
         public string ImagePath { get; set; }
+
+        [DataType(DataType.Upload)]
+        [Required(ErrorMessageResourceType = typeof(Displays), ErrorMessageResourceName = "MustPhoto")]
+        public HttpPostedFileBase ImageUpload { get; set; }
     }
 
-    public class HomeSliderVideoViewModel
+    public class HomeSlideVideoViewModel
     {
         [Display(ResourceType = typeof(Displays), Name = "HomeSliderVideoUrlVideo")]
         [DataType(DataType.Url)]
@@ -18,7 +22,7 @@ namespace Topodata2.Models.Home
         public string UrlVideo { get; set; }
     }
 
-    public class DeslinderViewModel
+    public class DeslindeViewModel
     {
         [Display(ResourceType = typeof(Displays), Name = "Nombres")]
         [DataType(DataType.Text)]

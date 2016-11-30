@@ -106,6 +106,15 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no_reply@topodata.com.
+        /// </summary>
+        public static string EmailNo_reply {
+            get {
+                return ResourceManager.GetString("EmailNo_reply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to registrados@topodata.com.
         /// </summary>
         public static string EmailRegistrados {
@@ -187,6 +196,15 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to testt@topodata.com.
+        /// </summary>
+        public static string EmailTestt {
+            get {
+                return ResourceManager.GetString("EmailTestt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mail.topodata.com.
         /// </summary>
         public static string HostEmail {
@@ -210,6 +228,15 @@ namespace Topodata2.resources.Strings {
         public static string HostPortSend {
             get {
                 return ResourceManager.GetString("HostPortSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to topodata.com/Services/Document/.
+        /// </summary>
+        public static string UrlDocument {
+            get {
+                return ResourceManager.GetString("UrlDocument", resourceCulture);
             }
         }
     }

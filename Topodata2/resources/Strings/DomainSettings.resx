@@ -132,6 +132,9 @@
   <data name="EmailInfoPassword" xml:space="preserve">
     <value>Topo.1953</value>
   </data>
+  <data name="EmailNo_reply" xml:space="preserve">
+    <value>no_reply@topodata.com</value>
+  </data>
   <data name="EmailRegistrados" xml:space="preserve">
     <value>registrados@topodata.com</value>
   </data>
@@ -159,6 +162,9 @@
   <data name="EmailSubjectSendSubscribeDone" xml:space="preserve">
     <value>Gracias por Suscribirte a TOPODATA!</value>
   </data>
+  <data name="EmailTestt" xml:space="preserve">
+    <value>testt@topodata.com</value>
+  </data>
   <data name="HostEmail" xml:space="preserve">
     <value>mail.topodata.com</value>
   </data>
@@ -167,5 +173,8 @@
   </data>
   <data name="HostPortSend" xml:space="preserve">
     <value>587</value>
+  </data>
+  <data name="UrlDocument" xml:space="preserve">
+    <value>topodata.com/Services/Document/</value>
   </data>
 </root>

@@ -1,0 +1,28 @@
+﻿@model Topodata2.Models.Home.HomeSliderImageSeasonViewModel
+<div id="add" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Añadir Imagen Temporada</h2>
+    <p>Añadir</p>
+    <br>
+    @using (Html.BeginForm("ImageSeason", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
+    {
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(m => m.ImageUpload)</dt>
+            <dd>
+                <section>
+                    <label class="label">Imagen</label>
+                    <label for="file" class="input input-file">
+                        <div class="button">
+                            @Html.TextBoxFor(m => m.ImageUpload, new { @id = "file", @type = "file", @onchange = "this.parentNode.nextElementSibling.value = this.value" })
+                            Seleccionar
+                        </div>
+                        <input readonly type="text">
+                        @Html.ValidationMessageFor(m => m.ImageUpload)
+                    </label>
+                </section>
+            </dd>
+        </dl>
+        <br>
+        <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
+        <button id="submitButton" class="btn-u" type="submit">Guardar cambios</button>
+    }
+</div>

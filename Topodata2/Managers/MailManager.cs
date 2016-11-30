@@ -7,31 +7,31 @@ using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.UI.WebControls;
 using Topodata2.Classes;
 using Topodata2.Models.Home;
 using Topodata2.Models.User;
 using Topodata2.resources.Strings;
-using WebGrease;
 
 namespace Topodata2.Models.Mail
 {
-    public class MailManager : IDisposable
+    public class MailManager
     {
-        private const int Clientcount = 15;
-        private readonly SmtpClient[] _smtpClients = new SmtpClient[Clientcount + 1];
-        private CancellationTokenSource _cancelToken;
+        //private const int Clientcount = 15;
+        //private readonly SmtpClient[] _smtpClients = new SmtpClient[Clientcount + 1];
+        //private CancellationTokenSource _cancelToken;
 
-        public MailManager()
+        /*public MailManager()
         {
             SetupSmtpClients();
-        }
+        }*/
 
-        ~MailManager()
+        /*~MailManager()
         {
             DisposeSmtpClients();
-        }
+        }*/
 
-        private void SetupSmtpClients()
+        /*private void SetupSmtpClients()
         {
             for (var i = 0; i <= Clientcount; i++)
             {
@@ -52,9 +52,9 @@ namespace Topodata2.Models.Mail
                     // ignored
                 }
             }
-        }
+        }*/
 
-        private void DisposeSmtpClients()
+        /* private void DisposeSmtpClients()
         {
             for (var i = 0; i <= Clientcount; i++)
             {
@@ -67,18 +67,18 @@ namespace Topodata2.Models.Mail
                     //Log Exception
                 }
             }
-        }
+        }*/
 
-        public void CancelEmailRun()
+        /* public void CancelEmailRun()
         {
             _cancelToken.Cancel();
-        }
+        }*/
 
-        private void Send(MailMessage mailMessage)
+        /*private void Send(MailMessage mailMessage)
         {
             using (mailMessage)
             {
-                var gotlocked = false;
+                /#1#*var gotlocked = false;
                 while (!gotlocked)
                 {
                     //Keep looping through all smtp client connections until one becomes available
@@ -88,6 +88,7 @@ namespace Topodata2.Models.Mail
                         try
                         {
                             _smtpClients[i].Send(mailMessage);
+                            mailMessage.Dispose();
                         }
                         finally
                         {
@@ -95,30 +96,81 @@ namespace Topodata2.Models.Mail
                         }
                         gotlocked = true;
                         break;
-                    }
+                    }#2#
                     //Do this to make sure CPU doesn't ramp up to 100%
-                    Thread.Sleep(100);
-                }
+                    /*Thread.Sleep(100);#2#
+                }#1#
+            }
+        }*/
+
+        private static MailMessage MakeMailMessage(MessageType messageType, string subject, string body, IEnumerable<string> to,
+            AlternateView view = null,
+            Attachment[] attachment = null)
+        {
+            var mail = new MailMessage
+            {
+                From = new MailAddress(DomainSettings.EmailInfo),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+                AlternateViews = { view },
+            };
+            switch (messageType)
+            {
+                case MessageType.Mass:
+                    mail.To.Add(DomainSettings.EmailNo_reply);
+                    foreach (var recipient in to)
+                    {
+                        mail.Bcc.Add(recipient);
+                    }
+                    break;
+                case MessageType.Personal:
+                    foreach (var recipient in to)
+                    {
+                        mail.To.Add(recipient);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
+            }
+            
+            if (attachment == null) return mail;
+            foreach (var a in attachment)
+            {
+                mail.Attachments.Add(a);
+            }
+            return mail;
+        }
+
+        private static void Send(MailMessage message)
+        {
+            using (var client = new SmtpClient
+            {
+                Host = DomainSettings.HostEmail,
+                Port = int.Parse(DomainSettings.HostPortSend),
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(DomainSettings.EmailInfo, DomainSettings.EmailInfoPassword),
+                EnableSsl = false
+            })
+            {
+                client.Send(message);
+                //Thread.Sleep(100);
             }
         }
 
-        private void SendMessage(string subject, string body, IEnumerable<string> to, AlternateView view = null,
-            IEnumerable<Attachment> attachment = null)
+        private static void SendMessage(MessageType messageType, string subject, string body, IEnumerable<string> to,
+            AlternateView view = null, Attachment[] attachment = null)
         {
-            var po = new ParallelOptions();
+            /*var po = new ParallelOptions();
             //Create a cancellation token so you can cancel the task.
             _cancelToken = new CancellationTokenSource();
             po.CancellationToken = _cancelToken.Token;
             //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
-            po.MaxDegreeOfParallelism = Environment.ProcessorCount*2;
-            Parallel.ForEach(to, po, recipent =>
-            {
-                Send(MakeMailMessage(subject, body, recipent, view, attachment));
-            });
-
+            po.MaxDegreeOfParallelism = Environment.ProcessorCount*2;*/
+            Send(MakeMailMessage(messageType,subject,body,to,view,attachment));
         }
 
-        private void SendContactUs(ContactUsModel model, ContactUsViewModel viewModel = null)
+        private static void SendContactUs(ContactUsModel model, ContactUsViewModel viewModel = null)
         {
             if (model == null)
             {
@@ -126,9 +178,7 @@ namespace Topodata2.Models.Mail
                 {
                     model = new ContactUsModel
                     {
-                        Email = viewModel.Email,
-                        Nombre = viewModel.Nombre,
-                        Mensaje = viewModel.Mensaje
+                        Email = viewModel.Email, Nombre = viewModel.Nombre, Mensaje = viewModel.Mensaje
                     };
                 }
                 else
@@ -143,14 +193,8 @@ namespace Topodata2.Models.Mail
                 {
                     body = sr.ReadToEnd();
                 }
-                body = string.Format(body,
-                    model.Nombre,
-                    model.Email,
-                    model.Mensaje
-                    );
-                SendMessage(DomainSettings.EmailSubjectSendContactUs,
-                    body,
-                    new[] {DomainSettings.EmailContact});
+                body = string.Format(body, model.Nombre, model.Email, model.Mensaje);
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendContactUs, body, new[] {DomainSettings.EmailContact});
             }
             catch (Exception)
             {
@@ -158,7 +202,7 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private void SendHomeVideoUpload(HomeSliderVideo model, HomeSliderVideoViewModel viewModel = null)
+        private static void SendHomeVideoUpload(HomeSliderVideo model, IReadOnlyCollection<UserModel> to, HomeSlideVideoViewModel viewModel = null)
         {
             if (model == null)
             {
@@ -176,6 +220,9 @@ namespace Topodata2.Models.Mail
             }
             try
             {
+                if (to.Count < 1) return;
+                var emails = to.Select(i => i.Email).ToList();
+
                 string body;
                 using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateHomeVideoAdded)))
                 {
@@ -205,45 +252,30 @@ namespace Topodata2.Models.Mail
                 body = body.Replace("{iconTwitter}", iconTwitter.ContentId);
                 body = body.Replace("{iconYoutube}", iconYoutube.ContentId);
 
-                var view = AlternateView.CreateAlternateViewFromString(body, null,
-                    DomainSettings.EmailAlternativeViewMediaType);
+                /*var ms = new MemoryStream();
+                new FileStream(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault),FileMode.Open,FileAccess.Read).CopyTo(ms);
+                byte[] data = ms.ToArray();*/
+
+                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
                 view.LinkedResources.Add(logo);
                 view.LinkedResources.Add(iconFacebook);
                 view.LinkedResources.Add(iconTwitter);
                 view.LinkedResources.Add(iconYoutube);
 
-                var informedUsers = new List<UserModel>();
-
-                var informed = UserManager.GetAllInformedUsers();
-                if (informed != null)
-                {
-                    informedUsers.AddRange(informed);
-                }
-                informed = UserManager.GetSuscribedInformed();
-                if (informed != null)
-                {
-                    informedUsers.AddRange(informed);
-                }
-                if (informedUsers.Count <= 0) return;
-                var emails = informedUsers.Select(i => i.Email).ToList();
-                SendMessage(DomainSettings.EmailSubjectSendHomeVideoUpload,
-                    body,
-                    emails,
-                    view);
+                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, view);
             }
-            catch
+            catch (Exception e)
             {
                 // ignored
             }
         }
 
-        private void SendSubscribeDone(string email)
+        private static void SendSubscribeDone(string email)
         {
             try
             {
                 string body;
-                using (
-                    var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateSubscribedDoneMin)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateSubscribedDoneMin)))
                 {
                     body = sr.ReadToEnd();
                 }
@@ -259,19 +291,14 @@ namespace Topodata2.Models.Mail
                 body = body.Replace("{imgLogo}", imgLogo.ContentId);
                 body = body.Replace("{img1}", img1.ContentId);
                 body = body.Replace("{url1}", DomainSettings.HostHome);
-                var view = AlternateView.CreateAlternateViewFromString(body, null,
-                    DomainSettings.EmailAlternativeViewMediaType);
+                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
                 view.LinkedResources.Add(imgLogo);
                 view.LinkedResources.Add(img1);
 
-                SendMessage(DomainSettings.EmailSubjectSendSubscribeDone,
-                    body,
-                    new[] {email},
-                    view,
-                    new[]
-                    {
-                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
-                    });
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendSubscribeDone, body, new[] {email}, view, new[]
+                {
+                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
+                });
             }
             catch
             {
@@ -279,44 +306,34 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private void SendRegistrationDoneAdmin(UserModel model, UserViewModel viewModel = null)
+        private static void SendRegistrationDoneAdmin(UserModel model, UserViewModel viewModel = null)
         {
-            if (model == null)
+            /*if (model == null)
             {
                 if (viewModel != null)
                 {
                     model = new UserModel
                     {
-
-                    };
+                    }
                 }
                 else
                 {
                     return;
                 }
-            }
+            }*/
 
             try
             {
                 string body;
-                using (var sr =
-                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUserAdmin)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUserAdmin)))
                 {
                     body = sr.ReadToEnd();
                 }
-                body = string.Format(body,
-                    model.Name,
-                    model.LastName,
-                    model.Email,
-                    model.UserName,
-                    model.RegDate.Date
-                    );
-                SendMessage(DomainSettings.EmailSubjectSendRegistrationDoneAdmin,
-                    body,
-                    new[]
-                    {
-                        DomainSettings.EmailRegistrados
-                    });
+                body = string.Format(body, model.Name, model.LastName, model.Email, model.UserName, model.RegDate.Date);
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendRegistrationDoneAdmin, body, new[]
+                {
+                    DomainSettings.EmailRegistrados
+                });
             }
                 // ReSharper disable once UnusedVariable
             catch (Exception e)
@@ -325,7 +342,7 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private void SendRegistrationDoneUser(UserModel model, UserViewModel viewModel = null)
+        private static void SendRegistrationDoneUser(UserModel model, UserViewModel viewModel = null)
         {
             /*if (model == null)
             {
@@ -358,8 +375,7 @@ namespace Topodata2.Models.Mail
             try
             {
                 string body;
-                using (var sr =
-                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUser)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUser)))
                 {
                     body = sr.ReadToEnd();
                 }
@@ -377,22 +393,14 @@ namespace Topodata2.Models.Mail
                 body = body.Replace("{username}", model.UserName);
                 body = body.Replace("{contra}", model.Password);
 
-                var view = AlternateView.CreateAlternateViewFromString(
-                    body,
-                    null,
-                    DomainSettings.EmailAlternativeViewMediaType);
+                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
                 view.LinkedResources.Add(img0);
                 view.LinkedResources.Add(img1);
 
-                SendMessage(DomainSettings.EmailSubjectSendRegistrationDone,
-                    body,
-                    new[] {model.Email},
-                    view,
-                    new[]
-                    {
-                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
-                    });
-
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendRegistrationDone, body, new[] {model.Email}, view, new[]
+                {
+                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
+                });
             }
                 // ReSharper disable once UnusedVariable
             catch (Exception e)
@@ -401,20 +409,21 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private void SendNewDocumentMessage(DocumentModel model)
+        private static void SendNewDocumentMessage(DocumentModel model, IReadOnlyCollection<UserModel> to )
         {
             try
             {
+                if (to.Count < 1) return;
+
                 string body;
-                using (var sr =
-                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateNewDocumentAdded)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateNewDocumentAdded)))
                 {
                     body = sr.ReadToEnd();
                 }
                 body = body.Replace("{title1}", model.Nombre);
                 body = body.Replace("{categoria1}", model.SubCategoria);
                 body = body.Replace("{descripcion1}", model.Descripcion);
-                body = body.Replace("{urlDocument}", "topodata.com/Services/Document/" + model.Id);
+                body = body.Replace("{urlDocument}", DomainSettings.UrlDocument + model.Id);
 
                 var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
                 {
@@ -428,33 +437,15 @@ namespace Topodata2.Models.Mail
                 body = body.Replace("{img0}", img0.ContentId);
                 body = body.Replace("{img1}", img1.ContentId);
 
-                var view = AlternateView.CreateAlternateViewFromString(body, null,
-                    DomainSettings.EmailAlternativeViewMediaType);
+                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
                 view.LinkedResources.Add(img0);
                 view.LinkedResources.Add(img1);
 
-                var informedUsers = new List<UserModel>();
-
-                var informed = UserManager.GetAllInformedUsers();
-                if (informed != null)
+                var emails = to.Select(informedUser => informedUser.Email).ToList();
+                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, view, new[]
                 {
-                    informedUsers.AddRange(informed);
-                }
-                informed = UserManager.GetSuscribedInformed();
-                if (informed != null)
-                {
-                    informedUsers.AddRange(informed);
-                }
-                if (informedUsers.Count <= 0) return;
-                var emails = informedUsers.Select(informedUser => informedUser.Email).ToList();
-                SendMessage(DomainSettings.EmailSubjectSendNewDocumentMessage,
-                    body,
-                    emails,
-                    view,
-                    new[]
-                    {
-                        new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
-                    });
+                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
+                });
             }
             catch (Exception e)
             {
@@ -462,7 +453,7 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private void SendDeslinderRegistrationUser(DeslinderModel model, DeslinderViewModel viewModel = null)
+        private static void SendDeslinderRegistrationUser(DeslinderModel model, DeslindeViewModel viewModel = null)
         {
             if (model == null)
             {
@@ -470,18 +461,7 @@ namespace Topodata2.Models.Mail
                 {
                     model = new DeslinderModel
                     {
-                        Apellido = viewModel.Apellido,
-                        Area = viewModel.Area,
-                        Correo = viewModel.Correo,
-                        Movil = viewModel.Movil,
-                        Municipio = viewModel.Municipio,
-                        NoDistrito = viewModel.NoDistrito,
-                        NoMatrical = viewModel.NoMatrical,
-                        Nombre = viewModel.Nombre,
-                        NoParsela = viewModel.NoParsela,
-                        Provincia = viewModel.Provincia,
-                        Telefono = viewModel.Telefono,
-                        Ubicacion = viewModel.Ubicacion
+                        Apellido = viewModel.Apellido, Area = viewModel.Area, Correo = viewModel.Correo, Movil = viewModel.Movil, Municipio = viewModel.Municipio, NoDistrito = viewModel.NoDistrito, NoMatrical = viewModel.NoMatrical, Nombre = viewModel.Nombre, NoParsela = viewModel.NoParsela, Provincia = viewModel.Provincia, Telefono = viewModel.Telefono, Ubicacion = viewModel.Ubicacion
                     };
                 }
                 else
@@ -492,8 +472,7 @@ namespace Topodata2.Models.Mail
             try
             {
                 string body;
-                using (var sr =
-                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredUser)))
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredUser)))
                 {
                     body = sr.ReadToEnd();
                 }
@@ -511,17 +490,11 @@ namespace Topodata2.Models.Mail
                 body = body.Replace("{img1}", img1.ContentId);
                 body = body.Replace("{img2}", img2.ContentId);
 
-                var view = AlternateView.CreateAlternateViewFromString(
-                    body,
-                    null,
-                    DomainSettings.EmailAlternativeViewMediaType);
+                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
                 view.LinkedResources.Add(img1);
                 view.LinkedResources.Add(img2);
 
-                SendMessage(DomainSettings.EmailSubjectSendDeslindeRegistrationUser,
-                    body,
-                    new[] {model.Correo},
-                    view);
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendDeslindeRegistrationUser, body, new[] {model.Correo}, view);
             }
                 // ReSharper disable once UnusedVariable
             catch (Exception e)
@@ -530,7 +503,7 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private void SendDeslinderRegistrationAdmin(DeslinderModel model, DeslinderViewModel viewModel = null)
+        private static void SendDeslinderRegistrationAdmin(DeslinderModel model, DeslindeViewModel viewModel = null)
         {
             if (model == null)
             {
@@ -538,56 +511,26 @@ namespace Topodata2.Models.Mail
                 {
                     model = new DeslinderModel
                     {
-                        Apellido = viewModel.Apellido,
-                        Area = viewModel.Area,
-                        Correo = viewModel.Correo,
-                        Movil = viewModel.Movil,
-                        Municipio = viewModel.Municipio,
-                        NoDistrito = viewModel.NoDistrito,
-                        NoMatrical = viewModel.NoMatrical,
-                        Nombre = viewModel.Nombre,
-                        NoParsela = viewModel.NoParsela,
-                        Provincia = viewModel.Provincia,
-                        Telefono = viewModel.Telefono,
-                        Ubicacion = viewModel.Ubicacion
+                        Apellido = viewModel.Apellido, Area = viewModel.Area, Correo = viewModel.Correo, Movil = viewModel.Movil, Municipio = viewModel.Municipio, NoDistrito = viewModel.NoDistrito, NoMatrical = viewModel.NoMatrical, Nombre = viewModel.Nombre, NoParsela = viewModel.NoParsela, Provincia = viewModel.Provincia, Telefono = viewModel.Telefono, Ubicacion = viewModel.Ubicacion
                     };
                 }
                 else
                 {
                     return;
                 }
-
             }
             try
             {
                 string body;
-                using (var sr =
-                    new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredAdmin))
-                    )
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredAdmin)))
                 {
                     body = sr.ReadToEnd();
                 }
-                body = string.Format(body,
-                    model.Nombre,
-                    model.Apellido,
-                    model.Telefono,
-                    model.Movil,
-                    model.Correo,
-                    model.Ubicacion,
-                    model.NoMatrical,
-                    model.NoParsela,
-                    model.NoDistrito,
-                    model.Municipio,
-                    model.Provincia,
-                    model.Area,
-                    model.RegDate.Date
-                    );
-                SendMessage(DomainSettings.EmailSubjectSendDeslindeRegistrationAdmin,
-                    body,
-                    new[]
-                    {
-                        DomainSettings.EmailDeslinde
-                    });
+                body = string.Format(body, model.Nombre, model.Apellido, model.Telefono, model.Movil, model.Correo, model.Ubicacion, model.NoMatrical, model.NoParsela, model.NoDistrito, model.Municipio, model.Provincia, model.Area, model.RegDate.Date);
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendDeslindeRegistrationAdmin, body, new[]
+                {
+                    DomainSettings.EmailDeslinde
+                });
             }
             catch (Exception e)
             {
@@ -595,36 +538,14 @@ namespace Topodata2.Models.Mail
             }
         }
 
-        private static MailMessage MakeMailMessage(string subject, string body, string to, AlternateView view = null,
-            IEnumerable<Attachment> attachment = null)
+        private static void SendMailThread(MailType mailType, object model)
         {
-            var mail = new MailMessage
-            {
-                From = new MailAddress(DomainSettings.EmailInfo),
-                Subject = subject,
-                Body = body,
-                To = {to},
-                IsBodyHtml = true
-            };
-            if (view != null)
-            {
-                mail.AlternateViews.Add(view);
-            }
-            if (attachment == null) return mail;
-            foreach (var a in attachment)
-            {
-                mail.Attachments.Add(a);
-            }
-            return mail;
-        }
-
-        public MailManager SendMail(MailType mailType, object model)
-        {
+            //var type = mailType is MailType ? (MailType) mailType : MailType.DeslinderRegistrationAdmin;
             switch (mailType)
             {
                 case MailType.DeslinderRegistrationAdmin:
                     var dRegistrationAdmin = model as DeslinderModel;
-                    var dRegistrationAdminView = model as DeslinderViewModel;
+                    var dRegistrationAdminView = model as DeslindeViewModel;
                     if (dRegistrationAdmin != null || dRegistrationAdminView != null)
                     {
                         SendDeslinderRegistrationAdmin(dRegistrationAdmin, dRegistrationAdminView);
@@ -632,7 +553,7 @@ namespace Topodata2.Models.Mail
                     break;
                 case MailType.DeslinderRegistrationUser:
                     var dRegistrationUser = model as DeslinderModel;
-                    var dRegistrationUserView = model as DeslinderViewModel;
+                    var dRegistrationUserView = model as DeslindeViewModel;
                     if (dRegistrationUser != null || dRegistrationUserView != null)
                     {
                         SendDeslinderRegistrationUser(dRegistrationUser, dRegistrationUserView);
@@ -642,7 +563,13 @@ namespace Topodata2.Models.Mail
                     var document = model as DocumentModel;
                     if (document != null)
                     {
-                        SendNewDocumentMessage(document);
+                        var userList = UserManager.GetAllInformedSeparated(150);
+                        foreach (var users in userList)
+                        {
+                            SendNewDocumentMessage(document, users);
+                            Thread.Sleep(4200000);
+                        }
+
                     }
                     break;
                 case MailType.RegistrationDoneUser:
@@ -668,10 +595,15 @@ namespace Topodata2.Models.Mail
                     break;
                 case MailType.HomeVideoUpload:
                     var videoUpload = model as HomeSliderVideo;
-                    var videoUploadView = model as HomeSliderVideoViewModel;
+                    var videoUploadView = model as HomeSlideVideoViewModel;
                     if (videoUpload != null || videoUploadView != null)
                     {
-                        SendHomeVideoUpload(videoUpload,videoUploadView);
+                        var userList = UserManager.GetAllInformedSeparated(150);
+                        foreach (var users in userList)
+                        {
+                            SendHomeVideoUpload(videoUpload, users, videoUploadView);
+                            //Thread.Sleep(4200000);
+                        }
                     }
                     break;
                 case MailType.ContactUs:
@@ -679,20 +611,25 @@ namespace Topodata2.Models.Mail
                     var contactUsView = model as ContactUsViewModel;
                     if (contactus != null || contactUsView != null)
                     {
-                        SendContactUs(contactus,contactUsView);
+                        SendContactUs(contactus, contactUsView);
                     }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mailType), mailType, null);
             }
+        }
+
+        public MailManager SendMail(MailType mailType, object model)
+        {
+           // var thread = new Thread(() => SendMailThread(mailType,model));
+            //thread.Start();
+            SendMailThread(mailType,model);
             return this;
         }
 
-        public void Dispose()
+        /* public void Dispose()
         {
             DisposeSmtpClients();
-        }
-
-
+        }*/
     }
 }

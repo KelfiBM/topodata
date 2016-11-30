@@ -226,7 +226,7 @@
     <Compile Include="Models\Home\HomeModels.cs" />
     <Compile Include="Models\Home\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Mail\MailManager.cs" />
+    <Compile Include="Managers\MailManager.cs" />
     <Compile Include="Models\Mail\MailModel.cs" />
     <Compile Include="Models\Mail\MailType.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -822,7 +822,7 @@
     <Content Include="Views\Administration\Index.cshtml" />
     <Content Include="Views\Administration\HomeText.cshtml" />
     <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
-    <Content Include="Views\Administration\HomeSlide\HomeSliderVideo.cshtml" />
+    <Content Include="Views\Administration\HomeSlide\HomeSlideVideo.cshtml" />
     <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
@@ -854,6 +854,8 @@
     <Content Include="Views\Home\Index\Index.cshtml" />
     <Content Include="Views\Home\About\_TextHome.cshtml" />
     <Content Include="Views\Home\About\_Sectores.cshtml" />
+    <Content Include="Views\Administration\ImageSeason\ImageSeason.cshtml" />
+    <Content Include="Views\Administration\ImageSeason\_AddImageSeason.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
@@ -861,6 +863,7 @@
     <Folder Include="EmailTemplates\img\brands\" />
     <Folder Include="EmailTemplates\img\logo\" />
     <Folder Include="resources\css\plugins\" />
+    <Folder Include="resources\img\season\" />
     <Folder Include="resources\js\custom\" />
   </ItemGroup>
   <ItemGroup>

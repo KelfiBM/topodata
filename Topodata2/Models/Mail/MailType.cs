@@ -11,4 +11,10 @@
         HomeVideoUpload,
         ContactUs
     }
+
+    public enum MessageType
+    {
+        Mass,
+        Personal
+    }
 }
