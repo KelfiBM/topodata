@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using Topodata2.Models.Mail;
 using Topodata2.Models.User;
@@ -9,14 +10,26 @@ namespace Topodata2.Managers
 {
     public class TestManager
     {
+        public static void SendRDoneUser(DateTime fecha)
+        {
+            var thread = new Thread(() => SendRegistrationDoneUser(fecha));
+            thread.Start();
+        }
+
         public static bool SendRegistrationDoneUser(DateTime fecha)
         {
+
             var result = false;
             try
             {
+                var count = 0;
                 foreach (var userModel in UserManager.GetAllUsers(fecha))
                 {
                     new MailManager().SendMail(MailType.RegistrationDoneUser, userModel);
+                    count++;
+                    if(count < 100) continue;
+                    count = 0;
+                    Thread.Sleep(4200000);
                 }
                 result = true;
             }

@@ -5,15 +5,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.UI.WebControls;
 using Topodata2.Classes;
+using Topodata2.Models;
 using Topodata2.Models.Home;
+using Topodata2.Models.Mail;
 using Topodata2.Models.User;
 using Topodata2.resources.Strings;
 
-namespace Topodata2.Models.Mail
+namespace Topodata2.Managers
 {
     public class MailManager
     {
@@ -262,7 +262,7 @@ namespace Topodata2.Models.Mail
                 view.LinkedResources.Add(iconTwitter);
                 view.LinkedResources.Add(iconYoutube);
 
-                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, view);
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, view);
             }
             catch (Exception e)
             {
@@ -442,7 +442,7 @@ namespace Topodata2.Models.Mail
                 view.LinkedResources.Add(img1);
 
                 var emails = to.Select(informedUser => informedUser.Email).ToList();
-                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, view, new[]
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, view, new[]
                 {
                     new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
                 });
@@ -563,10 +563,14 @@ namespace Topodata2.Models.Mail
                     var document = model as DocumentModel;
                     if (document != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(150);
+                        var userList = UserManager.GetAllInformedSeparated(1);
+                        var count = 0;
                         foreach (var users in userList)
                         {
                             SendNewDocumentMessage(document, users);
+                            count++;
+                            if (count < 150) continue;
+                            count = 0;
                             Thread.Sleep(4200000);
                         }
 
@@ -598,11 +602,15 @@ namespace Topodata2.Models.Mail
                     var videoUploadView = model as HomeSlideVideoViewModel;
                     if (videoUpload != null || videoUploadView != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(150);
+                        var userList = UserManager.GetAllInformedSeparated(1);
+                        var count = 0;
                         foreach (var users in userList)
                         {
                             SendHomeVideoUpload(videoUpload, users, videoUploadView);
-                            //Thread.Sleep(4200000);
+                            count++;
+                            if (count < 150) continue;
+                            count = 0;
+                            Thread.Sleep(4200000);
                         }
                     }
                     break;
@@ -621,9 +629,9 @@ namespace Topodata2.Models.Mail
 
         public MailManager SendMail(MailType mailType, object model)
         {
-           // var thread = new Thread(() => SendMailThread(mailType,model));
-            //thread.Start();
-            SendMailThread(mailType,model);
+            var thread = new Thread(() => SendMailThread(mailType,model));
+            thread.Start();
+            //SendMailThread(mailType,model);
             return this;
         }
 

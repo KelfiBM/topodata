@@ -267,7 +267,7 @@ namespace Topodata2.Models.User
             return result;
         }
 
-        public static List<UserModel> GetAllInformedUsers()
+        public static List<UserModel> GetInformedUsers()
         {
             List<UserModel> result = null;
             var con = new SqlConnection(Connection);
@@ -314,10 +314,26 @@ namespace Topodata2.Models.User
             return result;
         }
 
+        public static List<UserModel> GetAllInformed()
+        {
+            var informed = new List<UserModel>();
+            var informedUsers = GetInformedUsers();
+            if (informedUsers != null)
+            {
+                informed.AddRange(informedUsers);
+            }
+            var informedSubscribed = GetSuscribedInformed();
+            if (informedSubscribed != null)
+            {
+                informed.AddRange(informedSubscribed);
+            }
+            return informed.Count < 1 ? null : informed;
+        }
+
         public static List<List<UserModel>> GetAllInformedSeparated(int count)
         {
             var informed = new List<UserModel>();
-            var informedUsers = GetAllInformedUsers();
+            var informedUsers = GetInformedUsers();
             if (informedUsers != null)
             {
                 informed.AddRange(informedUsers);
