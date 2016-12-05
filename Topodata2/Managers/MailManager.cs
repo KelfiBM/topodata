@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Threading;
 using System.Web;
+using SparkPost;
 using Topodata2.Classes;
 using Topodata2.Models;
 using Topodata2.Models.Home;
@@ -103,6 +103,7 @@ namespace Topodata2.Managers
             }
         }*/
 
+/*
         private static MailMessage MakeMailMessage(MessageType messageType, string subject, string body, IEnumerable<string> to,
             AlternateView view = null,
             Attachment[] attachment = null)
@@ -141,10 +142,71 @@ namespace Topodata2.Managers
             }
             return mail;
         }
+*/
 
-        private static void Send(MailMessage message)
+        private static Transmission MakeMailTransmission(MessageType messageType, string subject, string body,
+            IEnumerable<string> to, IList<InlineImage> inlineImages = null, IList<Attachment> attachments = null)
         {
-            using (var client = new SmtpClient
+            var result = new Transmission
+            {
+                Content =
+                {
+                    Html = body,
+                    Subject = subject,
+                    From = {Email = DomainSettings.EmailInfo}
+                }
+            };
+            if (inlineImages != null)
+            {
+                result.Content.InlineImages = inlineImages;
+            }
+            if (attachments != null)
+            {
+                result.Content.Attachments = attachments;
+            }
+            switch (messageType)
+            {
+                case MessageType.Mass:
+                    result.Recipients.Add(new Recipient
+                    {
+                        Address = new Address {Email = DomainSettings.EmailNo_reply}
+                    });
+                    foreach (var recipient in to)
+                    {
+                        result.Recipients.Add(new Recipient
+                        {
+                            Address = new Address
+                            {
+                                Email = recipient,
+                                HeaderTo = DomainSettings.EmailNo_reply
+                            }
+                        });
+                    }
+                    break;
+                case MessageType.Personal:
+                    foreach (var recipient in to)
+                    {
+                        result.Recipients.Add(new Recipient
+                        {
+                            Address = new Address
+                            {
+                                Email = recipient
+                            }
+                        });
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
+            }
+            return result;
+        }
+
+        private static void Send(Transmission transmission)
+        {
+            var client = new Client(DomainSettings.SparkPostKey);
+            client.CustomSettings.SendingMode = SendingModes.Async;
+            client.Transmissions.Send(transmission);
+            /*using (var client = new SmtpClient
             {
                 Host = DomainSettings.HostEmail,
                 Port = int.Parse(DomainSettings.HostPortSend),
@@ -155,11 +217,11 @@ namespace Topodata2.Managers
             {
                 client.Send(message);
                 //Thread.Sleep(100);
-            }
+            }*/
         }
 
         private static void SendMessage(MessageType messageType, string subject, string body, IEnumerable<string> to,
-            AlternateView view = null, Attachment[] attachment = null)
+            IList<InlineImage> inlineImages = null, IList<Attachment> attachments = null)
         {
             /*var po = new ParallelOptions();
             //Create a cancellation token so you can cancel the task.
@@ -167,7 +229,7 @@ namespace Topodata2.Managers
             po.CancellationToken = _cancelToken.Token;
             //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
             po.MaxDegreeOfParallelism = Environment.ProcessorCount*2;*/
-            Send(MakeMailMessage(messageType,subject,body,to,view,attachment));
+            Send(MakeMailTransmission(messageType,subject,body,to,inlineImages,attachments));
         }
 
         private static void SendContactUs(ContactUsModel model, ContactUsViewModel viewModel = null)
@@ -202,68 +264,60 @@ namespace Topodata2.Managers
             }
         }
 
-        private static void SendHomeVideoUpload(HomeSliderVideo model, IReadOnlyCollection<UserModel> to, HomeSlideVideoViewModel viewModel = null)
+        private static void SendHomeVideoUpload(HomeSliderVideo model, IReadOnlyCollection<UserModel> to,
+            HomeSlideVideoViewModel viewModel = null)
         {
             if (model == null)
             {
                 if (viewModel != null)
                 {
-                    model = new HomeSliderVideo
-                    {
-                        UrlVideo = viewModel.UrlVideo,
-                    };
+                    model = new HomeSliderVideo {UrlVideo = viewModel.UrlVideo};
                 }
-                else
-                {
-                    return;
-                }
+                else return;
             }
             try
             {
                 if (to.Count < 1) return;
-                var emails = to.Select(i => i.Email).ToList();
-
+                var images = new List<InlineImage>
+                {
+                    new InlineImage
+                    {
+                        Data = MailParameters.Logo76x72,
+                        Type = MailParameters.ImageTypeGif,
+                        Name = MailParameters.Logo76x72Name
+                    },
+                    new InlineImage
+                    {
+                        Data = MailParameters.IconFacebookHomeVideo,
+                        Type = MailParameters.ImageTyePng,
+                        Name = MailParameters.IconFacebookHomeVideoName
+                    },
+                    new InlineImage
+                    {
+                        Data = MailParameters.IconTwitterHomeVideo,
+                        Type = MailParameters.ImageTyePng,
+                        Name = MailParameters.IconTwitterHomeVideoName
+                    },
+                    new InlineImage
+                    {
+                        Data = MailParameters.IconYoutubeHomeVideo,
+                        Type = MailParameters.ImageTyePng,
+                        Name = MailParameters.IconYoutubeHomeVideoName
+                    }
+                };
                 string body;
                 using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateHomeVideoAdded)))
                 {
                     body = sr.ReadToEnd();
                 }
-
-                var logo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconFacebook = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconFacebook))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconTwitter = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconTwitter))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconYoutube = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconYoutube))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{logo}", logo.ContentId);
                 body = body.Replace("{imgVideo}", Youtube.GetImageFromId(model.UrlVideo));
-                body = body.Replace("{iconFacebook}", iconFacebook.ContentId);
-                body = body.Replace("{iconTwitter}", iconTwitter.ContentId);
-                body = body.Replace("{iconYoutube}", iconYoutube.ContentId);
-
+                var emails = to.Select(i => i.Email).ToList();
                 /*var ms = new MemoryStream();
                 new FileStream(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault),FileMode.Open,FileAccess.Read).CopyTo(ms);
                 byte[] data = ms.ToArray();*/
-
-                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(logo);
-                view.LinkedResources.Add(iconFacebook);
-                view.LinkedResources.Add(iconTwitter);
-                view.LinkedResources.Add(iconYoutube);
-
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, view);
+                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, images);
             }
+                // ReSharper disable once UnusedVariable
             catch (Exception e)
             {
                 // ignored
@@ -274,31 +328,37 @@ namespace Topodata2.Managers
         {
             try
             {
+                var images = new List<InlineImage>
+                {
+                    new InlineImage
+                    {
+                        Data = MailParameters.Logo100x95,
+                        Type = MailParameters.ImageTypeGif,
+                        Name = MailParameters.Logo100x95Name
+                    },
+                    new InlineImage
+                    {
+                        Data = MailParameters.SubscribeDone,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.SubscribeDoneName
+                    }
+                };
+                var attachments = new List<Attachment>
+                {
+                    new Attachment
+                    {
+                        Data = MailParameters.VolanteTopogis,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.VolanteTopogisName
+                    }
+                };
                 string body;
                 using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateSubscribedDoneMin)))
                 {
                     body = sr.ReadToEnd();
                 }
-                var imgLogo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgEmailSubscribeDone))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{imgLogo}", imgLogo.ContentId);
-                body = body.Replace("{img1}", img1.ContentId);
                 body = body.Replace("{url1}", DomainSettings.HostHome);
-                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(imgLogo);
-                view.LinkedResources.Add(img1);
-
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendSubscribeDone, body, new[] {email}, view, new[]
-                {
-                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
-                });
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendSubscribeDone, body, new[] {email}, images, attachments);
             }
             catch
             {
@@ -306,6 +366,7 @@ namespace Topodata2.Managers
             }
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private static void SendRegistrationDoneAdmin(UserModel model, UserViewModel viewModel = null)
         {
             /*if (model == null)
@@ -342,6 +403,7 @@ namespace Topodata2.Managers
             }
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private static void SendRegistrationDoneUser(UserModel model, UserViewModel viewModel = null)
         {
             /*if (model == null)
@@ -374,33 +436,39 @@ namespace Topodata2.Managers
 
             try
             {
+                var images = new List<InlineImage>
+                {
+                    new InlineImage
+                    {
+                        Data = MailParameters.Logo100x95,
+                        Type = MailParameters.ImageTypeGif,
+                        Name = MailParameters.Logo100x95Name
+                    },
+                    new InlineImage
+                    {
+                        Data = MailParameters.RegistrationDoneUser,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.RegistrationDoneUserName
+                    }
+                };
+                var attachments = new List<Attachment>
+                {
+                    new Attachment
+                    {
+                        Data = MailParameters.VolanteTopogis,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.VolanteTopogisName
+                    }
+                };
                 string body;
                 using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateRegistrationDoneUser)))
                 {
                     body = sr.ReadToEnd();
                 }
-                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgEmailArchitect))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{img0}", img0.ContentId);
-                body = body.Replace("{img1}", img1.ContentId);
                 body = body.Replace("{username}", model.UserName);
                 body = body.Replace("{contra}", model.Password);
-
-                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(img0);
-                view.LinkedResources.Add(img1);
-
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendRegistrationDone, body, new[] {model.Email}, view, new[]
-                {
-                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
-                });
+                
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendRegistrationDone, body, new[] {model.Email}, images, attachments);
             }
                 // ReSharper disable once UnusedVariable
             catch (Exception e)
@@ -414,7 +482,39 @@ namespace Topodata2.Managers
             try
             {
                 if (to.Count < 1) return;
-
+                string imageDocument;
+                using (var image = Image.FromFile(HttpContext.Current.Server.MapPath("~" + model.ImagePath)))
+                {
+                    using (var memory = new MemoryStream())
+                    {
+                        image.Save(memory,image.RawFormat);
+                        imageDocument = Convert.ToBase64String(memory.ToArray(), Base64FormattingOptions.None);
+                    }
+                }
+                var images = new List<InlineImage>
+                {
+                    new InlineImage
+                    {
+                        Data = MailParameters.Logo100x95,
+                        Type = MailParameters.ImageTypeGif,
+                        Name = MailParameters.Logo100x95Name
+                    },
+                    new InlineImage
+                    {
+                        Data = imageDocument,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.NewDocumentName
+                    }
+                };
+                var attachments = new List<Attachment>
+                {
+                    new Attachment
+                    {
+                        Data = MailParameters.VolanteTopogis,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.VolanteTopogisName
+                    }
+                };
                 string body;
                 using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateNewDocumentAdded)))
                 {
@@ -424,29 +524,11 @@ namespace Topodata2.Managers
                 body = body.Replace("{categoria1}", model.SubCategoria);
                 body = body.Replace("{descripcion1}", model.Descripcion);
                 body = body.Replace("{urlDocument}", DomainSettings.UrlDocument + model.Id);
-
-                var img0 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath("~" + model.ImagePath))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{img0}", img0.ContentId);
-                body = body.Replace("{img1}", img1.ContentId);
-
-                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(img0);
-                view.LinkedResources.Add(img1);
-
+                
                 var emails = to.Select(informedUser => informedUser.Email).ToList();
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, view, new[]
-                {
-                    new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
-                });
+                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, images, attachments);
             }
+                // ReSharper disable once UnusedVariable
             catch (Exception e)
             {
                 //Ignore
@@ -471,35 +553,33 @@ namespace Topodata2.Managers
             }
             try
             {
+                var images = new List<InlineImage>
+                {
+                    new InlineImage
+                    {
+                        Data = MailParameters.Logo100x95,
+                        Type = MailParameters.ImageTypeGif,
+                        Name = MailParameters.Logo100x95Name
+                    },
+                    new InlineImage
+                    {
+                        Data = MailParameters.DeslindePeople,
+                        Type = MailParameters.ImageTypeJpeg,
+                        Name = MailParameters.DeslindePeopleName
+                    }
+                };
                 string body;
                 using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(Paths.EmailTemplateDeslindeUserRegisteredUser)))
                 {
                     body = sr.ReadToEnd();
                 }
                 body = body.Replace("{modelCorreo}", model.Correo);
-
-                var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var img2 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgDeslindePeople))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-
-                body = body.Replace("{img1}", img1.ContentId);
-                body = body.Replace("{img2}", img2.ContentId);
-
-                var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
-                view.LinkedResources.Add(img1);
-                view.LinkedResources.Add(img2);
-
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendDeslindeRegistrationUser, body, new[] {model.Correo}, view);
+                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendDeslindeRegistrationUser, body, new[] {model.Correo}, images);
             }
                 // ReSharper disable once UnusedVariable
             catch (Exception e)
             {
-                //Ignore
+                //ignored
             }
         }
 
@@ -532,6 +612,7 @@ namespace Topodata2.Managers
                     DomainSettings.EmailDeslinde
                 });
             }
+                // ReSharper disable once UnusedVariable
             catch (Exception e)
             {
                 //Ignore
@@ -540,7 +621,6 @@ namespace Topodata2.Managers
 
         private static void SendMailThread(MailType mailType, object model)
         {
-            //var type = mailType is MailType ? (MailType) mailType : MailType.DeslinderRegistrationAdmin;
             switch (mailType)
             {
                 case MailType.DeslinderRegistrationAdmin:
@@ -563,17 +643,8 @@ namespace Topodata2.Managers
                     var document = model as DocumentModel;
                     if (document != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(1);
-                        var count = 0;
-                        foreach (var users in userList)
-                        {
-                            SendNewDocumentMessage(document, users);
-                            count++;
-                            if (count < 150) continue;
-                            count = 0;
-                            Thread.Sleep(4200000);
-                        }
-
+                        var userList = UserManager.GetAllInformed();
+                        SendNewDocumentMessage(document, userList);
                     }
                     break;
                 case MailType.RegistrationDoneUser:
@@ -602,16 +673,8 @@ namespace Topodata2.Managers
                     var videoUploadView = model as HomeSlideVideoViewModel;
                     if (videoUpload != null || videoUploadView != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(1);
-                        var count = 0;
-                        foreach (var users in userList)
-                        {
-                            SendHomeVideoUpload(videoUpload, users, videoUploadView);
-                            count++;
-                            if (count < 150) continue;
-                            count = 0;
-                            Thread.Sleep(4200000);
-                        }
+                        var userList = UserManager.GetAllInformed();
+                        SendHomeVideoUpload(videoUpload, userList, videoUploadView);
                     }
                     break;
                 case MailType.ContactUs:
@@ -629,9 +692,7 @@ namespace Topodata2.Managers
 
         public MailManager SendMail(MailType mailType, object model)
         {
-            var thread = new Thread(() => SendMailThread(mailType,model));
-            thread.Start();
-            //SendMailThread(mailType,model);
+            SendMailThread(mailType, model);
             return this;
         }
 

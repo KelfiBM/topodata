@@ -232,6 +232,15 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
+        /// </summary>
+        public static string SparkPostKey {
+            get {
+                return ResourceManager.GetString("SparkPostKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to topodata.com/Services/Document/.
         /// </summary>
         public static string UrlDocument {

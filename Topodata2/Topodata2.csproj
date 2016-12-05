@@ -82,6 +82,10 @@
       <HintPath>..\packages\RecaptchaNet.2.1.0\lib\net45\Recaptcha.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SparkPost, Version=1.9.3.20487, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SparkPost.1.9.3\lib\net45\SparkPost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -261,6 +265,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>General.resx</DependentUpon>
     </Compile>
+    <Compile Include="resources\Strings\MailParameters.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailParameters.resx</DependentUpon>
+    </Compile>
     <Compile Include="resources\Strings\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -388,6 +397,10 @@
     <Content Include="resources\img\icons\volantetopogis.jpg" />
     <Content Include="resources\img\icons\volantetopogis2.jpg" />
     <Content Include="resources\img\logoDefault.png" />
+    <Content Include="resources\img\Logos\logoDefault.png" />
+    <Content Include="resources\img\Logos\logoDefault76x72.jpg" />
+    <Content Include="resources\img\Logos\logoDefault76x72.png" />
+    <Content Include="resources\img\Logos\logoDefault91x87.png" />
     <Content Include="resources\img\mockup\imac_t.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
     <Content Include="resources\img\mockup\planning2.jpg" />
@@ -891,6 +904,10 @@
     <EmbeddedResource Include="resources\Strings\General.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>General.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Strings\MailParameters.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailParameters.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="resources\Strings\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
