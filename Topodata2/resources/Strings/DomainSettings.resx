@@ -174,6 +174,7 @@
   <data name="HostPortSend" xml:space="preserve">
     <value>587</value>
   </data>
+<<<<<<< HEAD
   <data name="HostSparkpostAuthentication" xml:space="preserve">
     <value>AUTH LOGIN</value>
   </data>
@@ -192,6 +193,11 @@
   <data name="HostSparkpostUsername" xml:space="preserve">
     <value>SMTP_Injection</value>
   </data>
+=======
+  <data name="SparkPostKey" xml:space="preserve">
+    <value>59b70763f9429e4e54295dd07ad651727f6618f1</value>
+  </data>
+>>>>>>> f9b10f5fbc692958b5ac9a89549a45da2159381b
   <data name="UrlDocument" xml:space="preserve">
     <value>topodata.com/Services/Document/</value>
   </data>

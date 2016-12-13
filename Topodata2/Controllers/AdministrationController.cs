@@ -368,15 +368,12 @@ namespace Topodata2.Controllers
             {
                 string[] validImageTypes =
                 {
-                    "image/gif",
-                    "image/jpeg",
-                    "image/pjpeg",
-                    "image/png"
+                    "image/jpeg"
                 };
 
                 if (!validImageTypes.Contains(model.ImageUpload.ContentType))
                 {
-                    errorMessage = "Tiene que seleccionar una imagen de formato GIF, JPG o PNG";
+                    errorMessage = "Tiene que seleccionar una imagen de formato JPG";
                     TempData["OperationStatus"] = "Error";
                     TempData["OperationMessage"] = errorMessage;
 

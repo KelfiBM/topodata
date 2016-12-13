@@ -232,6 +232,7 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+<<<<<<< HEAD
         ///   Looks up a localized string similar to AUTH LOGIN.
         /// </summary>
         public static string HostSparkpostAuthentication {
@@ -282,6 +283,13 @@ namespace Topodata2.resources.Strings {
         public static string HostSparkpostUsername {
             get {
                 return ResourceManager.GetString("HostSparkpostUsername", resourceCulture);
+=======
+        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
+        /// </summary>
+        public static string SparkPostKey {
+            get {
+                return ResourceManager.GetString("SparkPostKey", resourceCulture);
+>>>>>>> f9b10f5fbc692958b5ac9a89549a45da2159381b
             }
         }
         
