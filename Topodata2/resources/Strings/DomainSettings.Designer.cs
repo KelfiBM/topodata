@@ -232,6 +232,60 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AUTH LOGIN.
+        /// </summary>
+        public static string HostSparkpostAuthentication {
+            get {
+                return ResourceManager.GetString("HostSparkpostAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STARTTLS.
+        /// </summary>
+        public static string HostSparkpostEncryption {
+            get {
+                return ResourceManager.GetString("HostSparkpostEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
+        /// </summary>
+        public static string HostSparkpostKey {
+            get {
+                return ResourceManager.GetString("HostSparkpostKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to smtp.sparkpostmail.com.
+        /// </summary>
+        public static string HostSparkpostMail {
+            get {
+                return ResourceManager.GetString("HostSparkpostMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 587.
+        /// </summary>
+        public static string HostSparkpostPortSend {
+            get {
+                return ResourceManager.GetString("HostSparkpostPortSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMTP_Injection.
+        /// </summary>
+        public static string HostSparkpostUsername {
+            get {
+                return ResourceManager.GetString("HostSparkpostUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to topodata.com/Services/Document/.
         /// </summary>
         public static string UrlDocument {

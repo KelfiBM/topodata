@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using Topodata2.Classes;
 using Topodata2.Models;
@@ -144,18 +145,22 @@ namespace Topodata2.Managers
 
         private static void Send(MailMessage message)
         {
-            using (var client = new SmtpClient
+            var t = Task.Run(async () =>
             {
-                Host = DomainSettings.HostEmail,
-                Port = int.Parse(DomainSettings.HostPortSend),
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(DomainSettings.EmailInfo, DomainSettings.EmailInfoPassword),
-                EnableSsl = false
-            })
-            {
-                client.Send(message);
-                //Thread.Sleep(100);
-            }
+                using (var client = new SmtpClient
+                {
+                    Host = DomainSettings.HostSparkpostMail,
+                    Port = int.Parse(DomainSettings.HostSparkpostPortSend),
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(DomainSettings.HostSparkpostUsername, DomainSettings.HostSparkpostKey),
+                    EnableSsl = true,
+
+                })
+                {
+                    await client.SendMailAsync(message);
+                }
+            });
+            t.Wait();
         }
 
         private static void SendMessage(MessageType messageType, string subject, string body, IEnumerable<string> to,
@@ -178,13 +183,12 @@ namespace Topodata2.Managers
                 {
                     model = new ContactUsModel
                     {
-                        Email = viewModel.Email, Nombre = viewModel.Nombre, Mensaje = viewModel.Mensaje
+                        Email = viewModel.Email,
+                        Nombre = viewModel.Nombre,
+                        Mensaje = viewModel.Mensaje
                     };
                 }
-                else
-                {
-                    return;
-                }
+                else return;
             }
             try
             {
@@ -208,15 +212,9 @@ namespace Topodata2.Managers
             {
                 if (viewModel != null)
                 {
-                    model = new HomeSliderVideo
-                    {
-                        UrlVideo = viewModel.UrlVideo,
-                    };
+                    model = new HomeSliderVideo { UrlVideo = viewModel.UrlVideo };
                 }
-                else
-                {
-                    return;
-                }
+                else return;
             }
             try
             {
@@ -229,22 +227,10 @@ namespace Topodata2.Managers
                     body = sr.ReadToEnd();
                 }
 
-                var logo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconFacebook = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconFacebook))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconTwitter = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconTwitter))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
-                var iconYoutube = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconYoutube))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
+                var logo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault)) { ContentId = Guid.NewGuid().ToString() };
+                var iconFacebook = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconFacebook)) { ContentId = Guid.NewGuid().ToString() };
+                var iconTwitter = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconTwitter)) { ContentId = Guid.NewGuid().ToString() };
+                var iconYoutube = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.imgHomeVideoIconYoutube)) { ContentId = Guid.NewGuid().ToString() };
 
                 body = body.Replace("{logo}", logo.ContentId);
                 body = body.Replace("{imgVideo}", Youtube.GetImageFromId(model.UrlVideo));
@@ -252,17 +238,13 @@ namespace Topodata2.Managers
                 body = body.Replace("{iconTwitter}", iconTwitter.ContentId);
                 body = body.Replace("{iconYoutube}", iconYoutube.ContentId);
 
-                /*var ms = new MemoryStream();
-                new FileStream(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault),FileMode.Open,FileAccess.Read).CopyTo(ms);
-                byte[] data = ms.ToArray();*/
-
                 var view = AlternateView.CreateAlternateViewFromString(body, null, DomainSettings.EmailAlternativeViewMediaType);
                 view.LinkedResources.Add(logo);
                 view.LinkedResources.Add(iconFacebook);
                 view.LinkedResources.Add(iconTwitter);
                 view.LinkedResources.Add(iconYoutube);
 
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, view);
+                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendHomeVideoUpload, body, emails, view);
             }
             catch (Exception e)
             {
@@ -280,13 +262,9 @@ namespace Topodata2.Managers
                     body = sr.ReadToEnd();
                 }
                 var imgLogo = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgLogoDefault))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
+                { ContentId = Guid.NewGuid().ToString() };
                 var img1 = new LinkedResource(HttpContext.Current.Server.MapPath(Paths.ImgEmailSubscribeDone))
-                {
-                    ContentId = Guid.NewGuid().ToString()
-                };
+                { ContentId = Guid.NewGuid().ToString() };
 
                 body = body.Replace("{imgLogo}", imgLogo.ContentId);
                 body = body.Replace("{img1}", img1.ContentId);
@@ -442,7 +420,7 @@ namespace Topodata2.Managers
                 view.LinkedResources.Add(img1);
 
                 var emails = to.Select(informedUser => informedUser.Email).ToList();
-                SendMessage(MessageType.Personal, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, view, new[]
+                SendMessage(MessageType.Mass, DomainSettings.EmailSubjectSendNewDocumentMessage, body, emails, view, new[]
                 {
                     new Attachment(HttpContext.Current.Server.MapPath(Paths.ImgVolanteTopogis))
                 });
@@ -563,17 +541,12 @@ namespace Topodata2.Managers
                     var document = model as DocumentModel;
                     if (document != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(1);
-                        var count = 0;
+                        var userList = UserManager.GetAllInformedSeparated(10);
                         foreach (var users in userList)
                         {
                             SendNewDocumentMessage(document, users);
-                            count++;
-                            if (count < 150) continue;
-                            count = 0;
-                            Thread.Sleep(4200000);
-                        }
 
+                        }
                     }
                     break;
                 case MailType.RegistrationDoneUser:
@@ -602,16 +575,12 @@ namespace Topodata2.Managers
                     var videoUploadView = model as HomeSlideVideoViewModel;
                     if (videoUpload != null || videoUploadView != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(1);
-                        var count = 0;
+                        var userList = UserManager.GetAllInformedSeparated(10);
                         foreach (var users in userList)
                         {
                             SendHomeVideoUpload(videoUpload, users, videoUploadView);
-                            count++;
-                            if (count < 150) continue;
-                            count = 0;
-                            Thread.Sleep(4200000);
                         }
+                        
                     }
                     break;
                 case MailType.ContactUs:
@@ -629,9 +598,7 @@ namespace Topodata2.Managers
 
         public MailManager SendMail(MailType mailType, object model)
         {
-            var thread = new Thread(() => SendMailThread(mailType,model));
-            thread.Start();
-            //SendMailThread(mailType,model);
+            SendMailThread(mailType,model);
             return this;
         }
 

@@ -22,14 +22,9 @@ namespace Topodata2.Managers
             var result = false;
             try
             {
-                var count = 0;
                 foreach (var userModel in UserManager.GetAllUsers(fecha))
                 {
                     new MailManager().SendMail(MailType.RegistrationDoneUser, userModel);
-                    count++;
-                    if(count < 100) continue;
-                    count = 0;
-                    Thread.Sleep(4200000);
                 }
                 result = true;
             }
