@@ -117,26 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmailTemplateDeslindeUserRegisteredAdmin" xml:space="preserve">
+  <data name="EmailDeslindeUserRegisteredAdmin" xml:space="preserve">
     <value>~/EmailTemplates/Deslinder/DeslinderUserRegisteredAdmin.html</value>
   </data>
-  <data name="EmailTemplateDeslindeUserRegisteredUser" xml:space="preserve">
+  <data name="EmailDeslindeUserRegisteredUser" xml:space="preserve">
     <value>~/EmailTemplates/Deslinder/DeslinderUserRegisteredUser.html</value>
   </data>
-  <data name="EmailTemplateHomeVideoAdded" xml:space="preserve">
-    <value>~/EmailTemplates/HomeVideo.html</value>
+  <data name="EmailHomeVideoAdded" xml:space="preserve">
+    <value>~/EmailTemplates/AddedContent/HomeVideo.html</value>
   </data>
-  <data name="EmailTemplateNewDocumentAdded" xml:space="preserve">
+  <data name="EmailNewDocumentAdded" xml:space="preserve">
     <value>~/EmailTemplates/AddedContent/NewDocumentAdded.html</value>
   </data>
-  <data name="EmailTemplateRegistrationDoneUser" xml:space="preserve">
+  <data name="EmailRegistrationDoneUser" xml:space="preserve">
     <value>~/EmailTemplates/Registration/RegistrationDoneUser.html</value>
   </data>
-  <data name="EmailTemplateRegistrationDoneUserAdmin" xml:space="preserve">
+  <data name="EmailRegistrationDoneUserAdmin" xml:space="preserve">
     <value>~/EmailTemplates/Registration/RegistrationDoneUserAdmin.html</value>
   </data>
-  <data name="EmailTemplateSubscribedDoneMin" xml:space="preserve">
-    <value>~/EmailTemplates/Subscribe/SubscribedDone/SubscribedDoneMin.html</value>
+  <data name="EmailSubscribedDone" xml:space="preserve">
+    <value>~/EmailTemplates/Subscribe/SubscribedDoneUser.html</value>
   </data>
   <data name="ImgDeslindePeople" xml:space="preserve">
     <value>~/EmailTemplates/Deslinder/images/people.jpg</value>
@@ -162,7 +162,7 @@
   <data name="ImgVolanteTopogis" xml:space="preserve">
     <value>~/resources/img/icons/volantetopogis.jpg</value>
   </data>
-  <data name="EmailTemplateContactUsAdmin" xml:space="preserve">
+  <data name="EmailContactUsAdmin" xml:space="preserve">
     <value>~/EmailTemplates/ContactUsAdmin.html</value>
   </data>
 </root>

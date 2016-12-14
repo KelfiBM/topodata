@@ -79,6 +79,15 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Topodata.
+        /// </summary>
+        internal static string DisplayNameInfo {
+            get {
+                return ResourceManager.GetString("DisplayNameInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRv [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IconFacebookHomeVideo {
@@ -223,6 +232,78 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Correo de un visitante.
+        /// </summary>
+        internal static string SubjectContactUs {
+            get {
+                return ResourceManager.GetString("SubjectContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario Deslinde Registrado.
+        /// </summary>
+        internal static string SubjectDeslindeRegistrationAdmin {
+            get {
+                return ResourceManager.GetString("SubjectDeslindeRegistrationAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proceso de gestion de Título iniciado.
+        /// </summary>
+        internal static string SubjectDeslindeRegistrationUser {
+            get {
+                return ResourceManager.GetString("SubjectDeslindeRegistrationUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Última NOTICIA de TOPODATA del sector Construcción.
+        /// </summary>
+        internal static string SubjectHomeVideoUpload {
+            get {
+                return ResourceManager.GetString("SubjectHomeVideoUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NUEVO!! Documento Técnico.
+        /// </summary>
+        internal static string SubjectNewDocumentMessage {
+            get {
+                return ResourceManager.GetString("SubjectNewDocumentMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Introducete a TOPODATA.
+        /// </summary>
+        internal static string SubjectRegistrationDone {
+            get {
+                return ResourceManager.GetString("SubjectRegistrationDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario Topodata Registrado.
+        /// </summary>
+        internal static string SubjectRegistrationDoneAdmin {
+            get {
+                return ResourceManager.GetString("SubjectRegistrationDoneAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gracias por Suscribirte a TOPODATA!.
+        /// </summary>
+        internal static string SubjectSubscribeDone {
+            get {
+                return ResourceManager.GetString("SubjectSubscribeDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAQFBAYFBQYJBgUGCQsIBgYICwwKCgsKCgwQDAwMDAwMEAwODxAPDgwTExQUExMcGxsbHB8fHx8fHx8fHx//2wBDAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAFNAfQDAREAAhEBAxEB/8QAHQAAAQUBAQEBAAAAAAAAAAAAAAMEBQYHCAIBCf/EAFMQAAIBAwMBBQUFBQUFBAcGBwECAwAEEQUSIQYHEzFBURQiMmFxI0KBkbEIFVKhwRYzYnKSJENTgtEXNKKyGCVEc4Ph8SY1VGTC4mWTo7PD0vD/xAAbAQABBQEBAAAAAAAAAAAAAAAAAQIDBAUGB//EAEERAAIBAwICBggFAQYGAwEAAAABAgMEERIhBTETIjJBUfAGYXGBobHB0RQjQlKRM1OCosLh8RUWJGJy [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SubscribeDone {
@@ -241,20 +322,11 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALCwsMCxAMDBAXDw0PFxsUEBAUGx8XFxcXFx8eFxoaGhoXHh4jJSclIx4vLzMzLy9AQEBAQEBAQEBAQEBAQED/2wBDAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCASGAu4DASIAAhEBAxEB/8QAGwAAAQUBAQAAAAAAAAAAAAAAAAECAwQFBgf/xABQEAABAwIEAgcEBwUGBQMDAgcBAAIDBBEFEiExQVEGExQiYXGRMlOBsRU0QlKh0eEjM3KSwRYlYmOy0gckQ/DxVIKiF3PCNTZEgyZ0k7Pi/8QAGgEBAQEBAQEBAAAAAAAAAAAAAAECAwQFBv/EADARAQACAQQBAwMDBQABBQAAAAABEQIDEiExQQRRYRMiMgUUgRUzQnGhkSNygtHh/9oADAMBAAIRAxEAPwD0BIlS [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to http://i.imgur.com/JDJFsq0.jpg.
         /// </summary>
-        internal static string VolanteTopogis {
+        internal static string VolanteTopogisWeb {
             get {
-                return ResourceManager.GetString("VolanteTopogis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to volantetopogis.jpg.
-        /// </summary>
-        internal static string VolanteTopogisName {
-            get {
-                return ResourceManager.GetString("VolanteTopogisName", resourceCulture);
+                return ResourceManager.GetString("VolanteTopogisWeb", resourceCulture);
             }
         }
     }

@@ -124,78 +124,6 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Correo de un visitante.
-        /// </summary>
-        public static string EmailSubjectSendContactUs {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendContactUs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuario Deslinde Registrado.
-        /// </summary>
-        public static string EmailSubjectSendDeslindeRegistrationAdmin {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendDeslindeRegistrationAdmin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proceso de gestion de Título iniciado.
-        /// </summary>
-        public static string EmailSubjectSendDeslindeRegistrationUser {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendDeslindeRegistrationUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Última NOTICIA de TOPODATA del sector Construcción.
-        /// </summary>
-        public static string EmailSubjectSendHomeVideoUpload {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendHomeVideoUpload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NUEVO!! Documento Técnico.
-        /// </summary>
-        public static string EmailSubjectSendNewDocumentMessage {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendNewDocumentMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Introducete a TOPODATA.
-        /// </summary>
-        public static string EmailSubjectSendRegistrationDone {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendRegistrationDone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuario Topodata Registrado.
-        /// </summary>
-        public static string EmailSubjectSendRegistrationDoneAdmin {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendRegistrationDoneAdmin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gracias por Suscribirte a TOPODATA!.
-        /// </summary>
-        public static string EmailSubjectSendSubscribeDone {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendSubscribeDone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to testt@topodata.com.
         /// </summary>
         public static string EmailTestt {
@@ -232,7 +160,6 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
-<<<<<<< HEAD
         ///   Looks up a localized string similar to AUTH LOGIN.
         /// </summary>
         public static string HostSparkpostAuthentication {
@@ -283,13 +210,6 @@ namespace Topodata2.resources.Strings {
         public static string HostSparkpostUsername {
             get {
                 return ResourceManager.GetString("HostSparkpostUsername", resourceCulture);
-=======
-        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
-        /// </summary>
-        public static string SparkPostKey {
-            get {
-                return ResourceManager.GetString("SparkPostKey", resourceCulture);
->>>>>>> f9b10f5fbc692958b5ac9a89549a45da2159381b
             }
         }
         

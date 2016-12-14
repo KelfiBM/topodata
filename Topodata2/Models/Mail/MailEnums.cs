@@ -17,4 +17,10 @@
         Mass,
         Personal
     }
+
+    public enum AttachmentType
+    {
+        Local,
+        Web
+    }
 }

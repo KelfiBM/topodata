@@ -138,30 +138,6 @@
   <data name="EmailRegistrados" xml:space="preserve">
     <value>registrados@topodata.com</value>
   </data>
-  <data name="EmailSubjectSendContactUs" xml:space="preserve">
-    <value>Correo de un visitante</value>
-  </data>
-  <data name="EmailSubjectSendDeslindeRegistrationAdmin" xml:space="preserve">
-    <value>Usuario Deslinde Registrado</value>
-  </data>
-  <data name="EmailSubjectSendDeslindeRegistrationUser" xml:space="preserve">
-    <value>Proceso de gestion de Título iniciado</value>
-  </data>
-  <data name="EmailSubjectSendHomeVideoUpload" xml:space="preserve">
-    <value>Última NOTICIA de TOPODATA del sector Construcción</value>
-  </data>
-  <data name="EmailSubjectSendNewDocumentMessage" xml:space="preserve">
-    <value>NUEVO!! Documento Técnico</value>
-  </data>
-  <data name="EmailSubjectSendRegistrationDone" xml:space="preserve">
-    <value>Introducete a TOPODATA</value>
-  </data>
-  <data name="EmailSubjectSendRegistrationDoneAdmin" xml:space="preserve">
-    <value>Usuario Topodata Registrado</value>
-  </data>
-  <data name="EmailSubjectSendSubscribeDone" xml:space="preserve">
-    <value>Gracias por Suscribirte a TOPODATA!</value>
-  </data>
   <data name="EmailTestt" xml:space="preserve">
     <value>testt@topodata.com</value>
   </data>
@@ -174,7 +150,6 @@
   <data name="HostPortSend" xml:space="preserve">
     <value>587</value>
   </data>
-<<<<<<< HEAD
   <data name="HostSparkpostAuthentication" xml:space="preserve">
     <value>AUTH LOGIN</value>
   </data>
@@ -193,11 +168,6 @@
   <data name="HostSparkpostUsername" xml:space="preserve">
     <value>SMTP_Injection</value>
   </data>
-=======
-  <data name="SparkPostKey" xml:space="preserve">
-    <value>59b70763f9429e4e54295dd07ad651727f6618f1</value>
-  </data>
->>>>>>> f9b10f5fbc692958b5ac9a89549a45da2159381b
   <data name="UrlDocument" xml:space="preserve">
     <value>topodata.com/Services/Document/</value>
   </data>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.Models;
 using Topodata2.Models.Home;
@@ -96,7 +97,7 @@ namespace Topodata2.Controllers
         public ActionResult Deslinder(DeslindeViewModel viewModel)
         {
             string message;
-            viewModel.RegDate = DateTime.Now;
+            viewModel.RegDate = TimePicker.GetLocalDateTime();
             if (!ModelState.IsValid)
             {
                 message = string.Join("; ",
