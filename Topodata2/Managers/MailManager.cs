@@ -22,7 +22,7 @@ using File = System.IO.File;
 
 namespace Topodata2.Managers
 {
-    public class MailManager : IDisposable
+    public class MailManager
     {
         private const int Clientcount = 15;
         private readonly SmtpClient[] _smtpClients = new SmtpClient[Clientcount + 1];
@@ -35,36 +35,6 @@ namespace Topodata2.Managers
             SetupTransmissionClients();
         }
 
-        ~MailManager()
-        {
-            //DisposeSmtpClients();
-            DisposeTransmissionClients();
-        }
-
-        private void SetupSmtpClients()
-        {
-            for (var i = 0; i <= Clientcount; i++)
-            {
-                try
-                {
-                    var client = new SmtpClient
-                    {
-                        Host = DomainSettings.HostSparkMail,
-                        Port = int.Parse(DomainSettings.HostSparkPort),
-                        UseDefaultCredentials = false,
-                        Credentials =
-                            new NetworkCredential(DomainSettings.HostSparkUsername, DomainSettings.KeySparkpost),
-                        EnableSsl = true,
-                    };
-                    _smtpClients[i] = client;
-                }
-                catch (Exception ex)
-                {
-                    // ignored
-                }
-            }
-        }
-
         private void SetupTransmissionClients()
         {
             for (var i = 0; i <= Clientcount; i++)
@@ -73,7 +43,7 @@ namespace Topodata2.Managers
                 {
                     var client = new Client(DomainSettings.KeySparkpost)
                     {
-                          CustomSettings = { SendingMode = SendingModes.Sync}
+                          CustomSettings = { SendingMode = SendingModes.Async}
                     };
                     _transmissionClients[i] = client;
                 }
@@ -84,71 +54,15 @@ namespace Topodata2.Managers
             }
         }
 
-        private void DisposeSmtpClients()
-        {
-            for (var i = 0; i <= Clientcount; i++)
-            {
-                try
-                {
-                    _smtpClients[i].Dispose();
-                }
-                catch (Exception ex)
-                {
-                    //Log Exception
-                }
-            }
-        }
-
-        private void DisposeTransmissionClients()
-        {
-            for (var i = 0; i <= Clientcount; i++)
-            {
-                try
-                {
-                    //_transmissionClients[i].Dispose();
-                }
-                catch (Exception ex)
-                {
-                    //Log Exception
-                }
-            }
-        }
-
         public void CancelEmailRun()
         {
             _cancelToken.Cancel();
         }
 
-        private void Send(MailMessage mailMessage)
-        {
-            using (mailMessage)
-            {
-                var gotlocked = false;
-                while (!gotlocked)
-                {
-                    //Keep looping through all smtp client connections until one becomes available
-                    for (var i = 0; i <= Clientcount; i++)
-                    {
-                        if (!Monitor.TryEnter(_smtpClients[i])) continue;
-                        try
-                        {
-                            _smtpClients[i].Send(mailMessage);
-                        }
-                        finally
-                        {
-                            Monitor.Exit(_smtpClients[i]);
-                        }
-                        gotlocked = true;
-                        break;
-                    }
-                    //Do this to make sure CPU doesn't ramp up to 100%
-                    Thread.Sleep(1000);
-                }
-            }
-        }
-
         private void Send(Transmission transmission)
         {
+            _transmissionClients[0].Transmissions.Send(transmission);
+            return;
             var gotlocked = false;
             while (!gotlocked)
             {
@@ -172,53 +86,22 @@ namespace Topodata2.Managers
             }
         }
 
-        private static void SendIndividual(MailMessage message)
-        {
-            var t = Task.Run(async () =>
-            {
-                using (var client = new SmtpClient
-                {
-                    Host = DomainSettings.HostSparkMail,
-                    Port = int.Parse(DomainSettings.HostSparkPort),
-                    UseDefaultCredentials = false,
-                    Credentials =
-                        new NetworkCredential(DomainSettings.HostSparkUsername, DomainSettings.KeySparkpost),
-                    EnableSsl = true,
-                })
-                {
-                    await client.SendMailAsync(message);
-                }
-            });
-            t.Wait();
-        }
-
-        private void SendMessage(MessageType messageType, string subject, string body, IEnumerable<string> to,
-            Attachment[] attachment = null)
-        {
-            var po = new ParallelOptions();
-            //Create a cancellation token so you can cancel the task.
-            _cancelToken = new CancellationTokenSource();
-            po.CancellationToken = _cancelToken.Token;
-            //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
-            po.MaxDegreeOfParallelism = Environment.ProcessorCount*2;
-            var enumerable = to as string[] ?? to.ToArray();
-            Parallel.ForEach(enumerable, po, recipient =>
-            {
-                Send(MakeMailMessage(messageType, subject, body, new []{recipient}, attachment));
-            });
-        }
-
         private void SendTransmision(MessageType messageType, string subject, string body, IEnumerable<string> to,
             SparkPost.Attachment[] attachment = null)
         {
-            var po = new ParallelOptions();
-            //Create a cancellation token so you can cancel the task.
+            //var po = new ParallelOptions();
+                //Create a cancellation token so you can cancel the task.
             _cancelToken = new CancellationTokenSource();
-            po.CancellationToken = _cancelToken.Token;
-            //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
-            po.MaxDegreeOfParallelism = Environment.ProcessorCount * 2;
+            //po.CancellationToken = _cancelToken.Token;
+                //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
+            //po.MaxDegreeOfParallelism = Environment.ProcessorCount * 2;
             var enumerable = to as string[] ?? to.ToArray();
-            Parallel.ForEach(enumerable, po, recipient =>
+            foreach (var recipient in enumerable)
+            {
+                Send(MakeTransmission(messageType, subject, body, new[] { recipient }, attachment));
+            }
+            return;
+            Parallel.ForEach(enumerable, recipient =>
             {
                 Send(MakeTransmission(messageType, subject, body, new[] { recipient }, attachment));
             });
@@ -249,7 +132,7 @@ namespace Topodata2.Managers
                     var document = model as DocumentModel;
                     if (document != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(10);
+                        var userList = UserManager.GetAllInformedSeparated(300000);
                         foreach (var users in userList)
                         {
                             SendNewDocumentMessage(document, users);
@@ -282,7 +165,7 @@ namespace Topodata2.Managers
                     var videoUploadView = model as HomeSlideVideoViewModel;
                     if (videoUpload != null || videoUploadView != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(10);
+                        var userList = UserManager.GetAllInformedSeparated(300000);
                         foreach (var users in userList)
                         {
                             SendHomeVideoUpload(videoUpload, users, videoUploadView);
@@ -303,11 +186,7 @@ namespace Topodata2.Managers
             return this;
         }
 
-        public void Dispose()
-        {
-            //DisposeSmtpClients();
-            DisposeTransmissionClients();
-        }
+        
         //---------------------------------------------------------------------------------//
         private static string MakeBody(string pathTemplate, params object[] replaces)
         {
