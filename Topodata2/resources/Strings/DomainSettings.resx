@@ -150,23 +150,29 @@
   <data name="HostPortSend" xml:space="preserve">
     <value>587</value>
   </data>
-  <data name="HostSparkpostAuthentication" xml:space="preserve">
+  <data name="HostSparkAuthentication" xml:space="preserve">
     <value>AUTH LOGIN</value>
   </data>
-  <data name="HostSparkpostEncryption" xml:space="preserve">
+  <data name="HostSparkEncryption" xml:space="preserve">
     <value>STARTTLS</value>
   </data>
-  <data name="HostSparkpostKey" xml:space="preserve">
-    <value>59b70763f9429e4e54295dd07ad651727f6618f1</value>
-  </data>
-  <data name="HostSparkpostMail" xml:space="preserve">
+  <data name="HostSparkMail" xml:space="preserve">
     <value>smtp.sparkpostmail.com</value>
   </data>
-  <data name="HostSparkpostPortSend" xml:space="preserve">
+  <data name="HostSparkPort" xml:space="preserve">
     <value>587</value>
   </data>
-  <data name="HostSparkpostUsername" xml:space="preserve">
+  <data name="HostSparkUsername" xml:space="preserve">
     <value>SMTP_Injection</value>
+  </data>
+  <data name="KeyImgurClientId" xml:space="preserve">
+    <value>46a9427144b4b0e</value>
+  </data>
+  <data name="KeyImgurClientSecret" xml:space="preserve">
+    <value>c8130803f9e7f8bf41f3b95a1b743edc53d85caa</value>
+  </data>
+  <data name="KeySparkpost" xml:space="preserve">
+    <value>59b70763f9429e4e54295dd07ad651727f6618f1</value>
   </data>
   <data name="UrlDocument" xml:space="preserve">
     <value>topodata.com/Services/Document/</value>

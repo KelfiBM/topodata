@@ -74,16 +74,16 @@
       <HintPath>..\packages\MvcCheckBoxList.1.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Recaptcha.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=171a6ec5fa4b1644, processorArchitecture=MSIL">
       <HintPath>..\packages\RecaptchaNet.2.1.0\lib\net45\Recaptcha.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SparkPost, Version=1.9.3.20487, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SparkPost.1.9.3\lib\net45\SparkPost.dll</HintPath>
+    <Reference Include="SparkPost, Version=1.12.0.29448, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SparkPost.1.12.0\lib\net45\SparkPost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -403,9 +403,6 @@
     <Content Include="resources\img\icons\volantetopogis2.jpg" />
     <Content Include="resources\img\logoDefault.png" />
     <Content Include="resources\img\Logos\logoDefault.png" />
-    <Content Include="resources\img\Logos\logoDefault76x72.jpg" />
-    <Content Include="resources\img\Logos\logoDefault76x72.png" />
-    <Content Include="resources\img\Logos\logoDefault91x87.png" />
     <Content Include="resources\img\mockup\imac_t.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
     <Content Include="resources\img\mockup\planning2.jpg" />

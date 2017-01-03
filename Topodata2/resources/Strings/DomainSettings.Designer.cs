@@ -162,54 +162,72 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to AUTH LOGIN.
         /// </summary>
-        public static string HostSparkpostAuthentication {
+        public static string HostSparkAuthentication {
             get {
-                return ResourceManager.GetString("HostSparkpostAuthentication", resourceCulture);
+                return ResourceManager.GetString("HostSparkAuthentication", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to STARTTLS.
         /// </summary>
-        public static string HostSparkpostEncryption {
+        public static string HostSparkEncryption {
             get {
-                return ResourceManager.GetString("HostSparkpostEncryption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
-        /// </summary>
-        public static string HostSparkpostKey {
-            get {
-                return ResourceManager.GetString("HostSparkpostKey", resourceCulture);
+                return ResourceManager.GetString("HostSparkEncryption", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to smtp.sparkpostmail.com.
         /// </summary>
-        public static string HostSparkpostMail {
+        public static string HostSparkMail {
             get {
-                return ResourceManager.GetString("HostSparkpostMail", resourceCulture);
+                return ResourceManager.GetString("HostSparkMail", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 587.
         /// </summary>
-        public static string HostSparkpostPortSend {
+        public static string HostSparkPort {
             get {
-                return ResourceManager.GetString("HostSparkpostPortSend", resourceCulture);
+                return ResourceManager.GetString("HostSparkPort", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to SMTP_Injection.
         /// </summary>
-        public static string HostSparkpostUsername {
+        public static string HostSparkUsername {
             get {
-                return ResourceManager.GetString("HostSparkpostUsername", resourceCulture);
+                return ResourceManager.GetString("HostSparkUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 46a9427144b4b0e.
+        /// </summary>
+        public static string KeyImgurClientId {
+            get {
+                return ResourceManager.GetString("KeyImgurClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to c8130803f9e7f8bf41f3b95a1b743edc53d85caa.
+        /// </summary>
+        public static string KeyImgurClientSecret {
+            get {
+                return ResourceManager.GetString("KeyImgurClientSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
+        /// </summary>
+        public static string KeySparkpost {
+            get {
+                return ResourceManager.GetString("KeySparkpost", resourceCulture);
             }
         }
         

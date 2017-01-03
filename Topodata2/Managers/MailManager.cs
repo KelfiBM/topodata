@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Topodata2.Classes;
 using Topodata2.Models;
 using Topodata2.Models.Home;
@@ -41,11 +43,11 @@ namespace Topodata2.Managers
                 {
                     var client = new SmtpClient
                     {
-                        Host = DomainSettings.HostSparkpostMail,
-                        Port = int.Parse(DomainSettings.HostSparkpostPortSend),
+                        Host = DomainSettings.HostSparkMail,
+                        Port = int.Parse(DomainSettings.HostSparkPort),
                         UseDefaultCredentials = false,
                         Credentials =
-                        new NetworkCredential(DomainSettings.HostSparkpostUsername, DomainSettings.HostSparkpostKey),
+                            new NetworkCredential(DomainSettings.HostSparkUsername, DomainSettings.KeySparkpost),
                         EnableSsl = true,
                     };
                     _smtpClients[i] = client;
@@ -111,11 +113,11 @@ namespace Topodata2.Managers
             {
                 using (var client = new SmtpClient
                 {
-                    Host = DomainSettings.HostSparkpostMail,
-                    Port = int.Parse(DomainSettings.HostSparkpostPortSend),
+                    Host = DomainSettings.HostSparkMail,
+                    Port = int.Parse(DomainSettings.HostSparkPort),
                     UseDefaultCredentials = false,
                     Credentials =
-                        new NetworkCredential(DomainSettings.HostSparkpostUsername, DomainSettings.HostSparkpostKey),
+                        new NetworkCredential(DomainSettings.HostSparkUsername, DomainSettings.KeySparkpost),
                     EnableSsl = true,
                 })
                 {
@@ -249,6 +251,29 @@ namespace Topodata2.Managers
             return result;
         }
 
+        private static string UploadImage(string imagePath)
+        {
+            var result = "";
+            try
+            {
+                if (!File.Exists(imagePath)) return result;
+                using (var w = new WebClient())
+                {
+                    w.Headers.Add("Authorization", "Client-ID " + DomainSettings.KeyImgurClientId);
+                    var values = new NameValueCollection
+                    {
+                        {"image", MakeImageBase64(imagePath) }
+                    };
+                    var response = w.UploadValues("https://api.imgur.com/3/upload.xml", values);
+                    result = XDocument.Load(new MemoryStream(response)).Root?.Element("link")?.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                //ignored
+            }
+            return result;
+        }
         private Attachment MakeAttachment(AttachmentType type, string path)
         {
             Attachment result = null;
@@ -423,7 +448,7 @@ namespace Topodata2.Managers
                 body = body.Replace("{categoria1}", model.SubCategoria);
                 body = body.Replace("{descripcion1}", model.Descripcion);
                 body = body.Replace("{urlDocument}", DomainSettings.UrlDocument + model.Id);
-                body = body.Replace("{imageDocument}", MakeImageBase64(Current.Server.MapPath("~" + model.ImagePath)));
+                body = body.Replace("{imageDocument}", UploadImage(Current.Server.MapPath("~" + model.ImagePath)));
 
                 var emails = to.Select(informedUser => informedUser.Email).ToList();
                 SendMessage(MessageType.Personal, MailParameters.SubjectNewDocumentMessage, body, emails/*, new[]
@@ -482,4 +507,3 @@ namespace Topodata2.Managers
         }
     }
 }
-
