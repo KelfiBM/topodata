@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using SparkPost;
 using Topodata2.Classes;
 using Topodata2.Models;
 using Topodata2.Models.Home;
@@ -16,6 +17,8 @@ using Topodata2.Models.Mail;
 using Topodata2.Models.User;
 using Topodata2.resources.Strings;
 using static System.Web.HttpContext;
+using Attachment = System.Net.Mail.Attachment;
+using File = System.IO.File;
 
 namespace Topodata2.Managers
 {
@@ -23,16 +26,19 @@ namespace Topodata2.Managers
     {
         private const int Clientcount = 15;
         private readonly SmtpClient[] _smtpClients = new SmtpClient[Clientcount + 1];
+        private readonly Client[] _transmissionClients = new Client[Clientcount + 1];
         private CancellationTokenSource _cancelToken;
 
         public MailManager()
         {
-            SetupSmtpClients();
+            //SetupSmtpClients();
+            SetupTransmissionClients();
         }
 
         ~MailManager()
         {
-            DisposeSmtpClients();
+            //DisposeSmtpClients();
+            DisposeTransmissionClients();
         }
 
         private void SetupSmtpClients()
@@ -59,6 +65,25 @@ namespace Topodata2.Managers
             }
         }
 
+        private void SetupTransmissionClients()
+        {
+            for (var i = 0; i <= Clientcount; i++)
+            {
+                try
+                {
+                    var client = new Client(DomainSettings.KeySparkpost)
+                    {
+                          CustomSettings = { SendingMode = SendingModes.Sync}
+                    };
+                    _transmissionClients[i] = client;
+                }
+                catch (Exception ex)
+                {
+                    // ignored
+                }
+            }
+        }
+
         private void DisposeSmtpClients()
         {
             for (var i = 0; i <= Clientcount; i++)
@@ -66,6 +91,21 @@ namespace Topodata2.Managers
                 try
                 {
                     _smtpClients[i].Dispose();
+                }
+                catch (Exception ex)
+                {
+                    //Log Exception
+                }
+            }
+        }
+
+        private void DisposeTransmissionClients()
+        {
+            for (var i = 0; i <= Clientcount; i++)
+            {
+                try
+                {
+                    //_transmissionClients[i].Dispose();
                 }
                 catch (Exception ex)
                 {
@@ -107,6 +147,31 @@ namespace Topodata2.Managers
             }
         }
 
+        private void Send(Transmission transmission)
+        {
+            var gotlocked = false;
+            while (!gotlocked)
+            {
+                //Keep looping through all transmision client connections until one becomes available
+                for (var i = 0; i <= Clientcount; i++)
+                {
+                    if (!Monitor.TryEnter(_transmissionClients[i])) continue;
+                    try
+                    {
+                        _transmissionClients[i].Transmissions.Send(transmission);
+                    }
+                    finally
+                    {
+                        Monitor.Exit(_transmissionClients[i]);
+                    }
+                    gotlocked = true;
+                    break;
+                }
+                //Do this to make sure CPU doesn't ramp up to 100%
+                Thread.Sleep(500);
+            }
+        }
+
         private static void SendIndividual(MailMessage message)
         {
             var t = Task.Run(async () =>
@@ -142,6 +207,23 @@ namespace Topodata2.Managers
                 Send(MakeMailMessage(messageType, subject, body, new []{recipient}, attachment));
             });
         }
+
+        private void SendTransmision(MessageType messageType, string subject, string body, IEnumerable<string> to,
+            SparkPost.Attachment[] attachment = null)
+        {
+            var po = new ParallelOptions();
+            //Create a cancellation token so you can cancel the task.
+            _cancelToken = new CancellationTokenSource();
+            po.CancellationToken = _cancelToken.Token;
+            //Manage the MaxDegreeOfParallelism instead of .NET Managing this. We dont need 500 threads spawning for this.
+            po.MaxDegreeOfParallelism = Environment.ProcessorCount * 2;
+            var enumerable = to as string[] ?? to.ToArray();
+            Parallel.ForEach(enumerable, po, recipient =>
+            {
+                Send(MakeTransmission(messageType, subject, body, new[] { recipient }, attachment));
+            });
+        }
+
         public MailManager SendMail(MailType mailType, object model)
         {
             //var type = mailType is MailType ? (MailType) mailType : MailType.DeslinderRegistrationAdmin;
@@ -223,16 +305,18 @@ namespace Topodata2.Managers
 
         public void Dispose()
         {
-            DisposeSmtpClients();
+            //DisposeSmtpClients();
+            DisposeTransmissionClients();
         }
         //---------------------------------------------------------------------------------//
-        private static string MakeBody(string pathTemplate)
+        private static string MakeBody(string pathTemplate, params object[] replaces)
         {
             string result;
             using (var sr = new StreamReader(Current.Server.MapPath(pathTemplate)))
             {
                 result = sr.ReadToEnd();
             }
+            if(replaces.Length > 0) result = string.Format(result,replaces);
             return result;
         }
 
@@ -274,6 +358,7 @@ namespace Topodata2.Managers
             }
             return result;
         }
+
         private Attachment MakeAttachment(AttachmentType type, string path)
         {
             Attachment result = null;
@@ -330,13 +415,61 @@ namespace Topodata2.Managers
             return mail;
         }
 
+        private Transmission MakeTransmission(MessageType messageType, string subject, string body,
+            IEnumerable<string> to, SparkPost.Attachment[] attachment = null)
+        {
+            var transmission = new Transmission
+            {
+                Content =
+                {
+                    Subject = subject,
+                    Html = body,
+                    From =
+                    {
+                        Email = DomainSettings.EmailInfo,
+                        Name = MailParameters.DisplayNameInfo
+                    }
+                }
+            };
+            switch (messageType)
+            {
+                case MessageType.Mass:
+                    transmission.Recipients.Add(new Recipient {Address = {Email = DomainSettings.EmailNo_reply}});
+                    foreach (var recipient in to)
+                    {
+                        transmission.Recipients.Add(new Recipient
+                        {
+                            Address =
+                            {
+                                Email = recipient,
+                                HeaderTo = DomainSettings.EmailNo_reply
+                            }
+                        });
+                    }
+                    break;
+                case MessageType.Personal:
+                    foreach (var recipient in to)
+                    {
+                        transmission.Recipients.Add(new Recipient {Address = {Email = recipient}});
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
+            }
+            if(attachment == null) return transmission;
+            foreach (var a in attachment)
+            {
+                transmission.Content.Attachments.Add(a);
+            }
+            return transmission;
+        }
+
         private void SendRegistrationDoneAdmin(UserModel model, UserViewModel viewModel = null)
         {
             try
             {
-                var body = MakeBody(Paths.EmailRegistrationDoneUserAdmin);
-                body = string.Format(body, model.Name, model.LastName, model.Email, model.UserName, model.RegDate.Date);
-                SendMessage(MessageType.Personal, MailParameters.SubjectRegistrationDoneAdmin, body, new[]
+                var body = MakeBody(Paths.EmailRegistrationDoneUserAdmin, model.Name, model.LastName, model.Email, model.UserName, model.RegDate.Date);
+                SendTransmision(MessageType.Personal, MailParameters.SubjectRegistrationDoneAdmin, body, new[]
                 {
                     DomainSettings.EmailRegistrados
                 });
@@ -354,7 +487,7 @@ namespace Topodata2.Managers
                 var body = MakeBody(Paths.EmailRegistrationDoneUser);
                 body = body.Replace("{username}", model.UserName);
                 body = body.Replace("{contra}", model.Password);
-                SendMessage(MessageType.Personal, MailParameters.SubjectRegistrationDone, body, new[] {model.Email}/*,
+                SendTransmision(MessageType.Personal, MailParameters.SubjectRegistrationDone, body, new[] {model.Email}/*,
                     new[]
                     {
                         MakeAttachment(AttachmentType.Web, MailParameters.VolanteTopogisWeb)
@@ -389,14 +522,11 @@ namespace Topodata2.Managers
                 else return;
             try
             {
-                var body = MakeBody(Paths.EmailDeslindeUserRegisteredAdmin);
-                body = string.Format(body, model.Nombre, model.Apellido, model.Telefono, model.Movil, model.Correo,
+                var body = MakeBody(Paths.EmailDeslindeUserRegisteredAdmin, model.Nombre, model.Apellido, model.Telefono, model.Movil, model.Correo,
                     model.Ubicacion, model.NoMatrical, model.NoParsela, model.NoDistrito, model.Municipio,
                     model.Provincia, model.Area, model.RegDate.Date);
-                SendMessage(MessageType.Personal, MailParameters.SubjectDeslindeRegistrationAdmin, body, new[]
-                {
-                    DomainSettings.EmailDeslinde
-                });
+                SendTransmision(MessageType.Personal, MailParameters.SubjectDeslindeRegistrationAdmin, body,
+                    new[] {DomainSettings.EmailDeslinde});
             }
             catch (Exception e)
             {
@@ -413,7 +543,7 @@ namespace Topodata2.Managers
             {
                 var body = MakeBody(Paths.EmailDeslindeUserRegisteredUser);
                 body = body.Replace("{modelCorreo}", model.Correo);
-                SendMessage(MessageType.Personal, MailParameters.SubjectDeslindeRegistrationUser, body,
+                SendTransmision(MessageType.Personal, MailParameters.SubjectDeslindeRegistrationUser, body,
                     new[] {model.Correo});
             }
             catch (Exception e)
@@ -427,7 +557,7 @@ namespace Topodata2.Managers
             try
             {
                 var body = MakeBody(Paths.EmailSubscribedDone);
-                SendMessage(MessageType.Personal, MailParameters.SubjectSubscribeDone, body, new[] { email }/*, new[]
+                SendTransmision(MessageType.Personal, MailParameters.SubjectSubscribeDone, body, new[] { email }/*, new[]
                 {
                     MakeAttachment(AttachmentType.Web, MailParameters.VolanteTopogisWeb)
                 }*/);
@@ -451,7 +581,7 @@ namespace Topodata2.Managers
                 body = body.Replace("{imageDocument}", UploadImage(Current.Server.MapPath("~" + model.ImagePath)));
 
                 var emails = to.Select(informedUser => informedUser.Email).ToList();
-                SendMessage(MessageType.Personal, MailParameters.SubjectNewDocumentMessage, body, emails/*, new[]
+                SendTransmision(MessageType.Personal, MailParameters.SubjectNewDocumentMessage, body, emails/*, new[]
                 {
                     MakeAttachment(AttachmentType.Web, MailParameters.VolanteTopogisWeb)
                 }*/);
@@ -474,7 +604,7 @@ namespace Topodata2.Managers
                 var body = MakeBody(Paths.EmailHomeVideoAdded);
                 body = body.Replace("{imgVideo}", Youtube.GetImageFromId(model.UrlVideo));
                 var emails = to.Select(i => i.Email).ToList();
-                SendMessage(MessageType.Personal, MailParameters.SubjectHomeVideoUpload, body, emails);
+                SendTransmision(MessageType.Personal, MailParameters.SubjectHomeVideoUpload, body, emails);
             }
             catch (Exception e)
             {
@@ -495,9 +625,8 @@ namespace Topodata2.Managers
                 else return;
             try
             {
-                var body = MakeBody(Paths.EmailContactUsAdmin);
-                body = string.Format(body, model.Nombre, model.Email, model.Mensaje);
-                SendMessage(MessageType.Personal, MailParameters.SubjectContactUs, body,
+                var body = MakeBody(Paths.EmailContactUsAdmin, model.Nombre, model.Email, model.Mensaje);
+                SendTransmision(MessageType.Personal, MailParameters.SubjectContactUs, body,
                     new[] {DomainSettings.EmailContact});
             }
             catch (Exception)
