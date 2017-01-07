@@ -193,9 +193,9 @@
 	background: #fff;
 }
 
-.profile .table th {
+/*.profile .table th {
 	min-width: 100px;
-}
+}*/
 
 .profile .table td {
 	vertical-align: middle;
@@ -218,7 +218,7 @@
 	display: block;
 }
 
-.profile .table > thead > tr > th, 
+/*.profile .table > thead > tr > th,*/ 
 .profile .table > tbody > tr > th, 
 .profile .table > tfoot > tr > th, 
 .profile .table > thead > tr > td, 

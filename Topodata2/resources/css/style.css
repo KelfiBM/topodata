@@ -11,13 +11,13 @@
 @import url(blocks.css);
 @import url(plugins.css);
 @import url(app.css);
-@import url(one-theme.css);
+/*@import url(one-theme.css);*/
 
 /*@import url(one-demo.css);*/
 /*@import url(one-style.css);*/
 
 /*Import CSS Plugins*/
-@import url(plugins/style-switcher.css);
+/*@import url(plugins/style-switcher.css);*/
 
 body {
    color: #333;

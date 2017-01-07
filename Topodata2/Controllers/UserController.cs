@@ -189,8 +189,8 @@ namespace Topodata2.Controllers
                 Password = userViewModel.Register.Password,
                 UserName = userViewModel.Register.Username
             };
-            new MailManager().SendMail(MailType.RegistrationDoneUser,model)
-                .SendMail(MailType.RegistrationDoneAdmin, model);
+            MailManager.SendMail(MailType.RegistrationDoneUser,model);
+            MailManager.SendMail(MailType.RegistrationDoneAdmin, model);
             return RedirectToAction("Index", "Home");
         }
 
@@ -199,7 +199,7 @@ namespace Topodata2.Controllers
         {
             if (!ModelState.IsValid) return Redirect(Request.UrlReferrer?.ToString());
             subscribeView.Subscribe(subscribeView);
-            new MailManager().SendMail(MailType.SubscribeDone, subscribeView.Email);
+            MailManager.SendMail(MailType.SubscribeDone, subscribeView.Email);
             return Redirect(Request.UrlReferrer?.ToString());
         }
 

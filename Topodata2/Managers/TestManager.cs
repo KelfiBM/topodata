@@ -24,7 +24,7 @@ namespace Topodata2.Managers
             {
                 foreach (var userModel in UserManager.GetAllUsers(fecha))
                 {
-                    new MailManager().SendMail(MailType.RegistrationDoneUser, userModel);
+                    MailManager.SendMail(MailType.RegistrationDoneUser, userModel);
                 }
                 result = true;
             }

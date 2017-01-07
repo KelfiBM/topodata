@@ -308,10 +308,7 @@
 <script src="~/resources/js/plugins/validation.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-@if (controller == "Administration")
-{
-    <script src="~/resources/js/plugins/paging.js"></script>
-}
+
 
 <!-- JS Customization -->
 <script src="~/resources/js/custom.js"></script>
@@ -323,10 +320,7 @@
 <script>
     jQuery(document).ready(function() {
         App.init();
-        @if (controller == "Administration")
-        {
-            @Html.Raw("$('table').paging({ limit: 30 });")
-        }
+        
         @RenderSection("documentReady", false)
     });
 </script>

@@ -155,7 +155,7 @@ namespace Topodata2.Controllers
                 /*var t1 = new Thread(() =>
                 {
                     Thread.CurrentThread.IsBackground = true;*/
-                    new MailManager().SendMail(MailType.HomeVideoUpload, viewModel);
+                    MailManager.SendMail(MailType.HomeVideoUpload, viewModel);
                 /*});
                 t1.Start();*/
                 return RedirectToAction("HomeSlideVideo", "Administration");
@@ -409,7 +409,7 @@ namespace Topodata2.Controllers
             {
                 TempData["OperationStatus"] = "Success";
                 var lastDocument = ServiceManager.GetLastDocument();
-                new MailManager().SendMail(MailType.NewDocumentMessage, lastDocument);
+                MailManager.SendMail(MailType.NewDocumentMessage, lastDocument);
                 return RedirectToAction("Document", "Services", new { id = lastDocument.Id });
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";

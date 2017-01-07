@@ -2,38 +2,39 @@
 @model DocumentViewModel
 <div id="allDocument" class="profile-edit tab-pane fade">
     <h2 class="heading-md">Eliminar Equipo</h2>
-    <p>Eliminar</p>
     <br>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Sector</th>
-            <th>Grupo</th>
-            <th>Fecha de Registro</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        @if (ServiceManager.DocumentsExist())
-        {
-            var no = 1;
-            foreach (var document in ServiceManager.GetLastDocumentsAdded())
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped" id="allDocumentsTable">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Sector</th>
+                <th>Grupo</th>
+                <th>Fecha Registro</th>
+                <th>Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (ServiceManager.DocumentsExist())
             {
-                <tr>
-                    <td>@no</td>
-                    <td>@document.Nombre</td>
-                    <td>@document.Descripcion</td>
-                    <td>@document.SubCategoria</td>
-                    <td>@document.Contenido</td>
-                    <td>@document.RegDate</td>
-                    <td>@Html.ActionLink("Eliminar", "DeleteDocument", "Administration", new {id = document.Id}, new {@class = "btn btn-danger btn-xs", @style = "color: #FFF"})</td>
-                </tr>
-                no++;
+                var no = 1;
+                foreach (var document in ServiceManager.GetLastDocumentsAdded())
+                {
+                    <tr>
+                        <td>@no</td>
+                        <td>@document.Nombre</td>
+                        <td>@document.Descripcion</td>
+                        <td>@document.SubCategoria</td>
+                        <td>@document.Contenido</td>
+                        <td>@document.RegDate.ToShortDateString()</td>
+                        <td>@Html.ActionLink("Eliminar", "DeleteDocument", "Administration", new {id = document.Id}, new {@class = "btn btn-danger btn-xs", @style = "color: #FFF"})</td>
+                    </tr>
+                    no++;
+                }
             }
-        }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>

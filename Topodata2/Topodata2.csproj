@@ -580,6 +580,8 @@
     <Content Include="resources\plugins\jquery.parallax.js" />
     <Content Include="resources\plugins\jquery\jquery-migrate.min.js" />
     <Content Include="resources\plugins\jquery\jquery.min.js" />
+    <Content Include="resources\plugins\dynoTable\jquery.dynatable.css" />
+    <Content Include="resources\plugins\dynoTable\jquery.dynatable.js" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\blank.gif" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\layerslider-rtl.css" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\layerslider.css" />
@@ -759,7 +761,10 @@
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.eot" />
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.ttf" />
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.woff" />
-    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.psd" />
+    <Content Include="resources\plugins\dynoTable\bower.json" />
+    <Content Include="resources\plugins\dynoTable\package.json" />
+    <Content Include="resources\plugins\font-awesome\less\screen-reader.less" />
+    <Content Include="resources\plugins\font-awesome\scss\_screen-reader.scss" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -38,77 +38,52 @@
 </div>
 @section cssPlugins
 {
-    <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet" />
     <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
     <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+    @*_AllDocuments Specific*@
+    <link href="~/resources/plugins/dynoTable/jquery.dynatable.css" rel="stylesheet" />
 }
 @section cssPageStyle
 {
     <link href="~/resources/css/pages/profile.css" rel="stylesheet" />
 }
+
 @section PageScripts
 {
+    
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
-    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
-    <script src="~/resources/js/forms/reg.js"></script>
-    <script src="~/resources/js/forms/checkout.js"></script>
     <script src="~/resources/js/plugins/datepicker.js"></script>
+    @*_AllDocuments Specific*@
+    <script src="~/resources/plugins/dynoTable/jquery.dynatable.js"></script>
 }
 @section documentReady
 {
-    RegForm.initRegForm();
+    activaTab('addDocument');
+    @*_AllDocuments Specific*@
+    $('#allDocumentsTable').dynatable();
+    @*_AdministrationLeftPanel Specific*@
     Datepicker.initDatepicker();
-    CheckoutForm.initCheckoutForm();
-    Validation.initValidation();
 }
 
 @section ScriptsFunction
 {
-    <script>
-        $(document).ready(function() {
-            var form = $('#sky-form3'),
-                formData = $.data(form[0]),
-                settings = formData.validator.settings
-                // Store existing event handlers in local variables
-                ,
-                oldErrorPlacement = settings.errorPlacement,
-                oldSuccess = settings.success;
-
-            settings.errorPlacement = function(label, element) {
-
-                // Call old handler so it can update the HTML
-                oldErrorPlacement(label, element);
-
-                // Add Bootstrap classes to newly added elements
-                label.parents('label').addClass('state-error');
-                label.addClass('text-danger');
-
-            };
-
-            settings.success = function(label) {
-                // Remove error class from <div class="form-group">, but don't worry about
-                // validation error messages as the plugin is going to remove it anyway
-
-                label.parents('label').removeClass('state-error');
-
-                // Call old handler to do rest of the work
-                oldSuccess(label);
-            };
-        });
+    <script language="javascript" type="text/javascript">
+        function activaTab(tab) {
+            $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+        };
     </script>
     <script language="javascript" type="text/javascript">
         function GetContenido(_subcategorieId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#idcontenido").html(procemessage).show();
             var url = "/Administration/GetContenidoBySubCategorie/";
-
             $.ajax({
                 url: url,
                 data: { subCategorie: _subcategorieId },
                 cache: false,
                 type: "POST",
                 success: function(data) {
-                    var markup = "<option value=''>Seleccionar Grupo</option>";
+                    var markup = "<option value='' disabled selected hidden>Seleccionar Grupo</option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
@@ -126,4 +101,25 @@
             document.getElementById("subcategorielist").onchange();
         }, false);
     </script>
+    <script>
+        $(document).ready(function() {
+            var form = $('#AddDocumentForm'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+            settings.errorPlacement = function(label, element) {
+                oldErrorPlacement(label, element);
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+            };
+            settings.success = function(label) {
+                label.parents('label').removeClass('state-error');
+                oldSuccess(label);
+            };
+        });
+    </script>
+    $(document).ready(function(){
+  
+});
 }

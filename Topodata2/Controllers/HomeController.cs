@@ -69,7 +69,7 @@ namespace Topodata2.Controllers
             }
             try
             {
-                new MailManager().SendMail(MailType.ContactUs, viewModel);
+                MailManager.SendMail(MailType.ContactUs, viewModel);
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("Contact", "Home");
             }
@@ -111,8 +111,8 @@ namespace Topodata2.Controllers
             }
             try
             {
-                new MailManager().SendMail(MailType.DeslinderRegistrationAdmin, viewModel)
-                    .SendMail(MailType.DeslinderRegistrationUser, viewModel);
+                MailManager.SendMail(MailType.DeslinderRegistrationAdmin, viewModel);
+                MailManager.SendMail(MailType.DeslinderRegistrationUser, viewModel);
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("Deslinder", "Home");
             }
