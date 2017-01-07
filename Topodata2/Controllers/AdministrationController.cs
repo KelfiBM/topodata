@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.Models;
@@ -33,7 +35,7 @@ namespace Topodata2.Controllers
 
         public ActionResult HomeSlideVideo()
         {
-            return View("HomeSlide/HomeSlideVideo",HomeManager.GetCurrentHomeSliderVideoViewModel());
+            return View("HomeSlide/HomeSlideVideo", HomeManager.GetCurrentHomeSliderVideoViewModel());
         }
 
         public ActionResult OurTeam()
@@ -72,11 +74,11 @@ namespace Topodata2.Controllers
                 {
                     string[] validImageTypes =
                     {
-                    "image/gif",
-                    "image/jpeg",
-                    "image/pjpeg",
-                    "image/png"
-                };
+                        "image/gif",
+                        "image/jpeg",
+                        "image/pjpeg",
+                        "image/png"
+                    };
 
                     if (!validImageTypes.Contains(viewModel.ImageUpload.ContentType))
                     {
@@ -99,7 +101,7 @@ namespace Topodata2.Controllers
                 ViewBag.OperationStatus = errorMessage;
                 return RedirectToAction("ImageSeason", "Administration");
             }
-            
+
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
@@ -155,7 +157,7 @@ namespace Topodata2.Controllers
                 /*var t1 = new Thread(() =>
                 {
                     Thread.CurrentThread.IsBackground = true;*/
-                    MailManager.SendMail(MailType.HomeVideoUpload, viewModel);
+                MailManager.SendMail(MailType.HomeVideoUpload, viewModel);
                 /*});
                 t1.Start();*/
                 return RedirectToAction("HomeSlideVideo", "Administration");
@@ -196,7 +198,7 @@ namespace Topodata2.Controllers
                 {
                     ModelState.AddModelError("ImageUpload",
                         Messages.TieneFormatoImagen);
-                    return View("OurTeam/OurTeam",viewModel);
+                    return View("OurTeam/OurTeam", viewModel);
                 }
                 const string uploadPath = "~/resources/img/team";
                 var filename = viewModel.ImageUpload.FileName;
@@ -227,7 +229,7 @@ namespace Topodata2.Controllers
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("OurTeam", "Administration");
             }
-            
+
             TempData["OperationMessage"] = errorMessage;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
@@ -325,6 +327,7 @@ namespace Topodata2.Controllers
 
         }
 
+        //---------------------------------------------------//
         public ActionResult Documents()
         {
             return View("Documents/Documents");
@@ -335,18 +338,27 @@ namespace Topodata2.Controllers
             return View("AddDocument");
         }
 
-        public ActionResult DeleteDocument(int id)
+        public ContentResult GetAllDocumentTable()
         {
-            if (ServiceManager.DeleteDocument(id))
+            var documentos = ServiceManager.GetLastDocumentsAdded();
+            var result = documentos.Select(documento => new AllDocumentsViewModel
             {
-                TempData["OperationStatus"] = "Success";
-                return RedirectToAction("Documents", "Administration");
-            }
-            var errorMessage = string.Join("; ",
-                ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-            TempData["OperationStatus"] = "Error";
-            TempData["OperationMessage"] = errorMessage;
-            return RedirectToAction("Documents", "Administration");
+                Id = documento.Id,
+                Nombre = documento.Nombre,
+                Descripcion = documento.Descripcion,
+                SubCategoria = documento.SubCategoria,
+                Contenido = documento.Contenido,
+                RegDate = documento.RegDate.ToShortDateString()
+            }).ToList();
+            return Content(JsonConvert.SerializeObject(result), "application/json",
+                Encoding.UTF8);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDocument(int[] ids)
+        {
+            var allGood = ids.Select(ServiceManager.DeleteDocument).ToList();
+            return PartialView(allGood.Any(good => !good) ? "_AlertError" : "_AlertSuccess");
         }
 
         [HttpPost]
@@ -379,7 +391,7 @@ namespace Topodata2.Controllers
 
                     ModelState.AddModelError("ImageUpload",
                         Messages.TieneFormatoImagen);
-                    return View("Documents/Documents",model);
+                    return View("Documents/Documents", model);
                 }
                 const string uploadPath = "~/resources/img/documents";
                 var filename = model.ImageUpload.FileName;
@@ -410,7 +422,7 @@ namespace Topodata2.Controllers
                 TempData["OperationStatus"] = "Success";
                 var lastDocument = ServiceManager.GetLastDocument();
                 MailManager.SendMail(MailType.NewDocumentMessage, lastDocument);
-                return RedirectToAction("Document", "Services", new { id = lastDocument.Id });
+                return RedirectToAction("Document", "Services", new {id = lastDocument.Id});
             }
             errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
             TempData["OperationMessage"] = errorMessage;
@@ -419,10 +431,14 @@ namespace Topodata2.Controllers
             return View("Documents/Documents", model);
         }
 
+        public ActionResult RenderDocumentPartial()
+        {
+            return PartialView("Documents/Documents");
+        }
+        //----------------------------------------------------//
         [HttpPost]
         public ActionResult GetContenidoBySubCategorie(int subCategorie)
         {
-
             var contenido = new SelectList(
                 ServiceManager.GetAllContenidoBySubcategorieId(
                     new SubCategorieModel {Id = subCategorie}),
@@ -464,7 +480,7 @@ namespace Topodata2.Controllers
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
             }
-            if (ServiceManager.EditCategorie(model.IdSubCategoria,model.Descripcion))
+            if (ServiceManager.EditCategorie(model.IdSubCategoria, model.Descripcion))
             {
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("Sectores", "Administration");
@@ -475,5 +491,7 @@ namespace Topodata2.Controllers
             ViewBag.OperationStatus = errorMessage;
             return RedirectToAction("Sectores", "Administration");
         }
+
+        
     }
 }

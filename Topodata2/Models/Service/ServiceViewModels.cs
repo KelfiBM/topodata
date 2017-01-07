@@ -54,4 +54,15 @@ namespace Topodata2.Models.Service
         [Display(Name = "Nuevo nombre")]
         public string Descripcion { get; set; }
     }
+
+    public class AllDocumentsViewModel
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string SubCategoria { get; set; }
+        public string Contenido { get; set; }
+        public string RegDate { get; set; }
+
+    }
 }

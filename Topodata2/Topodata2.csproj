@@ -239,6 +239,7 @@
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\Service\ServiceViewModels.cs" />
+    <Compile Include="Models\SharedModels.cs" />
     <Compile Include="Models\Test\TestModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
@@ -513,6 +514,7 @@
     <Content Include="lib\jquery\MIT-LICENSE.txt" />
     <Content Include="resources\plugins\animate.css" />
     <Content Include="resources\plugins\back-to-top.js" />
+    <Content Include="resources\plugins\Blob.min.js" />
     <Content Include="resources\plugins\bootstrap\css\bootstrap-rtl.min.css" />
     <Content Include="resources\plugins\bootstrap\css\bootstrap-theme.css" />
     <Content Include="resources\plugins\bootstrap\css\bootstrap-theme.min.css" />
@@ -551,6 +553,7 @@
     <Content Include="resources\plugins\fancybox\source\jquery.fancybox.css" />
     <Content Include="resources\plugins\fancybox\source\jquery.fancybox.js" />
     <Content Include="resources\plugins\fancybox\source\jquery.fancybox.pack.js" />
+    <Content Include="resources\plugins\FileSaver.min.js" />
     <Content Include="resources\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="resources\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="resources\plugins\gmap\gmap.js" />
@@ -654,6 +657,7 @@
     <Content Include="resources\plugins\smoothScroll.js" />
     <Content Include="resources\plugins\style-switcher\style-switcher.css" />
     <Content Include="resources\plugins\wow-animations\js\wow.min.js" />
+    <Content Include="resources\plugins\xlsx.core.min.js" />
     <Content Include="resources\plugins\youmax-master\css\youmax.css" />
     <Content Include="resources\plugins\youmax-master\js\youmax.js" />
     <Content Include="favicon.ico" />
@@ -876,6 +880,12 @@
     <Content Include="Views\Home\About\_Sectores.cshtml" />
     <Content Include="Views\Administration\ImageSeason\ImageSeason.cshtml" />
     <Content Include="Views\Administration\ImageSeason\_AddImageSeason.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableJsCode.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableJsSrc.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableHtmlCode.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableCssSrc.cshtml" />
+    <Content Include="Views\Administration\_LeftPanelJsCode.cshtml" />
+    <Content Include="Views\Administration\Documents\_DocumentsBody.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
@@ -917,7 +927,7 @@
       <LastGenOutput>MailParameters.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="resources\Strings\Messages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>

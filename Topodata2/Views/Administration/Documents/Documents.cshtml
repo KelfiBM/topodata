@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Topodata2.Models
+@{
     ViewBag.Title = "Documentos";
 }
 
@@ -9,7 +10,8 @@
                 Html.RenderPartial("_AdministrationLeftPanel");
             }
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" >
+            <div id="operationStatus"></div>
             @if (TempData["OperationStatus"] != null)
             {
                 if (TempData["OperationStatus"].ToString() == "Error")
@@ -21,17 +23,8 @@
                     Html.RenderPartial("_AlertSuccess");
                 }
             }
-            <div class="profile-body margin-bottom-20">
-                <div class="tab-v1">
-                    <ul class="nav nav-justified nav-tabs">
-                        <li><a data-toggle="tab" href="#addDocument">Añadir Documento</a></li>
-                        <li><a data-toggle="tab" href="#allDocument">Todos los Documentos</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        @{ Html.RenderPartial("Documents/_AddDocument");}
-                        @{ Html.RenderPartial("Documents/_AllDocuments");}
-                    </div>
-                </div>
+            <div class="profile-body margin-bottom-20" id="operationSection">
+                @{Html.RenderPartial("Documents/_DocumentsBody");}
             </div>
         </div>
     </div>
@@ -41,7 +34,7 @@
     <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
     <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
     @*_AllDocuments Specific*@
-    <link href="~/resources/plugins/dynoTable/jquery.dynatable.css" rel="stylesheet" />
+    @{Html.RenderPartial("BTable/_BTableCssSrc");}
 }
 @section cssPageStyle
 {
@@ -53,24 +46,33 @@
     
     <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
     <script src="~/resources/js/plugins/datepicker.js"></script>
-    @*_AllDocuments Specific*@
-    <script src="~/resources/plugins/dynoTable/jquery.dynatable.js"></script>
+    @{Html.RenderPartial("BTable/_BTableJsSrc");}
 }
 @section documentReady
 {
     activaTab('addDocument');
     @*_AllDocuments Specific*@
-    $('#allDocumentsTable').dynatable();
     @*_AdministrationLeftPanel Specific*@
     Datepicker.initDatepicker();
 }
 
 @section ScriptsFunction
 {
+    @{ Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
+       {
+           IdTable = "allDocumentsTable",
+           UrlDeleteRecord = "/Administration/DeleteDocument/",
+           IdOperationStatus = "operationStatus"
+       }); }
+    @{Html.RenderPartial("_LeftPanelJsCode");}
     <script language="javascript" type="text/javascript">
         function activaTab(tab) {
             $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         };
+        @*BTable Specific*@
+        function detailFormatter(index, row) {
+            return '<p><b>Descripcion:</b> ' + row.Descripcion + '</p>';
+        }
     </script>
     <script language="javascript" type="text/javascript">
         function GetContenido(_subcategorieId) {
@@ -119,7 +121,4 @@
             };
         });
     </script>
-    $(document).ready(function(){
-  
-});
 }

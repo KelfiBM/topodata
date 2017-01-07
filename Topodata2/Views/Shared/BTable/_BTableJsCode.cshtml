@@ -1,0 +1,60 @@
+﻿@model Topodata2.Models.BTableModel
+<script>
+    $('#@Model.IdTable').bootstrapTable();
+    function addExport(add) {
+        var tables = $('#@Model.IdTable').tableExport({ formats: ['xlsx', 'csv', 'txt'] });
+        tables.remove();
+        if (add === 1) {
+            $('#@Model.IdTable').tableExport({ formats: ['xlsx', 'csv', 'txt'], position: 'top' });
+        }
+    }
+
+    var $table = $('#@Model.IdTable');
+    var $remove = $('#remove');
+    var selections = [];
+
+    function rowCountNumber(value, row, index) {
+        return index + 1;
+    }
+
+    $table.on('check.bs.table uncheck.bs.table ' +
+        'check-all.bs.table uncheck-all.bs.table', function() {
+            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+            // save your data, here just save the current page
+            selections = getIdSelections();
+            // push or splice the selections if you want to save all data selections
+        });
+    $table.on('refresh.bs.table reset-view.bs.table', function() {
+        addExport();
+    });
+    $remove.click(function() {
+        var ids = getIdSelections();
+        var url = '@Model.UrlDeleteRecord';
+        $.ajax({
+            url: url,
+            data: { ids: ids },
+            cache: false,
+            type: "POST",
+            success: function(result) {
+                $('#@Model.IdOperationStatus').html(result);
+                $table.bootstrapTable('remove', {
+                    field: 'Id',
+                    values: ids
+                });
+            },
+            error: function(result) {
+                $('#@Model.IdOperationStatus').html(result);
+                $table.bootstrapTable('refresh', {
+                    silent: true
+                });
+            }
+        });
+        $remove.prop('disabled', true);
+    });
+
+    function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function(row) {
+            return row.Id;
+        });
+    }
+</script>

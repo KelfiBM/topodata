@@ -3,7 +3,7 @@
      class="img-responsive profile-img margin-bottom-20"/>
 <ul id="sidebar-nav-1" class="nav list-group sidebar-nav-v1 margin-bottom-40">
     <li class="list-group-item">
-        <a href="@Url.Action("Documents", "Administration")">
+        <a href="@Url.Action("Documents", "Administration")" onclick="renderSection('/Administration/RenderDocumentPartial/'); return false;">
             <i class="fa fa-cog"></i>
             Documentos
         </a>

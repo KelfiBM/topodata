@@ -144,4 +144,7 @@
   <data name="MustWrite" xml:space="preserve">
     <value>Favor escriba algun mensaje</value>
   </data>
+  <data name="ErrorRealizandoOperacion" xml:space="preserve">
+    <value>Ha sucedido un error realizando la operacion.</value>
+  </data>
 </root>

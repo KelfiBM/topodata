@@ -1,0 +1,10 @@
+﻿<div class="tab-v1">
+    <ul class="nav nav-justified nav-tabs">
+        <li><a data-toggle="tab" href="#addDocument">Añadir Documento</a></li>
+        <li><a data-toggle="tab" href="#allDocument">Todos los Documentos</a></li>
+    </ul>
+    <div class="tab-content">
+        @{ Html.RenderPartial("Documents/_AddDocument");}
+        @{ Html.RenderPartial("Documents/_AllDocuments");}
+    </div>
+</div>
