@@ -1,15 +1,14 @@
 ﻿@model Topodata2.Models.Home.FlipboardViewModel
-<div id="add" class="profile-edit tab-pane fade in active">
-    <h2 class="heading-md">Añadir Revista de Flipboard</h2>
-    <br>
-    @using (Html.BeginForm("AddFlipboard", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
+<h2 class="heading-md">Añadir Revista de Flipboard</h2>
+<br/>
+    @using (Html.BeginForm("AddFlipboard", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "addFlipboardForm"}))
     {
         <dl class="dl-horizontal">
             <dt>@Html.DisplayNameFor(m => m.Url)</dt>
             <dd>
                 <section>
                     <label class="input">
-                        @Html.EditorFor(m => m.Url, new { htmlAttributes = new { @placeholder = "Url de la revista", @class = "changeable" } })
+                        @Html.EditorFor(m => m.Url, new {htmlAttributes = new {@placeholder = "Url de la revista"}})
                         <b class="tooltip tooltip-bottom-right">Link de la revista en flipboard</b>
                         @Html.ValidationMessageFor(m => m.Url)
                     </label>
@@ -19,7 +18,7 @@
             <dd>
                 <section>
                     <label class="input">
-                        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @placeholder = "Nombre de la revista", @class = "changeable" } })
+                        @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@placeholder = "Nombre de la revista"}})
                         <b class="tooltip tooltip-bottom-right">Nombre de la revista en Flipboard</b>
                         @Html.ValidationMessageFor(m => m.Name)
                     </label>
@@ -27,7 +26,5 @@
             </dd>
         </dl>
         <br>
-        <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
-        <button id="submitButton" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
+        <button id="submitButton" class="btn-u" type="submit">Guardar cambios</button>
     }
-</div>

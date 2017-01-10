@@ -5,8 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using SparkPost;
@@ -17,7 +15,6 @@ using Topodata2.Models.Mail;
 using Topodata2.Models.User;
 using Topodata2.resources.Strings;
 using static System.Web.HttpContext;
-using Attachment = System.Net.Mail.Attachment;
 using File = System.IO.File;
 
 namespace Topodata2.Managers
@@ -342,7 +339,7 @@ namespace Topodata2.Managers
                 var body = MakeBody(Paths.EmailNewDocumentAdded);
                 body = body.Replace("{title1}", model.Nombre);
                 body = body.Replace("{categoria1}", model.SubCategoria);
-                body = body.Replace("{descripcion1}", model.Descripcion);
+                body = body.Replace("{descripcion1}", model.Descripcion.Length >= 200 ? model.Descripcion.Substring(0,197)+"..." : model.Descripcion);
                 body = body.Replace("{urlDocument}", DomainSettings.UrlDocument + model.Id);
                 body = body.Replace("{imageDocument}", UploadImage(Current.Server.MapPath("~" + model.ImagePath)));
 

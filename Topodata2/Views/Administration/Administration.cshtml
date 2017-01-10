@@ -1,5 +1,6 @@
 ﻿@using Topodata2.Models.Administration
 @using Topodata2.Models.Shared
+@using Topodata2.resources.Strings
 @model AdministrationModel
 @{
     ViewBag.Title = Model.Title;
@@ -34,12 +35,12 @@
                     </ul>
                     <div class="tab-content">
                         <div id="@Model.Tabs[0].Key" class="profile-edit tab-pane fade in active">
-                            @{ Html.RenderPartial(Model.Tabs[0].Value2,Model.ViewModel);}
+                            @{ Html.RenderPartial(Model.Tabs[0].Value2, Model.ViewModel);}
                         </div>
                         @for (var i = 1; i < Model.Tabs.Count; i++)
                         {
                             <div id="@Model.Tabs[i].Key" class="profile-edit tab-pane fade">
-                                @{ Html.RenderPartial(Model.Tabs[i].Value2,Model.ViewModel); } 
+                                @{ Html.RenderPartial(Model.Tabs[i].Value2, Model.ViewModel); }
                             </div>
                         }
                     </div>
@@ -101,13 +102,33 @@
                 browser_spellcheck: true,
                 init_instance_callback: function (editor) {
                     editor.on('Change', function (e) {
-                        $('#Descripcion').val(tinymce.activeEditor.getContent({ format: 'text' }));
+                        $('#@Model.IdHiddenRaw').val(tinymce.activeEditor.getContent({ format: 'text' }));
                     });
                 }
             });
         </script>
     }
     @{ Html.RenderPartial("_LeftPanelJsCode"); }
+    @if (Model.UseDetailFormatter)
+    {
+        <script language="javascript" type="text/javascript">
+            function detailFormatter(index, row) {
+                @switch (Model.Action)
+                {
+                    case ActionType.Documents:
+                        @Html.Raw("return '<p><b>Descripcion:</b> ' + row.Descripcion + '</p>' + '<p><b>Url:</b> ' + row.Url + '</p>'")
+                        break;
+                    case ActionType.HomeSlideVideo:
+                        break;
+                    case ActionType.Flipboard:
+                        @Html.Raw("return '<p><b>Url:</b> ' + row.Url + '</p>'")
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        </script>
+    }
     @switch (Model.Action)
     {
         case ActionType.Documents:
@@ -115,11 +136,19 @@
                 window.addEventListener("load", function() {
                     document.getElementById("subcategorielist").onchange();
                 }, false);
-
                 @*BTable Specific*@
-                function detailFormatter(index, row) {
-                    return '<p><b>Descripcion:</b> ' + row.Descripcion + '</p>'+
-                        '<p><b>Url:</b> ' + row.Url + '</p>';
+                function getDocumentLink(index, row) {
+                    return '<a href="@DomainSettings.UrlDocumentLocal' + row.Id + '" target="_blank" class="btn-u btn-u-xs" style="color: #fff">Click</a>';
+                }
+            </script>
+            break;
+        case ActionType.HomeSlideVideo:
+            break;
+        case ActionType.Flipboard:
+            <script language="javascript" type="text/javascript">
+                @*BTable Specific*@
+                function getFlipboardLink(index, row) {
+                    return '<a href="' + row.Url + '" target="_blank" class="btn-u btn-u-xs" style="color: #fff">Click</a>';
                 }
             </script>
             break;

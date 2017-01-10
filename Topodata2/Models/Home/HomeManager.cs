@@ -197,12 +197,12 @@ namespace Topodata2.Models.Home
             });
         }
 
-        public static bool DeleteFlipboard(Flipboard model)
+        public static bool DeleteFlipboard(int id)
         {
             var result = false;
             var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
                 DatabaseParameters.DeleteFlipboard,
-                model.Id.ToString());
+                id.ToString());
             if (value.Count > 0)
             {
                 result = true;

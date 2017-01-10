@@ -1,8 +1,7 @@
 ﻿@using Topodata2.Models.Service
 @model DocumentViewModel
-<div id="addDocument" class="profile-edit tab-pane fade in active">
-    <h2 class="heading-md">Añadir Documento</h2>
-    <br>
+<h2 class="heading-md">Añadir Documento</h2>
+<br/>
     @using (Html.BeginForm("AddDocument", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "AddDocumentForm", enctype = "multipart/form-data"}))
     {
         <dl class="dl-horizontal">
@@ -52,13 +51,13 @@
                 <section>
                     <label class="textarea">
                         <i class="icon-append fa fa-pencil"></i>
-                        @Html.EditorFor(m => m.DescripcionHtml, new { htmlAttributes = new { @rows = "5", @required = "" } })
+                        @Html.EditorFor(m => m.DescripcionHtml, new {htmlAttributes = new {@rows = "5", @required = ""}})
                         <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.DescripcionHtml)</b>
                         @Html.ValidationMessageFor(m => m.DescripcionHtml)
                     </label>
                 </section>
             </dd>
-                        @Html.TextBoxFor(m => m.Descripcion, new {@hidden = "hidden"})
+            @Html.TextBoxFor(m => m.Descripcion, new {@hidden = "hidden"})
             <dt>@Html.DisplayNameFor(m => m.ImageUpload)</dt>
             <dd>
                 <section>
@@ -75,4 +74,3 @@
         </dl>
         <button type="submit" class="btn btn-u">Añadir documento</button>
     }
-</div>

@@ -177,4 +177,7 @@
   <data name="UrlDocument" xml:space="preserve">
     <value>topodata.com/Services/Document/</value>
   </data>
+  <data name="UrlDocumentLocal" xml:space="preserve">
+    <value>/Services/Document/</value>
+  </data>
 </root>

@@ -1,5 +1,5 @@
 ﻿@model Topodata2.Models.Shared.BTableModel
-<div id="allDocumentToolbar">
+<div id="allToolbar">
     <button id="remove" class="btn btn-default" disabled>
         <i class="glyphicon glyphicon-trash"></i>
     </button>
@@ -11,7 +11,7 @@
            data-toggle="table"
            data-url="@Model.UrlDataTable"
            data-checkbox-header="false"
-           data-toolbar="#allDocumentToolbar"
+           data-toolbar="#allToolbar"
            data-search="true"
            data-show-refresh="true"
            data-show-columns="true"
@@ -34,7 +34,11 @@
             @{
                 foreach (var column in Model.ColumData)
                 {
-                    @Html.Raw("<th data-sortable='true' data-field=" + column.Key+">"+column.Value+"</th>")
+                    @Html.Raw("<th data-sortable='true' data-field='" + column.Key+"'>"+column.Value+"</th>")
+                }
+                foreach (var columnCustom in Model.CustomColumData)
+                {
+                    @Html.Raw("<th data-formatter='"+columnCustom.Key+"'>"+columnCustom.Value+"</th>")
                 }
             }
             <th data-checkbox="true"></th>

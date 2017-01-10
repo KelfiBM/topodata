@@ -124,7 +124,7 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Link del video de youtube.
+        ///   Looks up a localized string similar to Link del video.
         /// </summary>
         public static string HomeSliderVideoUrlVideo {
             get {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using Topodata2.Classes;
 using Topodata2.resources.Strings;
 
 namespace Topodata2.Models.Home
@@ -14,7 +15,7 @@ namespace Topodata2.Models.Home
         public HttpPostedFileBase ImageUpload { get; set; }
     }
 
-    public class HomeSlideVideoViewModel
+    public class HomeSlideVideoViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "HomeSliderVideoUrlVideo")]
         [DataType(DataType.Url)]
@@ -144,7 +145,7 @@ namespace Topodata2.Models.Home
         public HttpPostedFileBase ImageUpload { get; set; }
     }
 
-    public class FlipboardViewModel
+    public class FlipboardViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "UrlRevista")]
         [DataType(DataType.Url)]
@@ -184,5 +185,14 @@ namespace Topodata2.Models.Home
         {
             return value.ToString().Contains("flipboard.com/@topodata/");
         }
+    }
+
+    public class AllFlipboardViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string RegDate { get; set; }
+
     }
 }

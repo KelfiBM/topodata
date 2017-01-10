@@ -35,19 +35,9 @@ namespace Topodata2.Controllers
             return View(HomeManager.GetLastHomeTextViewModel());
         }
 
-        public ActionResult HomeSlideVideo()
-        {
-            return View("HomeSlide/HomeSlide", HomeManager.GetCurrentHomeSliderVideoViewModel());
-        }
-
         public ActionResult OurTeam()
         {
             return View("OurTeam/OurTeam");
-        }
-
-        public ActionResult Flipboard()
-        {
-            return View("Flipboard/Flipboard");
         }
 
         public ActionResult ImageSeason()
@@ -138,40 +128,6 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public ActionResult HomeSlideVideo(HomeSlideVideoViewModel viewModel)
-        {
-            string errorMessage;
-            if (!ModelState.IsValid)
-            {
-                errorMessage = string.Join("; ",
-                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                TempData["OperationStatus"] = "Error";
-                TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("HomeSlideVideo", "Administration");
-                /*var errors = string.Join("; ",
-                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
-            }
-            if (HomeManager.AddHomeSlideVideo(viewModel))
-            {
-                TempData["OperationStatus"] = "Success";
-                viewModel.UrlVideo = Youtube.GetVideoId(viewModel.UrlVideo);
-                /*var t1 = new Thread(() =>
-                {
-                    Thread.CurrentThread.IsBackground = true;*/
-                MailManager.SendMail(MailType.HomeVideoUpload, viewModel);
-                /*});
-                t1.Start();*/
-                return RedirectToAction("HomeSlideVideo", "Administration");
-            }
-            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
-            TempData["OperationMessage"] = errorMessage;
-            TempData["OperationStatus"] = "Error";
-            ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("HomeSlideVideo", "Administration");
-        }
-
-        [HttpPost]
         public ActionResult AddOurTeam(OurTeamViewModel viewModel)
         {
             var errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
@@ -258,52 +214,6 @@ namespace Topodata2.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult AddFlipboard(FlipboardViewModel viewModel)
-        {
-            string errorMessage;
-            if (!ModelState.IsValid)
-            {
-                errorMessage = string.Join("; ",
-                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                TempData["OperationStatus"] = "Error";
-                TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("Flipboard", "Administration");
-                /*var errors = string.Join("; ",
-                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
-            }
-            if (HomeManager.AddFlipboard(viewModel))
-            {
-                TempData["OperationStatus"] = "Success";
-                return RedirectToAction("Flipboard", "Administration");
-            }
-            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
-            TempData["OperationMessage"] = errorMessage;
-            TempData["OperationStatus"] = "Error";
-            ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("Flipboard", "Administration");
-        }
-
-        public ActionResult DeleteFlipboard(int id)
-        {
-            var model = new Flipboard
-            {
-                Id = Convert.ToInt32(id)
-            };
-
-            if (HomeManager.DeleteFlipboard(model))
-            {
-                TempData["OperationStatus"] = "Success";
-                return RedirectToAction("Flipboard", "Administration");
-            }
-            var errorMessage = string.Join("; ",
-                ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-            TempData["OperationStatus"] = "Error";
-            TempData["OperationMessage"] = errorMessage;
-            return RedirectToAction("Flipboard", "Administration");
-        }
-
         public ActionResult AllUser()
         {
             return View("Users/AllUsers");
@@ -338,7 +248,7 @@ namespace Topodata2.Controllers
                 Title = "Documentos",
                 UseTable = true,
                 UseTextArea = true,
-                IdTabPrincipal = "addDocument",
+                IdTabPrincipal = "add",
                 IdTable = "allDocumentsTable",
                 UrlDeleteRecord = "/Administration/DeleteDocument/",
                 IdsFormValidation = new List<string> {"AddDocumentForm"},
@@ -346,25 +256,22 @@ namespace Topodata2.Controllers
                 {
                     new ThreeValuesString
                     {
-                        Key = "addDocument",
+                        Key = "add",
                         Value1 = "Añadir Documento",
                         Value2 = "Documents/_AddDocument"
                     },
                     new ThreeValuesString
                     {
-                        Key = "allDocument",
+                        Key = "all",
                         Value1 = "Todos los Documentos",
                         Value2 = "Documents/_AllDocuments"
                     }
                 },
-                ViewModel = new DocumentViewModel()
+                ViewModel = new DocumentViewModel(),
+                IdHiddenRaw = "Descripcion",
+                UseDetailFormatter = true
             };
             return View("Administration",model);
-        }
-
-        public ActionResult AddDocument()
-        {
-            return View("AddDocument");
         }
 
         public ContentResult GetAllDocumentTable()
@@ -461,21 +368,163 @@ namespace Topodata2.Controllers
             return View("Documents/Documents", model);
         }
 
-        public ActionResult RenderDocumentPartial()
-        {
-            return PartialView("Documents/_DocumentsBody");
-        }
-        //----------------------------------------------------//
         [HttpPost]
         public ActionResult GetContenidoBySubCategorie(int subCategorie)
         {
             var contenido = new SelectList(
                 ServiceManager.GetAllContenidoBySubcategorieId(
-                    new SubCategorieModel {Id = subCategorie}),
+                    new SubCategorieModel { Id = subCategorie }),
                 "Id", "Descripcion");
             return Json(contenido);
         }
+        //----------------------------------------------------//
+        public ActionResult HomeSlideVideo()
+        {
+            var model = new AdministrationModel
+            {
+                Action = ActionType.HomeSlideVideo,
+                Title = "Video Slide",
+                UseTable = false,
+                UseTextArea = false,
+                IdTabPrincipal = "add",
+                IdTable = null,
+                UrlDeleteRecord = null,
+                IdsFormValidation = new List<string> { "AddHomeSlideVideoForm" },
+                Tabs = new List<ThreeValuesString>
+                {
+                    new ThreeValuesString
+                    {
+                        Key = "add",
+                        Value1 = "Añadir Video",
+                        Value2 = "HomeSlide/_AddHomeSlideVideo"
+                    },
+                },
+                ViewModel = HomeManager.GetCurrentHomeSliderVideoViewModel(),
+                IdHiddenRaw = null,
+                UseDetailFormatter = false
+            };
 
+            return View("Administration", model);
+        }
+
+        [HttpPost]
+        public ActionResult HomeSlideVideo(HomeSlideVideoViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("HomeSlideVideo", "Administration");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (HomeManager.AddHomeSlideVideo(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                viewModel.UrlVideo = Youtube.GetVideoId(viewModel.UrlVideo);
+                /*var t1 = new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;*/
+                MailManager.SendMail(MailType.HomeVideoUpload, viewModel);
+                /*});
+                t1.Start();*/
+                return RedirectToAction("HomeSlideVideo", "Administration");
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("HomeSlideVideo", "Administration");
+        }
+        //-----------------------------------------------------//
+        public ActionResult Flipboard()
+        {
+            var model = new AdministrationModel
+            {
+                Action = ActionType.Flipboard,
+                Title = "Flipboard",
+                UseTable = true,
+                UseTextArea = false,
+                IdTabPrincipal = "add",
+                IdTable = "allFlipboardTable",
+                UrlDeleteRecord = "/Administration/DeleteFlipboard/",
+                IdsFormValidation = new List<string> { "addFlipboardForm" },
+                Tabs = new List<ThreeValuesString>
+                {
+                    new ThreeValuesString
+                    {
+                        Key = "add",
+                        Value1 = "Añadir Revista",
+                        Value2 = "Flipboard/_AddFlipboard"
+                    },
+                    new ThreeValuesString
+                    {
+                        Key = "all",
+                        Value1 = "Todas las Revistas",
+                        Value2 = "Flipboard/_DeleteFlipboard"
+                    }
+                },
+                ViewModel = new FlipboardViewModel(),
+                IdHiddenRaw = null,
+                UseDetailFormatter = true
+            };
+
+            return View("Administration",model);
+        }
+
+        public ContentResult GetAllFlipboardTable()
+        {
+            var flipboards = HomeManager.GetAllFlipboard();
+            var result = flipboards.Select(flipboard => new AllFlipboardViewModel
+            {
+                Id = flipboard.Id,
+                Name = flipboard.Name,
+                RegDate = flipboard.RegDate.ToShortDateString(),
+                Url = flipboard.Url
+            }).ToList();
+            return Content(JsonConvert.SerializeObject(result), "application/json",
+                Encoding.UTF8);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFlipboard(int[] ids)
+        {
+            var allGood = ids.Select(HomeManager.DeleteFlipboard).ToList();
+            return PartialView(allGood.Any(good => !good) ? "_AlertError" : "_AlertSuccess");
+        }
+
+        [HttpPost]
+        public ActionResult AddFlipboard(FlipboardViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ModelState.IsValid)
+            {
+                errorMessage = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                TempData["OperationStatus"] = "Error";
+                TempData["OperationMessage"] = errorMessage;
+                return RedirectToAction("Flipboard", "Administration");
+                /*var errors = string.Join("; ",
+                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
+                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+            }
+            if (HomeManager.AddFlipboard(viewModel))
+            {
+                TempData["OperationStatus"] = "Success";
+                return RedirectToAction("Flipboard", "Administration");
+            }
+            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            TempData["OperationMessage"] = errorMessage;
+            TempData["OperationStatus"] = "Error";
+            ViewBag.OperationStatus = errorMessage;
+            return RedirectToAction("Flipboard", "Administration");
+        }
+
+        //-----------------------------------------------------//
         public ActionResult Sectores()
         {
             return View("Sectores/Sectores");

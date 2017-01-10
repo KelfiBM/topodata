@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="HomeSliderVideoUrlVideo" xml:space="preserve">
-    <value>Link del video de youtube</value>
+    <value>Link del video</value>
   </data>
   <data name="Nombres" xml:space="preserve">
     <value>Nombres</value>

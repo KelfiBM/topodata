@@ -239,5 +239,14 @@ namespace Topodata2.resources.Strings {
                 return ResourceManager.GetString("UrlDocument", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Services/Document/.
+        /// </summary>
+        public static string UrlDocumentLocal {
+            get {
+                return ResourceManager.GetString("UrlDocumentLocal", resourceCulture);
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace Topodata2.Models.Shared
         public string UrlDataTable { get; set; }
         public bool DetailFormatter { get; set; }
         public Dictionary<string,string> ColumData { get; set; }
+        public Dictionary<string,string> CustomColumData { get; set; }
     }
     public struct ThreeValuesString
     {

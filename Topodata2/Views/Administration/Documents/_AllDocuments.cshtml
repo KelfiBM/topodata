@@ -1,16 +1,20 @@
 ﻿@using Topodata2.Models.Shared
 <h2 class="heading-md">Eliminar Documento</h2>
 <br>
-@{Html.RenderPartial("BTable/_BTableHtmlCode", new BTableModel
-    {
-        UrlDataTable = "/Administration/GetAllDocumentTable/",
-        IdTable = "allDocumentsTable",
-        DetailFormatter = true,
-        ColumData = new Dictionary<string, string>
-              {
-                  {"Nombre", "Nombre"},
-                  {"SubCategoria", "Sector"},
-                  {"Contenido", "Grupo"},
-                  {"RegDate", "Fecha Registro"}
-              }
-    });}
+@{ Html.RenderPartial("BTable/_BTableHtmlCode", new BTableModel
+   {
+       UrlDataTable = "/Administration/GetAllDocumentTable/",
+       IdTable = "allDocumentsTable",
+       DetailFormatter = true,
+       ColumData = new Dictionary<string, string>
+       {
+           {"Nombre", "Nombre"},
+           {"SubCategoria", "Sector"},
+           {"Contenido", "Grupo"},
+           {"RegDate", "Fecha Registro"}
+       },
+       CustomColumData = new Dictionary<string, string>
+       {
+           {"getDocumentLink", "Abrir"}
+       }
+   }); }
