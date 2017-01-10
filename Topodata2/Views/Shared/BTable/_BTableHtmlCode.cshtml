@@ -1,4 +1,4 @@
-﻿@model Topodata2.Models.BTableModel
+﻿@model Topodata2.Models.Shared.BTableModel
 <div id="allDocumentToolbar">
     <button id="remove" class="btn btn-default" disabled>
         <i class="glyphicon glyphicon-trash"></i>
@@ -30,11 +30,11 @@
         <thead>
         <tr>
             <th data-formatter="rowCountNumber">#</th>
-            <th data-field="Id" data-visible="false" data-searchable="false">Id</th>
+            <th data-sortable="true" data-field="Id" data-visible="false" data-searchable="false">Id</th>
             @{
                 foreach (var column in Model.ColumData)
                 {
-                    @Html.Raw("<th data-field="+column.Key+">"+column.Value+"</th>")
+                    @Html.Raw("<th data-sortable='true' data-field=" + column.Key+">"+column.Value+"</th>")
                 }
             }
             <th data-checkbox="true"></th>

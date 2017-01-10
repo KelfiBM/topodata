@@ -99,7 +99,9 @@ namespace Topodata2.Models.Service
                             SubCategoria = reader.GetString(5),
                             IdSubCategorie = reader.GetInt32(6),
                             Contenido = reader.GetString(7),
-                            IdContenido = reader.GetInt32(8)
+                            IdContenido = reader.GetInt32(8),
+                            Url = reader.GetString(9),
+                            DescripcionHtml = reader.GetString(10)
                         });
                     }
                 }

@@ -1,0 +1,27 @@
+﻿@using Topodata2.Classes
+@model Topodata2.Models.Home.HomeSlideVideoViewModel
+@{
+    Model.UrlVideo = Youtube.GetWatchFromId(Model.UrlVideo);
+}
+<div id="addDocument" class="profile-edit tab-pane fade in active">
+    <h2 class="heading-md">Añadir Video</h2>
+    <p>@Html.DisplayNameFor(m => m.UrlVideo)</p>
+    <br>
+    @using (Html.BeginForm("HomeSlideVideo", "Administration", null, FormMethod.Post, new { @class = "sky-form", @id = "AddHomeSlideVideoForm" }))
+    {
+        <dl class="dl-horizontal">
+            <dt>Link del video</dt>
+            <dd>
+                <section>
+                    <label class="input">
+                        <i class="icon-append fa fa-pencil"></i>
+                        @Html.EditorFor(m => m.UrlVideo, new { htmlAttributes = new { @placeholder = "Url", @required = "" } })
+                        <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.UrlVideo)</b>
+                        @Html.ValidationMessageFor(m => m.UrlVideo)
+                    </label>
+                </section>
+            </dd>
+        </dl>
+        <button type="submit" class="btn btn-u">Añadir Video</button>
+    }
+</div>

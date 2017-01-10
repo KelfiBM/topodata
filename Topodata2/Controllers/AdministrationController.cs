@@ -11,9 +11,11 @@ using Newtonsoft.Json;
 using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.Models;
+using Topodata2.Models.Administration;
 using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
 using Topodata2.Models.Service;
+using Topodata2.Models.Shared;
 using Topodata2.Models.User;
 using Topodata2.resources.Strings;
 
@@ -35,7 +37,7 @@ namespace Topodata2.Controllers
 
         public ActionResult HomeSlideVideo()
         {
-            return View("HomeSlide/HomeSlideVideo", HomeManager.GetCurrentHomeSliderVideoViewModel());
+            return View("HomeSlide/HomeSlide", HomeManager.GetCurrentHomeSliderVideoViewModel());
         }
 
         public ActionResult OurTeam()
@@ -330,7 +332,34 @@ namespace Topodata2.Controllers
         //---------------------------------------------------//
         public ActionResult Documents()
         {
-            return View("Documents/Documents");
+            var model = new AdministrationModel
+            {
+                Action = ActionType.Documents,
+                Title = "Documentos",
+                UseTable = true,
+                UseTextArea = true,
+                IdTabPrincipal = "addDocument",
+                IdTable = "allDocumentsTable",
+                UrlDeleteRecord = "/Administration/DeleteDocument/",
+                IdsFormValidation = new List<string> {"AddDocumentForm"},
+                Tabs = new List<ThreeValuesString>
+                {
+                    new ThreeValuesString
+                    {
+                        Key = "addDocument",
+                        Value1 = "Añadir Documento",
+                        Value2 = "Documents/_AddDocument"
+                    },
+                    new ThreeValuesString
+                    {
+                        Key = "allDocument",
+                        Value1 = "Todos los Documentos",
+                        Value2 = "Documents/_AllDocuments"
+                    }
+                },
+                ViewModel = new DocumentViewModel()
+            };
+            return View("Administration",model);
         }
 
         public ActionResult AddDocument()
@@ -348,7 +377,8 @@ namespace Topodata2.Controllers
                 Descripcion = documento.Descripcion,
                 SubCategoria = documento.SubCategoria,
                 Contenido = documento.Contenido,
-                RegDate = documento.RegDate.ToShortDateString()
+                RegDate = documento.RegDate.ToShortDateString(),
+                Url = documento.Url
             }).ToList();
             return Content(JsonConvert.SerializeObject(result), "application/json",
                 Encoding.UTF8);
@@ -433,7 +463,7 @@ namespace Topodata2.Controllers
 
         public ActionResult RenderDocumentPartial()
         {
-            return PartialView("Documents/Documents");
+            return PartialView("Documents/_DocumentsBody");
         }
         //----------------------------------------------------//
         [HttpPost]

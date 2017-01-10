@@ -1,4 +1,4 @@
-﻿@model Topodata2.Models.Home.FlipboardViewModel
+﻿
 @{
     ViewBag.Title = "Flipboard";
 }
@@ -22,17 +22,7 @@
                 }
             }
             <div class="profile-body margin-bottom-20">
-                <div class="tab-v1">
-                    <ul class="nav nav-justified nav-tabs">
-                        <li><a data-toggle="tab" href="#add">Añadir Revista</a></li>
-                        @*<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>*@
-                        <li><a data-toggle="tab" href="#delete">Borrar Revista</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        @{Html.RenderPartial("Flipboard/_AddFlipboard", Model, ViewData);}
-                        @{Html.RenderPartial("Flipboard/_DeleteFlipboard", Model, ViewData);}
-                    </div>
-                </div>
+                @{Html.RenderPartial("Flipboard/_FlipboardBody");}
             </div>
         </div>
     </div>
@@ -83,6 +73,7 @@
 }
 @section documentReady
 {
+    activaTab('add');
     RegForm.initRegForm();
     CheckoutForm.initCheckoutForm();
     Datepicker.initDatepicker();

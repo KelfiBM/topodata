@@ -1,6 +1,6 @@
-﻿@using Topodata2.Models.Shared
+﻿@using Topodata2.Models
 @{
-    ViewBag.Title = "Documentos";
+    ViewBag.Title = "Home Slide";
 }
 
 <div class="container content profile">
@@ -24,7 +24,7 @@
                 }
             }
             <div class="profile-body margin-bottom-20" id="operationSection">
-                @{Html.RenderPartial("Documents/_DocumentsBody");}
+                @{Html.RenderPartial("HomeSlide/_HomeSlideBody");}
             </div>
         </div>
     </div>
@@ -36,37 +36,44 @@
     @*_AllDocuments Specific*@
     @{Html.RenderPartial("BTable/_BTableCssSrc");}
 }
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/profile.css" rel="stylesheet" />
+}
 
 @section PageScripts
 {
+    
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script src="~/resources/js/plugins/datepicker.js"></script>
     @{Html.RenderPartial("BTable/_BTableJsSrc");}
 }
 @section documentReady
 {
-    activaTab('addDocument');
+    activaTab('addVideo');
+    @*_AllDocuments Specific*@
     @*_AdministrationLeftPanel Specific*@
-    makeFormValidation('AddDocumentForm');
+    Datepicker.initDatepicker();
 }
 
 @section ScriptsFunction
 {
-    @{ Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
-       {
-           IdTable = "allDocumentsTable",
-           UrlDeleteRecord = "/Administration/DeleteDocument/",
-           IdOperationStatus = "operationStatus"
-       }); }
-    @{Html.RenderPartial("_LeftPanelJsCode");}
-
-    @*Documents Specific*@
-    <script language="javascript" type="text/javascript">
-        window.addEventListener("load", function() {
-            document.getElementById("subcategorielist").onchange();
-        }, false);
-
-        @*BTable Specific*@
-        function detailFormatter(index, row) {
-            return '<p><b>Descripcion:</b> ' + row.Descripcion + '</p>';
-        }
+    <script>
+        $(document).ready(function() {
+            var form = $('#AddHomeSlideVideoForm'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+            settings.errorPlacement = function(label, element) {
+                oldErrorPlacement(label, element);
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+            };
+            settings.success = function(label) {
+                label.parents('label').removeClass('state-error');
+                oldSuccess(label);
+            };
+        });
     </script>
 }

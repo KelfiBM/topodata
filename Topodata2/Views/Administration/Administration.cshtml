@@ -1,0 +1,129 @@
+﻿@using Topodata2.Models.Administration
+@using Topodata2.Models.Shared
+@model AdministrationModel
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="container content profile">
+    <div class="row">
+        <div class="col-md-3 md-margin-bottom-40">
+            @{
+                Html.RenderPartial("_AdministrationLeftPanel");
+            }
+        </div>
+        <div class="col-md-9">
+            <div id="operationStatus"></div>
+            @if (TempData["OperationStatus"] != null)
+            {
+                if (TempData["OperationStatus"].ToString() == "Error")
+                {
+                    Html.RenderPartial("_AlertError");
+                }
+                if (TempData["OperationStatus"].ToString() == "Success")
+                {
+                    Html.RenderPartial("_AlertSuccess");
+                }
+            }
+            <div class="profile-body margin-bottom-20" id="operationSection">
+                <div class="tab-v1">
+                    <ul class="nav nav-justified nav-tabs">
+                        @foreach (var tab in Model.Tabs)
+                        {
+                            <li><a data-toggle="tab" href="#@tab.Key">@tab.Value1</a></li>
+                        }
+                    </ul>
+                    <div class="tab-content">
+                        <div id="@Model.Tabs[0].Key" class="profile-edit tab-pane fade in active">
+                            @{ Html.RenderPartial(Model.Tabs[0].Value2,Model.ViewModel);}
+                        </div>
+                        @for (var i = 1; i < Model.Tabs.Count; i++)
+                        {
+                            <div id="@Model.Tabs[i].Key" class="profile-edit tab-pane fade">
+                                @{ Html.RenderPartial(Model.Tabs[i].Value2,Model.ViewModel); } 
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section cssPlugins
+{
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+    @if (Model.UseTable)
+    {
+        Html.RenderPartial("BTable/_BTableCssSrc");
+    }
+}
+
+@section PageScripts
+{
+    @if (Model.UseTable)
+    {
+        Html.RenderPartial("BTable/_BTableJsSrc");
+    }
+    @if (Model.UseTextArea)
+    {
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    }
+}
+
+@section documentReady
+{
+    activaTab('@Model.IdTabPrincipal');
+    @foreach (var idForm in Model.IdsFormValidation)
+    {
+        @Html.Raw("makeFormValidation('"+idForm+"');")
+    }
+}
+
+@section ScriptsFunction
+{
+    @if (Model.UseTable)
+    {
+        Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
+        {
+            IdTable = Model.IdTable,
+            UrlDeleteRecord = Model.UrlDeleteRecord,
+            IdOperationStatus = "operationStatus"
+        });
+    }
+    @if (Model.UseTextArea)
+    {
+        <script>
+            tinymce.init({
+                selector: 'textarea',
+                plugins: "autosave autolink autoresize charmap hr insertdatetime spellchecker",
+                autoresize_max_height: 500,
+                spellchecker_language: 'es',
+                browser_spellcheck: true,
+                init_instance_callback: function (editor) {
+                    editor.on('Change', function (e) {
+                        $('#Descripcion').val(tinymce.activeEditor.getContent({ format: 'text' }));
+                    });
+                }
+            });
+        </script>
+    }
+    @{ Html.RenderPartial("_LeftPanelJsCode"); }
+    @switch (Model.Action)
+    {
+        case ActionType.Documents:
+            <script language="javascript" type="text/javascript">
+                window.addEventListener("load", function() {
+                    document.getElementById("subcategorielist").onchange();
+                }, false);
+
+                @*BTable Specific*@
+                function detailFormatter(index, row) {
+                    return '<p><b>Descripcion:</b> ' + row.Descripcion + '</p>'+
+                        '<p><b>Url:</b> ' + row.Url + '</p>';
+                }
+            </script>
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+}

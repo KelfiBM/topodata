@@ -9,16 +9,17 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.WebPages;
 using Topodata2.Models.Service;
+using Topodata2.resources.Strings;
 
 namespace Topodata2.Models
 {
     public class ServiceDocumentViewModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Este campo es requerido")]
+        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido")]
+        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [DataType(DataType.MultilineText)]
         public string Descripcion { get; set; }
 
@@ -26,11 +27,11 @@ namespace Topodata2.Models
 
         public DateTime FechaPublicacion { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido")]
+        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido")]
+        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         public int IdCategoria { get; set; }
 
         public bool Exists { get; set; }
@@ -429,5 +430,6 @@ namespace Topodata2.Models
         public string SubCategorieImagePath { get; set; }
         public int IdSubCategorie { get; set; }
         public int IdContenido { get; set; }
+        public string DescripcionHtml { get; set; }
     }
 }

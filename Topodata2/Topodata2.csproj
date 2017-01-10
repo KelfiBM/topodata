@@ -225,6 +225,7 @@
     <Compile Include="Managers\DatabaseManager.cs" />
     <Compile Include="Managers\TestManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Administration\AdministrationModels.cs" />
     <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\Home\HomeManager.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\Home\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Managers\MailManager.cs" />
+    <Compile Include="Models\Administration\AdministrationEnums.cs" />
     <Compile Include="Models\Mail\MailModel.cs" />
     <Compile Include="Models\Mail\MailEnums.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -239,7 +241,7 @@
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\Service\ServiceViewModels.cs" />
-    <Compile Include="Models\SharedModels.cs" />
+    <Compile Include="Models\Shared\SharedModels.cs" />
     <Compile Include="Models\Test\TestModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
@@ -886,6 +888,11 @@
     <Content Include="Views\Shared\BTable\_BTableCssSrc.cshtml" />
     <Content Include="Views\Administration\_LeftPanelJsCode.cshtml" />
     <Content Include="Views\Administration\Documents\_DocumentsBody.cshtml" />
+    <Content Include="Views\Administration\HomeSlide\HomeSlide.cshtml" />
+    <Content Include="Views\Administration\HomeSlide\_HomeSlideBody.cshtml" />
+    <Content Include="Views\Administration\HomeSlide\_AddHomeSlideVideo.cshtml" />
+    <Content Include="Views\Administration\Flipboard\_FlipboardBody.cshtml" />
+    <Content Include="Views\Administration\Administration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

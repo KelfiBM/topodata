@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using Topodata2.Classes;
 using Topodata2.resources.Strings;
 
 namespace Topodata2.Models.Service
 {
-    public class DocumentViewModel
+    public class DocumentViewModel : ViewModelAbstract
     {
         [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [Display(Name = "Nombre del documento")]
@@ -16,13 +18,14 @@ namespace Topodata2.Models.Service
             ErrorMessage = "El nombre del documento debe tener maximo 500 caracteres y minimo 5")]
         public string Nombre { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Descripcion")]
         [StringLength(4000,
             MinimumLength = 5,
             ErrorMessage = "La descripcion debe tener maximo 4000 caracteres y minimo 5")]
-        public string Descripcion { get; set; }
+        public string DescripcionHtml { get; set; }
 
         [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [DataType(DataType.Url)]
@@ -42,6 +45,8 @@ namespace Topodata2.Models.Service
         public HttpPostedFileBase ImageUpload { get; set; }
 
         public string ImagePath { get; set; }
+
+        public string Descripcion { get; set; }
     }
 
     public class SubCategorieViewModel
@@ -63,6 +68,7 @@ namespace Topodata2.Models.Service
         public string SubCategoria { get; set; }
         public string Contenido { get; set; }
         public string RegDate { get; set; }
+        public string Url { get; set; }
 
     }
 }

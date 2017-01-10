@@ -31,7 +31,7 @@
                         <h2>
                             @Model.Nombre
                         </h2>
-                        <p>@Model.Descripcion</p>
+                        @(Model.DescripcionHtml == null ? Html.Raw("<p>" + Model.Descripcion + "</p>") : Html.Raw(Model.DescripcionHtml))
                     </div>
                 </div>
             </div>

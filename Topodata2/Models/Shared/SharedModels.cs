@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace Topodata2.Models
+namespace Topodata2.Models.Shared
 {
     public class BTableModel
     {
@@ -13,5 +10,11 @@ namespace Topodata2.Models
         public string UrlDataTable { get; set; }
         public bool DetailFormatter { get; set; }
         public Dictionary<string,string> ColumData { get; set; }
+    }
+    public struct ThreeValuesString
+    {
+        public string Key;
+        public string Value1;
+        public string Value2;
     }
 }

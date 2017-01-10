@@ -1,7 +1,6 @@
 ﻿@model Topodata2.Models.Home.FlipboardViewModel
 <div id="add" class="profile-edit tab-pane fade in active">
     <h2 class="heading-md">Añadir Revista de Flipboard</h2>
-    <p>Añadir</p>
     <br>
     @using (Html.BeginForm("AddFlipboard", "Administration", FormMethod.Post, new { @class = "sky-form", @id = "sky-form3", enctype = "multipart/form-data" }))
     {

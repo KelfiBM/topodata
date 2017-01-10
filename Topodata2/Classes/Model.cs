@@ -4,4 +4,9 @@
     {
 
     }
+
+    public abstract class ViewModelAbstract
+    {
+        
+    }
 }
