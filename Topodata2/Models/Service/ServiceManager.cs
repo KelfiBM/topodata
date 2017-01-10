@@ -101,7 +101,7 @@ namespace Topodata2.Models.Service
                             Contenido = reader.GetString(7),
                             IdContenido = reader.GetInt32(8),
                             Url = reader.GetString(9),
-                            DescripcionHtml = reader.GetString(10)
+                            DescripcionHtml = !reader.IsDBNull(10) ? reader.GetString(10) : null
                         });
                     }
                 }
@@ -376,7 +376,7 @@ namespace Topodata2.Models.Service
             SqlDataReader reader = null;
             try
             {
-                com.CommandText = $"SELECT dbo.Documento.IdDocumento, dbo.Documento.Nombre, dbo.Documento.Descripcion, dbo.Documento.ImagePath, dbo.Documento.Url, dbo.SubCategoria.Descripcion AS SubCategoria, dbo.Contenido.Descripcion AS Contenido, dbo.Documento.RegDate, dbo.SubCategoria.ImagePath AS SubCategorieImage, dbo.Documento.IdSubCategoria FROM            dbo.SubCategoria INNER JOIN dbo.Contenido INNER JOIN dbo.SubCategoria_Contenido ON dbo.Contenido.IdContenido = dbo.SubCategoria_Contenido.IdContenido ON dbo.SubCategoria.IdSubCategoria = dbo.SubCategoria_Contenido.IdSubCategoria INNER JOIN dbo.Documento ON dbo.SubCategoria_Contenido.IdSubCategoria = dbo.Documento.IdSubCategoria AND dbo.SubCategoria_Contenido.IdContenido = dbo.Documento.IdContenido WHERE (dbo.Documento.IdDocumento = @id)";
+                com.CommandText = $"SELECT dbo.Documento.IdDocumento, dbo.Documento.Nombre, dbo.Documento.Descripcion, dbo.Documento.ImagePath, dbo.Documento.Url, dbo.SubCategoria.Descripcion AS SubCategoria, dbo.Contenido.Descripcion AS Contenido, dbo.Documento.RegDate, dbo.SubCategoria.ImagePath AS SubCategorieImage, dbo.Documento.IdSubCategoria, dbo.Documento.DescripcionHtml FROM dbo.SubCategoria INNER JOIN dbo.Contenido INNER JOIN dbo.SubCategoria_Contenido ON dbo.Contenido.IdContenido = dbo.SubCategoria_Contenido.IdContenido ON dbo.SubCategoria.IdSubCategoria = dbo.SubCategoria_Contenido.IdSubCategoria INNER JOIN dbo.Documento ON dbo.SubCategoria_Contenido.IdSubCategoria = dbo.Documento.IdSubCategoria AND dbo.SubCategoria_Contenido.IdContenido = dbo.Documento.IdContenido WHERE (dbo.Documento.IdDocumento = @id)";
                 com.CommandType = CommandType.Text;
                 com.Parameters.AddWithValue("id", id);
                 com.Connection = con;
@@ -398,7 +398,8 @@ namespace Topodata2.Models.Service
                             Contenido = reader.GetString(6),
                             RegDate = reader.GetDateTime(7),
                             SubCategorieImagePath = reader.GetString(8),
-                            IdSubCategorie = reader.GetInt32(9)
+                            IdSubCategorie = reader.GetInt32(9),
+                            DescripcionHtml = !reader.IsDBNull(10) ? reader.GetString(10) : null
                         };
                     }
                 }
@@ -421,8 +422,8 @@ namespace Topodata2.Models.Service
             var result = false;
             var sqlConnection = new SqlConnection(Connection);
             var query =
-                "INSERT INTO [Topodata].[dbo].[Documento] (Nombre, Descripcion, ImagePath, Url, IdSubCategoria, IdContenido) " +
-                "VALUES (@nombre, @descripcion, @imagepath, @url, @idsubcategoria, @idcontenido)";
+                "INSERT INTO [Topodata].[dbo].[Documento] (Nombre, Descripcion, ImagePath, Url, IdSubCategoria, IdContenido, DescripcionHtml) " +
+                "VALUES (@nombre, @descripcion, @imagepath, @url, @idsubcategoria, @idcontenido, @descripcionHtml)";
             var sqlCommand = new SqlCommand(query, sqlConnection);
             try
             {
@@ -437,6 +438,7 @@ namespace Topodata2.Models.Service
                 sqlCommand.Parameters.AddWithValue("url", model.Url);
                 sqlCommand.Parameters.AddWithValue("idsubcategoria", model.IdSubCategoria);
                 sqlCommand.Parameters.AddWithValue("idcontenido", model.IdContenido);
+                sqlCommand.Parameters.AddWithValue("descripcionHtml", model.DescripcionHtml);
                 sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 result = true;

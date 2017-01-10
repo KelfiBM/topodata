@@ -9,7 +9,7 @@
             <dt>@Html.DisplayNameFor(m => m.IdSubCategoria)</dt>
             <dd>
                 <section><label class="select">
-                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new {@id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);", @required = ""})
+                        @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new {@id = "subcategorielist", @onchange = "javascript:getListFromList(this.value,'idcontenido','/Administration/GetContenidoBySubCategorie/');", @required = ""})
                         <i></i>
                         @Html.ValidationMessageFor(m => m.IdSubCategoria)
                     </label>
@@ -47,17 +47,18 @@
                     </label>
                 </section>
             </dd>
-            <dt>@Html.DisplayNameFor(m => m.Descripcion)</dt>
+            <dt>@Html.DisplayNameFor(m => m.DescripcionHtml)</dt>
             <dd>
                 <section>
                     <label class="textarea">
                         <i class="icon-append fa fa-pencil"></i>
-                        @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@rows = "5", @required = ""}})
-                        <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Descripcion)</b>
-                        @Html.ValidationMessageFor(m => m.Descripcion)
+                        @Html.EditorFor(m => m.DescripcionHtml, new { htmlAttributes = new { @rows = "5", @required = "" } })
+                        <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.DescripcionHtml)</b>
+                        @Html.ValidationMessageFor(m => m.DescripcionHtml)
                     </label>
                 </section>
             </dd>
+                        @Html.TextBoxFor(m => m.Descripcion, new {@hidden = "hidden"})
             <dt>@Html.DisplayNameFor(m => m.ImageUpload)</dt>
             <dd>
                 <section>
