@@ -1,4 +1,7 @@
 ﻿@model Topodata2.Models.Home.DeslindeViewModel
+    @{
+        ViewBag.Title = "Deslinde";
+    }
 <div class="container content">
     @if (TempData["OperationStatus"] != null)
     {
@@ -13,7 +16,7 @@
     }
     <div class="row">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            @using (Html.BeginForm("Deslinder", "Home", FormMethod.Post, new { @class = "reg-page", @id = "sky-form1" }))
+            @using (Html.BeginForm("Deslinde", "Home", FormMethod.Post, new { @class = "reg-page", @id = "sky-form1" }))
             {
                 <div class="reg-header">
                     <h2>Obten tu Título de propiedad!</h2>

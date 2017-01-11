@@ -851,13 +851,12 @@
     <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
-    <Content Include="Views\Administration\Flipboard\Flipboard.cshtml" />
     <Content Include="Views\Administration\Flipboard\_AddFlipboard.cshtml" />
     <Content Include="Views\Administration\Flipboard\_DeleteFlipboard.cshtml" />
     <Content Include="Views\Home\Index\_HomeFlipboard.cshtml" />
-    <Content Include="Views\Home\Deslinder.cshtml" />
+    <Content Include="Views\Home\Deslinde.cshtml" />
     <Content Include="Views\Administration\Users\AllUsers.cshtml" />
-    <Content Include="Views\Administration\Users\ViewAllUsers.cshtml" />
+    <Content Include="Views\Administration\Users\_AllUsers.cshtml" />
     <Content Include="Views\Home\Index\_HomeRecentDocument.cshtml" />
     <Content Include="Views\Shared\Layout\_Categories.cshtml" />
     <Content Include="Views\Services\Contenido.cshtml" />
@@ -878,7 +877,6 @@
     <Content Include="Views\Home\Index\Index.cshtml" />
     <Content Include="Views\Home\About\_TextHome.cshtml" />
     <Content Include="Views\Home\About\_Sectores.cshtml" />
-    <Content Include="Views\Administration\ImageSeason\ImageSeason.cshtml" />
     <Content Include="Views\Administration\ImageSeason\_AddImageSeason.cshtml" />
     <Content Include="Views\Shared\BTable\_BTableJsCode.cshtml" />
     <Content Include="Views\Shared\BTable\_BTableJsSrc.cshtml" />
@@ -886,7 +884,6 @@
     <Content Include="Views\Shared\BTable\_BTableCssSrc.cshtml" />
     <Content Include="Views\Administration\_LeftPanelJsCode.cshtml" />
     <Content Include="Views\Administration\HomeSlide\_AddHomeSlideVideo.cshtml" />
-    <Content Include="Views\Administration\Flipboard\_FlipboardBody.cshtml" />
     <Content Include="Views\Administration\Administration.cshtml" />
   </ItemGroup>
   <ItemGroup>

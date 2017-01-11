@@ -3,13 +3,6 @@
     <button class="close" type="button" data-dismiss="alert" aria-hidden="True">x</button>
     <strong>Error!</strong>
     @{
-        if (TempData["OperationMessage"] != null)
-        {
-            Html.Encode(TempData["OperationMessage"]);
-        }
-        else
-        {
-            Html.Encode(Messages.ErrorRealizandoOperacion);
-        }
+        Html.Encode(TempData["OperationMessage"] ?? Messages.ErrorRealizandoOperacion);
     }
 </div>

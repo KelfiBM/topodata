@@ -1,6 +1,11 @@
 ﻿@model Topodata2.Models.Shared.BTableModel
 <script>
-    $('#@Model.IdTable').bootstrapTable();
+    $('#@Model.IdTable').bootstrapTable({
+        method: 'post',
+        queryParams: function(p) {
+            return {index: @Model.IndexActionType}
+        }
+    });
     function addExport(add) {
         var tables = $('#@Model.IdTable').tableExport({ formats: ['xlsx', 'csv', 'txt'] });
         tables.remove();
@@ -32,7 +37,7 @@
         var url = '@Model.UrlDeleteRecord';
         $.ajax({
             url: url,
-            data: { ids: ids },
+            data: { ids: ids, index: @Model.IndexActionType },
             cache: false,
             type: "POST",
             success: function(result) {

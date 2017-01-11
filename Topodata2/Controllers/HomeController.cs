@@ -89,12 +89,12 @@ namespace Topodata2.Controllers
             return View();
         }
 
-        public ActionResult Deslinder()
+        public ActionResult Deslinde()
         {
-            return View("Deslinder");
+            return View("Deslinde");
         }
         [HttpPost]
-        public ActionResult Deslinder(DeslindeViewModel viewModel)
+        public ActionResult Deslinde(DeslindeViewModel viewModel)
         {
             string message;
             viewModel.RegDate = TimePicker.GetLocalDateTime();
@@ -104,7 +104,7 @@ namespace Topodata2.Controllers
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
                 TempData["OperationMessage"] = message;
-                return RedirectToAction("Deslinder", "Home");
+                return RedirectToAction("Deslinde", "Home");
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
@@ -114,7 +114,7 @@ namespace Topodata2.Controllers
                 MailManager.SendMail(MailType.DeslinderRegistrationAdmin, viewModel);
                 MailManager.SendMail(MailType.DeslinderRegistrationUser, viewModel);
                 TempData["OperationStatus"] = "Success";
-                return RedirectToAction("Deslinder", "Home");
+                return RedirectToAction("Deslinde", "Home");
             }
             catch
             {
@@ -124,7 +124,7 @@ namespace Topodata2.Controllers
             TempData["OperationMessage"] = message;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = message;
-            return RedirectToAction("Deslinder", "Home");
+            return RedirectToAction("Deslinde", "Home");
         }
     }
 }

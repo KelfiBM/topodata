@@ -18,7 +18,7 @@
             @* ReSharper disable once Html.Obsolete *@
             <iframe src="@Youtube.GetEmbedFromId(@Model.UrlVideo)" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="432" width="700"></iframe>
         </div>
-        <img src="@Model.PathImageSeason" class="ls-l" data-ls="delayin:2500;scaleyin:0;scalexin:0;scalexout:2;scaleyout:2;offsetxout:0;offsetxin:0;durationin:2000;" style="top: 32%; left: 10%" width="270" />
+        <img src="@Model.PathImageSeason?@Html.Raw(DateTime.Now.ToBinary())}" class="ls-l" data-ls="delayin:2500;scaleyin:0;scalexin:0;scalexout:2;scaleyout:2;offsetxout:0;offsetxin:0;durationin:2000;" style="top: 32%; left: 10%" width="270" />
     </div>
     <div class="ls-slide" data-ls="slidedelay: 6000; transition2d: 1,5,15;">
         <img src="~/resources/img/sliders/agrimensuras.jpg" class="ls-bg" />

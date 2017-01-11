@@ -2,8 +2,9 @@
 {
     public enum ActionType
     {
-        Documents,
-        HomeSlideVideo,
-        Flipboard
+        Documents = 0,
+        HomeSlideVideo = 1,
+        Flipboard = 2,
+        ImageSeason = 3
     }
 }

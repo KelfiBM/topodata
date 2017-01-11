@@ -8,8 +8,7 @@
 </div>
 <div class="table-responsive">
     <table class="table table-hover table-bordered table-striped" id="@Model.IdTable"
-           data-toggle="table"
-           data-url="@Model.UrlDataTable"
+           data-url="GetContentForTable"
            data-checkbox-header="false"
            data-toolbar="#allToolbar"
            data-search="true"
@@ -26,7 +25,8 @@
            data-minimum-count-columns="1"
            data-pagination="true"
            data-page-list="[10, 25, 50, 100, ALL]"
-           data-side-pagination="client">
+           data-side-pagination="client"
+           data-ajax-options ="{index = @Model.ActionType}">
         <thead>
         <tr>
             <th data-formatter="rowCountNumber">#</th>

@@ -147,4 +147,7 @@
   <data name="ErrorRealizandoOperacion" xml:space="preserve">
     <value>Ha sucedido un error realizando la operacion.</value>
   </data>
+  <data name="TieneFormatoJPG" xml:space="preserve">
+    <value>Tiene que seleccionar una imagen de formato JPG</value>
+  </data>
 </root>

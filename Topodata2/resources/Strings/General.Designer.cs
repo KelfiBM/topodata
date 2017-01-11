@@ -61,11 +61,20 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string EmailSubject {
+        internal static string OpStatusError {
             get {
-                return ResourceManager.GetString("EmailSubject", resourceCulture);
+                return ResourceManager.GetString("OpStatusError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string OpStatusSuccess {
+            get {
+                return ResourceManager.GetString("OpStatusSuccess", resourceCulture);
             }
         }
     }

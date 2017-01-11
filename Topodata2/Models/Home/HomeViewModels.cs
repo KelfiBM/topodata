@@ -6,7 +6,7 @@ using Topodata2.resources.Strings;
 
 namespace Topodata2.Models.Home
 {
-    public class HomeSliderImageSeasonViewModel
+    public class HomeSliderImageSeasonViewModel : ViewModelAbstract
     {
         public string ImagePath { get; set; }
 

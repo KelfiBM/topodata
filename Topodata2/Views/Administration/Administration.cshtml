@@ -16,13 +16,16 @@
             <div id="operationStatus"></div>
             @if (TempData["OperationStatus"] != null)
             {
-                if (TempData["OperationStatus"].ToString() == "Error")
+                switch (TempData["OperationStatus"].ToString())
                 {
-                    Html.RenderPartial("_AlertError");
-                }
-                if (TempData["OperationStatus"].ToString() == "Success")
-                {
-                    Html.RenderPartial("_AlertSuccess");
+                    case "Error":
+                        Html.RenderPartial("_AlertError");
+                        break;
+                    case "Success":
+                        Html.RenderPartial("_AlertSuccess");
+                        break;
+                    default:
+                        break;
                 }
             }
             <div class="profile-body margin-bottom-20" id="operationSection">
@@ -50,62 +53,63 @@
     </div>
 </div>
 @section cssPlugins
-{
+            {
     <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
     <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
     @if (Model.UseTable)
     {
-        Html.RenderPartial("BTable/_BTableCssSrc");
-    }
-}
+                    Html.RenderPartial("BTable/_BTableCssSrc");
+                }
+            }
 
-@section PageScripts
-{
-    @if (Model.UseTable)
+            @section PageScripts
+            {
+                @if (Model.UseTable)
     {
-        Html.RenderPartial("BTable/_BTableJsSrc");
-    }
-    @if (Model.UseTextArea)
+                    Html.RenderPartial("BTable/_BTableJsSrc");
+                }
+                @if (Model.UseTextArea)
     {
         <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     }
-}
+            }
 
-@section documentReady
-{
-    activaTab('@Model.IdTabPrincipal');
-    @foreach (var idForm in Model.IdsFormValidation)
+            @section documentReady
+            {
+                activaTab('@Model.IdTabPrincipal');
+                @foreach (var idForm in Model.IdsFormValidation)
     {
-        @Html.Raw("makeFormValidation('"+idForm+"');")
+                    @Html.Raw("makeFormValidation('"+idForm+"');")
     }
-}
+            }
 
-@section ScriptsFunction
-{
-    @if (Model.UseTable)
+            @section ScriptsFunction
+            {
+                @if (Model.UseTable)
     {
-        Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
-        {
-            IdTable = Model.IdTable,
-            UrlDeleteRecord = Model.UrlDeleteRecord,
-            IdOperationStatus = "operationStatus"
-        });
-    }
-    @if (Model.UseTextArea)
+                    Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
+                    {
+                        IdTable = Model.IdTable,
+                        UrlDeleteRecord = Model.UrlDeleteRecord,
+                        IdOperationStatus = "operationStatus",
+                        IndexActionType = (int) Model.Action
+                    });
+                }
+                @if (Model.UseTextArea)
     {
         <script>
             tinymce.init({
-                selector: 'textarea',
+                        selector: 'textarea',
                 plugins: "autosave autolink autoresize charmap hr insertdatetime spellchecker",
                 autoresize_max_height: 500,
                 spellchecker_language: 'es',
                 browser_spellcheck: true,
                 init_instance_callback: function (editor) {
-                    editor.on('Change', function (e) {
+                            editor.on('Change', function (e) {
                         $('#@Model.IdHiddenRaw').val(tinymce.activeEditor.getContent({ format: 'text' }));
+                            });
+                        }
                     });
-                }
-            });
         </script>
     }
     @{ Html.RenderPartial("_LeftPanelJsCode"); }
@@ -151,6 +155,8 @@
                     return '<a href="' + row.Url + '" target="_blank" class="btn-u btn-u-xs" style="color: #fff">Click</a>';
                 }
             </script>
+            break;
+        case ActionType.ImageSeason:
             break;
         default:
             throw new ArgumentOutOfRangeException();

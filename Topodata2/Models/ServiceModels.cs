@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.WebPages;
+using Topodata2.Classes;
 using Topodata2.Models.Service;
 using Topodata2.resources.Strings;
 
@@ -383,7 +384,7 @@ namespace Topodata2.Models
         public int IdSubCategorie { get; set; }
     }
 
-    public class DocumentModel
+    public class DocumentModel : Model
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

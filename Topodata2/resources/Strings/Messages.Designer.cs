@@ -149,5 +149,14 @@ namespace Topodata2.resources.Strings {
                 return ResourceManager.GetString("TieneFormatoImagen", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiene que seleccionar una imagen de formato JPG.
+        /// </summary>
+        public static string TieneFormatoJPG {
+            get {
+                return ResourceManager.GetString("TieneFormatoJPG", resourceCulture);
+            }
+        }
     }
 }
