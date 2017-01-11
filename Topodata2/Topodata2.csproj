@@ -241,6 +241,7 @@
     <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\Service\ServiceViewModels.cs" />
     <Compile Include="Models\Shared\SharedModels.cs" />
+    <Compile Include="Models\TableViewModels.cs" />
     <Compile Include="Models\Test\TestModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
@@ -578,6 +579,8 @@
     <Content Include="resources\plugins\image-hover\js\modernizr.js" />
     <Content Include="resources\plugins\image-hover\js\touch.js" />
     <Content Include="resources\plugins\jquery-appear.js" />
+    <Content Include="resources\plugins\jquery-confirm\jquery-confirm.min.css" />
+    <Content Include="resources\plugins\jquery-confirm\jquery-confirm.min.js" />
     <Content Include="resources\plugins\jquery.easing.min.js" />
     <Content Include="resources\plugins\jquery.media.js" />
     <Content Include="resources\plugins\jquery.mixitup.min.js" />
@@ -845,7 +848,7 @@
     <Content Include="Views\User\Profile\_SettingsEditProfile.cshtml" />
     <Content Include="Views\Home\Index\_HomeText.cshtml" />
     <Content Include="Views\Administration\Index.cshtml" />
-    <Content Include="Views\Administration\HomeText.cshtml" />
+    <Content Include="Views\Administration\HomeText\HomeText.cshtml" />
     <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
     <Content Include="Views\Administration\HomeSlide\HomeSlideVideo.cshtml" />
     <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
@@ -885,6 +888,7 @@
     <Content Include="Views\Administration\_LeftPanelJsCode.cshtml" />
     <Content Include="Views\Administration\HomeSlide\_AddHomeSlideVideo.cshtml" />
     <Content Include="Views\Administration\Administration.cshtml" />
+    <Content Include="Views\Administration\HomeText\_AddHomeText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

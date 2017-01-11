@@ -49,26 +49,14 @@ namespace Topodata2.Models.Service
         public string Descripcion { get; set; }
     }
 
-    public class SubCategorieViewModel
+    public class SubCategorieViewModel : ViewModelAbstract
     {
         [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [Display(Name = "Sector")]
-        public int IdSubCategoria { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Requerido")]
         [Display(Name = "Nuevo nombre")]
         public string Descripcion { get; set; }
-    }
-
-    public class AllDocumentsViewModel
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public string SubCategoria { get; set; }
-        public string Contenido { get; set; }
-        public string RegDate { get; set; }
-        public string Url { get; set; }
-
     }
 }

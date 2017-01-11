@@ -26,7 +26,8 @@
            data-pagination="true"
            data-page-list="[10, 25, 50, 100, ALL]"
            data-side-pagination="client"
-           data-ajax-options ="{index = @Model.ActionType}">
+           data-sort-name="Id"
+           data-sort-order="desc">
         <thead>
         <tr>
             <th data-formatter="rowCountNumber">#</th>
@@ -41,6 +42,7 @@
                     @Html.Raw("<th data-formatter='"+columnCustom.Key+"'>"+columnCustom.Value+"</th>")
                 }
             }
+            <th data-sortable="false" data-field="RegDate" data-visible="true" data-searchable="true">Fecha Registro</th>
             <th data-checkbox="true"></th>
         </tr>
         </thead>

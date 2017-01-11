@@ -5,6 +5,9 @@
         Documents = 0,
         HomeSlideVideo = 1,
         Flipboard = 2,
-        ImageSeason = 3
+        ImageSeason = 3,
+        Users = 4,
+        HomeText = 5,
+        Sectores = 6
     }
 }

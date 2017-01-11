@@ -89,29 +89,29 @@ namespace Topodata2.Models.Home
         public DateTime RegDate { get; set; }
     }
 
-    public class TextoHomeViewModel
+    public class TextoHomeViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "Agrimensura")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string Agrimensura { get; set; }
 
         [Display(ResourceType = typeof(Displays), Name = "EstudioSuelo")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string EstudioSuelo { get; set; }
 
         [Display(ResourceType = typeof(Displays), Name = "Diseno")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string Diseno { get; set; }
 
         [Display(ResourceType = typeof(Displays), Name = "Ingenieria")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string Ingenieria { get; set; }
     }
@@ -185,14 +185,5 @@ namespace Topodata2.Models.Home
         {
             return value.ToString().Contains("flipboard.com/@topodata/");
         }
-    }
-
-    public class AllFlipboardViewModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string RegDate { get; set; }
-
     }
 }

@@ -1,30 +1,31 @@
 ﻿@using Topodata2.Models.Service
-@model Topodata2.Models.Service.SubCategorieViewModel
-<div id="edit" class="profile-edit tab-pane fade in active">
-    <h2 class="heading-md">Todos los Sectores</h2>
-    <p>Sectores</p>
-    <br>
-    @using (Html.BeginForm("EditSubCategorie", "Administration", null, FormMethod.Post, new { @id = "sky-form3", @class = "sky-form", enctype = "multipart/form-data" }))
-    {
-        <fieldset>
+@model SubCategorieViewModel
+<h2 class="heading-md">Editar Sector</h2>
+<br />
+@using (Html.BeginForm("EditSubCategorie", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "EditSectoresForm"}))
+{
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(m => m.Id)</dt>
+        <dd>
             <section>
-                <label class="label">@Html.DisplayNameFor(m => m.IdSubCategoria)</label>
                 <label class="select">
-                    @Html.DropDownListFor(m => m.IdSubCategoria, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new { @class = "form-control", @id = "subcategorielist", @onchange = "javascript:GetContenido(this.value);" })
+                    @Html.DropDownListFor(m => m.Id, new SelectList(ServiceManager.GetAllSubCategories(), "Id", "Descripcion", "Seleecione un Sector"), new {@required = ""})
                     <i></i>
-                    @Html.ValidationMessageFor(m => m.IdSubCategoria, String.Empty, new { @class = "text-danger text-bold" })
+                    @Html.ValidationMessageFor(m => m.Id)
                 </label>
             </section>
+        </dd>
+        <dt>@Html.DisplayNameFor(m => m.Descripcion)</dt>
+        <dd>
             <section>
-                <label class="label">@Html.DisplayNameFor(m => m.Descripcion)</label>
                 <label class="input">
-                    @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@class = "form-control changeable"}})
-                    @Html.ValidationMessageFor(m => m.Descripcion, String.Empty, new {@class = "text-danger text-bold"})
+                    <i class="icon-append fa fa-pencil"></i>
+                    @Html.EditorFor(m => m.Descripcion, new {htmlAttributes = new {@placeholder = "Nuevo Nombre", @required = ""}})
+                    <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Descripcion)</b>
+                    @Html.ValidationMessageFor(m => m.Descripcion)
                 </label>
             </section>
-            <button id="resetProfile" type="reset" onclick="$(this).resetValidation()" class="btn-u btn-u-default reset-btn">Cancelar</button>
-            <button id="submitButton" class="btn-u" style="opacity: 0.5" type="submit" disabled="">Guardar cambios</button>
-        </fieldset>
-    }
-</div>
-
+        </dd>
+    </dl>
+    <button type="submit" class="btn btn-u">Editar</button>
+}

@@ -16,7 +16,6 @@ namespace Topodata2.Models.Administration
         public string IdTabPrincipal { get; set; }
         public string IdHiddenRaw { get; set; }
         public string IdTable { get; set; }
-        public string UrlDeleteRecord { get; set; }
         public List<string> IdsFormValidation { get; set; }
         public List<ThreeValuesString> Tabs { get; set; }
         public ViewModelAbstract ViewModel { get; set; }

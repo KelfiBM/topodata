@@ -1,42 +1,16 @@
-﻿@using Topodata2.Models.User
-@model List<UserModel>
-<div id="all" class="profile-edit tab-pane fade in active">
-    <h2 class="heading-md">Todos los usuarios</h2>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered table-striped" id="allUserTable">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Username</th>
-                <th>Notificaciones</th>
-                <th>Fecha de Registro</th>
-                <th>Rol</th>
-                <th>Accion</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if (UserManager.GetAllUsers() != null)
-            {
-                var no = 1;
-                foreach (var user in UserManager.GetAllUsers())
-                {
-                    <tr>
-                        <td>@no</td>
-                        <td>@user.Name @user.LastName</td>
-                        <td>@user.Email</td>
-                        <td>@user.UserName</td>
-                        <td>@(user.Informed ? Html.Raw("Recibe") : Html.Raw("No Recibe"))</td>
-                        <td>@user.RegDate.ToShortDateString()</td>
-                        <td>@user.Rol</td>
-                        <td>@Html.ActionLink("Eliminar", "DeleteUser", "Administration", new {id = user.IdUser}, new {@class = "btn btn-danger btn-xs", @style = "color: #FFF"})</td>
-                    </tr>
-                    no++;
-                }
-            }
-            </tbody>
-        </table>
-    </div>
-</div>
+﻿@using Topodata2.Models.Shared
+<h2 class="heading-md">Todos los usuarios</h2>
+<br>
+@{ Html.RenderPartial("BTable/_BTableHtmlCode", new BTableModel
+    {
+        IdTable = "allUsersTable",
+        DetailFormatter = true,
+        ColumData = new Dictionary<string, string>
+       {
+           {"Name", "Nombre"},
+           {"LastName", "Apellido"},
+           {"Email", "Correo"},
+           {"Informed", "Notificaciones"},
+       },
+        CustomColumData = new Dictionary<string, string>()
+    }); }

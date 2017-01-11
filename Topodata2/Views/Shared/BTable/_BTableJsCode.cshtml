@@ -33,28 +33,48 @@
         addExport();
     });
     $remove.click(function() {
-        var ids = getIdSelections();
-        var url = '@Model.UrlDeleteRecord';
-        $.ajax({
-            url: url,
-            data: { ids: ids, index: @Model.IndexActionType },
-            cache: false,
-            type: "POST",
-            success: function(result) {
-                $('#operationStatus').html(result);
-                $table.bootstrapTable('remove', {
-                    field: 'Id',
-                    values: ids
-                });
-            },
-            error: function(result) {
-                $('#operationStatus').html(result);
-                $table.bootstrapTable('refresh', {
-                    silent: true
-                });
+        $.confirm({
+            theme: 'light',
+            type: 'red',
+            typeAnimated: true,
+            title: 'Confirmacion',
+            content: 'Esta seguro de eliminar los componentes seleccionados?',
+            buttons: {
+                confirm: {
+                    text: 'Confirmar',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        var ids = getIdSelections();
+                        var url = '/Administration/DeleteContent/';
+                        $.ajax({
+                            url: url,
+                            data: { ids: ids, index: @Model.IndexActionType },
+                            cache: false,
+                            type: "POST",
+                            success: function(result) {
+                                $('#operationStatus').html(result);
+                                $table.bootstrapTable('remove', {
+                                    field: 'Id',
+                                    values: ids
+                                });
+                            },
+                            error: function(result) {
+                                $('#operationStatus').html(result);
+                                $table.bootstrapTable('refresh', {
+                                    silent: true
+                                });
+                            }
+                        });
+                        $remove.prop('disabled', true);
+                    }
+                },
+                Cancelar: function() {
+                    
+                }
             }
+
         });
-        $remove.prop('disabled', true);
+        
     });
 
     function getIdSelections() {

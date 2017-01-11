@@ -45,7 +45,7 @@
                             <div id="@Model.Tabs[i].Key" class="profile-edit tab-pane fade">
                                 @{ Html.RenderPartial(Model.Tabs[i].Value2, Model.ViewModel); }
                             </div>
-                        }
+                                    }
                     </div>
                 </div>
             </div>
@@ -53,62 +53,60 @@
     </div>
 </div>
 @section cssPlugins
-            {
+{
     <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
     <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" />
     @if (Model.UseTable)
     {
-                    Html.RenderPartial("BTable/_BTableCssSrc");
-                }
-            }
-
-            @section PageScripts
-            {
-                @if (Model.UseTable)
+        Html.RenderPartial("BTable/_BTableCssSrc");
+    }
+}
+@section PageScripts
+{
+    <script src="~/resources/plugins/jquery-confirm/jquery-confirm.min.js"></script>
+    @if (Model.UseTable)
     {
-                    Html.RenderPartial("BTable/_BTableJsSrc");
-                }
-                @if (Model.UseTextArea)
+        Html.RenderPartial("BTable/_BTableJsSrc");
+    }
+    @if (Model.UseTextArea)
     {
         <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     }
-            }
-
-            @section documentReady
-            {
-                activaTab('@Model.IdTabPrincipal');
-                @foreach (var idForm in Model.IdsFormValidation)
+}
+@section documentReady
+{
+    activaTab('@Model.IdTabPrincipal');
+    @foreach (var idForm in Model.IdsFormValidation)
     {
-                    @Html.Raw("makeFormValidation('"+idForm+"');")
+        @Html.Raw("makeFormValidation('" + idForm + "');")
     }
-            }
-
-            @section ScriptsFunction
-            {
-                @if (Model.UseTable)
+}
+@section ScriptsFunction
+{
+    @if (Model.UseTable)
     {
-                    Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
-                    {
-                        IdTable = Model.IdTable,
-                        UrlDeleteRecord = Model.UrlDeleteRecord,
-                        IndexActionType = (int) Model.Action
-                    });
-                }
-                @if (Model.UseTextArea)
+        Html.RenderPartial("BTable/_BTableJsCode", new BTableModel
+        {
+            IdTable = Model.IdTable,
+            IndexActionType = (int)Model.Action
+        });
+    }
+    @if (Model.UseTextArea)
     {
         <script>
             tinymce.init({
-                        selector: 'textarea',
+                selector: 'textarea',
                 plugins: "autosave autolink autoresize charmap hr insertdatetime spellchecker",
                 autoresize_max_height: 500,
                 spellchecker_language: 'es',
                 browser_spellcheck: true,
-                init_instance_callback: function (editor) {
-                            editor.on('Change', function (e) {
+                init_instance_callback: function(editor) {
+                    editor.on('Change', function(e) {
                         $('#@Model.IdHiddenRaw').val(tinymce.activeEditor.getContent({ format: 'text' }));
-                            });
-                        }
                     });
+                }
+            });
         </script>
     }
     @{ Html.RenderPartial("_LeftPanelJsCode"); }
@@ -125,6 +123,15 @@
                         break;
                     case ActionType.Flipboard:
                         @Html.Raw("return '<p><b>Url:</b> ' + row.Url + '</p>'")
+                        break;
+                    case ActionType.ImageSeason:
+                        break;
+                    case ActionType.Users:
+                        @Html.Raw("return '<p><b>Rol:</b> ' + row.Rol + '</p>' + '<p><b>Username:</b> ' + row.UserName + '</p>'")
+                        break;
+                    case ActionType.HomeText:
+                        break;
+                    case ActionType.Sectores:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -156,6 +163,12 @@
             </script>
             break;
         case ActionType.ImageSeason:
+            break;
+        case ActionType.Users:
+            break;
+        case ActionType.HomeText:
+            break;
+        case ActionType.Sectores:
             break;
         default:
             throw new ArgumentOutOfRangeException();
