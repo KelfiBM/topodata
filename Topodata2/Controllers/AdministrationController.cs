@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Topodata2.Classes;
@@ -290,7 +287,7 @@ namespace Topodata2.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddDocument(DocumentViewModel model)
+        public ActionResult Documents(DocumentViewModel model)
         {
             string errorMessage = null;
             if (!ModelState.IsValid)
@@ -302,13 +299,13 @@ namespace Topodata2.Controllers
             {
                 string[] validImageTypes =
                 {
-                    "image/jpeg"
+                    "image/gif", "image/jpeg", "image/pjpeg", "image/png"
                 };
 
                 if (!validImageTypes.Contains(model.ImageUpload.ContentType))
                 {
-                    errorMessage = Messages.TieneFormatoJPG;
-                    ModelState.AddModelError("ImageUpload", Messages.TieneFormatoJPG);
+                    errorMessage = Messages.TieneFormatoImagen;
+                    ModelState.AddModelError("ImageUpload", Messages.TieneFormatoImagen);
                     return RedirectToAction("Documents", new { opStatus = General.OpStatusError, opMessage = errorMessage });
                 }
                 const string uploadPath = "~/resources/img/documents";
@@ -395,96 +392,108 @@ namespace Topodata2.Controllers
             if (!ModelState.IsValid)
             {
                 errorMessage = string.Join("; ", ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                return RedirectToAction("HomeSlideVideo", new { opStatus = General.OpStatusError, opMessage = errorMessage });
+                return RedirectToAction("HomeSlideVideo",
+                    new {opStatus = General.OpStatusError, opMessage = errorMessage});
             }
             if (HomeManager.AddHomeSlideVideo(viewModel))
             {
                 viewModel.UrlVideo = Youtube.GetVideoId(viewModel.UrlVideo);
                 MailManager.SendMail(MailType.HomeVideoUpload, viewModel);
-                return RedirectToAction("HomeSlideVideo", new { opStatus = General.OpStatusSuccess, opMessage = (string) null });
+                return RedirectToAction("HomeSlideVideo",
+                    new {opStatus = General.OpStatusSuccess, opMessage = (string) null});
             }
             errorMessage = Messages.ErrorDesconocido;
-            return RedirectToAction("HomeSlideVideo", new { opStatus = General.OpStatusError, opMessage = errorMessage });
+            return RedirectToAction("HomeSlideVideo", new {opStatus = General.OpStatusError, opMessage = errorMessage});
         }
 
         //-----------------------------------------------------//
-        public ActionResult Flipboard()
+        public ActionResult Flipboard(string opStatus = null, string opMessage = null)
         {
+            if (opStatus != null)
+            {
+                TempData["OperationStatus"] = opStatus;
+                TempData["OperationMessage"] = opMessage;
+            }
             var model = new AdministrationModel
             {
-                Action = ActionType.Flipboard, Title = "Flipboard", UseTable = true, UseTextArea = false, IdTabPrincipal = "add", IdTable = "allFlipboardTable", UrlDeleteRecord = "/Administration/DeleteFlipboard/", IdsFormValidation = new List<string> {"addFlipboardForm"}, Tabs = new List<ThreeValuesString>
+                Action = ActionType.Flipboard,
+                Title = "Flipboard",
+                UseTable = true,
+                UseTextArea = false,
+                IdTabPrincipal = "add",
+                IdTable = "allFlipboardTable",
+                UrlDeleteRecord = "/Administration/DeleteFlipboard/",
+                IdsFormValidation = new List<string> {"addFlipboardForm"},
+                Tabs = new List<ThreeValuesString>
                 {
                     new ThreeValuesString
                     {
-                        Key = "add", Value1 = "Añadir Revista", Value2 = "Flipboard/_AddFlipboard"
+                        Key = "add",
+                        Value1 = "Añadir Revista",
+                        Value2 = "Flipboard/_AddFlipboard"
                     },
                     new ThreeValuesString
                     {
-                        Key = "all", Value1 = "Todas las Revistas", Value2 = "Flipboard/_DeleteFlipboard"
+                        Key = "all",
+                        Value1 = "Todas las Revistas",
+                        Value2 = "Flipboard/_DeleteFlipboard"
                     }
                 },
-                ViewModel = new FlipboardViewModel(), IdHiddenRaw = null, UseDetailFormatter = true
+                ViewModel = new FlipboardViewModel(),
+                IdHiddenRaw = null,
+                UseDetailFormatter = true
             };
 
             return View("Administration", model);
         }
-
-        /*public ContentResult GetAllFlipboardTable()
-        {
-            var flipboards = HomeManager.GetAllFlipboard();
-            var result = flipboards.Select(flipboard => new AllFlipboardViewModel
-            {
-                Id = flipboard.Id, Name = flipboard.Name, RegDate = flipboard.RegDate.ToShortDateString(), Url = flipboard.Url
-            }).ToList();
-            return Content(JsonConvert.SerializeObject(result), "application/json", Encoding.UTF8);
-        }*/
-
+        
         [HttpPost]
-        public ActionResult DeleteFlipboard(int[] ids)
-        {
-            var allGood = ids.Select(HomeManager.DeleteFlipboard).ToList();
-            return PartialView(allGood.Any(good => !good) ? "_AlertError" : "_AlertSuccess");
-        }
-
-        [HttpPost]
-        public ActionResult AddFlipboard(FlipboardViewModel viewModel)
+        public ActionResult Flipboard(FlipboardViewModel viewModel)
         {
             string errorMessage;
             if (!ModelState.IsValid)
             {
                 errorMessage = string.Join("; ", ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                TempData["OperationStatus"] = "Error";
-                TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("Flipboard", "Administration");
-                /*var errors = string.Join("; ",
-                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+                return RedirectToAction("Flipboard", new { opStatus = General.OpStatusError, opMessage = errorMessage });
             }
             if (HomeManager.AddFlipboard(viewModel))
             {
-                TempData["OperationStatus"] = "Success";
-                return RedirectToAction("Flipboard", "Administration");
+                return RedirectToAction("Flipboard", new {opStatus = General.OpStatusSuccess, opMessage = (string) null});
             }
-            errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
-            TempData["OperationMessage"] = errorMessage;
-            TempData["OperationStatus"] = "Error";
-            ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("Flipboard", "Administration");
+            errorMessage = Messages.ErrorDesconocido;
+            return RedirectToAction("Flipboard", new { opStatus = General.OpStatusError, opMessage = errorMessage });
         }
 
         //-----------------------------------------------------//
-        public ActionResult ImageSeason()
+        public ActionResult ImageSeason(string opStatus = null, string opMessage = null)
         {
+            if (opStatus != null)
+            {
+                TempData["OperationStatus"] = opStatus;
+                TempData["OperationMessage"] = opMessage;
+            }
             var model = new AdministrationModel
             {
-                Action = ActionType.ImageSeason, Title = "Imagen Slide", UseTable = false, UseTextArea = false, IdTabPrincipal = "add", IdTable = null, UrlDeleteRecord = null, IdsFormValidation = new List<string> {"addImageSeasonForm"}, Tabs = new List<ThreeValuesString>
+                Action = ActionType.ImageSeason,
+                Title = "Imagen Slide",
+                UseTable = false,
+                UseTextArea = false,
+                IdTabPrincipal = "add",
+                IdTable = null,
+                UrlDeleteRecord = null,
+                IdsFormValidation = new List<string> {"addImageSeasonForm"},
+                Tabs = new List<ThreeValuesString>
                 {
                     new ThreeValuesString
                     {
-                        Key = "add", Value1 = "Añadir Imagen Slide", Value2 = "ImageSeason/_AddImageSeason"
+                        Key = "add",
+                        Value1 = "Añadir Imagen Slide",
+                        Value2 = "ImageSeason/_AddImageSeason"
                     },
                 },
-                ViewModel = new HomeSliderImageSeasonViewModel(), IdHiddenRaw = null, UseDetailFormatter = false
+                ViewModel = new HomeSliderImageSeasonViewModel(),
+                IdHiddenRaw = null,
+                UseDetailFormatter = false
             };
             return View("Administration", model);
         }
@@ -492,51 +501,34 @@ namespace Topodata2.Controllers
         [HttpPost]
         public ActionResult ImageSeason(HomeSliderImageSeasonViewModel viewModel)
         {
-            var errorMessage = "Ha sucedido un error desconocido, favor intentar mas tarde";
+            string errorMessage;
             if (!ModelState.IsValid)
             {
                 errorMessage = string.Join("; ", ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                TempData["OperationStatus"] = "Error";
-                TempData["OperationMessage"] = errorMessage;
-                return RedirectToAction("ImageSeason", "Administration");
-                /*var errors = string.Join("; ",
-                    ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
-                return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
+                return RedirectToAction("ImageSeason", new {opStatus = General.OpStatusError, opMessage = errorMessage});
             }
-            try
+
+            if (viewModel.ImageUpload != null)
             {
-                if (viewModel.ImageUpload != null)
+                string[] validImageTypes =
                 {
-                    string[] validImageTypes =
-                    {
-                        "image/gif", "image/jpeg", "image/pjpeg", "image/png"
-                    };
+                    "image/jpeg"
+                };
 
-                    if (!validImageTypes.Contains(viewModel.ImageUpload.ContentType))
-                    {
-                        ModelState.AddModelError("ImageUpload", Messages.TieneFormatoImagen);
-                        return View("ImageSeason/ImageSeason", viewModel);
-                    }
-                    const string uploadPath = "/resources/img/season";
-                    const string filename = "season.jpg";
-                    var imagePath = Path.Combine(Server.MapPath("~" + uploadPath), filename);
-                    viewModel.ImageUpload.SaveAs(imagePath);
-                    TempData["OperationStatus"] = "Success";
-                    return RedirectToAction("ImageSeason", "Administration");
+                if (!validImageTypes.Contains(viewModel.ImageUpload.ContentType))
+                {
+                    ModelState.AddModelError("ImageUpload", Messages.TieneFormatoJPG);
+                    errorMessage = Messages.TieneFormatoJPG;
+                    return RedirectToAction("ImageSeason",
+                        new {opStatus = General.OpStatusError, opMessage = errorMessage});
                 }
+                var imagePath = Path.Combine(Server.MapPath("~/resources/img/season"), "season.jpg");
+                viewModel.ImageUpload.SaveAs(imagePath);
+                return RedirectToAction("ImageSeason",
+                    new {opStatus = General.OpStatusSuccess, opMessage = (string) null});
             }
-            catch
-            {
-                TempData["OperationMessage"] = errorMessage;
-                TempData["OperationStatus"] = "Error";
-                ViewBag.OperationStatus = errorMessage;
-                return RedirectToAction("ImageSeason", "Administration");
-            }
-
-            TempData["OperationMessage"] = errorMessage;
-            TempData["OperationStatus"] = "Error";
-            ViewBag.OperationStatus = errorMessage;
-            return RedirectToAction("ImageSeason", "Administration");
+            errorMessage = Messages.ErrorDesconocido;
+            return RedirectToAction("ImageSeason", new {opStatus = General.OpStatusError, opMessage = errorMessage});
         }
 
         //-----------------------------------------------------//

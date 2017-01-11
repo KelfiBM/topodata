@@ -41,14 +41,14 @@
             cache: false,
             type: "POST",
             success: function(result) {
-                $('#@Model.IdOperationStatus').html(result);
+                $('#operationStatus').html(result);
                 $table.bootstrapTable('remove', {
                     field: 'Id',
                     values: ids
                 });
             },
             error: function(result) {
-                $('#@Model.IdOperationStatus').html(result);
+                $('#operationStatus').html(result);
                 $table.bootstrapTable('refresh', {
                     silent: true
                 });

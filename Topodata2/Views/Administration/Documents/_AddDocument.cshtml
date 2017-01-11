@@ -2,7 +2,7 @@
 @model DocumentViewModel
 <h2 class="heading-md">Añadir Documento</h2>
 <br/>
-    @using (Html.BeginForm("AddDocument", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "AddDocumentForm", enctype = "multipart/form-data"}))
+    @using (Html.BeginForm("Documents", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "AddDocumentForm", enctype = "multipart/form-data"}))
     {
         <dl class="dl-horizontal">
             <dt>@Html.DisplayNameFor(m => m.IdSubCategoria)</dt>

@@ -1,7 +1,7 @@
 ﻿@model Topodata2.Models.Home.FlipboardViewModel
 <h2 class="heading-md">Añadir Revista de Flipboard</h2>
 <br/>
-    @using (Html.BeginForm("AddFlipboard", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "addFlipboardForm"}))
+    @using (Html.BeginForm("Flipboard", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "addFlipboardForm"}))
     {
         <dl class="dl-horizontal">
             <dt>@Html.DisplayNameFor(m => m.Url)</dt>
