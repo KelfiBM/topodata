@@ -1,5 +1,6 @@
 ﻿@using Microsoft.Ajax.Utilities
 @using Topodata2.Models
+@using Topodata2.Models.Administration
 @using Topodata2.Models.Service
 @using Topodata2.Models.User
 @{
@@ -10,7 +11,8 @@
     var urlGooglePlus = "https://plus.google.com/+TopodataGis/";
     var urlFlickr = "https://www.flickr.com/people/89639027@N07/";
     var urlFlipboard = "https://flipboard.com/@topodata";
-    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+    var controller = ViewContext.RouteData.Values["Controller"].ToString();
+    var controllerAdmin = (controller == "Administration") ? true : false;
 }
 
 <!DOCTYPE html>
@@ -45,6 +47,10 @@
     @RenderSection("cssPlugins", false)
 
     <!--CSS Page Style-->
+    @if (controllerAdmin)
+    {
+        <link href="~/resources/css/pages/profile.css" rel="stylesheet" />
+    }
     @RenderSection("cssPageStyle", false)
 
 
@@ -53,7 +59,7 @@
     @RenderSection("cssTheme", false)
 
     <!-- CSS Customization -->
-    @if (controller == "Administration")
+    @if (controllerAdmin)
     {
         <link href="~/resources/css/customAdmin.css" rel="stylesheet"/>
     }
@@ -169,14 +175,14 @@
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Administracion</a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Documentos", "Documents", "Administration")</li>
-                                <li>@Html.ActionLink("Video Slide", "HomeSlideVideo", "Administration")</li>
-                                <li>@Html.ActionLink("Flipboard", "Flipboard", "Administration")</li>
-                                <li>@Html.ActionLink("Imagen Slide","ImageSeason","Administration")</li>
-                                <li>@Html.ActionLink("Usuarios", "AllUser", "Administration")</li>
-                                <li>@Html.ActionLink("Textos Inicio", "HomeText", "Administration")</li>
-                                <li>@Html.ActionLink("Sectores", "Sectores", "Administration")</li>
-                                <li>@Html.ActionLink("Nuestro Equipo", "OurTeam", "Administration")</li>
+                                <li>@Html.ActionLink("Documentos", "Index", "Administration", new { index = (int)ActionType.Documents }, null)</li>
+                                <li>@Html.ActionLink("Video Slide", "Index", "Administration", new { index = (int)ActionType.HomeSlideVideo }, null)</li>
+                                <li>@Html.ActionLink("Flipboard", "Index", "Administration", new { index = (int)ActionType.Flipboard }, null)</li>
+                                <li>@Html.ActionLink("Imagen Slide","Index","Administration", new { index = (int)ActionType.ImageSeason }, null)</li>
+                                <li>@Html.ActionLink("Usuarios", "Index", "Administration", new { index = (int)ActionType.Users }, null)</li>
+                                <li>@Html.ActionLink("Textos Inicio", "Index", "Administration", new { index = (int)ActionType.HomeText }, null)</li>
+                                <li>@Html.ActionLink("Sectores", "Index", "Administration", new { index = (int)ActionType.Sectores }, null)</li>
+                                <li>@Html.ActionLink("Nuestro Equipo", "Index", "Administration", new { index = (int)ActionType.OurEquipos }, null)</li>
                             </ul>
                         </li>
                     }
@@ -308,10 +314,12 @@
 <script src="~/resources/js/plugins/validation.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-@if (controller == "Administration")
-{
-    <script src="~/resources/js/plugins/paging.js"></script>
-}
+    @if (controllerAdmin)
+    {
+        <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+        <script src="~/resources/js/plugins/datepicker.js"></script>
+    }
+
 
 <!-- JS Customization -->
 <script src="~/resources/js/custom.js"></script>
@@ -323,9 +331,9 @@
 <script>
     jQuery(document).ready(function() {
         App.init();
-        @if (controller == "Administration")
+        @if (controllerAdmin)
         {
-            @Html.Raw("$('table').paging({ limit: 30 });")
+            @Html.Raw("Datepicker.initDatepicker()");
         }
         @RenderSection("documentReady", false)
     });

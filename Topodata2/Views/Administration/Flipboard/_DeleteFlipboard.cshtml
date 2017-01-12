@@ -1,32 +1,17 @@
-﻿@using Topodata2.Models.Home
-@model FlipboardViewModel
-<div id="delete" class="profile-edit tab-pane fade">
-    <h2 class="heading-md">Eliminar Revista</h2>
-    <p>Eliminar</p>
-    <br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Url</th>
-                <th>Registrado</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        @if (HomeManager.GetAllFlipboard() != null)
-        {
-            foreach (var flipboard in HomeManager.GetAllFlipboard())
-            {
-                <tr>
-                    <td>@flipboard.Name</td>
-                    <td>@flipboard.Url</td>
-                    <td>@flipboard.RegDate</td>
-                    <td>@Html.ActionLink("Eliminar", "DeleteFlipboard", "Administration", new { id = flipboard.Id }, new { @class = "btn btn-danger btn-xs", @style = "color: #FFF" })</td>
-                </tr>
-            }
-        }
-        
-        </tbody>
-    </table>
-</div>
+﻿@using Topodata2.Models.Shared
+@model Topodata2.Models.Home.FlipboardViewModel
+<h2 class="heading-md">Eliminar Revista</h2>
+<br>
+@{ Html.RenderPartial("BTable/_BTableHtmlCode", new BTableModel
+   {
+       IdTable = "allFlipboardTable",
+       DetailFormatter = true,
+       ColumData = new Dictionary<string, string>
+       {
+           {"Name", "Nombre"},
+       },
+       CustomColumData = new Dictionary<string, string>
+       {
+           {"getFlipboardLink", "Abrir"}
+       }
+   }); }

@@ -63,72 +63,72 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to ~/EmailTemplates/ContactUsAdmin.html.
         /// </summary>
-        public static string EmailTemplateContactUsAdmin {
+        public static string EmailContactUsAdmin {
             get {
-                return ResourceManager.GetString("EmailTemplateContactUsAdmin", resourceCulture);
+                return ResourceManager.GetString("EmailContactUsAdmin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ~/EmailTemplates/Deslinder/DeslinderUserRegisteredAdmin.html.
         /// </summary>
-        public static string EmailTemplateDeslindeUserRegisteredAdmin {
+        public static string EmailDeslindeUserRegisteredAdmin {
             get {
-                return ResourceManager.GetString("EmailTemplateDeslindeUserRegisteredAdmin", resourceCulture);
+                return ResourceManager.GetString("EmailDeslindeUserRegisteredAdmin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ~/EmailTemplates/Deslinder/DeslinderUserRegisteredUser.html.
         /// </summary>
-        public static string EmailTemplateDeslindeUserRegisteredUser {
+        public static string EmailDeslindeUserRegisteredUser {
             get {
-                return ResourceManager.GetString("EmailTemplateDeslindeUserRegisteredUser", resourceCulture);
+                return ResourceManager.GetString("EmailDeslindeUserRegisteredUser", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ~/EmailTemplates/HomeVideo.html.
+        ///   Looks up a localized string similar to ~/EmailTemplates/AddedContent/HomeVideo.html.
         /// </summary>
-        public static string EmailTemplateHomeVideoAdded {
+        public static string EmailHomeVideoAdded {
             get {
-                return ResourceManager.GetString("EmailTemplateHomeVideoAdded", resourceCulture);
+                return ResourceManager.GetString("EmailHomeVideoAdded", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ~/EmailTemplates/AddedContent/NewDocumentAdded.html.
         /// </summary>
-        public static string EmailTemplateNewDocumentAdded {
+        public static string EmailNewDocumentAdded {
             get {
-                return ResourceManager.GetString("EmailTemplateNewDocumentAdded", resourceCulture);
+                return ResourceManager.GetString("EmailNewDocumentAdded", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ~/EmailTemplates/Registration/RegistrationDoneUser.html.
         /// </summary>
-        public static string EmailTemplateRegistrationDoneUser {
+        public static string EmailRegistrationDoneUser {
             get {
-                return ResourceManager.GetString("EmailTemplateRegistrationDoneUser", resourceCulture);
+                return ResourceManager.GetString("EmailRegistrationDoneUser", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ~/EmailTemplates/Registration/RegistrationDoneUserAdmin.html.
         /// </summary>
-        public static string EmailTemplateRegistrationDoneUserAdmin {
+        public static string EmailRegistrationDoneUserAdmin {
             get {
-                return ResourceManager.GetString("EmailTemplateRegistrationDoneUserAdmin", resourceCulture);
+                return ResourceManager.GetString("EmailRegistrationDoneUserAdmin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ~/EmailTemplates/Subscribe/SubscribedDone/SubscribedDoneMin.html.
+        ///   Looks up a localized string similar to ~/EmailTemplates/Subscribe/SubscribedDoneUser.html.
         /// </summary>
-        public static string EmailTemplateSubscribedDoneMin {
+        public static string EmailSubscribedDone {
             get {
-                return ResourceManager.GetString("EmailTemplateSubscribedDoneMin", resourceCulture);
+                return ResourceManager.GetString("EmailSubscribedDone", resourceCulture);
             }
         }
         

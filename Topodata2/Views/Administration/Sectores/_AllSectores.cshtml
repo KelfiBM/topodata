@@ -1,29 +1,13 @@
-﻿@model List<Topodata2.Models.SubCategorieModel>
-<div id="all" class="profile-edit tab-pane fade">
-    <h2 class="heading-md">Todos los Sectores</h2>
-    <p>Sectores</p>
-    <br>
-    <table class="table" id="sectorestable">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-            @if (Model != null)
-            {
-                var i = 1;
-                foreach (var sector in Model)
-                {
-                    <tr>
-                        <td>@Html.Encode(i++)</td>
-                        <td>@sector.Descripcion</td>
-                        <td>@Html.ActionLink("Eliminar", "DeleteSubcategorie", "Administration", new { id = sector.Id }, new { @class = "btn btn-danger btn-xs", @style = "color: #FFF" })</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+﻿@using Topodata2.Models.Shared
+<h2 class="heading-md">Todos los Sectores</h2>
+<br>
+@{ Html.RenderPartial("BTable/_BTableHtmlCode", new BTableModel
+    {
+        IdTable = "allSectoresTable",
+        DetailFormatter = false,
+        ColumData = new Dictionary<string, string>
+       {
+           {"Descripcion", "Nombre"},
+       },
+        CustomColumData = new Dictionary<string, string>()
+    }); }

@@ -22,7 +22,7 @@ namespace Topodata2.resources.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Messages {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Topodata2.resources.Strings {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Topodata2.resources.Strings.Messages", typeof(Messages).Assembly);
@@ -51,7 +51,7 @@ namespace Topodata2.resources.Strings {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Correo invalido.
         /// </summary>
-        internal static string CorreoInvalido {
+        public static string CorreoInvalido {
             get {
                 return ResourceManager.GetString("CorreoInvalido", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to No puede estar en blanco.
         /// </summary>
-        internal static string EmptyField {
+        public static string EmptyField {
             get {
                 return ResourceManager.GetString("EmptyField", resourceCulture);
             }
@@ -81,16 +81,25 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Ha sucedido un error desconocido, favor intentar mas tarde.
         /// </summary>
-        internal static string ErrorDesconocido {
+        public static string ErrorDesconocido {
             get {
                 return ResourceManager.GetString("ErrorDesconocido", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ha sucedido un error realizando la operacion..
+        /// </summary>
+        public static string ErrorRealizandoOperacion {
+            get {
+                return ResourceManager.GetString("ErrorRealizandoOperacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Debe tener un maximo de 200 caracteres.
         /// </summary>
-        internal static string Max200Char {
+        public static string Max200Char {
             get {
                 return ResourceManager.GetString("Max200Char", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Debe tener maximo 50 caracteres.
         /// </summary>
-        internal static string Max50Char {
+        public static string Max50Char {
             get {
                 return ResourceManager.GetString("Max50Char", resourceCulture);
             }
@@ -108,7 +117,7 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Debe ser un link de una revista de topodata en Flipboard.
         /// </summary>
-        internal static string MustTopodataFlipboard {
+        public static string MustTopodataFlipboard {
             get {
                 return ResourceManager.GetString("MustTopodataFlipboard", resourceCulture);
             }
@@ -117,7 +126,7 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Favor escriba algun mensaje.
         /// </summary>
-        internal static string MustWrite {
+        public static string MustWrite {
             get {
                 return ResourceManager.GetString("MustWrite", resourceCulture);
             }
@@ -126,7 +135,7 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Este campo es requerido.
         /// </summary>
-        internal static string Requerido {
+        public static string Requerido {
             get {
                 return ResourceManager.GetString("Requerido", resourceCulture);
             }
@@ -135,9 +144,18 @@ namespace Topodata2.resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Tiene que seleccionar una imagen de formato GIF, JPG o PNG.
         /// </summary>
-        internal static string TieneFormatoImagen {
+        public static string TieneFormatoImagen {
             get {
                 return ResourceManager.GetString("TieneFormatoImagen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiene que seleccionar una imagen de formato JPG.
+        /// </summary>
+        public static string TieneFormatoJPG {
+            get {
+                return ResourceManager.GetString("TieneFormatoJPG", resourceCulture);
             }
         }
     }

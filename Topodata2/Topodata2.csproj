@@ -74,12 +74,16 @@
       <HintPath>..\packages\MvcCheckBoxList.1.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Recaptcha.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=171a6ec5fa4b1644, processorArchitecture=MSIL">
       <HintPath>..\packages\RecaptchaNet.2.1.0\lib\net45\Recaptcha.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SparkPost, Version=1.12.0.29448, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SparkPost.1.12.0\lib\net45\SparkPost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -205,6 +209,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Classes\Model.cs" />
     <Compile Include="Classes\ModelType.cs" />
+    <Compile Include="Classes\TimePicker.cs" />
     <Compile Include="Classes\Youtube.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
@@ -220,6 +225,7 @@
     <Compile Include="Managers\DatabaseManager.cs" />
     <Compile Include="Managers\TestManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Administration\AdministrationModels.cs" />
     <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\Home\HomeManager.cs" />
@@ -227,13 +233,15 @@
     <Compile Include="Models\Home\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Managers\MailManager.cs" />
+    <Compile Include="Models\Administration\AdministrationEnums.cs" />
     <Compile Include="Models\Mail\MailModel.cs" />
-    <Compile Include="Models\Mail\MailType.cs" />
+    <Compile Include="Models\Mail\MailEnums.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\ServiceModels.cs" />
     <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\Service\ServiceViewModels.cs" />
+    <Compile Include="Models\Shared\SharedModels.cs" />
+    <Compile Include="Models\TableViewModels.cs" />
     <Compile Include="Models\Test\TestModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\User.cs" />
@@ -261,6 +269,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>General.resx</DependentUpon>
     </Compile>
+    <Compile Include="resources\Strings\MailParameters.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailParameters.resx</DependentUpon>
+    </Compile>
     <Compile Include="resources\Strings\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,7 +299,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="EmailTemplates\AddedContent\HomeVideo.html" />
     <Content Include="EmailTemplates\AddedContent\NewDocumentAdded.html" />
+    <Content Include="EmailTemplates\AddedContent\NewDocumentAdded2.html" />
     <Content Include="EmailTemplates\baseCorporate.html" />
     <Content Include="EmailTemplates\ContactUsAdmin.html" />
     <Content Include="EmailTemplates\Deslinder\DeslinderUserRegisteredAdmin.html" />
@@ -306,8 +321,10 @@
     <Content Include="EmailTemplates\img\icons\icon_twitter.png" />
     <Content Include="EmailTemplates\img\icons\icon_youtube.png" />
     <Content Include="EmailTemplates\NewContentAdded.html" />
+    <Content Include="EmailTemplates\Registration\RegistrationDoneUser2.html" />
     <Content Include="EmailTemplates\Registration\RegistrationDoneUserAdmin.html" />
     <Content Include="EmailTemplates\Registration\RegistrationDoneUser.html" />
+    <Content Include="EmailTemplates\Subscribe\SubscribedDoneUser.html" />
     <Content Include="EmailTemplates\Subscribe\SubscribedDone\SubscribedDone.html" />
     <Content Include="EmailTemplates\Subscribe\SubscribedDone\SubscribedDoneMin.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -388,6 +405,7 @@
     <Content Include="resources\img\icons\volantetopogis.jpg" />
     <Content Include="resources\img\icons\volantetopogis2.jpg" />
     <Content Include="resources\img\logoDefault.png" />
+    <Content Include="resources\img\Logos\logoDefault.png" />
     <Content Include="resources\img\mockup\imac_t.png" />
     <Content Include="resources\img\mockup\planning1.jpg" />
     <Content Include="resources\img\mockup\planning2.jpg" />
@@ -498,6 +516,7 @@
     <Content Include="lib\jquery\MIT-LICENSE.txt" />
     <Content Include="resources\plugins\animate.css" />
     <Content Include="resources\plugins\back-to-top.js" />
+    <Content Include="resources\plugins\Blob.min.js" />
     <Content Include="resources\plugins\bootstrap\css\bootstrap-rtl.min.css" />
     <Content Include="resources\plugins\bootstrap\css\bootstrap-theme.css" />
     <Content Include="resources\plugins\bootstrap\css\bootstrap-theme.min.css" />
@@ -536,6 +555,7 @@
     <Content Include="resources\plugins\fancybox\source\jquery.fancybox.css" />
     <Content Include="resources\plugins\fancybox\source\jquery.fancybox.js" />
     <Content Include="resources\plugins\fancybox\source\jquery.fancybox.pack.js" />
+    <Content Include="resources\plugins\FileSaver.min.js" />
     <Content Include="resources\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="resources\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="resources\plugins\gmap\gmap.js" />
@@ -559,12 +579,16 @@
     <Content Include="resources\plugins\image-hover\js\modernizr.js" />
     <Content Include="resources\plugins\image-hover\js\touch.js" />
     <Content Include="resources\plugins\jquery-appear.js" />
+    <Content Include="resources\plugins\jquery-confirm\jquery-confirm.min.css" />
+    <Content Include="resources\plugins\jquery-confirm\jquery-confirm.min.js" />
     <Content Include="resources\plugins\jquery.easing.min.js" />
     <Content Include="resources\plugins\jquery.media.js" />
     <Content Include="resources\plugins\jquery.mixitup.min.js" />
     <Content Include="resources\plugins\jquery.parallax.js" />
     <Content Include="resources\plugins\jquery\jquery-migrate.min.js" />
     <Content Include="resources\plugins\jquery\jquery.min.js" />
+    <Content Include="resources\plugins\dynoTable\jquery.dynatable.css" />
+    <Content Include="resources\plugins\dynoTable\jquery.dynatable.js" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\blank.gif" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\layerslider-rtl.css" />
     <Content Include="resources\plugins\layer-slider\layerslider\css\layerslider.css" />
@@ -637,6 +661,7 @@
     <Content Include="resources\plugins\smoothScroll.js" />
     <Content Include="resources\plugins\style-switcher\style-switcher.css" />
     <Content Include="resources\plugins\wow-animations\js\wow.min.js" />
+    <Content Include="resources\plugins\xlsx.core.min.js" />
     <Content Include="resources\plugins\youmax-master\css\youmax.css" />
     <Content Include="resources\plugins\youmax-master\js\youmax.js" />
     <Content Include="favicon.ico" />
@@ -744,7 +769,10 @@
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.eot" />
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.ttf" />
     <Content Include="resources\plugins\line-icons-pro\real-estate\webfont\fonts\real-estate.woff" />
-    <Content Include="resources\plugins\cube-portfolio\cubeportfolio\img\cbp-sprite.psd" />
+    <Content Include="resources\plugins\dynoTable\bower.json" />
+    <Content Include="resources\plugins\dynoTable\package.json" />
+    <Content Include="resources\plugins\font-awesome\less\screen-reader.less" />
+    <Content Include="resources\plugins\font-awesome\scss\_screen-reader.scss" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -820,19 +848,18 @@
     <Content Include="Views\User\Profile\_SettingsEditProfile.cshtml" />
     <Content Include="Views\Home\Index\_HomeText.cshtml" />
     <Content Include="Views\Administration\Index.cshtml" />
-    <Content Include="Views\Administration\HomeText.cshtml" />
+    <Content Include="Views\Administration\HomeText\HomeText.cshtml" />
     <Content Include="Views\Home\Index\_HomeSlider.cshtml" />
     <Content Include="Views\Administration\HomeSlide\HomeSlideVideo.cshtml" />
     <Content Include="Views\Administration\OurTeam\OurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_AddOurTeam.cshtml" />
     <Content Include="Views\Administration\OurTeam\_DeleteOurTeam.cshtml" />
-    <Content Include="Views\Administration\Flipboard\Flipboard.cshtml" />
     <Content Include="Views\Administration\Flipboard\_AddFlipboard.cshtml" />
     <Content Include="Views\Administration\Flipboard\_DeleteFlipboard.cshtml" />
     <Content Include="Views\Home\Index\_HomeFlipboard.cshtml" />
-    <Content Include="Views\Home\Deslinder.cshtml" />
+    <Content Include="Views\Home\Deslinde.cshtml" />
     <Content Include="Views\Administration\Users\AllUsers.cshtml" />
-    <Content Include="Views\Administration\Users\ViewAllUsers.cshtml" />
+    <Content Include="Views\Administration\Users\_AllUsers.cshtml" />
     <Content Include="Views\Home\Index\_HomeRecentDocument.cshtml" />
     <Content Include="Views\Shared\Layout\_Categories.cshtml" />
     <Content Include="Views\Services\Contenido.cshtml" />
@@ -845,7 +872,6 @@
     <Content Include="Views\Home\Index\_HomeDeslinder.cshtml" />
     <Content Include="Views\Home\Index\_HomeNanoGallery.cshtml" />
     <Content Include="Views\Services\Sectores.cshtml" />
-    <Content Include="Views\Administration\Documents\Documents.cshtml" />
     <Content Include="Views\Administration\_AdministrationLeftPanel.cshtml" />
     <Content Include="Views\Administration\Documents\_AllDocuments.cshtml" />
     <Content Include="Views\Administration\Documents\_AddDocument.cshtml" />
@@ -854,8 +880,15 @@
     <Content Include="Views\Home\Index\Index.cshtml" />
     <Content Include="Views\Home\About\_TextHome.cshtml" />
     <Content Include="Views\Home\About\_Sectores.cshtml" />
-    <Content Include="Views\Administration\ImageSeason\ImageSeason.cshtml" />
     <Content Include="Views\Administration\ImageSeason\_AddImageSeason.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableJsCode.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableJsSrc.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableHtmlCode.cshtml" />
+    <Content Include="Views\Shared\BTable\_BTableCssSrc.cshtml" />
+    <Content Include="Views\Administration\_LeftPanelJsCode.cshtml" />
+    <Content Include="Views\Administration\HomeSlide\_AddHomeSlideVideo.cshtml" />
+    <Content Include="Views\Administration\Administration.cshtml" />
+    <Content Include="Views\Administration\HomeText\_AddHomeText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />
@@ -892,8 +925,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>General.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="resources\Strings\Messages.resx">
+    <EmbeddedResource Include="resources\Strings\MailParameters.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailParameters.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\Strings\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>

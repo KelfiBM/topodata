@@ -124,78 +124,6 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Correo de un visitante.
-        /// </summary>
-        public static string EmailSubjectSendContactUs {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendContactUs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuario Deslinde Registrado.
-        /// </summary>
-        public static string EmailSubjectSendDeslindeRegistrationAdmin {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendDeslindeRegistrationAdmin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proceso de gestion de Título iniciado.
-        /// </summary>
-        public static string EmailSubjectSendDeslindeRegistrationUser {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendDeslindeRegistrationUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Última NOTICIA de TOPODATA del sector Construcción.
-        /// </summary>
-        public static string EmailSubjectSendHomeVideoUpload {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendHomeVideoUpload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NUEVO!! Documento Técnico.
-        /// </summary>
-        public static string EmailSubjectSendNewDocumentMessage {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendNewDocumentMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Introducete a TOPODATA.
-        /// </summary>
-        public static string EmailSubjectSendRegistrationDone {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendRegistrationDone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuario Topodata Registrado.
-        /// </summary>
-        public static string EmailSubjectSendRegistrationDoneAdmin {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendRegistrationDoneAdmin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gracias por Suscribirte a TOPODATA!.
-        /// </summary>
-        public static string EmailSubjectSendSubscribeDone {
-            get {
-                return ResourceManager.GetString("EmailSubjectSendSubscribeDone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to testt@topodata.com.
         /// </summary>
         public static string EmailTestt {
@@ -232,11 +160,92 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AUTH LOGIN.
+        /// </summary>
+        public static string HostSparkAuthentication {
+            get {
+                return ResourceManager.GetString("HostSparkAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STARTTLS.
+        /// </summary>
+        public static string HostSparkEncryption {
+            get {
+                return ResourceManager.GetString("HostSparkEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to smtp.sparkpostmail.com.
+        /// </summary>
+        public static string HostSparkMail {
+            get {
+                return ResourceManager.GetString("HostSparkMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 587.
+        /// </summary>
+        public static string HostSparkPort {
+            get {
+                return ResourceManager.GetString("HostSparkPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMTP_Injection.
+        /// </summary>
+        public static string HostSparkUsername {
+            get {
+                return ResourceManager.GetString("HostSparkUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 46a9427144b4b0e.
+        /// </summary>
+        public static string KeyImgurClientId {
+            get {
+                return ResourceManager.GetString("KeyImgurClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to c8130803f9e7f8bf41f3b95a1b743edc53d85caa.
+        /// </summary>
+        public static string KeyImgurClientSecret {
+            get {
+                return ResourceManager.GetString("KeyImgurClientSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 59b70763f9429e4e54295dd07ad651727f6618f1.
+        /// </summary>
+        public static string KeySparkpost {
+            get {
+                return ResourceManager.GetString("KeySparkpost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to topodata.com/Services/Document/.
         /// </summary>
         public static string UrlDocument {
             get {
                 return ResourceManager.GetString("UrlDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Services/Document/.
+        /// </summary>
+        public static string UrlDocumentLocal {
+            get {
+                return ResourceManager.GetString("UrlDocumentLocal", resourceCulture);
             }
         }
     }

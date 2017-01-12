@@ -1,0 +1,16 @@
+﻿@using Topodata2.Models.Shared
+<h2 class="heading-md">Todos los usuarios</h2>
+<br>
+@{ Html.RenderPartial("BTable/_BTableHtmlCode", new BTableModel
+    {
+        IdTable = "allUsersTable",
+        DetailFormatter = true,
+        ColumData = new Dictionary<string, string>
+       {
+           {"Name", "Nombre"},
+           {"LastName", "Apellido"},
+           {"Email", "Correo"},
+           {"Informed", "Notificaciones"},
+       },
+        CustomColumData = new Dictionary<string, string>()
+    }); }

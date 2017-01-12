@@ -1,0 +1,50 @@
+﻿@model Topodata2.Models.Shared.BTableModel
+<div id="allToolbar">
+    <button id="remove" class="btn btn-default" disabled>
+        <i class="glyphicon glyphicon-trash"></i>
+    </button>
+    <button onclick="addExport(1);" class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+    <button onclick="addExport();" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped" id="@Model.IdTable"
+           data-url="Administration/GetContentForTable"
+           data-checkbox-header="false"
+           data-toolbar="#allToolbar"
+           data-search="true"
+           data-show-refresh="true"
+           data-show-columns="true"
+           data-show-export="true"
+           @{
+               if (Model.DetailFormatter)
+               {
+                   @Html.Raw("data-detail-view='true'")
+                   @Html.Raw("data-detail-formatter='detailFormatter'")
+               }
+           }
+           data-minimum-count-columns="1"
+           data-pagination="true"
+           data-page-list="[10, 25, 50, 100, ALL]"
+           data-side-pagination="client"
+           data-sort-name="Id"
+           data-sort-order="desc">
+        <thead>
+        <tr>
+            <th data-formatter="rowCountNumber">#</th>
+            <th data-sortable="true" data-field="Id" data-visible="false" data-searchable="false">Id</th>
+            @{
+                foreach (var column in Model.ColumData)
+                {
+                    @Html.Raw("<th data-sortable='true' data-field='" + column.Key+"'>"+column.Value+"</th>")
+                }
+                foreach (var columnCustom in Model.CustomColumData)
+                {
+                    @Html.Raw("<th data-formatter='"+columnCustom.Key+"'>"+columnCustom.Value+"</th>")
+                }
+            }
+            <th data-sortable="false" data-field="RegDate" data-visible="true" data-searchable="true">Fecha Registro</th>
+            <th data-checkbox="true"></th>
+        </tr>
+        </thead>
+    </table>
+</div>

@@ -295,7 +295,7 @@ namespace Topodata2.Models.User
                             Informed = reader.GetBoolean(4),
                             RegDate = reader.GetDateTime(5),
                             Rol = reader.GetString(6),
-                            IdUser = reader.GetInt32(7),
+                            Id = reader.GetInt32(7),
                             Password = reader.GetString(8)
                         });
                     }
@@ -385,7 +385,7 @@ namespace Topodata2.Models.User
                             Informed = reader.GetBoolean(4),
                             RegDate = reader.GetDateTime(5),
                             Rol = reader.GetString(6),
-                            IdUser = reader.GetInt32(7),
+                            Id = reader.GetInt32(7),
                             Password = reader.GetString(8)
                         });
                     }
@@ -434,7 +434,7 @@ namespace Topodata2.Models.User
                             Informed = reader.GetBoolean(4),
                             RegDate = reader.GetDateTime(5),
                             Rol = reader.GetString(6),
-                            IdUser = reader.GetInt32(7),
+                            Id = reader.GetInt32(7),
                             Password = reader.GetString(8)
                         });
                     }
@@ -453,7 +453,7 @@ namespace Topodata2.Models.User
             return result;
         } 
 
-        public static bool DeleteUser(UserModel model)
+        public static bool DeleteUser(int id)
         {
             var result = false;
             var sqlConnection = new SqlConnection(Connection);
@@ -463,7 +463,7 @@ namespace Topodata2.Models.User
             var sqlCommand = new SqlCommand(query, sqlConnection);
             try
             {
-                sqlCommand.Parameters.AddWithValue("id", model.IdUser);
+                sqlCommand.Parameters.AddWithValue("id",id);
                 sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 result = true;

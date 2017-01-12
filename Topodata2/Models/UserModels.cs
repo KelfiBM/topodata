@@ -172,7 +172,6 @@ namespace Topodata2.Models
                     sqlCommand.Dispose();
                     sqlConnection.Close();
                 }
-                SendMessage(subscribeView.Email);
                 return true;
             }
             catch (Exception es)

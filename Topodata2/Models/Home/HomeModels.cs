@@ -59,6 +59,7 @@ namespace Topodata2.Models.Home
         public string Cargo { get; set; }
         public string Email { get; set; }
         public string ImagePath { get; set; }
+        public DateTime RegDate { get; set; }
     }
 
     public class Flipboard : Model

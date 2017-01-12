@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using Topodata2.Classes;
 using Topodata2.resources.Strings;
 
 namespace Topodata2.Models.Home
 {
-    public class HomeSliderImageSeasonViewModel
+    public class HomeSliderImageSeasonViewModel : ViewModelAbstract
     {
         public string ImagePath { get; set; }
 
@@ -14,7 +15,7 @@ namespace Topodata2.Models.Home
         public HttpPostedFileBase ImageUpload { get; set; }
     }
 
-    public class HomeSlideVideoViewModel
+    public class HomeSlideVideoViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "HomeSliderVideoUrlVideo")]
         [DataType(DataType.Url)]
@@ -88,34 +89,34 @@ namespace Topodata2.Models.Home
         public DateTime RegDate { get; set; }
     }
 
-    public class TextoHomeViewModel
+    public class TextoHomeViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "Agrimensura")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string Agrimensura { get; set; }
 
         [Display(ResourceType = typeof(Displays), Name = "EstudioSuelo")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string EstudioSuelo { get; set; }
 
         [Display(ResourceType = typeof(Displays), Name = "Diseno")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string Diseno { get; set; }
 
         [Display(ResourceType = typeof(Displays), Name = "Ingenieria")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "EmptyField")]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "Requerido")]
         [StringLength(200, ErrorMessageResourceType = typeof (Messages), ErrorMessageResourceName = "Max200Char")]
         public string Ingenieria { get; set; }
     }
 
-    public class OurTeamViewModel
+    public class OurTeamViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "Nombre")]
         [DataType(DataType.Text)]
@@ -144,7 +145,7 @@ namespace Topodata2.Models.Home
         public HttpPostedFileBase ImageUpload { get; set; }
     }
 
-    public class FlipboardViewModel
+    public class FlipboardViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "UrlRevista")]
         [DataType(DataType.Url)]

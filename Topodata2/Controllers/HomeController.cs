@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.Models;
 using Topodata2.Models.Home;
@@ -68,7 +69,7 @@ namespace Topodata2.Controllers
             }
             try
             {
-                new MailManager().SendMail(MailType.ContactUs, viewModel);
+                MailManager.SendMail(MailType.ContactUs, viewModel);
                 TempData["OperationStatus"] = "Success";
                 return RedirectToAction("Contact", "Home");
             }
@@ -88,32 +89,32 @@ namespace Topodata2.Controllers
             return View();
         }
 
-        public ActionResult Deslinder()
+        public ActionResult Deslinde()
         {
-            return View("Deslinder");
+            return View("Deslinde");
         }
         [HttpPost]
-        public ActionResult Deslinder(DeslindeViewModel viewModel)
+        public ActionResult Deslinde(DeslindeViewModel viewModel)
         {
             string message;
-            viewModel.RegDate = DateTime.Now;
+            viewModel.RegDate = TimePicker.GetLocalDateTime();
             if (!ModelState.IsValid)
             {
                 message = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 TempData["OperationStatus"] = "Error";
                 TempData["OperationMessage"] = message;
-                return RedirectToAction("Deslinder", "Home");
+                return RedirectToAction("Deslinde", "Home");
                 /*var errors = string.Join("; ",
                     ModelState.Values.SelectMany(m => m.Errors.Select(n => n.ErrorMessage)));
                 return Content("<script language='javascript' type='text/javascript'>alert('"+errors+"');</script>");*/
             }
             try
             {
-                new MailManager().SendMail(MailType.DeslinderRegistrationAdmin, viewModel)
-                    .SendMail(MailType.DeslinderRegistrationUser, viewModel);
+                MailManager.SendMail(MailType.DeslinderRegistrationAdmin, viewModel);
+                MailManager.SendMail(MailType.DeslinderRegistrationUser, viewModel);
                 TempData["OperationStatus"] = "Success";
-                return RedirectToAction("Deslinder", "Home");
+                return RedirectToAction("Deslinde", "Home");
             }
             catch
             {
@@ -123,7 +124,7 @@ namespace Topodata2.Controllers
             TempData["OperationMessage"] = message;
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = message;
-            return RedirectToAction("Deslinder", "Home");
+            return RedirectToAction("Deslinde", "Home");
         }
     }
 }

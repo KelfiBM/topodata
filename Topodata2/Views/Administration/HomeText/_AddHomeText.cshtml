@@ -1,0 +1,53 @@
+﻿@model Topodata2.Models.Home.TextoHomeViewModel
+<h2 class="heading-md">Añadir Textos Home</h2>
+<br />
+@using (Html.BeginForm("HomeText", "Administration", FormMethod.Post, new {@class = "sky-form", @id = "AddHomeTextForm"}))
+{
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(m => m.Agrimensura)</dt>
+        <dd>
+            <section>
+                <label class="textarea">
+                    <i class="icon-append fa fa-pencil"></i>
+                    @Html.EditorFor(m => m.Agrimensura, new {htmlAttributes = new {@rows = "2", @required = ""}})
+                    <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Agrimensura)</b>
+                    @Html.ValidationMessageFor(m => m.Agrimensura)
+                </label>
+            </section>
+        </dd>
+        <dt>@Html.DisplayNameFor(m => m.EstudioSuelo)</dt>
+        <dd>
+            <section>
+                <label class="textarea">
+                    <i class="icon-append fa fa-pencil"></i>
+                    @Html.EditorFor(m => m.EstudioSuelo, new {htmlAttributes = new {@rows = "2", @required = ""}})
+                    <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.EstudioSuelo)</b>
+                    @Html.ValidationMessageFor(m => m.EstudioSuelo)
+                </label>
+            </section>
+        </dd>
+        <dt>@Html.DisplayNameFor(m => m.Diseno)</dt>
+        <dd>
+            <section>
+                <label class="textarea">
+                    <i class="icon-append fa fa-pencil"></i>
+                    @Html.EditorFor(m => m.Diseno, new {htmlAttributes = new {@rows = "2", @required = ""}})
+                    <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Diseno)</b>
+                    @Html.ValidationMessageFor(m => m.Diseno)
+                </label>
+            </section>
+        </dd>
+        <dt>@Html.DisplayNameFor(m => m.Ingenieria)</dt>
+        <dd>
+            <section>
+                <label class="textarea">
+                    <i class="icon-append fa fa-pencil"></i>
+                    @Html.EditorFor(m => m.Ingenieria, new {htmlAttributes = new {@rows = "2", @required = ""}})
+                    <b class="tooltip tooltip-bottom-right">@Html.DisplayNameFor(m => m.Ingenieria)</b>
+                    @Html.ValidationMessageFor(m => m.Ingenieria)
+                </label>
+            </section>
+        </dd>
+    </dl>
+    <button type="submit" class="btn btn-u">Añadir Textos</button>
+}

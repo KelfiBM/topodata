@@ -1,51 +1,52 @@
-﻿<img src="@Topodata2.resources.Strings.Paths.ImgLogoDefault.Substring(1, Topodata2.resources.Strings.Paths.ImgLogoDefault.Length - 1)"
+﻿@using Topodata2.Models.Administration
+<img src="@Topodata2.resources.Strings.Paths.ImgLogoDefault.Substring(1, Topodata2.resources.Strings.Paths.ImgLogoDefault.Length - 1)"
      alt="" 
      class="img-responsive profile-img margin-bottom-20"/>
 <ul id="sidebar-nav-1" class="nav list-group sidebar-nav-v1 margin-bottom-40">
     <li class="list-group-item">
-        <a href="@Url.Action("Documents", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.Documents})">
             <i class="fa fa-cog"></i>
             Documentos
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("HomeSlideVideo", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.HomeSlideVideo})">
             <i class="fa fa-cog"></i>
             Video Slide
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("Flipboard", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.Flipboard})">
             <i class="fa fa-cog"></i>
             Flipboard
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("ImageSeason", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.ImageSeason})">
             <i class="fa fa-cog"></i>
             Imagen Slide
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("AllUser", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.Users})">
             <i class="fa fa-cog"></i>
             Usuarios
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("HomeText", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.HomeText})">
             <i class="fa fa-cog"></i>
             Textos Inicio
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("Sectores", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.Sectores})">
             <i class="fa fa-cog"></i>
             Sectores
         </a>
     </li>
     <li class="list-group-item">
-        <a href="@Url.Action("OurTeam", "Administration")">
+        <a href="@Url.Action("Index", new { index = (int) ActionType.OurEquipos})">
             <i class="fa fa-cog"></i>
             Nuestro Equipo
         </a>

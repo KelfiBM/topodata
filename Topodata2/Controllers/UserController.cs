@@ -6,6 +6,7 @@ using Topodata2.Models.User;
 using Recaptcha.Web;
 using Recaptcha.Web.Mvc;
 using Topodata2.Managers;
+using Topodata2.ViewModels;
 
 namespace Topodata2.Controllers
 {
@@ -189,8 +190,8 @@ namespace Topodata2.Controllers
                 Password = userViewModel.Register.Password,
                 UserName = userViewModel.Register.Username
             };
-            new MailManager().SendMail(MailType.RegistrationDoneUser,model)
-                .SendMail(MailType.RegistrationDoneAdmin, model);
+            MailManager.SendMail(MailType.RegistrationDoneUser,model);
+            MailManager.SendMail(MailType.RegistrationDoneAdmin, model);
             return RedirectToAction("Index", "Home");
         }
 
@@ -199,7 +200,7 @@ namespace Topodata2.Controllers
         {
             if (!ModelState.IsValid) return Redirect(Request.UrlReferrer?.ToString());
             subscribeView.Subscribe(subscribeView);
-            new MailManager().SendMail(MailType.SubscribeDone, subscribeView.Email);
+            MailManager.SendMail(MailType.SubscribeDone, subscribeView.Email);
             return Redirect(Request.UrlReferrer?.ToString());
         }
 

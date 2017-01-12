@@ -1,0 +1,135 @@
+﻿@model Topodata2.Models.Home.DeslindeViewModel
+    @{
+        ViewBag.Title = "Deslinde";
+    }
+<div class="container content">
+    @if (TempData["OperationStatus"] != null)
+    {
+        if (TempData["OperationStatus"].ToString() == "Error")
+        {
+            Html.RenderPartial("_AlertError");
+        }
+        if (TempData["OperationStatus"].ToString() == "Success")
+        {
+            Html.RenderPartial("_AlertSuccess");
+        }
+    }
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            @using (Html.BeginForm("Deslinde", "Home", FormMethod.Post, new { @class = "reg-page", @id = "sky-form1" }))
+            {
+                <div class="reg-header">
+                    <h2>Obten tu Título de propiedad!</h2>
+                    <p>Registrate para iniciar el proceso de gestion de Título de propiedad</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>@Html.DisplayNameFor(m => m.Nombre)</label>
+                        @Html.EditorFor(m => m.Nombre, new {htmlAttributes = new {@class = "form-control", @placeholder = "Nombres"}})
+                        <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Nombre)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@Html.DisplayNameFor(m => m.Apellido)</label>
+                        @Html.EditorFor(m => m.Apellido, new {htmlAttributes = new {@class = "form-control", @placeholder = "Apellidos"}})
+                        <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Apellido)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>@Html.DisplayNameFor(m => m.Telefono)</label>
+                        @Html.EditorFor(m => m.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefono", @id = "phone"} })
+                        <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Telefono)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@Html.DisplayNameFor(m => m.Movil)</label>
+                        @Html.EditorFor(m => m.Movil, new { htmlAttributes = new { @class = "form-control phoneText", @placeholder = "Movil", @id = "phone1" } })
+                        <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Movil)</p>
+                    </div>
+                </div>
+                <label>@Html.DisplayNameFor(m => m.Correo)</label>
+                @Html.EditorFor(m => m.Correo, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Correo) } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Correo)</p>
+                <label>@Html.DisplayNameFor(m => m.Ubicacion)</label>
+                @Html.EditorFor(m => m.Ubicacion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Direccion" } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Ubicacion)</p>
+                <label>@Html.DisplayNameFor(m => m.NoMatrical)</label>
+                @Html.EditorFor(m => m.NoMatrical, new { htmlAttributes = new { @class = "form-control", @placeholder = "No. de Matricula" } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoMatrical)</p>
+                <label>@Html.DisplayNameFor(m => m.NoParsela)</label>
+                @Html.EditorFor(m => m.NoParsela, new { htmlAttributes = new { @class = "form-control", @placeholder = "No. de Parcela" } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoParsela)</p>
+                <label>@Html.DisplayNameFor(m => m.NoDistrito)</label>
+                @Html.EditorFor(m => m.NoDistrito, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.NoDistrito) } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.NoDistrito)</p>
+                <label>@Html.DisplayNameFor(m => m.Municipio)</label>
+                @Html.EditorFor(m => m.Municipio, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Municipio) } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Municipio)</p>
+                <label>@Html.DisplayNameFor(m => m.Provincia)</label>
+                @Html.EditorFor(m => m.Provincia, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Provincia) } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Provincia)</p>
+                <label>@Html.DisplayNameFor(m => m.Area)</label>
+                @Html.EditorFor(m => m.Area, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Area) } })
+                <p class="margin-bottom-20">@Html.ValidationMessageFor(m => m.Area)</p>
+                <label>*Usted puede enviar un Share Location/Compartir Ubicacion desde Whatsapp al número 829-972-4131</label>
+                <div class="row">
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6 text-right">
+                        <button class="btn-u" type="submit">Enviar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/page_log_reg_v1.css" rel="stylesheet" />
+}
+@section PageScripts
+{
+    <script src="~/resources/js/plugins/masking.js"></script>
+    <script src="~/resources/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
+
+}
+@section documentReady
+{
+    Masking.initMasking();
+}
+@section ScriptsFunction
+{
+    <script>
+        $(document).ready(function () {
+            var form = $('#sky-form1'),
+                formData = $.data(form[0]),
+                settings = formData.validator.settings
+                // Store existing event handlers in local variables
+                ,
+                oldErrorPlacement = settings.errorPlacement,
+                oldSuccess = settings.success;
+
+            settings.errorPlacement = function (label, element) {
+
+                // Call old handler so it can update the HTML
+                oldErrorPlacement(label, element);
+
+                // Add Bootstrap classes to newly added elements
+                label.parents('label').addClass('state-error');
+                label.addClass('text-danger');
+
+            };
+
+            settings.success = function (label) {
+                // Remove error class from <div class="form-group">, but don't worry about
+                // validation error messages as the plugin is going to remove it anyway
+
+                label.parents('label').removeClass('state-error');
+
+                // Call old handler to do rest of the work
+                oldSuccess(label);
+            };
+        });
+        jQuery(function ($) {
+            $("#phone1").mask("(999) 999-9999", { placeholder: "X" });
+        });
+    </script>
+}

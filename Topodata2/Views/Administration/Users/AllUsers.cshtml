@@ -28,7 +28,7 @@
                         @*<li><a data-toggle="tab" href="#edit">Editar Equipo</a></li>*@
                     </ul>
                     <div class="tab-content">
-                        @{Html.RenderPartial("Users/ViewAllUsers", ViewData);}
+                        @{Html.RenderPartial("Users/_AllUsers", ViewData);}
                     </div>
                 </div>
             </div>
@@ -41,7 +41,8 @@
 {
     <link href="~/resources/plugins/line-icons/line-icons.css" rel="stylesheet" />
     <link href="~/resources/plugins/sky-forms-pro/skyforms/css/sky-forms.css" rel="stylesheet" />
-    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet" />
+    <link href="~/resources/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css" rel="stylesheet"/>
+    <link href="~/resources/plugins/dynoTable/jquery.dynatable.css" rel="stylesheet" />
 }
 @section cssPageStyle
 {
@@ -54,12 +55,14 @@
     <script src="~/resources/js/forms/checkout.js"></script>
     <script src="~/resources/js/forms/reg.js"></script>
     <script src="~/resources/js/plugins/datepicker.js"></script>
+    <script src="~/resources/plugins/dynoTable/jquery.dynatable.js"></script>
 }
 @section documentReady
 {
     RegForm.initRegForm();
     CheckoutForm.initCheckoutForm();
     Datepicker.initDatepicker();
+    $('#allUserTable').dynatable();
 }
 @section ScriptsFunction
 {

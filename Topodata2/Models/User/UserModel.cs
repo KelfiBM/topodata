@@ -7,7 +7,7 @@ namespace Topodata2.Models.User
 {
     public class UserModel
     {
-        public int IdUser { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

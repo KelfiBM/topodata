@@ -1,4 +1,6 @@
-﻿namespace Topodata2.Models
+﻿using Topodata2.Models;
+
+namespace Topodata2.ViewModels
 {
     public class UserViewModel
     {
