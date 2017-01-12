@@ -543,7 +543,8 @@ namespace Topodata2.Models.Service
                         {
                             Id = reader.GetInt32(0),
                             Descripcion = reader.GetString(1),
-                            ImagePath = reader.GetString(2)
+                            ImagePath = reader.GetString(2),
+                            RegDate = reader.GetDateTime(3)
                         });
                     }
                 }

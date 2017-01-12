@@ -367,6 +367,7 @@ namespace Topodata2.Models
         public int Id { get; set; }
         public string Descripcion { get; set; }
         public string ImagePath { get; set; }
+        public DateTime RegDate { get; set; }
     }
 
     public class CategorieModel

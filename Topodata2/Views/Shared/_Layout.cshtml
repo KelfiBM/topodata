@@ -1,5 +1,6 @@
 ﻿@using Microsoft.Ajax.Utilities
 @using Topodata2.Models
+@using Topodata2.Models.Administration
 @using Topodata2.Models.Service
 @using Topodata2.Models.User
 @{
@@ -174,14 +175,14 @@
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Administracion</a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Documentos", "Documents", "Administration")</li>
-                                <li>@Html.ActionLink("Video Slide", "HomeSlideVideo", "Administration")</li>
-                                <li>@Html.ActionLink("Flipboard", "Flipboard", "Administration")</li>
-                                <li>@Html.ActionLink("Imagen Slide","ImageSeason","Administration")</li>
-                                <li>@Html.ActionLink("Usuarios", "AllUser", "Administration")</li>
-                                <li>@Html.ActionLink("Textos Inicio", "HomeText", "Administration")</li>
-                                <li>@Html.ActionLink("Sectores", "Sectores", "Administration")</li>
-                                <li>@Html.ActionLink("Nuestro Equipo", "OurTeam", "Administration")</li>
+                                <li>@Html.ActionLink("Documentos", "Index", "Administration", new { index = (int)ActionType.Documents }, null)</li>
+                                <li>@Html.ActionLink("Video Slide", "Index", "Administration", new { index = (int)ActionType.HomeSlideVideo }, null)</li>
+                                <li>@Html.ActionLink("Flipboard", "Index", "Administration", new { index = (int)ActionType.Flipboard }, null)</li>
+                                <li>@Html.ActionLink("Imagen Slide","Index","Administration", new { index = (int)ActionType.ImageSeason }, null)</li>
+                                <li>@Html.ActionLink("Usuarios", "Index", "Administration", new { index = (int)ActionType.Users }, null)</li>
+                                <li>@Html.ActionLink("Textos Inicio", "Index", "Administration", new { index = (int)ActionType.HomeText }, null)</li>
+                                <li>@Html.ActionLink("Sectores", "Index", "Administration", new { index = (int)ActionType.Sectores }, null)</li>
+                                <li>@Html.ActionLink("Nuestro Equipo", "Index", "Administration", new { index = (int)ActionType.OurEquipos }, null)</li>
                             </ul>
                         </li>
                     }

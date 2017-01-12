@@ -97,9 +97,9 @@ namespace Topodata2.Models.Home
             });
         }
 
-        public static bool DeleteOurTeam(OurTeam model)
+        public static bool DeleteOurTeam(int id)
         {
-            var file = GetImagePathOurTeam(model);
+            var file = GetImagePathOurTeam(id);
             if (System.IO.File.Exists(file))
             {
                 System.IO.File.Delete(file);
@@ -108,7 +108,7 @@ namespace Topodata2.Models.Home
             var result = false;
             var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
                 DatabaseParameters.DeleteOurTeam,
-                model.Id.ToString());
+                id.ToString());
             if (value.Count > 0)
             {
                 result = true;
@@ -116,10 +116,10 @@ namespace Topodata2.Models.Home
             return result;
         }
 
-        private static string GetImagePathOurTeam(OurTeam model)
+        private static string GetImagePathOurTeam(int id)
         {
             var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.OurTeam,
-                DatabaseParameters.GetImagePathOurTeam, model.Id.ToString());
+                DatabaseParameters.GetImagePathOurTeam, id.ToString());
             if (value.Count == 0) return null;
             var result = value.ConvertAll(i => (OurTeam) i)[0].ImagePath;
             return result;

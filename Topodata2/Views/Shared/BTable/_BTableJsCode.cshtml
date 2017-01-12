@@ -3,7 +3,7 @@
     $('#@Model.IdTable').bootstrapTable({
         method: 'post',
         queryParams: function(p) {
-            return {index: @Model.IndexActionType}
+            return {modelType: @Model.IndexActionType}
         }
     });
     function addExport(add) {
@@ -48,7 +48,7 @@
                         var url = '/Administration/DeleteContent/';
                         $.ajax({
                             url: url,
-                            data: { ids: ids, index: @Model.IndexActionType },
+                            data: { ids: ids, modelType: @Model.IndexActionType },
                             cache: false,
                             type: "POST",
                             success: function(result) {

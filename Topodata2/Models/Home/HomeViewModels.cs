@@ -116,7 +116,7 @@ namespace Topodata2.Models.Home
         public string Ingenieria { get; set; }
     }
 
-    public class OurTeamViewModel
+    public class OurTeamViewModel : ViewModelAbstract
     {
         [Display(ResourceType = typeof(Displays), Name = "Nombre")]
         [DataType(DataType.Text)]

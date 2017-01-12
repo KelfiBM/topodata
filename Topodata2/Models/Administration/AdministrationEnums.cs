@@ -8,6 +8,7 @@
         ImageSeason = 3,
         Users = 4,
         HomeText = 5,
-        Sectores = 6
+        Sectores = 6,
+        OurEquipos = 7
     }
 }
