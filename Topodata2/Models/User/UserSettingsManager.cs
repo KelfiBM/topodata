@@ -126,7 +126,7 @@ namespace Topodata2.Models.User
                 userProfileSettings.PasswordOld, userProfileSettings.PasswordNew);
         }
 
-        public static bool SaveProfile(UserProfileSettingsEditProfileViewModel EditProfileViewModel)
+        public static bool SaveProfile(UserProfileSettingsEditProfileViewModel editProfileViewModel)
         {
             var result = false;
             var sqlConnection = new SqlConnection(Connection);
@@ -134,8 +134,8 @@ namespace Topodata2.Models.User
             var sqlCommand = new SqlCommand(query, sqlConnection);
             try
             {
-                sqlCommand.Parameters.AddWithValue("name", EditProfileViewModel.Name);
-                sqlCommand.Parameters.AddWithValue("lastName", EditProfileViewModel.Lastname);
+                sqlCommand.Parameters.AddWithValue("name", editProfileViewModel.Name);
+                sqlCommand.Parameters.AddWithValue("lastName", editProfileViewModel.Lastname);
                 sqlCommand.Parameters.AddWithValue("id", Convert.ToInt32(UserManager.User.Id));
                 sqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();

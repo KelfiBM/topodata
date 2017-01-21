@@ -4,15 +4,15 @@
 @using Topodata2.Models.Service
 @using Topodata2.Models.User
 @{
-    var urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
-    var urlTwitter = "https://twitter.com/topodata";
-    var urlInstagram = "https://www.instagram.com/topodatagis/";
-    var urlYoutube = "https://www.youtube.com/user/TOPODATA100/";
-    var urlGooglePlus = "https://plus.google.com/+TopodataGis/";
-    var urlFlickr = "https://www.flickr.com/people/89639027@N07/";
-    var urlFlipboard = "https://flipboard.com/@topodata";
+    const string urlFacebook = "https://www.facebook.com/Topodata-203572243122320/";
+    const string urlTwitter = "https://twitter.com/topodata";
+    const string urlInstagram = "https://www.instagram.com/topodatagis/";
+    const string urlYoutube = "https://www.youtube.com/user/TOPODATA100/";
+    const string urlGooglePlus = "https://plus.google.com/+TopodataGis/";
+    const string urlFlickr = "https://www.flickr.com/people/89639027@N07/";
+    const string urlFlipboard = "https://flipboard.com/@topodata";
     var controller = ViewContext.RouteData.Values["Controller"].ToString();
-    var controllerAdmin = (controller == "Administration") ? true : false;
+    var controllerAdmin = (controller == "Administration");
 }
 
 <!DOCTYPE html>

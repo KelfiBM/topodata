@@ -7,6 +7,7 @@ using Topodata2.Managers;
 using Topodata2.Models;
 using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
+using Topodata2.Models.User;
 using Topodata2.resources.Strings;
 
 namespace Topodata2.Controllers
@@ -125,6 +126,17 @@ namespace Topodata2.Controllers
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = message;
             return RedirectToAction("Deslinde", "Home");
+        }
+
+        public ActionResult Unsubscribe(string value)
+        {
+            var user = UserManager.GetUser(value);
+            if (user == null || !user.Informed)
+            {
+                return RedirectToAction("Index");
+            }
+            UserManager.UpdateSubscribed(value, false);
+            return View("SorryLeaving");
         }
     }
 }

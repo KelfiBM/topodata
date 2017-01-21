@@ -37,7 +37,7 @@ namespace Topodata2
 
                 // Deserialize the json data and set it on the custom principal.
                 var serializer = new JavaScriptSerializer();
-                principal.User = (User)serializer.Deserialize(userData, typeof(User));
+                principal.User = (UserModel)serializer.Deserialize(userData, typeof(UserModel));
 
                 // Set the context user.
                 Context.User = principal;

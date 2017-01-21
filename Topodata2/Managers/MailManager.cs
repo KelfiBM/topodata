@@ -29,7 +29,7 @@ namespace Topodata2.Managers
         }
 
         private static Transmission MakeTransmission(MessageType messageType, string subject, string body,
-            IEnumerable<string> to, SparkPost.Attachment[] attachment = null)
+            IEnumerable<string> to, Attachment[] attachment = null)
         {
             var transmission = new Transmission
             {
@@ -63,6 +63,8 @@ namespace Topodata2.Managers
                 case MessageType.Personal:
                     foreach (var recipient in to)
                     {
+                        body = body.Replace("{emailRecipient}", recipient);
+                        transmission.Content.Html = body;
                         transmission.Recipients.Add(new Recipient {Address = {Email = recipient}});
                     }
                     break;
@@ -77,11 +79,10 @@ namespace Topodata2.Managers
             return transmission;
         }
 
-
-
         private static void StartSendTransmission(MessageType messageType, string subject, string body, IEnumerable<string> to,
-            SparkPost.Attachment[] attachment = null)
+            Attachment[] attachment = null)
         {
+
             var recipients = to as string[] ?? to.ToArray();
 
             Task task = Task.Run(() => Parallel.ForEach(recipients, new ParallelOptions {MaxDegreeOfParallelism = 9} , recipient =>
@@ -230,7 +231,7 @@ namespace Topodata2.Managers
             try
             {
                 var body = MakeBody(Paths.EmailRegistrationDoneUserAdmin, model.Name, model.LastName, model.Email,
-                    model.UserName, model.RegDate.Date);
+                    model.Username, model.RegDate.Date);
                 StartSendTransmission(MessageType.Personal, MailParameters.SubjectRegistrationDoneAdmin, body, new[]
                 {
                     DomainSettings.EmailRegistrados
@@ -247,7 +248,7 @@ namespace Topodata2.Managers
             try
             {
                 var body = MakeBody(Paths.EmailRegistrationDoneUser);
-                body = body.Replace("{username}", model.UserName);
+                body = body.Replace("{username}", model.Username);
                 body = body.Replace("{contra}", model.Password);
                 StartSendTransmission(MessageType.Personal, MailParameters.SubjectRegistrationDone, body, new[] {model.Email}
                     /*,

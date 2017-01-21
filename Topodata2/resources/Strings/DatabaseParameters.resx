@@ -159,4 +159,41 @@
   <data name="GetFlipboardExists" xml:space="preserve">
     <value>SELECT TOP (1) * FROM viewFlipboard</value>
   </data>
+  <data name="UpdateInformed" xml:space="preserve">
+    <value>spUpdateSubscribed</value>
+  </data>
+  <data name="DeleteUser" xml:space="preserve">
+    <value>spDeleteUser</value>
+  </data>
+  <data name="GetUserFromEmail" xml:space="preserve">
+    <value>SELECT * FROM viewAllUsers WHERE (Email = @value0)</value>
+  </data>
+  <data name="GetUserFromId" xml:space="preserve">
+    <value>SELECT * FROM viewAllUsers WHERE (Id = @value0)</value>
+  </data>
+  <data name="GetAllUser" xml:space="preserve">
+    <value>SELECT * FROM viewAllUsers</value>
+  </data>
+  <data name="GetAllUserFromDate" xml:space="preserve">
+    <value>SELECT * FROM viewAllUsers WHERE viewAllUsers.RegDate &gt;= {0}</value>
+    <comment>Need Format</comment>
+  </data>
+  <data name="GetAllSubscribed" xml:space="preserve">
+    <value>SELECT * FROM viewSubscribedInformed</value>
+  </data>
+  <data name="GetAllInformedUsers" xml:space="preserve">
+    <value>SELECT * FROM viewAllUsers WHERE viewAllUsers.Informed = 1</value>
+  </data>
+  <data name="AuthenticateUser" xml:space="preserve">
+    <value>SELECT * FROM viewAllUsers WHERE ([Username] = @value0 AND [Password] = @value1) OR ([Email] = @value0 AND [Password] = @value1)</value>
+  </data>
+  <data name="IsActualPassword" xml:space="preserve">
+    <value>spIsActualPassword</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>spChangePassword</value>
+  </data>
+  <data name="UserIsInRole" xml:space="preserve">
+    <value>spUserIsInRole</value>
+  </data>
 </root>

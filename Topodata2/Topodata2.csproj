@@ -537,9 +537,6 @@
     <Content Include="resources\plugins\cube-portfolio\templates\agency\ajax-agency\loadMore.html" />
     <Content Include="resources\plugins\cube-portfolio\templates\agency\index.html" />
     <Content Include="resources\plugins\cube-portfolio\templates\agency\js\main.js" />
-    <Content Include="resources\plugins\fancybox\lib\jquery-1.10.1.min.js" />
-    <Content Include="resources\plugins\fancybox\lib\jquery-1.9.0.min.js" />
-    <Content Include="resources\plugins\fancybox\lib\jquery.mousewheel-3.0.6.pack.js" />
     <Content Include="resources\plugins\fancybox\source\blank.gif" />
     <Content Include="resources\plugins\fancybox\source\fancybox_loading%402x.gif" />
     <Content Include="resources\plugins\fancybox\source\fancybox_loading.gif" />
@@ -858,7 +855,6 @@
     <Content Include="Views\Administration\Flipboard\_DeleteFlipboard.cshtml" />
     <Content Include="Views\Home\Index\_HomeFlipboard.cshtml" />
     <Content Include="Views\Home\Deslinde.cshtml" />
-    <Content Include="Views\Administration\Users\AllUsers.cshtml" />
     <Content Include="Views\Administration\Users\_AllUsers.cshtml" />
     <Content Include="Views\Home\Index\_HomeRecentDocument.cshtml" />
     <Content Include="Views\Shared\Layout\_Categories.cshtml" />
@@ -889,6 +885,7 @@
     <Content Include="Views\Administration\HomeSlide\_AddHomeSlideVideo.cshtml" />
     <Content Include="Views\Administration\Administration.cshtml" />
     <Content Include="Views\Administration\HomeText\_AddHomeText.cshtml" />
+    <Content Include="Views\Home\SorryLeaving.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

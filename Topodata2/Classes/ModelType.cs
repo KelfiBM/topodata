@@ -11,9 +11,11 @@ namespace Topodata2.Classes
         HomeSlider,
         HomeSliderImageSeason,
         HomeSliderVideo,
-        DeslinderModel,
+        DeslindeModel,
         TextoHome,
         OurTeam,
-        Flipboard
+        Flipboard,
+        User,
+        Subscribed
     }
 }

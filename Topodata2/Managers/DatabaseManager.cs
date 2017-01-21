@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using Topodata2.Classes;
 using Topodata2.Models.Home;
+using Topodata2.Models.User;
 
 namespace Topodata2.Managers
 {
@@ -77,8 +75,8 @@ namespace Topodata2.Managers
                     case ModelType.HomeSliderVideo:
                         result.AddRange(GetHomeSliderVideo(sqlDataReader));
                         break;
-                    case ModelType.DeslinderModel:
-                        //GetDeslinderModel(sqlDataReader);
+                    case ModelType.DeslindeModel:
+                        //GetDeslindeModel(sqlDataReader);
                         break;
                     case ModelType.TextoHome:
                         result.AddRange(GetTextoHome(sqlDataReader));
@@ -88,6 +86,12 @@ namespace Topodata2.Managers
                         break;
                     case ModelType.Flipboard:
                         result.AddRange(GetFlipboard(sqlDataReader));
+                        break;
+                    case ModelType.User:
+                        result.AddRange(GetUser(sqlDataReader));
+                        break;
+                    case ModelType.Subscribed:
+                        result.AddRange(GetSubscribed(sqlDataReader));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(modelType), modelType, null);
@@ -113,10 +117,9 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<HomeSlider> GetHomeSlider(DbDataReader reader)
+        private static IEnumerable<HomeSlider> GetHomeSlider(IDataReader reader)
         {
             var result = new List<HomeSlider>();
-            if (!reader.HasRows) return result;
             while (reader.Read())
             {
                 result.Add(new HomeSlider
@@ -129,15 +132,14 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<HomeSliderImageSeason> GetHomeSliderImageSeason(DbDataReader reader)
+        private static IEnumerable<HomeSliderImageSeason> GetHomeSliderImageSeason(IDataReader reader)
         {
             return null;
         }
 
-        private static IEnumerable<HomeSliderVideo> GetHomeSliderVideo(DbDataReader reader)
+        private static IEnumerable<HomeSliderVideo> GetHomeSliderVideo(IDataReader reader)
         {
             var result = new List<HomeSliderVideo>();
-            if (!reader.HasRows) return result;
             while (reader.Read())
             {
                 result.Add(new HomeSliderVideo
@@ -150,9 +152,8 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<DeslinderModel> GetDeslinderModel(DbDataReader reader)
+        private static IEnumerable<DeslinderModel> GetDeslindeModel(IDataReader reader)
         {
-            if (!reader.HasRows) return null;
             var result = new List<DeslinderModel>();
             while (reader.Read())
             {
@@ -161,10 +162,9 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<TextoHome> GetTextoHome(DbDataReader reader)
+        private static IEnumerable<TextoHome> GetTextoHome(IDataReader reader)
         {
             var result = new List<TextoHome>();
-            if (!reader.HasRows) return result;
             while (reader.Read())
             {
                 result.Add(new TextoHome
@@ -180,10 +180,9 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<OurTeam> GetOurTeam(DbDataReader reader)
+        private static IEnumerable<OurTeam> GetOurTeam(IDataReader reader)
         {
             var result = new List<OurTeam>();
-            if (!reader.HasRows) return result;
             while (reader.Read())
             {
                 result.Add(new OurTeam
@@ -198,10 +197,9 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<Flipboard> GetFlipboard(DbDataReader reader)
+        private static IEnumerable<Flipboard> GetFlipboard(IDataReader reader)
         {
             var result = new List<Flipboard>();
-            if (!reader.HasRows) return result;
             while (reader.Read())
             {
                 result.Insert(0,new Flipboard
@@ -210,6 +208,41 @@ namespace Topodata2.Managers
                     Name = reader.GetString(reader.GetOrdinal("Name")),
                     Url = reader.GetString(reader.GetOrdinal("Url")),
                     RegDate = reader.GetDateTime(reader.GetOrdinal("RegDate"))
+                });
+            }
+            return result;
+        }
+
+        private static IEnumerable<UserModel> GetUser(IDataReader reader)
+        {
+            var result = new List<UserModel>();
+            while (reader.Read())
+            {
+                result.Insert(0, new UserModel
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    RegDate = reader.GetDateTime(reader.GetOrdinal("RegDate")),
+                    Username = reader.GetString(reader.GetOrdinal("Username")),
+                    Informed = reader.GetBoolean(reader.GetOrdinal("Informed")),
+                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                    Rol = reader.GetString(reader.GetOrdinal("Descripcion")),
+                    Password = reader.GetString(reader.GetOrdinal("Password"))
+                });
+            }
+            return result;
+        }
+
+        private static IEnumerable<UserModel> GetSubscribed(IDataReader reader)
+        {
+            var result = new List<UserModel>();
+            while (reader.Read())
+            {
+                result.Insert(0, new UserModel
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    Email = reader.GetString(reader.GetOrdinal("Email"))
                 });
             }
             return result;

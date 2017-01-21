@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Web;
 using System.Web.Security;
@@ -9,9 +8,6 @@ namespace Topodata2.Models
 {
     public class CustomMembershipProvider : MembershipProvider
     {
-        private static readonly string Connection =
-            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {

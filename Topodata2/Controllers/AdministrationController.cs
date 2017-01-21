@@ -298,7 +298,7 @@ namespace Topodata2.Controllers
                         Name = selected.Name,
                         LastName = selected.LastName,
                         Email = selected.Email,
-                        UserName = selected.UserName,
+                        Username = selected.Username,
                         RegDate = selected.RegDate.ToShortDateString(),
                         Informed = selected.Informed ? General.NotificationYes : General.NotificationNot,
                         Rol = selected.Rol

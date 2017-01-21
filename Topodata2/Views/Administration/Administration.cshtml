@@ -127,11 +127,13 @@
                     case ActionType.ImageSeason:
                         break;
                     case ActionType.Users:
-                        @Html.Raw("return '<p><b>Rol:</b> ' + row.Rol + '</p>' + '<p><b>Username:</b> ' + row.UserName + '</p>'")
+                        @Html.Raw("return '<p><b>Rol:</b> ' + row.Rol + '</p>' + '<p><b>Username:</b> ' + row.Username + '</p>'")
                         break;
                     case ActionType.HomeText:
                         break;
                     case ActionType.Sectores:
+                        break;
+                    case ActionType.OurEquipos:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

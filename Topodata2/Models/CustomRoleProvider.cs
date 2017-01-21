@@ -1,55 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
 
 namespace Topodata2.Models
 {
     public sealed class CustomRoleProvider : RoleProvider
     {
-        private string connection = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
         public override bool IsUserInRole(string username, string roleName)
         {
-            try
-            {
-                SqlConnection con = new SqlConnection(connection);
-                SqlCommand com = new SqlCommand();
-                SqlDataReader reader;
-                com.CommandText = string.Format("SELECT dbo.Roles.Descripcion, dbo.Users.Username FROM dbo.Roles INNER JOIN dbo.Users ON dbo.Roles.idRole = dbo.Users.idRole WHERE(dbo.Users.Username = N'{0}') AND(dbo.Roles.Descripcion = N'{1}')", username,roleName);
-                com.CommandType = CommandType.Text;
-                com.Connection = con;
-
-                con.Open();
-                reader = com.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    reader.Dispose();
-                    com.Dispose();
-                    con.Close();
-                    return true;
-                }
-                else
-                {
-                    reader.Dispose();
-                    com.Dispose();
-                    con.Close();
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
         public override string[] GetRolesForUser(string username)
         {
-            try
+            throw new NotImplementedException();
+            /*try
             {
                 SqlConnection con = new SqlConnection(connection);
                 SqlCommand com = new SqlCommand();
@@ -85,7 +49,7 @@ namespace Topodata2.Models
             catch (Exception)
             {
                 return new string[] { }; ;
-            }
+            }*/
         }
 
         public override void CreateRole(string roleName)

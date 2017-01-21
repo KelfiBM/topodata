@@ -188,7 +188,7 @@ namespace Topodata2.Controllers
                 LastName = userViewModel.Register.LastName,
                 Name = userViewModel.Register.Name,
                 Password = userViewModel.Register.Password,
-                UserName = userViewModel.Register.Username
+                Username = userViewModel.Register.Username
             };
             MailManager.SendMail(MailType.RegistrationDoneUser,model);
             MailManager.SendMail(MailType.RegistrationDoneAdmin, model);

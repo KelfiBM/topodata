@@ -61,6 +61,24 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewAllUsers WHERE ([Username] = @value0 AND [Password] = @value1) OR ([Email] = @value0 AND [Password] = @value1).
+        /// </summary>
+        internal static string AuthenticateUser {
+            get {
+                return ResourceManager.GetString("AuthenticateUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to spChangePassword.
+        /// </summary>
+        internal static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to spDeleteFlipboard.
         /// </summary>
         internal static string DeleteFlipboard {
@@ -79,6 +97,15 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to spDeleteUser.
+        /// </summary>
+        internal static string DeleteUser {
+            get {
+                return ResourceManager.GetString("DeleteUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT * FROM viewFlipboard.
         /// </summary>
         internal static string GetAllFlipboard {
@@ -88,11 +115,47 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewAllUsers WHERE viewAllUsers.Informed = 1.
+        /// </summary>
+        internal static string GetAllInformedUsers {
+            get {
+                return ResourceManager.GetString("GetAllInformedUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT * FROM viewOurTeam.
         /// </summary>
         internal static string GetAllOurTeam {
             get {
                 return ResourceManager.GetString("GetAllOurTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewSubscribedInformed.
+        /// </summary>
+        internal static string GetAllSubscribed {
+            get {
+                return ResourceManager.GetString("GetAllSubscribed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewAllUsers.
+        /// </summary>
+        internal static string GetAllUser {
+            get {
+                return ResourceManager.GetString("GetAllUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewAllUsers WHERE viewAllUsers.RegDate &gt;= {0}.
+        /// </summary>
+        internal static string GetAllUserFromDate {
+            get {
+                return ResourceManager.GetString("GetAllUserFromDate", resourceCulture);
             }
         }
         
@@ -142,6 +205,24 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewAllUsers WHERE (Email = @value0).
+        /// </summary>
+        internal static string GetUserFromEmail {
+            get {
+                return ResourceManager.GetString("GetUserFromEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM viewAllUsers WHERE (Id = @value0).
+        /// </summary>
+        internal static string GetUserFromId {
+            get {
+                return ResourceManager.GetString("GetUserFromId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to spInsertFlipboard.
         /// </summary>
         internal static string InsertFlipboard {
@@ -183,6 +264,33 @@ namespace Topodata2.resources.Strings {
         internal static string InsertTextoHome {
             get {
                 return ResourceManager.GetString("InsertTextoHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to spIsActualPassword.
+        /// </summary>
+        internal static string IsActualPassword {
+            get {
+                return ResourceManager.GetString("IsActualPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to spUpdateSubscribed.
+        /// </summary>
+        internal static string UpdateInformed {
+            get {
+                return ResourceManager.GetString("UpdateInformed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to spUserIsInRole.
+        /// </summary>
+        internal static string UserIsInRole {
+            get {
+                return ResourceManager.GetString("UserIsInRole", resourceCulture);
             }
         }
     }

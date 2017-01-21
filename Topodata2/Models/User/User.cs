@@ -17,8 +17,8 @@ namespace Topodata2.Models.User
 
     public class MyPrincipal : IPrincipal
     {
-        public IIdentity Identity { get; private set; }
-        public User User { get; set; } 
+        public IIdentity Identity { get; }
+        public UserModel User { get; set; } 
 
         public MyPrincipal(IIdentity identity)
         {
