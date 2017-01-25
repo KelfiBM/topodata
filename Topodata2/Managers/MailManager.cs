@@ -22,79 +22,27 @@ namespace Topodata2.Managers
 {
     public class MailManager
     {
-        private static void Send(Transmission transmission)
-        {
-            new Client(DomainSettings.KeySparkpost) {CustomSettings = {SendingMode = SendingModes.Sync}}.Transmissions
-                .Send(transmission);
-        }
-
-        private static Transmission MakeTransmission(MessageType messageType, string subject, string body,
-            IEnumerable<string> to, Attachment[] attachment = null)
-        {
-            var transmission = new Transmission
-            {
-                Content =
-                {
-                    Subject = subject,
-                    Html = body,
-                    From =
-                    {
-                        Email = DomainSettings.EmailInfo,
-                        Name = MailParameters.DisplayNameInfo
-                    }
-                }
-            };
-            switch (messageType)
-            {
-                case MessageType.Mass:
-                    transmission.Recipients.Add(new Recipient {Address = {Email = DomainSettings.EmailNo_reply}});
-                    foreach (var recipient in to)
-                    {
-                        transmission.Recipients.Add(new Recipient
-                        {
-                            Address =
-                            {
-                                Email = recipient,
-                                HeaderTo = DomainSettings.EmailNo_reply
-                            }
-                        });
-                    }
-                    break;
-                case MessageType.Personal:
-                    foreach (var recipient in to)
-                    {
-                        body = body.Replace("{emailRecipient}", recipient);
-                        transmission.Content.Html = body;
-                        transmission.Recipients.Add(new Recipient {Address = {Email = recipient}});
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
-            }
-            if (attachment == null) return transmission;
-            foreach (var a in attachment)
-            {
-                transmission.Content.Attachments.Add(a);
-            }
-            return transmission;
-        }
-
-        private static void StartSendTransmission(MessageType messageType, string subject, string body, IEnumerable<string> to,
+        /*private static void StartSendTransmission(MessageType messageType, string subject, string body, IEnumerable<string> to,
             Attachment[] attachment = null)
         {
 
             var recipients = to as string[] ?? to.ToArray();
-
-            Task task = Task.Run(() => Parallel.ForEach(recipients, new ParallelOptions {MaxDegreeOfParallelism = 9} , recipient =>
+            switch(transmissionType)
             {
-                Send(MakeTransmission(messageType, subject, body, new[] { recipient }, attachment));
-            }));
+                case TransmissionType.Template:
+                    break;
+                case TransmissionType.Html:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(transmissionType), transmissionType, null);
+            }
+            Task task = Task.Run(() => Parallel.ForEach(recipients, new ParallelOptions {MaxDegreeOfParallelism = 9}, recipient => { Send(MakeTransmission(messageType, subject, body, new[] {recipient}, attachment)); }));
 
             /*Parallel.ForEach(recipients, recipient =>
             {
                 Send(MakeTransmission(messageType, subject, body, new[] { recipient }, attachment));
-            });*/
-        }
+            });#1#
+        }*/
 
         public static void SendMail(MailType mailType, object model)
         {
@@ -121,7 +69,7 @@ namespace Topodata2.Managers
                     var document = model as DocumentModel;
                     if (document != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(300000);
+                        var userList = UserManager.GetAllInformedSeparated(10000);
                         foreach (var users in userList)
                         {
                             SendNewDocumentMessage(document, users);
@@ -154,7 +102,7 @@ namespace Topodata2.Managers
                     var videoUploadView = model as HomeSlideVideoViewModel;
                     if (videoUpload != null || videoUploadView != null)
                     {
-                        var userList = UserManager.GetAllInformedSeparated(300000);
+                        var userList = UserManager.GetAllInformedSeparated(10000);
                         foreach (var users in userList)
                         {
                             SendHomeVideoUpload(videoUpload, users, videoUploadView);
@@ -173,7 +121,6 @@ namespace Topodata2.Managers
                     throw new ArgumentOutOfRangeException(nameof(mailType), mailType, null);
             }
         }
-
 
         //---------------------------------------------------------------------------------//
         private static string MakeBody(string pathTemplate, params object[] replaces)
@@ -225,17 +172,154 @@ namespace Topodata2.Managers
             }
             return result;
         }
+        
+        //----------------------------------------------------------------------------------------------//
+        private static Transmission MakeTransmisionWithTemplate(IEnumerable<string> to, string templateId, IDictionary<string, object> substitutionData)
+        {
+            var transmission = new Transmission
+            {
+                Content =
+                {
+                    TemplateId = templateId,
+                    From = new Address(DomainSettings.EmailInfo, MailParameters.DisplayNameInfo)
+                }
+            };
+            foreach (var recipient in to)
+            {
+                transmission.Recipients.Add(new Recipient {Address = {Email = recipient}});
+            }
+            if (substitutionData == null || substitutionData.Count <= 0)
+            {
+                return transmission;
+            }
+            transmission.SubstitutionData = substitutionData;
+            return transmission;
+        }
+
+        private static Transmission MakeTransmissionWithoutTemplate(string subject, string body,
+            IEnumerable<string> to, Attachment[] attachment = null)
+        {
+            var transmission = new Transmission
+            {
+                Content =
+                {
+                    Subject = subject,
+                    Html = body,
+                    From =
+                    {
+                        Email = DomainSettings.EmailInfo,
+                        Name = MailParameters.DisplayNameInfo
+                    }
+                }
+            };
+            foreach (var recipient in to)
+            {
+                transmission.Recipients.Add(new Recipient {Address = {Email = recipient}});
+            }
+            if (attachment == null) return transmission;
+            foreach (var a in attachment)
+            {
+                transmission.Content.Attachments.Add(a);
+            }
+            return transmission;
+        }
+
+        private static void SendHomeVideoUpload(HomeSliderVideo model, IReadOnlyCollection<UserModel> to,
+            HomeSlideVideoViewModel viewModel = null)
+        {
+            if (to.Count < 1) return;
+            if (model == null)
+            {
+                if (viewModel != null) model = new HomeSliderVideo {UrlVideo = viewModel.UrlVideo};
+                else return;
+            }
+            try
+            {
+                var emails = to.Select(i => i.Email).ToList();
+                var substitutionData = new Dictionary<string, object>
+                {
+                    {"imgVideo", Youtube.GetImageFromId(model.UrlVideo)}
+                };
+                Send(MakeTransmisionWithTemplate(emails, MailParameters.TemplateIdAddedHomeVideo, substitutionData));
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+        }
+
+        private static void SendNewDocumentMessage(DocumentModel model, IReadOnlyCollection<UserModel> to)
+        {
+            if (to.Count < 1 || model == null) return;
+            try
+            {
+                var emails = to.Select(informedUser => informedUser.Email).ToList();
+                var substitutionData = new Dictionary<string, object>
+                {
+                    {"title1", model.Nombre},
+                    {"categoria1", model.SubCategoria},
+                    {
+                        "descripcion1",
+                        model.Descripcion.Length >= 200
+                            ? model.Descripcion.Substring(0, 197) + "..."
+                            : model.Descripcion
+                    },
+                    {"urlDocument", DomainSettings.UrlDocument + model.Id},
+                    {"imageDocument", UploadImage(Current.Server.MapPath("~" + model.ImagePath))}
+                };
+                Send(MakeTransmisionWithTemplate(emails, MailParameters.TemplateIdNewDocumentAdded, substitutionData));
+            }
+            catch (Exception e)
+            {
+                //Ignore
+            }
+        }
+
+        private static void SendSubscribeDone(string email)
+        {
+            try
+            {
+                Send(MakeTransmisionWithTemplate(new[] { email },MailParameters.TemplateIdSubscribeDoneUser,null));
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+        }
+
+        private static void SendContactUs(ContactUsModel model, ContactUsViewModel viewModel = null)
+        {
+            if (model == null)
+            {
+                if (viewModel != null)
+                {
+                    model = new ContactUsModel
+                    {
+                        Email = viewModel.Email,
+                        Nombre = viewModel.Nombre,
+                        Mensaje = viewModel.Mensaje
+                    };
+                }
+                else return;
+            }
+            try
+            {
+                var body = MakeBody(Paths.EmailContactUsAdmin, model.Nombre, model.Email, model.Mensaje);
+                Send(MakeTransmissionWithoutTemplate(MailParameters.SubjectContactUs, body,
+                    new[] { DomainSettings.EmailContact }));
+            }
+            catch (Exception)
+            {
+                //ignored
+            }
+        }
 
         private static void SendRegistrationDoneAdmin(UserModel model, UserViewModel viewModel = null)
         {
             try
             {
-                var body = MakeBody(Paths.EmailRegistrationDoneUserAdmin, model.Name, model.LastName, model.Email,
-                    model.Username, model.RegDate.Date);
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectRegistrationDoneAdmin, body, new[]
-                {
-                    DomainSettings.EmailRegistrados
-                });
+                var body = MakeBody(Paths.EmailRegistrationDoneUserAdmin, model.Name, model.LastName, model.Email, model.Username, model.RegDate.Date);
+                Send(MakeTransmissionWithoutTemplate(MailParameters.SubjectRegistrationDoneAdmin, body, new[] { DomainSettings.EmailRegistrados }));
             }
             catch (Exception e)
             {
@@ -245,17 +329,15 @@ namespace Topodata2.Managers
 
         private static void SendRegistrationDoneUser(UserModel model, UserViewModel viewModel = null)
         {
+            if (model == null || model.Email == string.Empty) return;
             try
             {
-                var body = MakeBody(Paths.EmailRegistrationDoneUser);
-                body = body.Replace("{username}", model.Username);
-                body = body.Replace("{contra}", model.Password);
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectRegistrationDone, body, new[] {model.Email}
-                    /*,
-                    new[]
-                    {
-                        MakeAttachment(AttachmentType.Web, MailParameters.VolanteTopogisWeb)
-                    }*/);
+                var substitutionData = new Dictionary<string, object>
+                {
+                    {"username", model.Username},
+                    {"contra", model.Password}
+                };
+                Send(MakeTransmisionWithTemplate(new[] { model.Email }, MailParameters.TemplateIdRegistrationDoneUser,substitutionData));
             }
             catch (Exception e)
             {
@@ -266,7 +348,9 @@ namespace Topodata2.Managers
         private static void SendDeslinderRegistrationAdmin(DeslinderModel model, DeslindeViewModel viewModel = null)
         {
             if (model == null)
+            {
                 if (viewModel != null)
+                {
                     model = new DeslinderModel
                     {
                         Nombre = viewModel.Nombre,
@@ -283,15 +367,13 @@ namespace Topodata2.Managers
                         Area = viewModel.Area,
                         RegDate = viewModel.RegDate
                     };
+                }
                 else return;
+            }
             try
             {
-                var body = MakeBody(Paths.EmailDeslindeUserRegisteredAdmin, model.Nombre, model.Apellido, model.Telefono,
-                    model.Movil, model.Correo,
-                    model.Ubicacion, model.NoMatrical, model.NoParsela, model.NoDistrito, model.Municipio,
-                    model.Provincia, model.Area, model.RegDate.Date);
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectDeslindeRegistrationAdmin, body,
-                    new[] {DomainSettings.EmailDeslinde});
+                var body = MakeBody(Paths.EmailDeslindeUserRegisteredAdmin, model.Nombre, model.Apellido, model.Telefono, model.Movil, model.Correo, model.Ubicacion, model.NoMatrical, model.NoParsela, model.NoDistrito, model.Municipio, model.Provincia, model.Area, model.RegDate.Date);
+                Send(MakeTransmissionWithoutTemplate(MailParameters.SubjectDeslindeRegistrationAdmin, body, new[] { DomainSettings.EmailDeslinde }));
             }
             catch (Exception e)
             {
@@ -302,14 +384,15 @@ namespace Topodata2.Managers
         private static void SendDeslinderRegistrationUser(DeslinderModel model, DeslindeViewModel viewModel = null)
         {
             if (model == null)
-                if (viewModel != null) model = new DeslinderModel {Correo = viewModel.Correo};
+            {
+                if (viewModel != null) model = new DeslinderModel { Correo = viewModel.Correo };
                 else return;
+            }
             try
             {
                 var body = MakeBody(Paths.EmailDeslindeUserRegisteredUser);
                 body = body.Replace("{modelCorreo}", model.Correo);
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectDeslindeRegistrationUser, body,
-                    new[] {model.Correo});
+                Send(MakeTransmissionWithoutTemplate(MailParameters.SubjectDeslindeRegistrationUser, body, new[] { model.Correo }));
             }
             catch (Exception e)
             {
@@ -317,87 +400,10 @@ namespace Topodata2.Managers
             }
         }
 
-        private static void SendSubscribeDone(string email)
+        private static void Send(Transmission transmission)
         {
-            try
-            {
-                var body = MakeBody(Paths.EmailSubscribedDone);
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectSubscribeDone, body, new[] {email} /*, new[]
-                {
-                    MakeAttachment(AttachmentType.Web, MailParameters.VolanteTopogisWeb)
-                }*/);
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-        }
-
-        private static void SendNewDocumentMessage(DocumentModel model, IReadOnlyCollection<UserModel> to)
-        {
-            try
-            {
-                if (to.Count < 1) return;
-                var body = MakeBody(Paths.EmailNewDocumentAdded);
-                body = body.Replace("{title1}", model.Nombre);
-                body = body.Replace("{categoria1}", model.SubCategoria);
-                body = body.Replace("{descripcion1}", model.Descripcion.Length >= 200 ? model.Descripcion.Substring(0,197)+"..." : model.Descripcion);
-                body = body.Replace("{urlDocument}", DomainSettings.UrlDocument + model.Id);
-                body = body.Replace("{imageDocument}", UploadImage(Current.Server.MapPath("~" + model.ImagePath)));
-
-                var emails = to.Select(informedUser => informedUser.Email).ToList();
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectNewDocumentMessage, body, emails /*, new[]
-                {
-                    MakeAttachment(AttachmentType.Web, MailParameters.VolanteTopogisWeb)
-                }*/);
-            }
-            catch (Exception e)
-            {
-                //Ignore
-            }
-        }
-
-        private static void SendHomeVideoUpload(HomeSliderVideo model, IReadOnlyCollection<UserModel> to,
-            HomeSlideVideoViewModel viewModel = null)
-        {
-            if (model == null)
-                if (viewModel != null) model = new HomeSliderVideo {UrlVideo = viewModel.UrlVideo};
-                else return;
-            try
-            {
-                if (to.Count < 1) return;
-                var body = MakeBody(Paths.EmailHomeVideoAdded);
-                body = body.Replace("{imgVideo}", Youtube.GetImageFromId(model.UrlVideo));
-                var emails = to.Select(i => i.Email).ToList();
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectHomeVideoUpload, body, emails);
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
-        }
-
-        private static void SendContactUs(ContactUsModel model, ContactUsViewModel viewModel = null)
-        {
-            if (model == null)
-                if (viewModel != null)
-                    model = new ContactUsModel
-                    {
-                        Email = viewModel.Email,
-                        Nombre = viewModel.Nombre,
-                        Mensaje = viewModel.Mensaje
-                    };
-                else return;
-            try
-            {
-                var body = MakeBody(Paths.EmailContactUsAdmin, model.Nombre, model.Email, model.Mensaje);
-                StartSendTransmission(MessageType.Personal, MailParameters.SubjectContactUs, body,
-                    new[] {DomainSettings.EmailContact});
-            }
-            catch (Exception)
-            {
-                //ignored
-            }
+            new Client(DomainSettings.KeySparkpost) { CustomSettings = { SendingMode = SendingModes.Sync } }.Transmissions
+                .Send(transmission);
         }
     }
 }

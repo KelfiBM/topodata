@@ -131,10 +131,7 @@ namespace Topodata2.Controllers
         public ActionResult Unsubscribe(string value)
         {
             var user = UserManager.GetUser(value);
-            if (user == null || !user.Informed)
-            {
-                return RedirectToAction("Index");
-            }
+            if (user == null || !user.Informed) return RedirectToAction("Index");
             UserManager.UpdateSubscribed(value, false);
             return View("SorryLeaving");
         }

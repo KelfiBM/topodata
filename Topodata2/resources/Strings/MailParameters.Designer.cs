@@ -322,6 +322,42 @@ namespace Topodata2.resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to added-home-video.
+        /// </summary>
+        internal static string TemplateIdAddedHomeVideo {
+            get {
+                return ResourceManager.GetString("TemplateIdAddedHomeVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to new-document-added.
+        /// </summary>
+        internal static string TemplateIdNewDocumentAdded {
+            get {
+                return ResourceManager.GetString("TemplateIdNewDocumentAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to registration-done-user.
+        /// </summary>
+        internal static string TemplateIdRegistrationDoneUser {
+            get {
+                return ResourceManager.GetString("TemplateIdRegistrationDoneUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to subscribe-done-user.
+        /// </summary>
+        internal static string TemplateIdSubscribeDoneUser {
+            get {
+                return ResourceManager.GetString("TemplateIdSubscribeDoneUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://i.imgur.com/JDJFsq0.jpg.
         /// </summary>
         internal static string VolanteTopogisWeb {

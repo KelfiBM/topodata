@@ -212,6 +212,18 @@
   <data name="SubscribeDoneName" xml:space="preserve">
     <value>subscribeDone500x333.jpg</value>
   </data>
+  <data name="TemplateIdAddedHomeVideo" xml:space="preserve">
+    <value>added-home-video</value>
+  </data>
+  <data name="TemplateIdNewDocumentAdded" xml:space="preserve">
+    <value>new-document-added</value>
+  </data>
+  <data name="TemplateIdRegistrationDoneUser" xml:space="preserve">
+    <value>registration-done-user</value>
+  </data>
+  <data name="TemplateIdSubscribeDoneUser" xml:space="preserve">
+    <value>subscribe-done-user</value>
+  </data>
   <data name="VolanteTopogisWeb" xml:space="preserve">
     <value>http://i.imgur.com/JDJFsq0.jpg</value>
   </data>
