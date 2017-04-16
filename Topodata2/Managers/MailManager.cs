@@ -264,7 +264,7 @@ namespace Topodata2.Managers
                             ? model.Descripcion.Substring(0, 197) + "..."
                             : model.Descripcion
                     },
-                    {"urlDocument", DomainSettings.UrlDocument + model.Id},
+                    {"urlDocument",  model.Id},
                     {"imageDocument", UploadImage(Current.Server.MapPath("~" + model.ImagePath))}
                 };
                 Send(MakeTransmisionWithTemplate(emails, MailParameters.TemplateIdNewDocumentAdded, substitutionData));
