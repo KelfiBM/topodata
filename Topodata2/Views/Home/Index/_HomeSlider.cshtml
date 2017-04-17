@@ -1,12 +1,12 @@
 ﻿@using Topodata2.Classes
-@model Topodata2.Models.Home.HomeSlider
+@model Topodata2.Models.Entities.HomeSlideData
 <div id="layerslider" class="ls-fullwidthdark" style="width: 2000px; height: 700px; margin: 0 auto;">
 
     <div class="ls-slide" data-ls="slidedelay: 10000; transition2d: 1,5,15;">
         <img src="~/resources/img/backgrounds/img1.jpg" class="ls-bg"/>
         <img src="~/resources/img/mockup/imac_t.png" class="ls-l" data-ls="offsetxin:300;durationin:2000;delayin:0;" style="top: 51%; left: 72%" width="751"/>
         <h1 class="ls-l" data-ls="offsetxin:-300;durationin:3000;delayin:0;offsetxout:-50;durationout:1000;" style="top: 30%; left: 34%; padding: 10px 40px 10px 40px; font-size: 90px; background: #262626; background: rgba(38, 38, 38, 0.9); font-weight: bold; color: #FFF">
-            ¡Informate!
+            ¡Infórmate!
         </h1>
         <h2 class="ls-l" data-ls="offsetxin:50;durationin:1000;delayin:1000;skewxin:-60;offsetxout:-50;durationout:1000;skewxout:-60;" style="top: 48%; left: 35%; padding: 10px 40px 10px 40px; font-size: 40px; background: #FFFFFF; background: rgba(255, 255, 255, 0.9); font-weight: bold;">
             MIRA LO ULTIMO EN
@@ -15,11 +15,10 @@
             TOPODATA
         </h2>
         <div class="ls-l" style="top: 38%; left: 72%" data-ls="offsetxin:300;durationin:2000;delayin:0;">
-            @* ReSharper disable once Html.Obsolete *@
-            <iframe src="@Youtube.GetEmbedFromId(@Model.UrlVideo)" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="432" width="700"></iframe>
+            <iframe src="@Youtube.GetEmbedFromId(@Model.HomeSlideVideo.UrlVideo)" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0" height="432" width="700"></iframe>
         </div>
-        <a  id="seasonImg" href="@Model.PathImageSeason?@Html.Raw(DateTime.Now.ToBinary())}" title="Temporada" class="ls-l" data-ls="delayin:2500;scaleyin:0;scalexin:0;scalexout:2;scaleyout:2;offsetxout:0;offsetxin:0;durationin:2000;" style="top: 32%; left: 10%" width="270">
-            <img src="@Model.PathImageSeason?@Html.Raw(DateTime.Now.ToBinary())}" alt="" style="top: 32%; left: 10%" width="270"/>
+        <a  id="seasonImg" href="@Model.HomeSlideImageSeason.ImagePath?@Html.Raw(DateTime.Now.ToBinary())}" title="Temporada" class="ls-l" data-ls="delayin:2500;scaleyin:0;scalexin:0;scalexout:2;scaleyout:2;offsetxout:0;offsetxin:0;durationin:2000;" style="top: 32%; left: 10%" width="270">
+            <img src="@Model.HomeSlideImageSeason.ImagePath?@Html.Raw(DateTime.Now.ToBinary())}" alt="" style="top: 32%; left: 10%" width="270"/>
         </a>
     </div>
     <div class="ls-slide" data-ls="slidedelay: 6000; transition2d: 1,5,15;">
@@ -33,7 +32,7 @@
         <h2 class="ls-l"
             style="top: 71%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
             data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
-            Levantamientos Topográficos y Parcelarios con métodos cinematecos (GPS).
+            Levantamientos Topográficos y Parcelarios con métodos cinemáticos (GPS).
         </h2>
     </div>
     <div class="ls-slide" data-ls="slidedelay: 6000; transition2d: 1,5,15;">
@@ -117,7 +116,7 @@
         <h2 class="ls-l"
             style="top: 75%; left: 40%; width: 50%; padding: 12px 20px; font-size: 370%; background: #262626; background: rgba(38, 38, 38, 0.6); color: #FFF"
             data-ls="offsetxin:0;durationin:1500;delayin:500;rotateyin:90;skewxin:60;transformoriginin:25% 50% 0;offsetxout:100;durationout:750;skewxout:60;">
-            Gerencia de Supervisión de Proyectos bajo el mando de los más capacitados profesionales...
+            Gerencia de Supervision de Proyectos bajo el mando de los más capacitados profesionales...
         </h2>
     </div>
     <div class="ls-slide" data-ls="slidedelay: 6000; transition2d: 1,5,15;">

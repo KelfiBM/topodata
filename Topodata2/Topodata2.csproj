@@ -233,9 +233,9 @@
     <Compile Include="Models\CustomRoleProvider.cs" />
     <Compile Include="Models\Documento.cs" />
     <Compile Include="Models\Flipboard.cs" />
-    <Compile Include="Models\HomeSlideData.cs" />
-    <Compile Include="Models\HomeSlideImageSeason.cs" />
-    <Compile Include="Models\HomeSlideVideo.cs" />
+    <Compile Include="Models\Entities\HomeSlideData.cs" />
+    <Compile Include="Models\Entities\HomeSlideImageSeason.cs" />
+    <Compile Include="Models\Entities\HomeSlideVideo.cs" />
     <Compile Include="Models\Home\HomeManager.cs" />
     <Compile Include="Models\Home\HomeModels.cs" />
     <Compile Include="Models\Home\HomeViewModels.cs" />
@@ -248,8 +248,10 @@
     <Compile Include="Models\OurTeam.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\ServiceModels.cs" />
+    <Compile Include="Models\Service\HomeSlideDataService.cs" />
     <Compile Include="Models\Service\ServiceManager.cs" />
     <Compile Include="Models\Service\ServiceViewModels.cs" />
+    <Compile Include="Models\Service\SuscritoService.cs" />
     <Compile Include="Models\Shared\SharedModels.cs" />
     <Compile Include="Models\SubCategoria.cs" />
     <Compile Include="Models\Entities\Suscrito.cs" />

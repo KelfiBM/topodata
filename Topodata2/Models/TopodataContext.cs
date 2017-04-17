@@ -11,6 +11,7 @@ namespace Topodata2.Models
         public TopodataContext()
             : base("name=TopodataContext")
         {
+            Database.SetInitializer<TopodataContext>(null);
         }
 
         public virtual DbSet<Categoria> Categorias { get; set; }

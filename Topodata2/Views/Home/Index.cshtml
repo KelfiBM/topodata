@@ -15,7 +15,7 @@
     <link href="~/resources/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet"/>
 }
 
-@{ Html.RenderPartial("Index/_HomeSlider", HomeManager.GetLastHomeSliderData());}
+@{ Html.RenderPartial("Index/_HomeSlider", new HomeSlideDataService().GetLast());}
 @{ Html.RenderPartial("Index/_HomeDeslinder");}
 <div class="content-md">
     <div class="container container-sm">

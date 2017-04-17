@@ -1,4 +1,4 @@
-namespace Topodata2.Models
+namespace Topodata2.Models.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,11 +6,11 @@ namespace Topodata2.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("HomeSlideVideo")]
-    public partial class HomeSlideVideo
+    [Table("HomeSlideImageSeason")]
+    public partial class HomeSlideImageSeason
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HomeSlideVideo()
+        public HomeSlideImageSeason()
         {
             HomeSlideDatas = new HashSet<HomeSlideData>();
         }
@@ -18,10 +18,9 @@ namespace Topodata2.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30)]
-        public string UrlVideo { get; set; }
+        public string ImagePath { get; set; }
 
-        public DateTime regDate { get; set; }
+        public DateTime? RegDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HomeSlideData> HomeSlideDatas { get; set; }

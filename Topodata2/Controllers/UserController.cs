@@ -6,6 +6,7 @@ using Topodata2.Models.UserFolder;
 using Recaptcha.Web;
 using Recaptcha.Web.Mvc;
 using Topodata2.Managers;
+using Topodata2.Models.Service;
 using Topodata2.ViewModels;
 
 namespace Topodata2.Controllers
@@ -193,7 +194,7 @@ namespace Topodata2.Controllers
         public ActionResult Subscribe(SubscribeViewModel subscribeView)
         {
             if (!ModelState.IsValid) return Redirect(Request.UrlReferrer?.ToString());
-            subscribeView.Subscribe(subscribeView);
+            new SuscritoService().Insert(subscribeView);
             MailManager.SendMail(MailType.SubscribeDone, subscribeView.Email);
             return Redirect(Request.UrlReferrer?.ToString());
         }

@@ -8,14 +8,14 @@ namespace Topodata2.Models.Home
 {
     public static class HomeManager
     {
-        public static HomeSlider GetLastHomeSliderData()
+        /*public static HomeSlider GetLastHomeSliderData()
         {
             var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.HomeSlider,
                 DatabaseParameters.GetLastHomeSliderData);
             if (value.Count == 0) return null;
             var result = value.ConvertAll(i => (HomeSlider) i)[0];
             return result;
-        }
+        }*/
 
         public static TextoHome GetLastHomeText()
         {
