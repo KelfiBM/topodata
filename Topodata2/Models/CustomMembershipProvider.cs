@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Web;
 using System.Web.Security;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 
 namespace Topodata2.Models
 {

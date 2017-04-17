@@ -64,16 +64,16 @@ namespace Topodata2.Models.Home
             });
         }
 
-        public static List<OurTeam> GetAllOurTeam()
+        public static List<OurTeamModel> GetAllOurTeam()
         {
             var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.OurTeam,
                 DatabaseParameters.GetAllOurTeam);
             if (value.Count == 0) return null;
-            var result = value.ConvertAll(i => (OurTeam) i);
+            var result = value.ConvertAll(i => (OurTeamModel) i);
             return result;
         }
 
-        public static bool AddOurTeam(OurTeam model)
+        public static bool AddOurTeam(OurTeamModel model)
         {
             var result = false;
             var value = DatabaseManager.ExecuteQuery(CommandType.StoredProcedure, ModelType.Default,
@@ -88,7 +88,7 @@ namespace Topodata2.Models.Home
 
         public static bool AddOurTeam(OurTeamViewModel viewModel)
         {
-            return AddOurTeam(new OurTeam
+            return AddOurTeam(new OurTeamModel
             {
                 Nombre = viewModel.Nombre,
                 Cargo = viewModel.Cargo,
@@ -121,7 +121,7 @@ namespace Topodata2.Models.Home
             var value = DatabaseManager.ExecuteQuery(CommandType.Text, ModelType.OurTeam,
                 DatabaseParameters.GetImagePathOurTeam, id.ToString());
             if (value.Count == 0) return null;
-            var result = value.ConvertAll(i => (OurTeam) i)[0].ImagePath;
+            var result = value.ConvertAll(i => (OurTeamModel) i)[0].ImagePath;
             return result;
         }
 

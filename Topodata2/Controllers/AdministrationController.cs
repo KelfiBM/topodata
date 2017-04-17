@@ -13,7 +13,7 @@ using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
 using Topodata2.Models.Service;
 using Topodata2.Models.Shared;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 using Topodata2.resources.Strings;
 
 namespace Topodata2.Controllers

@@ -1,5 +1,4 @@
-﻿@using Topodata2.Models.Service
-@model List<Topodata2.Models.CategorieModel>
+﻿@model List<Topodata2.Models.Entities.Categoria>
 <li class="dropdown">
     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Servicios</a>
     <ul class="dropdown-menu">
@@ -8,7 +7,7 @@
             <li class="dropdown-submenu">
                 <a href="javascript:void(0);">@categorieModel.Descripcion</a>
                 <ul class="dropdown-menu">
-                    @foreach (var subCategorie in categorieModel.SubCategories)
+                    @foreach (var subCategorie in categorieModel.SubCategorias)
                     {
                         <li>
                             @Html.ActionLink(subCategorie.Descripcion, "Contenido", "Services", new {id = subCategorie.Id}, null)

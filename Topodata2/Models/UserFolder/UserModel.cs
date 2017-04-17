@@ -1,7 +1,7 @@
 ﻿using System;
 using Topodata2.Classes;
 
-namespace Topodata2.Models.User
+namespace Topodata2.Models.UserFolder
 {
     public class UserModel : Model
     {

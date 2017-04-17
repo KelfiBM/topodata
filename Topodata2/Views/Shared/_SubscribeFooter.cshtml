@@ -1,13 +1,12 @@
-﻿@model Topodata2.Models.SubscribeViewModel
+﻿@model Topodata2.ViewModels.SubscribeViewModel
 @using (Html.BeginForm("Subscribe", "User", null, FormMethod.Post, new {@class = "footer-subsribe"}))
 {
 
     <div class="input-group">
         @Html.EditorFor(m => m.Email, new {htmlAttributes = new {@class = "form-control", @placeholder = "Coloque su Email Aqui!"}})
-
         <span class="input-group-btn">
             <button class="btn btn-u" type="submit">Suscribirse</button>
         </span>
     </div>
-    @Html.ValidationMessageFor(m => m.Email, String.Empty, new {@class = "text-danger"})
+    @Html.ValidationMessageFor(m => m.Email, string.Empty, new {@class = "text-danger"})
 }

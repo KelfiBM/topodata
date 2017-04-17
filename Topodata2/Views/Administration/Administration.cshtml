@@ -64,6 +64,8 @@
 }
 @section PageScripts
 {
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="~/resources/js/plugins/datepicker.js"></script>
     <script src="~/resources/plugins/jquery-confirm/jquery-confirm.min.js"></script>
     @if (Model.UseTable)
     {
@@ -77,6 +79,7 @@
 @section documentReady
 {
     activaTab('@Model.IdTabPrincipal');
+    @Html.Raw("Datepicker.initDatepicker();")
     @foreach (var idForm in Model.IdsFormValidation)
     {
         @Html.Raw("makeFormValidation('" + idForm + "');")
@@ -177,4 +180,8 @@
         default:
             throw new ArgumentOutOfRangeException();
     }
+}
+@section cssPageStyle
+{
+    <link href="~/resources/css/pages/profile.css" rel="stylesheet" />
 }

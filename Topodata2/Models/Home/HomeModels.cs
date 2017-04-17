@@ -52,7 +52,7 @@ namespace Topodata2.Models.Home
         public DateTime RegDate { get; set; }
     }
 
-    public class OurTeam : Model
+    public class OurTeamModel : Model
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

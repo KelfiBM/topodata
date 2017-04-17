@@ -12,7 +12,7 @@ using Topodata2.Classes;
 using Topodata2.Models;
 using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 using Topodata2.resources.Strings;
 using Topodata2.ViewModels;
 using static System.Web.HttpContext;

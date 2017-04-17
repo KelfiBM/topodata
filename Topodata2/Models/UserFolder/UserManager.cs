@@ -8,7 +8,7 @@ using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.resources.Strings;
 
-namespace Topodata2.Models.User
+namespace Topodata2.Models.UserFolder
 {
     public static class UserManager
     {

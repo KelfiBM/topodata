@@ -7,7 +7,7 @@ using Topodata2.Managers;
 using Topodata2.Models;
 using Topodata2.Models.Home;
 using Topodata2.Models.Mail;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 using Topodata2.resources.Strings;
 
 namespace Topodata2.Controllers
@@ -33,7 +33,7 @@ namespace Topodata2.Controllers
         public ActionResult OurTeam()
         {
             var model = HomeManager.GetAllOurTeam();
-            return View(model ?? new List<OurTeam>());
+            return View(model ?? new List<OurTeamModel>());
         }
 
         [HttpGet]

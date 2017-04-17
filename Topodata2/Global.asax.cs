@@ -8,7 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 
 namespace Topodata2
 {

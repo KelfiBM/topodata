@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Security;
 
-namespace Topodata2.Models.User
+namespace Topodata2.Models.UserFolder
 {
     public static class UserSettingsManager
     {

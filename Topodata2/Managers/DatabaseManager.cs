@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Topodata2.Classes;
 using Topodata2.Models.Home;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 
 namespace Topodata2.Managers
 {
@@ -180,12 +180,12 @@ namespace Topodata2.Managers
             return result;
         }
 
-        private static IEnumerable<OurTeam> GetOurTeam(IDataReader reader)
+        private static IEnumerable<OurTeamModel> GetOurTeam(IDataReader reader)
         {
-            var result = new List<OurTeam>();
+            var result = new List<OurTeamModel>();
             while (reader.Read())
             {
-                result.Add(new OurTeam
+                result.Add(new OurTeamModel
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
                     Nombre = reader.GetString(reader.GetOrdinal("Nombre")),

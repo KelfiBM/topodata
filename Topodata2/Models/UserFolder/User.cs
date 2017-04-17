@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 
-namespace Topodata2.Models.User
+namespace Topodata2.Models.UserFolder
 {
     public class User
     {

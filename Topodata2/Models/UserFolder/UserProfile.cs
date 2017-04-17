@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Security;
 
 
-namespace Topodata2.Models.User
+namespace Topodata2.Models.UserFolder
 {
     public class UserProfileSettings
     {

@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Topodata2.Models;
 using Topodata2.Models.Mail;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 using Recaptcha.Web;
 using Recaptcha.Web.Mvc;
 using Topodata2.Managers;
@@ -106,12 +106,6 @@ namespace Topodata2.Controllers
             TempData["OperationStatus"] = "Error";
             ViewBag.OperationStatus = errorMessage;
             return RedirectToAction("ProfileSettings");
-        }
-
-        [Authorize]
-        public ActionResult ProfileMain()
-        {
-            return View("Profile/ProfileMain");
         }
 
         [HttpPost]

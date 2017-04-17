@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using Topodata2.Models.Mail;
-using Topodata2.Models.User;
+using Topodata2.Models.UserFolder;
 
 namespace Topodata2.Managers
 {
