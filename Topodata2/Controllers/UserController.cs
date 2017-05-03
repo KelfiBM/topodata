@@ -5,6 +5,7 @@ using Topodata2.Models.Mail;
 using Topodata2.Models.UserFolder;
 using Recaptcha.Web;
 using Recaptcha.Web.Mvc;
+using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.Models.Service;
 using Topodata2.ViewModels;
@@ -183,7 +184,8 @@ namespace Topodata2.Controllers
                 LastName = userViewModel.Register.LastName,
                 Name = userViewModel.Register.Name,
                 Password = userViewModel.Register.Password,
-                Username = userViewModel.Register.Username
+                Username = userViewModel.Register.Username,
+                RegDate = TimePicker.GetLocalDateTime()
             };
             MailManager.SendMail(MailType.RegistrationDoneUser,model);
             MailManager.SendMail(MailType.RegistrationDoneAdmin, model);
