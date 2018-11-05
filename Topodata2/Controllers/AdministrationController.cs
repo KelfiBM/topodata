@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Topodata.Model;
 using Topodata2.Classes;
 using Topodata2.Managers;
 using Topodata2.Models;
@@ -313,7 +314,7 @@ namespace Topodata2.Controllers
                             {
                                 Id = selected.Id,
                                 Descripcion = selected.Descripcion,
-                                RegDate = selected.RegDate.ToShortDateString()
+                                RegDate = selected.FechaRegistro.ToShortDateString()
                             }).ToList());
                     break;
                 case ActionType.OurEquipos:
@@ -442,7 +443,7 @@ namespace Topodata2.Controllers
         {
             var contenido =
                 new SelectList(
-                    ServiceManager.GetAllContenidoBySubcategorieId(new SubCategorieModel {Id = subCategorie}), "Id",
+                    ServiceManager.GetAllContenidoBySubcategorieId(new SubCategoria {Id = subCategorie}), "Id",
                     "Descripcion");
             return Json(contenido);
         }

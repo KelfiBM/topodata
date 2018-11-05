@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.WebPages;
+using Topodata.Model;
 
 namespace Topodata2.Models.Service
 {
@@ -120,9 +121,9 @@ namespace Topodata2.Models.Service
             return result;
         }
 
-        public static List<SubCategorieModel> GetSubCategoriesByCategorieId(CategorieModel model)
+        public static List<SubCategoria> GetSubCategoriesByCategorieId(Categoria model)
         {
-            List<SubCategorieModel> result = null;
+            List<SubCategoria> result = null;
             var con = new SqlConnection(Connection);
             var com = new SqlCommand();
             SqlDataReader reader = null;
@@ -137,10 +138,10 @@ namespace Topodata2.Models.Service
                 reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    result = new List<SubCategorieModel>();
+                    result = new List<SubCategoria>();
                     while (reader.Read())
                     {
-                        result.Add(new SubCategorieModel
+                        result.Add(new SubCategoria
                         {
                             Id = reader.GetInt32(0),
                             Descripcion = reader.GetString(1),
@@ -163,7 +164,7 @@ namespace Topodata2.Models.Service
             return result;
         }
 
-        public static List<ContenidoModel> GetAllContenidoBySubcategorieId(SubCategorieModel model)
+        public static List<ContenidoModel> GetAllContenidoBySubcategorieId(SubCategoria model)
         {
             List<ContenidoModel> result = null;
             var con = new SqlConnection(Connection);
@@ -215,9 +216,9 @@ namespace Topodata2.Models.Service
             return result;
         }
 
-        public static List<CategorieModel> GetAllCategories()
+        public static List<Categoria> GetAllCategories()
         {
-            List<CategorieModel> result = null;
+            List<Categoria> result = null;
             var con = new SqlConnection(Connection);
             var com = new SqlCommand();
             SqlDataReader reader = null;
@@ -231,14 +232,14 @@ namespace Topodata2.Models.Service
                 reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    result = new List<CategorieModel>();
+                    result = new List<Categoria>();
                     while (reader.Read())
                     {
-                        result.Add(new CategorieModel
+                        result.Add(new Categoria
                         {
                             Id = reader.GetInt32(0),
                             Descripcion = reader.GetString(1),
-                            HtmlIcon = reader.GetString(2)
+                            Icono = reader.GetString(2)
                     });
                     }
                 }
@@ -257,9 +258,9 @@ namespace Topodata2.Models.Service
             return result;
         }
 
-        public static SubCategorieModel GetSubCategorieById(int id)
+        public static SubCategoria GetSubCategorieById(int id)
         {
-            SubCategorieModel result = null;
+            SubCategoria result = null;
             var con = new SqlConnection(Connection);
             var com = new SqlCommand();
             SqlDataReader reader = null;
@@ -276,7 +277,7 @@ namespace Topodata2.Models.Service
                 {
                     if (reader.Read())
                     {
-                        result = new SubCategorieModel
+                        result = new SubCategoria
                         {
                             Id = reader.GetInt32(0),
                             Descripcion = reader.GetString(1)
@@ -520,9 +521,9 @@ namespace Topodata2.Models.Service
             return result;
         }
 
-        public static List<SubCategorieModel> GetAllSubCategories()
+        public static List<SubCategoria> GetAllSubCategories()
         {
-            List<SubCategorieModel> result = null;
+            List<SubCategoria> result = null;
             var con = new SqlConnection(Connection);
             var com = new SqlCommand();
             SqlDataReader reader = null;
@@ -536,15 +537,15 @@ namespace Topodata2.Models.Service
                 reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    result = new List<SubCategorieModel>();
+                    result = new List<SubCategoria>();
                     while (reader.Read())
                     {
-                        result.Add(new SubCategorieModel
+                        result.Add(new SubCategoria
                         {
                             Id = reader.GetInt32(0),
                             Descripcion = reader.GetString(1),
                             ImagePath = reader.GetString(2),
-                            RegDate = reader.GetDateTime(3)
+                            FechaRegistro = reader.GetDateTime(3)
                         });
                     }
                 }

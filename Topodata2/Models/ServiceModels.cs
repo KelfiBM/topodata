@@ -362,28 +362,12 @@ namespace Topodata2.Models
 
     }
 
-    public class SubCategorieModel
-    {
-        public int Id { get; set; }
-        public string Descripcion { get; set; }
-        public string ImagePath { get; set; }
-        public DateTime RegDate { get; set; }
-    }
-
-    public class CategorieModel
-    {
-        public int Id { get; set; }
-        public string Descripcion { get; set; }
-        public string HtmlIcon { get; set; }
-        public List<SubCategorieModel> SubCategories => ServiceManager.GetSubCategoriesByCategorieId(this);
-    }
-
-    public class ContenidoModel
+    /*public class ContenidoModel
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
         public int IdSubCategorie { get; set; }
-    }
+    }*/
 
     public class DocumentModel : Model
     {
